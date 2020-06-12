@@ -23,28 +23,28 @@ def main():
     s = Solution()
     nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]
     res = s.removeDuplicates(nums)
-    print(res)
-    print(nums)
+    assert res == 5
+    assert nums == [0, 1, 2, 3, 4, 2, 2, 3, 3, 4]
 
     nums = [1, 1, 2]
     res = s.removeDuplicates(nums)
-    print(res)
-    print(nums)
+    assert res == 2
+    assert nums == [1, 2, 2]
 
     nums = []
     res = s.removeDuplicates(nums)
-    print(res)
-    print(nums)
+    assert res == 0
+    assert nums == []
 
     nums = [2]
     res = s.removeDuplicates(nums)
-    print(res)
-    print(nums)
+    assert res == 1
+    assert nums == [2]
 
     nums = [1, 1]
     res = s.removeDuplicates(nums)
-    print(res)
-    print(nums)
+    assert res == 1
+    assert nums == [1, 1]
 
 
 if __name__ == '__main__':

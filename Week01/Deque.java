@@ -1,4 +1,4 @@
-package tacos.tacos;
+package com.example;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -18,8 +18,9 @@ public class MyDeque {
     System.out.println(str); // c
     System.out.println(deque); // [a, b, c]
 
+    // 像栈一样使用双端队列
     while (deque.size() > 0) {
-      System.out.println(deque.pollLast()); // c b a
+      System.out.println(deque.pollLast()); // c -> b -> a
     }
 
     System.out.println(deque); // []
