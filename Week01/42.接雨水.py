@@ -19,7 +19,10 @@ class Solution:
 
 
 def main():
-    pass
+    heights = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+    s = Solution()
+    res = s.trap(heights)
+    print(res)
 
 
 if __name__ == '__main__':
