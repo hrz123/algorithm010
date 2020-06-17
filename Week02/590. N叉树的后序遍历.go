@@ -14,20 +14,35 @@ type Node struct {
 	Children []*Node
 }
 
-var res []int
+//var res []int
+//
+//func postorder(root *Node) []int {
+//	res = []int{}
+//	dfs(root)
+//	return res
+//}
+//
+//func dfs(root *Node) {
+//	if root != nil {
+//		for _, n := range root.Children {
+//			dfs(n)
+//		}
+//		res = append(res, root.Val) //后序输出
+//	}
+//}
 
 func postorder(root *Node) []int {
-	res = []int{}
-	dfs(root)
+	res := []int{}
+	_dfs(root, &res)
 	return res
 }
 
-func dfs(root *Node) {
+func _dfs(root *Node, res *[]int) {
 	if root != nil {
 		for _, n := range root.Children {
-			dfs(n)
+			_dfs(n, res)
 		}
-		res = append(res, root.Val) //后序输出
+		*res = append(*res, root.Val) //后序输出
 	}
 }
 

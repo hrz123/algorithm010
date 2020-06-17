@@ -19,8 +19,8 @@ func inorderTraversal(root *TreeNode) []int {
 
 // 迭代的写法
 func inorderTraversal(root *TreeNode) []int {
-	todo := []*TreeNode{}
-	ans := []int{}
+	var todo []*TreeNode
+	var ans []int
 
 	node := root
 	for node != nil || len(todo) > 0 {
