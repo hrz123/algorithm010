@@ -16,7 +16,7 @@ class Solution:
             memo[target - num] = i
 
         return []
-
+enu
 
 def main():
     s = Solution()

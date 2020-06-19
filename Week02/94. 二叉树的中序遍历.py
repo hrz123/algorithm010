@@ -10,6 +10,7 @@ class TreeNode:
         self.right = None
 
 
+# 递归的写法
 class Solution:
     def inorderTraversal(self, root: TreeNode) -> List[int]:
         res = []
@@ -25,8 +26,31 @@ class Solution:
         self._helper(node.right, res)
 
 
+# 迭代的写法
+class Solution:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        res = []
+        stack = []
+
+        node = root
+        while node or len(stack) > 0:
+            while node:
+                stack.append(node)
+                node = node.left
+            node = stack.pop()
+            res.append(node.val)
+            node = node.right
+
+        return res
+
+
 def main():
-    pass
+    root = TreeNode(1)
+    root.right = TreeNode(2)
+    root.right.left = TreeNode(3)
+    s = Solution()
+    res = s.inorderTraversal(root)
+    print(res)
 
 
 if __name__ == '__main__':

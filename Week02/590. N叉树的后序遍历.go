@@ -14,12 +14,12 @@ type Node struct {
 	Children []*Node
 }
 
-//var res []int
+//var aaa []int
 //
 //func postorder(root *Node) []int {
-//	res = []int{}
+//	aaa = []int{}
 //	dfs(root)
-//	return res
+//	return aaa
 //}
 //
 //func dfs(root *Node) {
@@ -27,7 +27,7 @@ type Node struct {
 //		for _, n := range root.Children {
 //			dfs(n)
 //		}
-//		res = append(res, root.Val) //后序输出
+//		aaa = append(aaa, root.Val) //后序输出
 //	}
 //}
 

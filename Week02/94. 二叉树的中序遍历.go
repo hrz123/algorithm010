@@ -31,7 +31,7 @@ func inorderTraversal(root *TreeNode) []int {
 		node = todo[len(todo)-1]
 		todo = todo[:len(todo)-1]
 		ans = append(ans, node.Val)
-		todo = append(todo, node.Right)
+		node = node.Right
 	}
 	return ans
 }

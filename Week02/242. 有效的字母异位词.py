@@ -6,16 +6,36 @@ class Solution:
         if len(s) != len(t):
             return False
 
-        memo = [0] * 26  # ascii改为256
+        hashmap = [0] * 26  # ascii改为256
         ord_a = ord('a')
         for c in s:
-            memo[ord(c) - ord_a] += 1
+            hashmap[ord(c) - ord_a] += 1
 
         for c in t:
             tmp = ord(c) - ord_a
-            if not memo[tmp]:
+            if not hashmap[tmp]:
                 return False
-            memo[tmp] -= 1
+            hashmap[tmp] -= 1
+
+        return True
+
+
+# 使用ascii码
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
+        hashmap = [0] * 256
+
+        for c in s:
+            hashmap[ord(c)] += 1
+
+        for c in t:
+            tmp = ord(c)
+            if not hashmap[tmp]:
+                return False
+            hashmap[tmp] -= 1
 
         return True
 
