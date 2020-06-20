@@ -3,6 +3,7 @@
 from functools import lru_cache
 
 
+# 递归的写法
 class Solution:
     @lru_cache(None)
     def isMatch(self, s: str, p: str) -> bool:
@@ -12,7 +13,7 @@ class Solution:
             return not s
 
         # process first char and "."
-        first_match = bool(s and p[0] in {'.', s[0]})
+        first_match = bool(s) and p[0] in {'.', s[0]}
 
         if len(p) >= 2 and p[1] == "*":
             # process '*: 0个或者多个 prev char
@@ -22,6 +23,7 @@ class Solution:
         return first_match and self.isMatch(s[1:], p[1:])
 
 
+# dp的写法
 class Solution(object):
     def isMatch(self, s: str, p: str) -> bool:
         memo = {}
