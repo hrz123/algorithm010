@@ -25,9 +25,9 @@ class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         size = len(nums)
         bucket = [None] * (size + 1)
-        counter = {}
+        counter = collections.defaultdict(int)
         for num in nums:
-            counter[num] = counter.get(num, 0) + 1
+            counter[num] += 1
 
         for key, value in counter.items():
             if not bucket[value]:
@@ -43,6 +43,14 @@ class Solution:
         if len(res) > k:
             res = res[:k]
         return res
+
+
+# 时间复杂度：
+# 建立哈希表要遍历整个数组，O(N)。之后遍历哈希表建立计数排序所需数组，
+# 时间复杂度与数组中不同的元素数目相关，不同元素个数小于数组大小。
+# 遍历计数排序数组，O(N)。综合起来，时间复杂度是O(n)
+
+# 空间复杂度：哈希表和计数排序数组占额外空间。O(N)
 
 
 def main():

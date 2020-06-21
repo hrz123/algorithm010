@@ -4,9 +4,9 @@ import heapq
 from typing import List
 
 
-# 1.sort: NlogN
-# 2.heap：NlogK
-# 3.quick-sort
+# 1.sort: O(NlogN)
+# 2.heap：O(NlogK)
+# 3.quick-sort: O(
 
 # sort排序的方法
 class Solution:
@@ -33,6 +33,8 @@ class Solution:
 
 
 # 使用快排partition方法
+# 时间复杂度：期望为 O(n)O(n) ，由于证明过程很繁琐，所以不再这里展开讲。
+# 具体证明可以参考《算法导论》第 9 章第 2 小节。
 class Solution:
     def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
         # partition 方法

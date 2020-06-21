@@ -1,5 +1,7 @@
 # 学习笔记
 
+ps:Go语言老师可不看，为自己练习。思路与python相同。
+
 ## 个人总结第一项
 ## Java HashMap实现，put和get方法看明白
 ### put方法

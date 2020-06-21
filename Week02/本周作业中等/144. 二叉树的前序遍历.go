@@ -28,15 +28,15 @@ func dfs(root *TreeNode, res *[]int) {
 
 // 迭代的写法
 func preorderTraversal(root *TreeNode) []int {
-	r := make([]int, 0)
+	res := make([]int, 0)
 	if root == nil {
-		return r
+		return res
 	}
 	stack := StackNode{}
 	stack.Push(root)
 	for !stack.IsEmpty() {
 		cur := stack.Pop()
-		r = append(r, cur.Val)
+		res = append(res, cur.Val)
 		if cur.Right != nil {
 			stack.Push(cur.Right)
 		}
@@ -44,7 +44,7 @@ func preorderTraversal(root *TreeNode) []int {
 			stack.Push(cur.Left)
 		}
 	}
-	return r
+	return res
 }
 
 type StackNode struct {
