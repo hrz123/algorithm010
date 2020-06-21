@@ -4,6 +4,9 @@ ps:Go语言老师可不看，为自己练习。思路与python相同。
 
 ## 个人总结第一项
 ## Java HashMap实现，put和get方法看明白
+
+(来不及写了，之后补上)
+
 ### put方法
 
 - put方法内部调用了putVal方法
@@ -95,4 +98,10 @@ ps:Go语言老师可不看，为自己练习。思路与python相同。
       - return: previous value, or null if none
 
   完整实现上，首先新建一个Node<K, V>[]数组tab。然后建立一个Node<K, V> p。
+  
+  声明int n, i
+  
+  首先将tab赋值table，一个成员变量，默认为Node<K, V>[] table。
+  
+  如果table是null或者len(table)为0。那么令n = (tab = resize()).length;
 
