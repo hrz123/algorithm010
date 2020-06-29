@@ -43,9 +43,9 @@ public void recur(int level, int param) {
 # python
 def divide_conquer(problem, param1, param2, ...):
     # recursion terminator
-    if problem is None:
-    print_result
-    return
+        if problem is None:
+        print_result
+        return
     # prepare data
     data = prepare_data(problem)
     subproblems = split_problem(problem, data)

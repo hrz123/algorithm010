@@ -1,0 +1,48 @@
+# 78. 子集.py
+import itertools
+from typing import List
+
+
+# 思路1：库函数
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        for i in range(len(nums) + 1):
+            for tmp in itertools.combinations(nums, i):
+                # 产生从nums中选出i个的组合
+                res.append(tmp)
+        return res
+
+
+# 思路2：迭代
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for i in nums:
+            res = res + [[i] + num for num in res]
+        return res
+
+
+# 思路3：递归（回溯算法）
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        n = len(nums)
+
+        def helper(i, tmp):
+            res.append(tmp)
+            for j in range(i, n):
+                helper(j + 1, tmp + [nums[j]])
+
+        helper(0, [])
+        return res
+
+
+def main():
+    sol = Solution()
+    res = sol.subsets([1, 2, 3])
+    print(res)
+
+
+if __name__ == '__main__':
+    main()
