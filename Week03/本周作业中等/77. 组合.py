@@ -76,6 +76,47 @@ class Solution:
                 self.combine(i - 1, k - 1)]
 
 
+# 二刷
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        if n <= 0 or k <= 0 or k > n:
+            return []
+
+        res = []
+        self.__dfs(0, 1, n, k, [], res)
+        return res
+
+    def __dfs(self, level, start, end, k, ans, res):
+        if level == k:
+            res.append(ans.copy())
+            return
+        for i in range(start, end - (k - level) + 2):
+            ans.append(i)
+            self.__dfs(level + 1, i + 1, end, k, ans, res)
+            ans.pop()
+
+
+# level可用len(ans)代替
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        if n <= 0 or k <= 0 or k > n:
+            return []
+
+        res = []
+        self.__dfs(1, n, k, [], res)
+        return res
+
+    def __dfs(self, start, end, k, ans, res):
+        level = len(ans)
+        if level == k:
+            res.append(ans.copy())
+            return
+        for i in range(start, end - (k - level) + 2):
+            ans.append(i)
+            self.__dfs(i + 1, end, k, ans, res)
+            ans.pop()
+
+
 def main():
     n = 4
     k = 2
