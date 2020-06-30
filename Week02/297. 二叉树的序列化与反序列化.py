@@ -55,7 +55,16 @@ class Codec:
 # codec.deserialize(codec.serialize(root))
 
 def main():
-    pass
+    codec = Codec()
+    root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.right = TreeNode(3)
+    root.right.left = TreeNode(4)
+    root.right.right = TreeNode(5)
+    res = codec.serialize(root)
+    print(res)
+    node = codec.deserialize(res)
+    print(node)
 
 
 if __name__ == '__main__':
