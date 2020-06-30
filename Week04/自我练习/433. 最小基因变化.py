@@ -11,6 +11,10 @@ from typing import List, Set
 # 一旦发现start和end一样了，在终止条件中记录目前为止count的最小值
 class Solution:
     def minMutation(self, start: str, end: str, bank: List[str]) -> int:
+        # 剪枝: 所有的目标基因序列必须是合法的。
+        if end not in bank:
+            return -1
+
         min_count = -1
 
         def __diff(elem1: str, elem2: str) -> int:
