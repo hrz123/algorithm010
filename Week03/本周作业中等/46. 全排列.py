@@ -3,6 +3,7 @@ from typing import List
 
 
 # 使用 数组 来判断某个位置的元素是否已经使用过
+# 使用O(n)的空间
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         def dfs(depth, nums, size, path, used, res):
@@ -35,6 +36,7 @@ class Solution:
 
 
 # 使用 hashset 来判断某个位置的元素是否已经使用过
+# 使用O(n)的空间
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         def dfs(nums, size, depth, hash_set, path, res):
@@ -62,6 +64,7 @@ class Solution:
 
 
 # 使用 位掩码 来判断某个位置的元素是否已经使用过
+# 空间最省，只要不越界。O(1)的空间
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         def dfs(nums, size, depth, path, used, res):
