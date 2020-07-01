@@ -1,4 +1,4 @@
-# 22. 括号生成.py
+# 22. 括号生成(bfs写法).py
 from typing import List
 
 # 上周预习题，这周默写

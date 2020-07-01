@@ -17,10 +17,10 @@ class Solution:
 
         min_count = -1
 
-        def __diff(elem1: str, elem2: str) -> int:
+        def __diff(s1: str, s2: str) -> int:
             res = 0
-            for i, ch in enumerate(elem1):
-                if ch != elem2[i]:
+            for i, ch in enumerate(s1):
+                if ch != s2[i]:
                     res += 1
             return res
 

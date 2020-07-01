@@ -1,4 +1,4 @@
-# 22. 括号生成.py
+# 22. 括号生成(bfs写法).py
 from functools import lru_cache
 from typing import List
 
