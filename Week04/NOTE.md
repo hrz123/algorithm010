@@ -1,6 +1,6 @@
 学习笔记
 
-dfs
+## dfs
 ```python
 visited = set() 
 def dfs(node, visited):
@@ -30,7 +30,7 @@ def DFS(self, tree):
 	...
 ```
 
-bfs
+## bfs
 ```python
 # Python
 def BFS(graph, start, end):
@@ -47,13 +47,13 @@ def BFS(graph, start, end):
 	...
 ```
 
-wiki上动态规划适用情况
+## wiki上动态规划适用情况
 
 - 最优子结构性质。如果问题的最优解所包含的子问题的解也是最优的，我们就称该问题具有最优子结构性质（即满足最优化原理）。最优子结构性质为动态规划算法解决问题提供了重要线索。
 - 无后效性。即子问题的解一旦确定，就不再改变，不受在这之后、包含它的更大的问题的求解决策影响。
 - 子问题重叠性质。子问题重叠性质是指在用递归算法自顶向下对问题进行求解时，每次产生的子问题并不总是新问题，有些子问题会被重复计算多次。动态规划算法正是利用了这种子问题的重叠性质，对每一个子问题只计算一次，然后将其计算结果保存在一个表格中，当再次需要计算已经计算过的子问题时，只是在表格中简单地查看一下结果，从而获得较高的效率。
 
-二分查找代码模板
+## 二分查找代码模板
 ```python
 # Python
 left, right = 0, len(array) - 1 
@@ -81,15 +81,30 @@ array[mid] <= array[right] 且 array[mid] >= array[left]
 子问题编程在新的left和right中找无序的起始位置，方法是一样的
 
 ```python
-def findArrayHead(nums: int) -> int:
-    left, right = 0, len(nums) - 1
-    while left < right:
-        mid = left + (right - left) // 2
-        if nums[mid] > nums[right]:
-            left = mid + 1
-        elif nums[mid] < nums[left]:
-            right = mid
-    # 最终left==right，返回哪个都行
-    return left
-
+class Solution:
+    def findArrayHead(self, nums: List[int]) -> int:
+        left, right = 0, len(nums) - 1
+        while left < right:
+            mid = left + (right - left) // 2
+            if nums[mid] > nums[right]:
+                left = mid + 1
+            elif nums[mid] < nums[left]:
+                right = mid - 1
+            else:
+                return left
+        # 最终left==right，返回哪个都行
+        return left
 ```
+
+
+## 个人解题总结
+
+bfs中要记录level，即层次遍历，实现dfs递归的level的效果。
+
+可以在queue的元素中存入level这个值，比如[(elem, level)]。
+
+这类似于参数中加入level，dfs的迭代写法也可以如此。
+
+stack中加入[(elem, level)]，来获取到level信息。
+
+第二种方法是记录当前level的大小，每次queue只pop这么多的元素，用一个计数记录level。

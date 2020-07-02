@@ -1,0 +1,268 @@
+# 127. 单词接龙.py
+from collections import deque, defaultdict
+from typing import List
+
+
+# dfs解法
+# 会超时
+class Solution:
+    def __init__(self):
+        self.minLength = float('inf')
+
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+
+        if endWord not in wordList:
+            return 0
+
+        self.__dfs(0, beginWord, endWord, wordList, set())
+
+        return 0 if self.minLength == float('inf') else self.minLength
+
+    def __dfs(self, level, midWord, endWord, wordList, visited):
+        # recursion terminator
+        if midWord == endWord:
+            self.minLength = min(self.minLength, level + 1)
+            return
+        # process current level logic
+        for word in wordList:
+            if word not in visited and self.__strDiff(word, midWord) == 1:
+                visited.add(word)
+                # drill down
+                self.__dfs(level + 1, word, endWord, wordList, visited)
+                # reverse current level status if needed
+                visited.remove(word)
+
+    def __strDiff(self, s1, s2):
+        res = 0
+        for i1, c1 in enumerate(s1):
+            if c1 != s2[i1]:
+                res += 1
+        return res
+
+
+# bfs解法
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+
+        wordList = set(wordList)
+        if endWord not in wordList:
+            return 0
+
+        lower_letters = "abcdefghijklmnopqrstuvwxyz"
+        # 起始点算链条的开始
+        res = 1
+        deq = deque()
+        deq.append(beginWord)
+        visited = set(beginWord)
+        while deq:
+            size = len(deq)
+            for _ in range(size):
+                curWord = deq.popleft()
+                if curWord == endWord:
+                    return res
+                for newWord in self.__showChanges(curWord, lower_letters):
+                    if newWord in wordList and newWord not in visited:
+                        deq.append(newWord)
+                        visited.add(newWord)
+            res += 1
+        return 0
+
+    def __showChanges(self, s, lower_letters):
+        for i in range(len(s)):
+            for ch in lower_letters:
+                if ch != s[i]:
+                    yield s[:i] + ch + s[i + 1:]
+
+
+# 国际站bfs写法
+# 使用neighbor words写法
+class Solution(object):
+    def ladderLength(self, beginWord, endWord, wordList):
+
+        def construct_dict(word_list):
+            # 构建一个字典，示例key是a_cd，值是[abcd, aacd]
+            d = {}
+            for word in word_list:
+                for i in range(len(word)):
+                    s = word[:i] + "_" + word[i + 1:]
+                    d[s] = d.get(s, []) + [word]
+            return d
+
+        def bfs_words(begin, end, dict_words):
+            # bfs需要用到队列，visited防止环
+            queue, visited = deque([(begin, 1)]), set()
+            while queue:
+                word, steps = queue.popleft()
+                if word == end:
+                    return steps
+                for i in range(len(word)):
+                    s = word[:i] + "_" + word[i + 1:]
+                    neigh_words = dict_words.get(s, [])
+                    # 遍历相差为1的字符串
+                    for neigh in neigh_words:
+                        if neigh not in visited:
+                            queue.append((neigh, steps + 1))
+                            visited.add(word)
+                    # 这一句可以节省不少时间
+                    dict_words[s] = []
+            return 0
+
+        d = construct_dict(wordList or {beginWord, endWord})
+        return bfs_words(beginWord, endWord, d)
+
+
+# 官方解法改进
+# bfs
+class Solution(object):
+    def ladderLength(self, beginWord, endWord, wordList):
+
+        if endWord not in wordList or not endWord or not beginWord or not wordList:
+            return 0
+
+        # Since all words are of same length.
+        L = len(beginWord)
+
+        # Dictionary to hold combination of words that can be formed,
+        # from any given word. By changing one letter at a time.
+        all_combo_dict = defaultdict(list)
+        for word in wordList:
+            for i in range(L):
+                # Key is the generic word
+                # Value is a list of words
+                # which have the same intermediate generic word.
+                all_combo_dict[word[:i] + "*" + word[i + 1:]].append(word)
+
+        # Queue for BFS
+        queue = deque([(beginWord, 1)])
+        # Visited to make sure we don't repeat processing same word.
+        visited = {beginWord}
+        while queue:
+            current_word, level = queue.popleft()
+            for i in range(L):
+                # Intermediate words for current word
+                intermediate_word = \
+                    current_word[:i] + "*" + current_word[i + 1:]
+
+                # Next states are all the words
+                # which share the same intermediate state.
+                for word in all_combo_dict[intermediate_word]:
+                    # If at any point if we find what we are looking for
+                    # i.e. the end word - we can return with the answer.
+                    if word == endWord:
+                        return level + 1
+                    # Otherwise, add it to the BFS Queue. Also, mark it visited
+                    if word not in visited:
+                        visited.add(word)
+                        queue.append((word, level + 1))
+                all_combo_dict[intermediate_word] = []
+        return 0
+
+
+# 官方解法2改进：双向广度优先搜索
+# 最快
+class Solution(object):
+    def __init__(self):
+        self.length = 0
+        # Dictionary to hold combination of words that can be formed,
+        # from any given word. By changing one letter at a time.
+        self.all_combo_dict = defaultdict(list)
+
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+
+        if endWord not in wordList or not endWord or not beginWord or not wordList:
+            return 0
+
+        # Since all words are of same length.
+        self.length = len(beginWord)
+
+        for word in wordList:
+            for i in range(self.length):
+                # Key is the generic word
+                # Value is a list of words
+                # which have the same intermediate generic word.
+                self.all_combo_dict[word[:i] + "*" + word[i + 1:]].append(word)
+
+        # Queues for bidirectional BFS
+        queue_begin = deque([(beginWord, 1)])  # BFS starting from beginWord
+        queue_end = deque([(endWord, 1)])  # BFS starting from endWord
+
+        # Visited to make sure we don't repeat processing same word
+        visited_begin = {beginWord: 1}
+        visited_end = {endWord: 1}
+        ans = None
+
+        # We do a bidirectional search starting one pointer from begin
+        # word and one pointer from end word. Hopping one by one.
+        while queue_begin and queue_end:
+
+            # One hop from begin word
+            ans = self.visitWordNode(queue_begin, visited_begin, visited_end)
+            if ans:
+                return ans
+            # One hop from end word
+            ans = self.visitWordNode(queue_end, visited_end, visited_begin)
+            if ans:
+                return ans
+
+        return 0
+
+    def visitWordNode(self, queue, visited, others_visited):
+        current_word, level = queue.popleft()
+        for i in range(self.length):
+            # Intermediate words for current word
+            intermediate_word = current_word[:i] + "*" + current_word[i + 1:]
+
+            # Next states are all the words
+            # which share the same intermediate state.
+            for word in self.all_combo_dict[intermediate_word]:
+                # If the intermediate state/word has already been visited
+                # from the other parallel traversal this means we have found
+                # the answer.
+                if word in others_visited:
+                    return level + others_visited[word]
+                if word not in visited:
+                    # Save the level as the value of the dictionary,
+                    # to save number of hops.
+                    visited[word] = level + 1
+                    queue.append((word, level + 1))
+        return
+
+
+# 时间复杂度：O(M*N)
+# 空间复杂度：O(M*N)
+
+
+def main():
+    beginWord = "qa"
+    endWord = "sq"
+    wordList = ["si", "go", "se", "cm", "so", "ph", "mt", "db", "mb", "sb",
+                "kr", "ln",
+                "tm", "le", "av", "sm", "ar", "ci", "ca", "br", "ti", "ba",
+                "to", "ra",
+                "fa", "yo", "ow", "sn", "ya", "cr", "po", "fe", "ho", "ma",
+                "re", "or",
+                "rn", "au", "ur", "rh", "sr", "tc", "lt", "lo", "as", "fr",
+                "nb", "yb",
+                "if", "pb", "ge", "th", "pm", "rb", "sh", "co", "ga", "li",
+                "ha", "hz",
+                "no", "bi", "di", "hi", "qa", "pi", "os", "uh", "wm", "an",
+                "me", "mo",
+                "na", "la", "st", "er", "sc", "ne", "mn", "mi", "am", "ex",
+                "pt", "io",
+                "be", "fm", "ta", "tb", "ni", "mr", "pa", "he", "lr", "sq",
+                "ye"]
+
+    beginWord = "hit"
+    endWord = "cog"
+    wordList = ["hot", "dot", "dog", "lot", "log"]
+
+    sol = Solution()
+    res = sol.ladderLength(beginWord, endWord, wordList)
+    print(res)
+
+
+if __name__ == '__main__':
+    main()
