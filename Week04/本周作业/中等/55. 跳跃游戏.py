@@ -38,6 +38,17 @@ class Solution:
                       enumerate(nums, 1), 1) > 0
 
 
+# 以下为自我练习遍数
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        start = 0
+        for i in range(len(nums)):
+            if i > start:
+                return False
+            start = max(start, i + nums[i])
+        return True
+
+
 def main():
     nums = [2, 3, 1, 1, 4]
     sol = Solution()
