@@ -231,6 +231,62 @@ class Solution(object):
         return
 
 
+# 最快中文注释
+class Solution(object):
+    def __init__(self):
+        self.length = 0
+        # 装载所有单词的组合的字典，通过一次改变一个字母。
+        self.all_combo_dict = defaultdict(list)
+
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+
+        if endWord not in wordList or not endWord or not beginWord or not wordList:
+            return 0
+
+        # 因为所有的单词都长度相同
+        self.length = len(beginWord)
+
+        for word in wordList:
+            for i in range(self.length):
+                self.all_combo_dict[word[:i] + "*" + word[i + 1:]].append(word)
+
+        # Queues for bidirectional BFS
+        queue_begin = deque([(beginWord, 1)])  # BFS starting from beginWord
+        queue_end = deque([(endWord, 1)])  # BFS starting from endWord
+
+        # Visited to make sure we don't repeat processing same word
+        visited_begin = {beginWord: 1}
+        visited_end = {endWord: 1}
+        ans = None
+
+        while queue_begin and queue_end:
+
+            # One hop from begin word
+            ans = self.visitWordNode(queue_begin, visited_begin, visited_end)
+            if ans:
+                return ans
+            # One hop from end word
+            ans = self.visitWordNode(queue_end, visited_end, visited_begin)
+            if ans:
+                return ans
+
+        return 0
+
+    def visitWordNode(self, queue, visited, others_visited):
+        current_word, level = queue.popleft()
+        for i in range(self.length):
+            intermediate_word = current_word[:i] + "*" + current_word[i + 1:]
+
+            for word in self.all_combo_dict[intermediate_word]:
+                if word in others_visited:
+                    return level + others_visited[word]
+                if word not in visited:
+                    visited[word] = level + 1
+                    queue.append((word, level + 1))
+        return
+
+
 # 时间复杂度：O(M*N)
 # 空间复杂度：O(M*N)
 
