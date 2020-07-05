@@ -1,5 +1,5 @@
 # 126. 单词接龙 II.py
-from collections import defaultdict, deque
+from collections import defaultdict
 from typing import List
 
 
@@ -57,32 +57,61 @@ class Solution:
 
 # bfs
 class Solution:
-    def __init__(self):
-        self.length = 0
-        self.all_combo_dict = defaultdict(list)
+    def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) \
+            -> List[List[str]]:
+        tree, words, n = defaultdict(set), set(wordList), len(beginWord)
+        if endWord not in wordList:
+            return []
+        found, q, nq = False, {beginWord}, set()
+        while q and not found:
+            words -= set(q)
+            for x in q:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          'qwertyuiopasdfghjklzxcvbnm']:
+                    if y in words:
+                        if y == endWord:
+                            found = True
+                        else:
+                            nq.add(y)
+                        tree[x].add(y)
+            q, nq = nq, set()
+
+        def bt(x):
+            return [[x]] if x == endWord else [[x] + rest for y in tree[x]
+                                               for rest in bt(y)]
+
+        return bt(beginWord)
+
+
+# 双向bfs
+class Solution(object):
 
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) \
             -> List[List[str]]:
+        tree, words, n = defaultdict(set), set(wordList), len(beginWord)
         if endWord not in wordList:
-            return 0
+            return []
+        found, bq, eq, nq, rev = False, {beginWord}, {endWord}, set(), False
+        while bq and not found:
+            words -= set(bq)
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          'qwertyuiopasdfghjklzxcvbnm']:
+                    if y in words:
+                        if y in eq:
+                            found = True
+                        else:
+                            nq.add(y)
+                        tree[y].add(x) if rev else tree[x].add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq, rev = eq, bq, not rev
 
-        self.length = len(beginWord)
+        def bt(x):
+            return [[x]] if x == endWord else [[x] + rest for y in tree[x]
+                                               for rest in bt(y)]
 
-        for word in wordList:
-            for i in range(self.length):
-                self.all_combo_dict[word[:i] + '*' + word[i + 1:]].append(word)
-
-        queue_begin = deque([(beginWord, 1)])
-        queue_end = deque([(endWord, 1)])
-
-        visited_begin = {beginWord: 1}
-        visited_end = {endWord: 1}
-
-        ans = None
-
-        while queue_begin and queue_end:
-
-            ans = self.
+        return bt(beginWord)
 
 
 def main():

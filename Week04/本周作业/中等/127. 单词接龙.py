@@ -251,22 +251,18 @@ class Solution(object):
             for i in range(self.length):
                 self.all_combo_dict[word[:i] + "*" + word[i + 1:]].append(word)
 
-        # Queues for bidirectional BFS
-        queue_begin = deque([(beginWord, 1)])  # BFS starting from beginWord
-        queue_end = deque([(endWord, 1)])  # BFS starting from endWord
+        queue_begin = deque([(beginWord, 1)])
+        queue_end = deque([(endWord, 1)])
 
-        # Visited to make sure we don't repeat processing same word
         visited_begin = {beginWord: 1}
         visited_end = {endWord: 1}
         ans = None
 
         while queue_begin and queue_end:
 
-            # One hop from begin word
             ans = self.visitWordNode(queue_begin, visited_begin, visited_end)
             if ans:
                 return ans
-            # One hop from end word
             ans = self.visitWordNode(queue_end, visited_end, visited_begin)
             if ans:
                 return ans
