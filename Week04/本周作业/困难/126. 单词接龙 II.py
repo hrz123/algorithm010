@@ -56,15 +56,26 @@ class Solution:
 
 
 # bfs
+# 和127不同的是，要找到最短的路径。因此，我们在bfs时需要构建一个搜索树
+# 并且原路返回该树并恢复所有的最短路径。
+# 所以我们不能一发现一个变换来的单词是结束单词就停止bfs，而应该继续在这一bfs层寻找
+# 因为可能又不止一条最短路径。
+# 我们仍需要排除之前我们寻找过的节点。同时，如果两个结点有一个相同的子节点。
+# 我们需要将该子节点添加到两个节点的孩子数组上，因为我们要找到所有的有效路径。
+# 所以不像常规的bfs，我们不能使用一个'seen'集合，更像用一个'explored'集合
+# 否则，例如{x->z, y->z}, z不会被添加到y的孩子如果x首先被访问
+# 并且z已经在x的搜索中
 class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) \
             -> List[List[str]]:
         tree, words, n = defaultdict(set), set(wordList), len(beginWord)
         if endWord not in wordList:
             return []
+
         found, q, nq = False, {beginWord}, set()
+
         while q and not found:
-            words -= set(q)
+            words -= q
             for x in q:
                 for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
                           'qwertyuiopasdfghjklzxcvbnm']:
@@ -84,6 +95,10 @@ class Solution:
 
 
 # 双向bfs
+# bfs的时间复杂度是O(b^d)，b是分支因子，d是深度
+# 所以如果我们用双向bfs，从开始和结束同时扩展，
+# 分支因子会被大大减少。
+# 实际时间上会减少。
 class Solution(object):
 
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) \
@@ -93,7 +108,7 @@ class Solution(object):
             return []
         found, bq, eq, nq, rev = False, {beginWord}, {endWord}, set(), False
         while bq and not found:
-            words -= set(bq)
+            words -= bq
             for x in bq:
                 for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
                           'qwertyuiopasdfghjklzxcvbnm']:
