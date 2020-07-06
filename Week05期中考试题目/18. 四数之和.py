@@ -80,6 +80,7 @@ class Solution:
                         res.append([nums[i], nums[j], nums[l], nums[r]])
                         l += 1
                         r -= 1
+                        # 只用更新这里就好，其他两个分支判断要判断l的左边界和r的右边界
                         while l < r and nums[l] == nums[l - 1]:
                             l += 1
                         while l < r and nums[r] == nums[r + 1]:
