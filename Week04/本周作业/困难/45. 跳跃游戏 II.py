@@ -7,15 +7,15 @@ from typing import List
 class Solution:
     def jump(self, nums: List[int]) -> int:
         end = 0
-        maxPosition = 0
+        max_position = 0
         steps = 0
         # 这里注意是len(nums) - 1，因为是索引为0时，steps已经是1了
         for i in range(len(nums) - 1):
             # 找能跳得最远的
-            maxPosition = max(maxPosition, nums[i] + i)
+            max_position = max(max_position, nums[i] + i)
             # 遇到边界就更新边界，且步数加一
             if i == end:
-                end = maxPosition
+                end = max_position
                 steps += 1
         return steps
 
