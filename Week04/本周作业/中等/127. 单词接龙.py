@@ -217,6 +217,34 @@ class Solution(object):
 # 时间复杂度：O(M*N)
 # 空间复杂度：O(M*N)
 
+class Solution(object):
+
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) \
+            -> int:
+        words, n = set(wordList), len(beginWord)
+
+        if endWord not in words:
+            return 0
+
+        bq, eq, nq, rev = {beginWord}, {endWord}, set(), False
+        res = 1
+        while bq:
+            res += 1
+            words -= bq
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          'qwertyuiopasdfghjklzxcvbnm']:
+                    if y in words:
+                        if y in eq:
+                            return res
+                        else:
+                            nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq, rev = eq, bq, not rev
+
+        return 0
+
 
 def main():
     beginWord = "qa"

@@ -69,7 +69,7 @@ class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) \
             -> List[List[str]]:
         tree, words, n = defaultdict(set), set(wordList), len(beginWord)
-        if endWord not in wordList:
+        if endWord not in words:
             return []
 
         found, q, nq = False, {beginWord}, set()
@@ -104,7 +104,7 @@ class Solution(object):
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) \
             -> List[List[str]]:
         tree, words, n = defaultdict(set), set(wordList), len(beginWord)
-        if endWord not in wordList:
+        if endWord not in words:
             return []
         found, bq, eq, nq, rev = False, {beginWord}, {endWord}, set(), False
         while bq and not found:
