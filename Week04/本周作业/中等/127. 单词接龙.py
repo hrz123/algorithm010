@@ -266,6 +266,7 @@ class Solution(object):
         res = 1
         while bq:
             res += 1
+            # 通过这个操作去掉环
             words -= bq
             for x in bq:
                 for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in

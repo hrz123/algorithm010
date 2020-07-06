@@ -68,10 +68,13 @@ class Solution:
 class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) \
             -> List[List[str]]:
+        # tree用来还原路径
         tree, words, n = defaultdict(set), set(wordList), len(beginWord)
+
         if endWord not in words:
             return []
 
+        # 用found增加循环的退出条件，因为这道题目不可以一找到就退出并返回
         found, q, nq = False, {beginWord}, set()
 
         while q and not found:
@@ -87,9 +90,24 @@ class Solution:
                         tree[x].add(y)
             q, nq = nq, set()
 
+        # 还原轨迹的算法
+        # 因为tree是有限的，bt的递归终止条件是x == endWord
+        # 那么其实其他的结果最终会返回[]
+        # 比如[hot, hat]
+        # beginWord = hit
+        # endWord = hot
+        # 那么tree是{hit: {hot, hat}}
+        # bt(hit)
+        # bt(hit) == [[x] + rest for y in tree(x) for rest in bt(y)]
+        #            [[hit] + rest for y in {hot, hat} for rest in bt(y)]]
+        # bt(hot) == [[hot]]
+        # bt(hat) == [[x] + rest for y in tree(x) for rest in bt(y)]
+        #         == [[hat] + rest for y in set() for rest in bt(y)]
+        #         == []
+        # 函数返回x到endWord的所有路径，没有会返回[]
         def bt(x):
-            return [[x]] if x == endWord else [[x] + rest for y in tree[x]
-                                               for rest in bt(y)]
+            return [[x]] if x == endWord \
+                else [[x] + rest for y in tree[x] for rest in bt(y)]
 
         return bt(beginWord)
 
@@ -103,10 +121,14 @@ class Solution(object):
 
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) \
             -> List[List[str]]:
+
         tree, words, n = defaultdict(set), set(wordList), len(beginWord)
+
         if endWord not in words:
             return []
+
         found, bq, eq, nq, rev = False, {beginWord}, {endWord}, set(), False
+
         while bq and not found:
             words -= bq
             for x in bq:
@@ -127,8 +149,10 @@ class Solution(object):
             # process current level logic
             # drill down
             # reverse current level status if needed
-            return [[x]] if x == endWord else [[x] + rest for y in tree[x]
-                                               for rest in bt(y)]
+            return [[x]] if x == endWord \
+                else [[x] + rest for y in tree[x] for rest in bt(y)]
+
+        print(tree)
 
         return bt(beginWord)
 
@@ -137,6 +161,10 @@ def main():
     beginWord = "hit"
     endWord = "cog"
     wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
+
+    # beginWord = "hit"
+    # endWord = "hot"
+    # wordList = ["hot", "hat"]
 
     sol = Solution()
     res = sol.findLadders(beginWord, endWord, wordList)
