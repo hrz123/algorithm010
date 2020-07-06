@@ -217,16 +217,52 @@ class Solution(object):
 # 时间复杂度：O(M*N)
 # 空间复杂度：O(M*N)
 
+
+# 单向bfs的另一种写法
+# 更简洁
 class Solution(object):
 
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) \
             -> int:
+
         words, n = set(wordList), len(beginWord)
 
         if endWord not in words:
             return 0
 
-        bq, eq, nq, rev = {beginWord}, {endWord}, set(), False
+        q, nq = {beginWord}, set()
+        res = 1
+        while q:
+            res += 1
+            words -= q
+            for x in q:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          'qwertyuiopasdfghjklzxcvbnm']:
+                    if y in words:
+                        if y == endWord:
+                            return res
+                        else:
+                            nq.add(y)
+            q, nq = nq, set()
+
+        return 0
+
+
+# 双向bfs的写法
+# 涉及到层级遍历的bfs可以用两个容器不停交换，达到层次遍历的效果
+# 双向的增加一维从尾回来的队列
+# 如果还要记录从begin的end的path，那么到end的时候要记录一个rev反序信息
+class Solution(object):
+
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) \
+            -> int:
+
+        words, n = set(wordList), len(beginWord)
+
+        if endWord not in words:
+            return 0
+
+        bq, eq, nq = {beginWord}, {endWord}, set()
         res = 1
         while bq:
             res += 1
@@ -241,8 +277,7 @@ class Solution(object):
                             nq.add(y)
             bq, nq = nq, set()
             if len(bq) > len(eq):
-                bq, eq, rev = eq, bq, not rev
-
+                bq, eq = eq, bq
         return 0
 
 
