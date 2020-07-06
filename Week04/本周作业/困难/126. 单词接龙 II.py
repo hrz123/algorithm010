@@ -123,6 +123,10 @@ class Solution(object):
                 bq, eq, rev = eq, bq, not rev
 
         def bt(x):
+            # recursion terminator
+            # process current level logic
+            # drill down
+            # reverse current level status if needed
             return [[x]] if x == endWord else [[x] + rest for y in tree[x]
                                                for rest in bt(y)]
 
