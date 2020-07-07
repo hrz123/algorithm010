@@ -4,11 +4,11 @@ from typing import List
 
 
 # 上周预习题，这周默写
-
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         def helper(ans, left, right):
             # recursion terminator
+            # 因为右小于左，因为left最大为n，所以只用判断右
             if right == n:
                 res.append(ans)
                 return

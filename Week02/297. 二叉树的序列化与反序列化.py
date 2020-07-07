@@ -40,7 +40,7 @@ class Codec:
         def doit():
             val = next(vals)
             if val == '#':
-                return None
+                return
             node = TreeNode(int(val))
             node.left = doit()
             node.right = doit()
@@ -48,6 +48,95 @@ class Codec:
 
         vals = iter(data.split())
         return doit()
+
+
+# 以下为自我练习
+
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+
+        :type root: TreeNode
+        :rtype: str
+        """
+        vals = []
+
+        def doit(node):
+            # recursion terminator
+            # process current level logic
+            if node:
+                vals.append(str(node.val))
+                # drill down
+                doit(node.left)
+                doit(node.right)
+            else:
+                vals.append('#')
+
+        doit(root)
+        return ' '.join(vals)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+
+        def doit():
+            val = next(vals)
+            if val == '#':
+                return
+            node = TreeNode(val)
+            node.left = doit()
+            node.right = doit()
+            return node
+
+        vals = iter(data.split())
+
+        return doit()
+
+
+# dfs
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+
+        :type root: TreeNode
+        :rtype: str
+        """
+        values = []
+
+        def helper(node):
+            if not node:
+                values.append('#')
+            else:
+                values.append(str(node.val))
+                helper(node.left)
+                helper(node.right)
+
+        helper(root)
+        return ' '.join(values)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        values = iter(data.split())
+
+        def helper():
+            val = next(values)
+            if val == '#':
+                return
+            node = TreeNode(val)
+            node.left = helper()
+            node.right = helper()
+            return node
+
+        return helper()
 
 
 # Your Codec object will be instantiated and called as such:

@@ -66,13 +66,9 @@ class Solution:
         return helper(root)
 
 
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+# 以下为自我练习
 
+# 中序遍历是严格升序的
 class Solution:
     def isValidBST(self, root: TreeNode) -> bool:
         if not root:
@@ -91,6 +87,43 @@ class Solution:
             root = root.right
 
         return True
+
+
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        if not root:
+            return True
+
+        inorder = float('-inf')
+        stack = []
+
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+
+            root = stack.pop()
+            # 注意也不能等于
+            if root.val <= inorder:
+                return False
+            inorder = root.val
+            root = root.right
+        return True
+
+
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        def helper(node, lower=float('-inf'), upper=float('inf')):
+            if not node:
+                return True
+            if node.val <= lower or node.val >= upper:
+                return False
+
+            return helper(node.left, lower, node.val) and helper(node.right,
+                                                                 node.val,
+                                                                 upper)
+
+        return helper(root)
 
 
 def main():
