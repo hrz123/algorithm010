@@ -33,6 +33,21 @@ class Solution:
         return nums[left]
 
 
+# 以下为自我练习
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        left = 0
+        right = len(nums) - 1
+        while left < right:
+            mid = left + ((right - left) >> 1)
+            # 比右边大就一定不是最小的
+            if nums[mid] > nums[right]:
+                left = mid + 1
+            else:
+                right = mid
+        return nums[left]
+
+
 def main():
     nums = [3, 4, 5, 1, 2]
     # nums = [4, 5, 6, 7, 0, 1, 2]

@@ -3,6 +3,7 @@ from collections import deque
 from typing import List
 
 
+# dfs
 class Solution:
     def __init__(self):
         self.dx = [0, 1, 0, -1]
@@ -34,6 +35,7 @@ class Solution:
             self.__DFSMarking(grid, row, col, i + self.dx[k], j + self.dy[k])
 
 
+# bfs
 class Solution:
     def __init__(self):
         self.dx = [0, 1, 0, -1]
@@ -74,6 +76,110 @@ class Solution:
 
 
 # 并查集的思想
+
+
+# 以下为自我练习
+class Solution:
+    def __init__(self):
+        self.dx = [0, 1, 0, -1]
+        self.dy = [1, 0, -1, 0]
+
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+
+        m, n = len(grid), len(grid[0])
+
+        def dfs_marking(r, c):
+            # recursion terminator
+            if r < 0 or r >= m or c < 0 or c >= n or grid[r][c] != '1':
+                return
+
+            # process current level logic
+            grid[r][c] = 0
+
+            # drill down
+            for i in range(4):
+                dfs_marking(r + self.dx[i], c + self.dy[i])
+
+            # reverse current level status if needed
+
+        res = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    res += 1
+                    dfs_marking(i, j)
+
+        return res
+
+
+class Solution:
+    def __init__(self):
+        self.dx = [0, 1, 0, -1]
+        self.dy = [1, 0, -1, 0]
+
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+
+        row = len(grid)
+        col = len(grid[0])
+
+        res = 0
+        for r in range(row):
+            for c in range(col):
+                if grid[r][c] == '1':
+                    res += 1
+                    self.__dfs_marking(grid, r, c, row, col)
+        return res
+
+    def __dfs_marking(self, grid, r, c, row, col):
+        if r < 0 or r >= row or c < 0 or c >= col or grid[r][c] != '1':
+            return
+
+        grid[r][c] = '0'
+
+        for i in range(4):
+            self.__dfs_marking(grid, r + self.dx[i], c + self.dy[i], row, col)
+
+
+class Solution:
+
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+
+        dx = [0, 1, 0, -1]
+        dy = [1, 0, -1, 0]
+
+        res = 0
+
+        row = len(grid)
+        col = len(grid[0])
+
+        for r in range(row):
+            for c in range(col):
+                if grid[r][c] == '1':
+                    res += 1
+                    deq = deque([(r, c)])
+                    visited = {(r, c)}
+
+                    while deq:
+                        i, j = deq.popleft()
+                        grid[i][j] = '0'
+
+                        for k in range(4):
+                            curr = i + dx[k]
+                            curc = j + dy[k]
+                            if (curr, curc) not in visited \
+                                    and 0 <= curr < row \
+                                    and 0 <= curc < col \
+                                    and grid[curr][curc] == '1':
+                                deq.append((curr, curc))
+                                visited.add((curr, curc))
+
+        return res
 
 
 def main():

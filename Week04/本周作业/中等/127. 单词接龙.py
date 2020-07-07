@@ -274,11 +274,71 @@ class Solution(object):
                     if y in words:
                         if y in eq:
                             return res
-                        else:
-                            nq.add(y)
+                        nq.add(y)
             bq, nq = nq, set()
             if len(bq) > len(eq):
                 bq, eq = eq, bq
+        return 0
+
+
+# 以下为自我练习遍数
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+        words, n = set(wordList), len(beginWord)
+
+        if endWord not in words:
+            return 0
+
+        bq, eq, nq = {beginWord}, {endWord}, set()
+
+        res = 1
+
+        while bq:
+            res += 1
+            words -= bq
+
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          "qwertyuiopasdfghjklzxcvbnm"]:
+                    if y in words:
+                        if y in eq:
+                            return res
+                        nq.add(y)
+
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+
+        return 0
+
+
+# 单向bfs
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+        words, n = set(wordList), len(beginWord)
+
+        if endWord not in words:
+            return 0
+
+        q, nq = {beginWord}, set()
+        res = 1
+
+        while q:
+            res += 1
+            # 去除环
+            words -= q
+
+            for x in q:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          "qwertyuiopasdfghjklzxcvbnm"]:
+                    if y in words:
+                        if y == endWord:
+                            return res
+                        nq.add(y)
+            q, nq = nq, set()
+
         return 0
 
 
