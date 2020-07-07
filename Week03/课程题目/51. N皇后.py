@@ -53,7 +53,7 @@ class Solution:
             row = len(queens)
             if row == n:
                 result.append(queens)
-                return None
+                return
             for col in range(n):
                 if col not in queens and \
                         row - col not in xy_dif and \
@@ -68,6 +68,56 @@ class Solution:
         DFS([], set(), set())
         return [["." * i + "Q" + "." * (n - i - 1) for i in sol]
                 for sol in result]
+
+
+# 以下为自我练习
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        result = []
+
+        def dfs(queens, xy_dif, xy_sum):
+            row = len(queens)
+            if row == n:
+                result.append(queens)
+                return
+            for col in range(n):
+                if col not in queens and row - col not in xy_dif and row + col \
+                        not in xy_sum:
+                    xy_dif.add(row - col)
+                    xy_sum.add(row + col)
+                    dfs(queens + [col], xy_dif, xy_sum)
+                    xy_dif.remove(row - col)
+                    xy_sum.remove(row + col)
+
+        dfs([], set(), set())
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in
+                result]
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        result = []
+        self.__dfs([], set(), set(), result, n)
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in s] for s in result]
+
+    def __dfs(self, queens, xy_dif, xy_sum, result, n):
+        # recursion terminator
+        row = len(queens)
+        if row == n:
+            result.append(queens)
+            return
+        # process current level logic
+        for col in range(n):
+            rc_dif = row - col
+            rc_sum = row + col
+            if col not in queens and rc_dif not in xy_dif and rc_sum not in xy_sum:
+                xy_dif.add(rc_dif)
+                xy_sum.add(rc_sum)
+                # drill down
+                self.__dfs(queens + [col], xy_dif, xy_sum, result, n)
+                # reverse current level status if needed
+                xy_dif.remove(rc_dif)
+                xy_sum.remove(rc_sum)
 
 
 def main():
