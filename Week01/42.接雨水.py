@@ -34,7 +34,6 @@ class Solution:
 
 # 时间复杂度： O(n^2)
 # 空间复杂度： O(1)
-
 # leetcode 超出时间限制
 
 
@@ -163,8 +162,98 @@ class Solution:
         return res
 
 
+# 以下为自我练习遍数
+
+# 解法：
+# 暴力法
+# 对于任何一根不是最左和最后的柱子
+# 向左向右都找到局部最高点，算出当前柱子的盛水量
+
+# 左右指针法
+# 可以这么理解，对于任何位置，需要知道其左右最大值
+# 对于i位置，左侧最大值一定在0..i-1，右侧最大值一定在i+1..size-1
+# 并且决定i位置加多少水的，是左右最大值的较小者
+# 用双指针法：
+# l, r
+# 到l位置左侧的最大值为left
+# 到r位置右侧的最大值为right
+# left = max(left, height[i])
+# right = max(right, height[i])
+# 左侧更小，左侧的边界已经确定了就是left，而右侧的最大肯定比right大
+# 所以此时l处的水量可以更新
+# 往后推进只要height[l]依然小于等于left
+# l < r and height[l] <= left <= right
+# ans += left - height[l]
+# l += 1
+# 右侧更小，右侧的边界已经确定了就是right，而左侧的最大肯定比left大
+# 往后推进只要height[r]依然小于等于right
+# l < r and height[r] <= right <= left
+# ans += right - height[r]
+# r -= 1
+
+# 这两个必有一个可以满足
+# 因为height[l]在一开始的时候，left = max(left, height[l])
+# 所以height[l] <= left
+# 同理，height[r] <= right
+# 所以 相当于left<=right和right<=left
+# 必然进入其中一个分支
+# 而 l < r 是在 l += 1中防止越界的
+# 只要height[l] <= left就可以继续
+# 大于left说明此时左侧最大发生了变化，需要进行迭代，更新左侧最大
+# 而在l自增的过程中left和right不会变化
+# 右侧同理
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        ans = 0
+        size = len(height)
+
+        for i in range(1, size - 1):
+            max_left = max_right = 0
+            for j in range(i, -1, -1):
+                max_left = max(max_left, height[j])
+            for j in range(i, size):
+                max_right = max(max_right, height[j])
+            ans += min(max_left, max_right) - height[i]
+
+        return ans
+
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        l, r = 0, len(height) - 1
+        left = right = res = 0
+        while l < r:
+            left, right = max(left, height[l]), max(right, height[r])
+            while l < r and height[l] <= left <= right:
+                res += left - height[l]
+                l += 1
+            while l < r and height[r] <= right < left:
+                res += right - height[r]
+                r -= 1
+        return res
+
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        l, r = 0, len(height) - 1
+        left = right = res = 0
+
+        while l < r:
+            left, right = max(left, height[l]), max(right, height[r])
+
+            while l < r and height[l] <= left <= right:
+                res += left - height[l]
+                l += 1
+            while l < r and height[r] <= right < left:
+                res += right - height[r]
+                r -= 1
+
+        return res
+
+
 def main():
-    heights = [4, 2, 3]
+    heights = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
     s = Solution()
     res = s.trap(heights)
     print(res)

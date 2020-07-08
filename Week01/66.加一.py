@@ -19,6 +19,39 @@ class Solution:
         return digits
 
 
+# 以下为自我练习
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+
+        size = len(digits)
+
+        for i in range(size - 1, -1, -1):
+            digits[i] += 1
+            digits[i] %= 10
+            if digits[i]:
+                return digits
+
+        if not digits[0]:
+            digits.insert(0, 1)
+
+        return digits
+
+
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        size = len(digits)
+
+        for i in range(size - 1, -1, -1):
+            digits[i] += 1
+            digits[i] %= 10
+            if digits[i]:
+                return digits
+        if not digits[0]:
+            digits.insert(0, 1)
+
+        return digits
+
+
 def main():
     s = Solution()
     res = s.plusOne([9, 9])

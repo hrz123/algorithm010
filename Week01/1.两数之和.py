@@ -39,6 +39,19 @@ class Solution:
 #                 r -= 1
 #         return [nums_copy.index(i) for i in res[0]] if res else res
 
+# 以下为自我练习
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        memo = {}
+
+        for i in range(len(nums)):
+            num = nums[i]
+            if num in memo:
+                return [memo[num], i]
+            memo[target - num] = i
+
+        return []
+
 
 def main():
     s = Solution()

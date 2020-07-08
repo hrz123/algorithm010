@@ -44,6 +44,22 @@ class Solution:
         return x == revertedNumber or x == revertedNumber // 10
 
 
+# 以下为自我练习
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        if x < 0 or (x % 10 == 0 and x != 0):
+            return False
+
+        reverted_number = 0
+        while x > reverted_number:
+            x, mod = divmod(x, 10)
+
+            reverted_number *= 10
+            reverted_number += mod
+
+        return x == reverted_number or x == reverted_number // 10
+
+
 def main():
     s = Solution()
     res = s.isPalindrome(121)

@@ -19,6 +19,24 @@ class Solution:
         return newTail + 1
 
 
+# 以下为自我练习
+
+
+# 使用双指针法
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+
+        new_tail = 0
+        for i in range(1, len(nums)):
+            num = nums[i]
+            if num != nums[new_tail]:
+                new_tail += 1
+                nums[new_tail] = num
+        return new_tail + 1
+
+
 def main():
     s = Solution()
     nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]

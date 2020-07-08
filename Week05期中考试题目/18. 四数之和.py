@@ -198,8 +198,8 @@ class Solution:
                     else:
                         r -= 1
             else:  # recursively reduce N
-                for i in range(l, r + 1):
-                    if i == l or (i > l and nums[i - 1] != nums[i]):
+                for i in range(l, r):
+                    if i == l or nums[i - 1] != nums[i]:
                         findNsum(i + 1, r, target - nums[i], N - 1,
                                  result + [nums[i]], results)
 
