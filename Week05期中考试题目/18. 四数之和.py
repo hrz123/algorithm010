@@ -177,31 +177,33 @@ class Solution:
 # 传指针，而非sliced list
 class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-        def findNsum(l, r, target, N, result, results):
+        def findNsum(l, r, N, target, result, results):
             # recursion terminator
             if r - l + 1 < N \
                     or N < 2 \
                     or target < nums[l] * N \
-                    or target > nums[r] * N:  # early termination
+                    or target > nums[r] * N:
                 return
+
             # process current level logic
-            if N == 2:  # two pointers solve sorted 2-sum problem
+            if N == 2:
                 while l < r:
                     s = nums[l] + nums[r]
-                    if s == target:
+                    if target == s:
                         results.append(result + [nums[l], nums[r]])
                         l += 1
                         while l < r and nums[l] == nums[l - 1]:
                             l += 1
-                    elif s < target:
+                    elif target > s:
                         l += 1
                     else:
                         r -= 1
-            else:  # recursively reduce N
+            else:
                 for i in range(l, r):
-                    if i == l or nums[i - 1] != nums[i]:
-                        findNsum(i + 1, r, target - nums[i], N - 1,
-                                 result + [nums[i]], results)
+                    if i == l or nums[i] != nums[i - 1]:
+                        # drill down
+                        findNsum(i + 1, r, N - 1, target - nums[i], result + [
+                            nums[i]], results)
 
         nums.sort()
         results = []

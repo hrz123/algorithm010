@@ -4,6 +4,7 @@ from typing import List
 
 # 暴力
 # O(n^2)的解决办法
+
 # 左右指针
 # l, r = 0, len(height) - 1
 # s = min(height[l], height[r]) * (r - l)
