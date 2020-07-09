@@ -139,10 +139,9 @@ class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
         heights.append(0)
         stack = [-1]
-        size = len(heights)
         res = 0
 
-        for i in range(size):
+        for i in range(len(heights)):
             while heights[i] < heights[stack[-1]]:
                 cur_height = heights[stack.pop()]
                 cur_width = i - stack[-1] - 1
@@ -154,20 +153,61 @@ class Solution:
         return res
 
 
-# class Solution:
-#     def largestRectangleArea(self, heights: List[int]) -> int:
-#         heights.append(0)
-#         stack = [-1]
-#         ans = 0
-#         for i in range(len(heights)):
-#             cur = heights[i]
-#             while cur < heights[stack[-1]]:
-#                 h = heights[stack.pop()]
-#                 w = i - stack[-1] - 1
-#                 ans = max(ans, h * w)
-#             stack.append(i)
-#         heights.pop()
-#         return ans
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        heights.append(0)
+        stack = [-1]
+        ans = 0
+        for i in range(len(heights)):
+            cur = heights[i]
+            while cur < heights[stack[-1]]:
+                h = heights[stack.pop()]
+                w = i - stack[-1] - 1
+                ans = max(ans, h * w)
+            stack.append(i)
+        heights.pop()
+        return ans
+
+
+# 以下为自我练习
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        heights.append(0)
+        stack = [-1]
+        res = 0
+
+        for i in range(len(heights)):
+            while heights[i] < heights[stack[-1]]:
+                h = heights[stack.pop()]
+                w = i - stack[-1] - 1
+                res = max(res, h * w)
+            stack.append(i)
+
+        heights.pop()
+        return res
+
+
+# 除了stack
+# 不使用任何额外空间
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        res = 0
+        size = len(heights)
+        stack = []
+
+        for i in range(size):
+            while stack and heights[i] < heights[stack[-1]]:
+                h = heights[stack.pop()]
+                w = i - stack[-1] - 1 if stack else i
+                res = max(res, h * w)
+            stack.append(i)
+
+        while stack:
+            h = heights[stack.pop()]
+            w = size - stack[-1] - 1 if stack else size
+            res = max(res, h * w)
+
+        return res
 
 
 def main():

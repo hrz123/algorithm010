@@ -1,4 +1,5 @@
 # 爬楼梯输出所有不同的path.py
+from functools import lru_cache
 from typing import List
 
 
@@ -7,17 +8,17 @@ class Solution:
     def climbStairs(self, n: int, steps: List[int]) -> List[List[int]]:
         res = []
 
+        @lru_cache(None)
         def dfs(n, ans):
-            if n < 0:
-                return
             if n == 0:
                 res.append(ans)
                 return
             for step in steps:
-                dfs(n - step, [step] + ans)
+                if n >= step:
+                    dfs(n - step, (step,) + ans)
 
-        dfs(n, [])
-        return res
+        dfs(n, ())
+        return [list(e) for e in res]
 
 
 # 相邻两步不可以相同，同时输出所有路径
@@ -25,18 +26,32 @@ class Solution:
     def climbStairs(self, n: int, steps: List[int]) -> List[List[int]]:
         res = []
 
-        def dfs(n, cur_step, ans):
-            if n < 0:
-                return
+        @lru_cache(None)
+        def dfs(n, ans):
             if n == 0:
                 res.append(ans)
                 return
             for step in steps:
-                if step != cur_step:
-                    dfs(n - step, step, [step] + ans)
+                if (not ans or step != ans[0]) and n >= step:
+                    dfs(n - step, (step,) + ans)
 
-        dfs(n, 0, [])
-        return res
+        dfs(n, ())
+        return [list(e) for e in res]
+
+
+# class Solution:
+#     def climbStairs(self, n: int) -> List[List[int]]:
+#
+#         a = [[1]]
+#         b = [[1, 1], [2]]
+#         if n == 1:
+#             return a
+#         if n == 2:
+#             return b
+#
+#         for i in range(n - 2):
+#             a, b = b, [e + [2] for e in a] + [e + [1] for e in b]
+#         return b
 
 
 def main():
@@ -46,6 +61,10 @@ def main():
     sol = Solution()
     res = sol.climbStairs(n, steps)
     print(res)
+
+    # sol = Solution()
+    # res = sol.climbStairs(4)
+    # print(res)
 
 
 if __name__ == '__main__':

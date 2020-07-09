@@ -1,0 +1,43 @@
+# 112. 路径总和.py
+
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+
+class Solution:
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+        if not root:
+            return False
+
+        if not root.left and not root.right:
+            return root.val == sum
+
+        return self.hasPathSum(root.left, sum - root.val) or \
+               self.hasPathSum(root.right, sum - root.val)
+
+
+class Solution:
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+        if not root:
+            return False
+
+        if not root.left and not root.right:
+            return root.val == sum
+
+        return self.hasPathSum(root.left, sum - root.val) or \
+               self.hasPathSum(root.right, sum - root.val) or \
+               self.hasPathSum(root.left, sum) or \
+               self.hasPathSum(root.right, sum)
+
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    main()
