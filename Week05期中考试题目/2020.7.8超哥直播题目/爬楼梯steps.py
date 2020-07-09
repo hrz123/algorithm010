@@ -35,8 +35,8 @@ class Solution:
 
 
 def main():
-    n = 4
-    steps = [1, 2]
+    n = 5
+    steps = [3, 2]
 
     sol = Solution()
     res = sol.climbStairs(n, steps)
