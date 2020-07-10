@@ -44,3 +44,11 @@ private:
         return t;
     }
 };
+
+int main() {
+    Solution s = Solution();
+    double res = s.myPow(3, 3);
+    std::cout << res << std::endl;
+//    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}
