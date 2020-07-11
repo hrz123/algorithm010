@@ -59,9 +59,23 @@ class Solution:
         return list(ans.values())
 
 
+# 以下为自我练习
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hashmap = set()
+        # 可以使用
+        res = []
+
+        for s in strs:
+            if s not in hashmap:
+                hashmap.add(sorted(s))
+                res.append()
+
+
 def main():
     pass
 
 
 if __name__ == '__main__':
     main()
+c

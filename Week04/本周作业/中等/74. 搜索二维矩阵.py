@@ -53,6 +53,31 @@ class Solution:
         return False
 
 
+# 以下是自我练习
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        if not matrix or not matrix[0]:
+            return False
+
+        row = len(matrix)
+        col = len(matrix[0])
+
+        left = 0
+        right = row * col - 1
+        # 注意可以等于
+        while left <= right:
+            mid = left + ((right - left) >> 1)
+            r, c = divmod(mid, col)
+            if matrix[r][c] == target:
+                return True
+            if matrix[r][c] > target:
+                right = mid - 1
+            else:
+                left = mid + 1
+
+        return False
+
+
 def main():
     matrix = [
         [1, 3, 5, 7],
