@@ -43,8 +43,49 @@ class Solution:
         return quickMul(n) if n >= 0 else 1.0 / quickMul(-n)
 
 
+# 以下为自我练习
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        def fast_pow(x, n):
+
+            x_contribute = x
+            ans = 1
+
+            while n:
+                if n & 1:
+                    ans *= x_contribute
+                x_contribute *= x_contribute
+                n >>= 1
+            return ans
+
+        if n < 0:
+            x = 1 / x
+            n = -n
+        return fast_pow(x, n)
+
+
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        def fast_pow(x, n):
+            if n == 0:
+                return 1
+
+            half = fast_pow(x, n >> 1)
+
+            return half * half * x if n & 1 else half * half
+
+        if n < 0:
+            n = -n
+            x = 1 / x
+        return fast_pow(x, n)
+
+
 def main():
-    pass
+    x = 2
+    n = 10
+    sol = Solution()
+    res = sol.myPow(x, n)
+    print(res)
 
 
 if __name__ == '__main__':

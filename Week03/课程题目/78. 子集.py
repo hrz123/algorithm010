@@ -18,8 +18,8 @@ class Solution:
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         res = [[]]
-        for i in nums:
-            res = res + [[i] + num for num in res]
+        for num in nums:
+            res += [[num] + ans for ans in res]
         return res
 
 
@@ -29,12 +29,52 @@ class Solution:
         res = []
         n = len(nums)
 
-        def helper(i, tmp):
-            res.append(tmp)
+        def helper(i, ans):
+            res.append(ans)
             for j in range(i, n):
-                helper(j + 1, tmp + [nums[j]])
+                helper(j + 1, ans + [nums[j]])
 
         helper(0, [])
+        return res
+
+
+# 以下为自我练习
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        n = len(nums)
+
+        def helper(i, ans):
+            res.append(ans)
+
+            for j in range(i, n):
+                helper(j + 1, ans + [nums[j]])
+
+        helper(0, [])
+        return res
+
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for num in nums:
+            res += [[num] + ans for ans in res]
+        return res
+
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        n = len(nums)
+
+        def helper(level, ans):
+            res.append(ans)
+
+            for i in range(level, n):
+                helper(i + 1, ans + [nums[i]])
+
+        helper(0, [])
+
         return res
 
 
