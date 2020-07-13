@@ -104,6 +104,45 @@ class Solution:
         return perms
 
 
+# 以下为自我练习
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        perms = [[]]
+
+        for num in nums:
+            new_perms = []
+
+            for perm in perms:
+                for i in range(len(perm) + 1):
+                    new_perms.append(perm[:i] + [num] + perm[i:])
+
+            perms = new_perms
+        return perms
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        n = len(nums)
+
+        def dfs(i, ans, res):
+            # terminator
+            if i == n:
+                res.append(ans)
+                return
+            # process current level logic
+            # drill down
+            for j in range(i + 1):
+                dfs(i + 1, ans[:j] + [nums[i]] + ans[j:], res)
+
+            # reverse current level status if needed
+
+        dfs(0, [], res)
+
+        return res
+
+
 def main():
     nums = [1, 2, 3]
     solution = Solution()

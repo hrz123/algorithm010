@@ -77,6 +77,54 @@ class Solution:
         return res
 
 
+# 迭代
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        ans = [[]]
+        for n in nums:
+            new_ans = []
+            for l in ans:
+                for i in range(len(l) + 1):
+                    new_ans.append(l[:i] + [n] + l[i:])
+                    # 在答案数组里面遇到相同的数直接break掉
+                    if i < len(l) and l[i] == n:
+                        break  # handles duplication
+            ans = new_ans
+        return ans
+
+
+# 以下为自我练习
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        res = []
+
+        def dfs(level, ans, res):
+            # recursion terminator
+            if level == n:
+                res.append(ans)
+                return
+            # process current level logic
+            for j in range(level + 1):
+                if j != level and nums[level] == ans[j]:
+                    continue
+
+                dfs(level + 1, ans[:j] + [nums[level]] + ans[j:], res)
+
+        dfs(0, [], res)
+        return res
+
+
+class Solution:
+    def permuteUnique(self, nums):
+        ans = [[]]
+        for n in nums:
+            ans = [l[:i] + [n] + l[i:]
+                   for l in ans
+                   for i in range((l + [n]).index(n) + 1)]
+        return ans
+
+
 def main():
     nums = [1, 1, 2]
     sol = Solution()

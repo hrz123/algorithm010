@@ -78,6 +78,15 @@ class Solution:
         return res
 
 
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+
+        for num in nums:
+            res.extend([ans + [num] for ans in res])
+        return res
+
+
 def main():
     sol = Solution()
     res = sol.subsets([1, 2, 3])
