@@ -101,6 +101,23 @@ class Solution:
         return res
 
 
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        res = []
+        stack = [root]
+
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.right:
+                stack.append(root.right)
+            if root.left:
+                stack.append(root.left)
+        return res
+
+
 def main():
     root = TreeNode(1)
     root.right = TreeNode(2)

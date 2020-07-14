@@ -74,6 +74,25 @@ class Solution:
         return res
 
 
+class Solution:
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        res = []
+        stack = [root]
+
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.left:
+                stack.append(root.left)
+            if root.right:
+                stack.append(root.right)
+
+        res.reverse()
+        return res
+
+
 def main():
     pass
 

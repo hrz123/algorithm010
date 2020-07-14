@@ -54,6 +54,7 @@ class Solution:
 
 
 # 以下为自我练习
+# 桶排序
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         # counter = collections.defaultdict(int)
@@ -70,11 +71,17 @@ class Solution:
         res = [0 for _ in range(k)]
         start = 0
         for i in range(size, -1, -1):
-            if start == k:
-                return res
             res[start: start + len(bucket[i])] = bucket[i]
 
             start += len(bucket[i])
+            if start == k:
+                return res
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = collections.Counter(nums)
+        return heapq.nlargest(k, counter, counter.get)
 
 
 def main():

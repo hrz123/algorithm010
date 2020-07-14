@@ -24,6 +24,15 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        res = 0
+        for num in nums:
+            res ^= num
+        return res
+
+
 def main():
     pass
 

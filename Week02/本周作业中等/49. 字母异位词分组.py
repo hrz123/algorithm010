@@ -62,20 +62,33 @@ class Solution:
 # 以下为自我练习
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        hashmap = set()
-        # 可以使用
-        res = []
-
+        hashmap = collections.defaultdict(list)
         for s in strs:
-            if s not in hashmap:
-                hashmap.add(sorted(s))
-                res.append()
+            count_s = self.count(s)
+            hashmap[count_s].append(s)
+        return list(hashmap.values())
+
+    def count(self, s):
+        ans = [0] * 26
+        for c in s:
+            ans[ord(c) - ord('a')] += 1
+        return tuple(ans)
+
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        d = collections.defaultdict(list)
+        for w in strs:
+            d[tuple(sorted(w))].append(w)
+        return list(d.values())
 
 
 def main():
-    pass
+    strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
+    sol = Solution()
+    res = sol.groupAnagrams(strs)
+    print(res)
 
 
 if __name__ == '__main__':
     main()
-c

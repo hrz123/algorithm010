@@ -72,3 +72,12 @@ Simplifying a complicated problem by breaking it down into simpler subproblems.(
 - 差异性：最有子结构、中途可以**淘汰**次优解
 
 傻递归或者傻分支的话，经常是指数级的复杂度。可以降到多项式级别。
+
+DP三部曲
+
+a.定义子问题
+b.定义状态数组
+c.定义递推方程
+
+
+

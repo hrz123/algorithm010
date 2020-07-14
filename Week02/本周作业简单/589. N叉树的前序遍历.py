@@ -68,6 +68,22 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        if not root:
+            return []
+        res = []
+        stack = [root]
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.children:
+                stack.extend(reversed(root.children))
+
+        return res
+
+
 def main():
     root = Node(1)
     node = Node(3)

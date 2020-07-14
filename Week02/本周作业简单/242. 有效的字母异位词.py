@@ -52,6 +52,29 @@ class Solution:
         return True
 
 
+# 以下为自我练习
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
+        hashmap = [0] * 26
+
+        for c in s:
+            hashmap[ord(c) - ord('a')] += 1
+
+        for c in t:
+            tmp = ord(c) - ord('a')
+            if hashmap[tmp] == 0:
+                return False
+            hashmap[tmp] -= 1
+
+        return True
+
+
+# unicode的话就用256大小的数组存
+
+
 def main():
     s = Solution()
     print(s.isAnagram("anagram", "anagram"))

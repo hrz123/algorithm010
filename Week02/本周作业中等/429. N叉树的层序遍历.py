@@ -137,6 +137,9 @@ class Solution:
 # 空间复杂度为树的高度。平均为O(logN)。最坏为O(N)
 
 
+# 以下为自我练习
+
+
 def main():
     pass
 
