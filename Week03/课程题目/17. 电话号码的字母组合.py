@@ -82,9 +82,57 @@ class Solution:
         )
 
 
+# 以下为自我练习
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits:
+            return []
+
+        digit2letter = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz"
+        }
+
+        res = [""]
+        for c in digits:
+            res = [ans + i for i in digit2letter[c] for ans in res]
+            # res = new_res
+
+        return res
+
+
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits:
+            return []
+
+        hashmap = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz"
+        }
+
+        return reduce(
+            lambda acc, digit: [x + y for x in acc for y in hashmap[digit]],
+            digits,
+            [""]
+        )
+
+
 def main():
     sol = Solution()
-    res = sol.letterCombinations("2")
+    res = sol.letterCombinations("23")
     print(res)
 
 

@@ -74,8 +74,62 @@ class Solution:
         return root
 
 
+# 以下为自我练习
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode',
+                             q: 'TreeNode') -> 'TreeNode':
+        if not root:
+            return
+        if root is p or root is q:
+            return root
+
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+
+        if not left:
+            return right
+        if not right:
+            return left
+        return root
+
+
 def main():
-    pass
+    root = [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4]
+    p = 5
+    q = 1
+
+    def deserialize(arr):
+        if not arr:
+            return
+
+        def helper(i):
+            if i >= len(arr):
+                return
+            if arr[i] is None:
+                return
+            root = TreeNode(arr[i])
+            root.left = helper(2 * i + 1)
+            root.right = helper(2 * i + 2)
+            return root
+
+        return helper(0)
+
+    root = deserialize(root)
+
+    def print_tree(root):
+        if not root:
+            print('#', end=" ")
+            return
+        print(root.val, end=" ")
+        print_tree(root.left)
+        print_tree(root.right)
+
+    print_tree(root)
+    print()
+
+    sol = Solution()
+    res = sol.lowestCommonAncestor(root, root.left, root.right)
+    print_tree(res)
 
 
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
 # 77. 组合.py
+from itertools import combinations
 from typing import List
 
 
@@ -59,9 +60,6 @@ class Solution:
 
 
 # 库函数（python提供了库函数）
-from itertools import combinations
-
-
 class Solution:
     def combine(self, n, k):
         return list(combinations(range(1, n + 1), k))
@@ -115,6 +113,31 @@ class Solution:
             ans.append(i)
             self.__dfs(i + 1, end, k, ans, res)
             ans.pop()
+
+
+# 以下为自我练习
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+
+        def dfs(start, ans):
+            if len(ans) == k:
+                res.append(ans)
+                return
+            for i in range(start + 1, n + 1):
+                dfs(i, ans + [i])
+
+        dfs(0, [])
+
+        return res
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        if k == 0:
+            return [[]]
+        return [pre + [i] for i in range(k, n + 1) for pre in
+                self.combine(i - 1, k - 1)]
 
 
 def main():

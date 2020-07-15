@@ -48,3 +48,19 @@ class Solution:
                 stack.append(c)
 
         return output[::-1]
+
+
+# 以下为自我练习
+class Solution:
+    def postorder(self, root: 'Node') -> List[int]:
+        if not root:
+            return []
+        # 左右根，根右左
+        res = []
+        stack = [root]
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            stack.extend(root.children)
+
+        return list(reversed(res))

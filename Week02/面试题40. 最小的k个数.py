@@ -106,11 +106,24 @@ class Solution:
             self.sink(arr, i, 0)
 
 
+# 以下为自我练习
+class Solution:
+    def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
+        heap = []
+        for num in arr:
+            if len(heap) == k:
+                heapq.heappushpop(heap, -num)
+                continue
+            heapq.heappush(heap, -num)
+
+        return [-num for num in heap]
+
+
 def main():
     s = Solution()
     arr = [3, 2, 1]
-    s.heapSort(arr)
-    print(arr)
+    res = s.getLeastNumbers(arr, 2)
+    print(res)
 
 
 if __name__ == '__main__':

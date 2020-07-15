@@ -177,9 +177,71 @@ class Solution:
 #     return build()
 # };
 
+# 以下为自我练习
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if not preorder:
+            return None
+
+        root = TreeNode(preorder[0])
+        idx = inorder.index(root.val)
+        root.left = self.buildTree(preorder[1:1 + idx], inorder[:idx])
+        root.right = self.buildTree(preorder[idx + 1:], inorder[idx + 1:])
+        return root
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if not preorder:
+            return None
+
+        def helper(pl, pr, il, ir):
+            if pl == pr:
+                return
+            root = TreeNode(preorder[pl])
+            idx = inorder.index(root.val)
+
+            root.left = helper(pl + 1, pl + idx - il + 1, il, idx)
+            root.right = helper(pl + idx - il + 1, pr, idx + 1, ir)
+            return root
+
+        size = len(preorder)
+        return helper(0, size, 0, size)
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def build(stop):
+            if inorder[-1] != stop:
+                root = TreeNode(preorder.pop())
+                root.left = build(root.val)
+                inorder.pop()
+                root.right = build(stop)
+                return root
+
+        preorder.reverse()
+        inorder.append(None)
+        inorder.reverse()
+
+        return build(None)
+
 
 def main():
-    pass
+    preorder = [3, 9, 20, 15, 7]
+    inorder = [9, 3, 15, 20, 7]
+
+    sol = Solution()
+    res = sol.buildTree(preorder, inorder)
+
+    def print_tree(root):
+        if not root:
+            print('#', end=' ')
+            return
+        print(root.val, end=" ")
+        print_tree(root.left)
+        print_tree(root.right)
+
+    print_tree(res)
 
 
 if __name__ == '__main__':

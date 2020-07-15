@@ -126,8 +126,50 @@ class Solution:
         return helper(root)
 
 
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        if not root:
+            return True
+
+        def helper(node, low, high):
+            # recursion terminator
+            if not node:
+                return True
+            # process current level logic
+            if low < node.val < high:
+                return helper(node.left, low, node.val) and helper(
+                    node.right, node.val, high)
+            return False
+
+        return helper(root, float('-inf'), float('inf'))
+
+
+# 中序遍历是严格升序的
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        stack = []
+        prev = float('-inf')
+
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            if root.val <= prev:
+                return False
+            prev = root.val
+            root = root.right
+
+        return True
+
+
 def main():
-    pass
+    root = TreeNode(2)
+    root.left = TreeNode(1)
+    root.right = TreeNode(3)
+    sol = Solution()
+    res = sol.isValidBST(root)
+    print(res)
 
 
 if __name__ == '__main__':

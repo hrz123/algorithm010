@@ -148,7 +148,7 @@ class Solution(object):
                 # Next states are all the words
                 # which share the same intermediate state.
                 for word in all_combo_dict[intermediate_word]:
-                    # If at any point if we find what we are looking for
+                    # If at any point if we findCompetitors what we are looking for
                     # i.e. the end word - we can return with the answer.
                     if word == endWord:
                         return level + 1

@@ -120,8 +120,35 @@ class Solution:
                 xy_sum.remove(rc_sum)
 
 
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        self.__dfs(0, [], res, n, 0, 0)
+        return [['.' * col + 'Q' + '.' * (n - col - 1) for col
+                 in ans] for ans in res]
+
+    def __dfs(self, row, ans, res, n, xy_sum, xy_dif):
+        # recursion terminator
+        if row == n:
+            res.append(ans)
+            return
+        # process current level logic
+        for col in range(n):
+            if col not in ans \
+                    and not (1 << col + row) & xy_sum \
+                    and not (1 << col - row + n - 1) & xy_dif:
+                # drill down
+                self.__dfs(row + 1, ans + [col], res, n,
+                           xy_sum + (1 << col + row),
+                           xy_dif + (1 << col - row + n - 1))
+        # reverse current level status if needed
+
+
 def main():
-    pass
+    n = 4
+    sol = Solution()
+    res = sol.solveNQueens(n)
+    print(res)
 
 
 if __name__ == '__main__':

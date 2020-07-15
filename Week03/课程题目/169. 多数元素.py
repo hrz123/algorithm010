@@ -157,6 +157,17 @@ class Solution:
 # 时间复杂度：O(n)
 # 空闲复杂度：O(1)
 
+# 以下为自我练习
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        candidate = None
+        count = 0
+        for num in nums:
+            if count == 0:
+                candidate = num
+            count += (1 if num == candidate else -1)
+        return candidate
+
 
 def main():
     pass

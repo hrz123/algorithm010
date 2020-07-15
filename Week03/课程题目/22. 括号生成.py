@@ -99,6 +99,25 @@ class Solution:
         return res
 
 
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+
+        def dfs(ans, left, right):
+            # recursion terminator
+            if right == n:
+                res.append(ans)
+                return
+            # drill down
+            if left < n:
+                dfs(ans + '(', left + 1, right)
+            if right < left:
+                dfs(ans + ')', left, right + 1)
+
+        dfs('', 0, 0)
+        return res
+
+
 def main():
     s = Solution()
     res = s.generateParenthesis(3)

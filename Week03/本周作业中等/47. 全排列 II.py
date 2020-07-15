@@ -125,6 +125,20 @@ class Solution:
         return ans
 
 
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for n in nums:
+            new_res = []
+            for ans in res:
+                for i in range(len(ans) + 1):
+                    new_res.append(ans[:i] + [n] + ans[i:])
+                    if i < len(ans) and ans[i] == n:
+                        break
+            res = new_res
+        return res
+
+
 def main():
     nums = [1, 1, 2]
     sol = Solution()

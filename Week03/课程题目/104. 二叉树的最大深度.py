@@ -83,6 +83,69 @@ class Solution:
         return max_depth
 
 
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+
+
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        res = 0
+
+        stack = [(root, 1)]
+
+        while stack:
+            root, depth = stack.pop()
+            if not root.left and not root.right:
+                res = max(res, depth)
+            if root.left:
+                stack.append((root.left, depth + 1))
+            if root.right:
+                stack.append((root.right, depth + 1))
+        return res
+
+
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        res = 0
+
+        def dfs(level, node):
+            nonlocal res
+            if not node:
+                res = max(res, level)
+                return res
+
+            dfs(level + 1, node.left)
+            dfs(level + 1, node.right)
+
+        dfs(0, root)
+
+        return res
+
+
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        res = 0
+        q, nq = [root], []
+
+        while q:
+            res += 1
+            for node in q:
+                if node.left:
+                    nq.append(node.left)
+                if node.right:
+                    nq.append(node.right)
+            q, nq = nq, []
+
+        return res
+
+
 def main():
     root = TreeNode(3)
     root.left = TreeNode(9)
