@@ -212,18 +212,65 @@ class Solution:
         return count
 
 
+class Solution:
+    def __init__(self):
+        self.dx = (0, 1, 0, -1, 1, 1, -1, -1)
+        self.dy = (1, 0, -1, 0, 1, -1, -1, 1)
+
+    def updateBoard(self, board: List[List[str]], click: List[int]) -> List[
+        List[str]]:
+        m, n = len(board), len(board[0])
+        x, y = click
+        self.__dfs(board, x, y, m, n)
+        return board
+
+    def __dfs(self, board, i, j, m, n):
+        # recursion terminator
+        if i < 0 or i >= m or j < 0 or j >= n:
+            return
+
+        if board[i][j] == 'E':
+            mines = self.__getAdjacentMines(board, i, j, m, n)
+            if mines == 0:
+                board[i][j] = 'B'
+                for k in range(8):
+                    self.__dfs(board, i + self.dx[k], j + self.dy[k], m, n)
+            else:
+                board[i][j] = str(mines)
+
+        elif board[i][j] == 'M':
+            board[i][j] = 'X'
+
+    def __getAdjacentMines(self, board, i, j, m, n):
+        count = 0
+        for k in range(8):
+            if 0 <= i + self.dx[k] < m \
+                    and 0 <= j + self.dy[k] < n \
+                    and board[i + self.dx[k]][j + self.dy[k]] == 'M':
+                count += 1
+        return count
+
+
 def main():
+    sol = Solution()
+
     board = [['E', 'E', 'E', 'E', 'E'],
              ['E', 'E', 'M', 'E', 'E'],
              ['E', 'E', 'E', 'E', 'E'],
              ['E', 'E', 'E', 'E', 'E']]
     click = [3, 0]
 
+    res = sol.updateBoard(board, click)
+    print(res)
+
     board = [['B', '1', 'E', '1', 'B'],
              ['B', '1', 'M', '1', 'B'],
              ['B', '1', '1', '1', 'B'],
              ['B', 'B', 'B', 'B', 'B']]
     click = [1, 2]
+
+    res = sol.updateBoard(board, click)
+    print(res)
 
     board = [["E", "E", "E", "E", "E", "E", "E", "E"],
              ["E", "E", "E", "E", "E", "E", "E", "M"],
@@ -245,8 +292,8 @@ def main():
               ["B", "1", "2", "2", "1", "B", "B", "B"],
               ["B", "1", "M", "M", "1", "B", "B", "B"]]
 
-    sol = Solution()
     res = sol.updateBoard(board, click)
+    print(res)
     assert res == expect
     print(res)
 

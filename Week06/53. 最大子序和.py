@@ -9,13 +9,24 @@ from typing import List
 # 返回max(dp)
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
+        dp = 0
+        res = nums[0]
+
+        for num in nums:
+            dp = max(dp, 0) + num
+            res = max(res, dp)
+
+        return res
+
+
+# 以下为自我练习
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
         dp = nums[0]
         res = dp
-
         for i in range(1, len(nums)):
             dp = max(dp, 0) + nums[i]
             res = max(res, dp)
-
         return res
 
 

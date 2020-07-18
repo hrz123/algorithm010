@@ -139,8 +139,23 @@ class Solution:
         return res
 
 
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+
+        for num in nums:
+            new_res = []
+            for ans in res:
+                for i in range(len(ans) + 1):
+                    new_res.append(ans[:i] + [num] + ans[i:])
+                    if i < len(ans) and ans[i] == num:
+                        break
+            res = new_res
+        return res
+
+
 def main():
-    nums = [1, 1, 2]
+    nums = [1, 2, 1]
     sol = Solution()
     res = sol.permuteUnique(nums)
     print(res)

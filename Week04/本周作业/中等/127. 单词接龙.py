@@ -342,6 +342,63 @@ class Solution:
         return 0
 
 
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+        words = set(wordList)
+        if endWord not in words:
+            return 0
+
+        n, bq, eq, nq = len(beginWord), {beginWord}, {endWord}, set()
+
+        res = 0
+
+        while bq:
+            res += 1
+            words -= bq
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          "qwertyuiopasdfghjklzxcvbnm"]:
+                    if y in words:
+                        if y in eq:
+                            return res + 1
+                        else:
+                            nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+
+        return 0
+
+
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+        words = set(wordList)
+        if endWord not in words:
+            return 0
+
+        bq, eq, nq, n = {beginWord}, {endWord}, set(), len(endWord)
+
+        res = 0
+        while bq:
+            words -= bq
+            res += 1
+
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          "qwertyuiopasdfghjklzxcvbnm"]:
+                    if y in words:
+                        if y in eq:
+                            return res + 1
+                        nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+
+        return 0
+
+
 def main():
     beginWord = "qa"
     endWord = "sq"
@@ -364,7 +421,7 @@ def main():
 
     beginWord = "hit"
     endWord = "cog"
-    wordList = ["hot", "dot", "dog", "lot", "log"]
+    wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
 
     sol = Solution()
     res = sol.ladderLength(beginWord, endWord, wordList)

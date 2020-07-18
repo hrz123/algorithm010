@@ -81,3 +81,55 @@ c.定义递推方程
 
 
 
+并查集
+
+1.小弟老大
+
+2.帮派识别
+
+3.两种优化方式
+
+
+
+## 滑动窗口
+
+详解「滑动窗口」这种高级双指针技巧的算法框架，带你秒杀几道难度较大的子字符串匹配问题：
+
+[最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)
+
+[找到字符串中所有字母异位词](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/)
+
+[无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+
+[字符串的排列](https://leetcode-cn.com/problems/permutation-in-string/)
+
+### 滑动窗口防滑记
+
+链表子串数组题，用双指针别犹豫。
+
+双指针家三兄弟，各个都是万人迷。
+
+
+
+快慢指针最神奇，链表操作无压力。
+
+归并排序找中点，链表成环搞判定。
+
+
+
+左右指针最常见，左右两端相向行。
+
+反转数组要靠它，二分搜索是弟弟。
+
+
+
+滑动窗口老猛男，子串问题全靠它。
+
+左右指针滑窗口，一前一后齐头进。
+
+自称十年老司机，怎料农村道路滑。
+
+一不小心滑倒了，鼻青脸肿少颗牙。
+
+算法思想很简单，出了bug想升天。
+

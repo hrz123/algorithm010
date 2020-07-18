@@ -1,0 +1,50 @@
+# 1011. 在 D 天内送达包裹的能力.py
+from typing import List
+
+
+class Solution:
+    def shipWithinDays(self, weights: List[int], D: int) -> int:
+
+        lo = 0
+        hi = 0
+        for w in weights:
+            lo = lo if lo > w else w
+            hi += w
+        while lo < hi:
+            mid = lo + ((hi - lo) >> 1)
+            count = 1
+            total = 0
+            for w in weights:
+                total += w
+
+                if total > mid:
+                    count += 1
+                    total = w
+            if count > D:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+
+def main():
+    sol = Solution()
+
+    weights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    D = 5
+    res = sol.shipWithinDays(weights, D)
+    print(res)
+
+    weights = [3, 2, 2, 4, 1, 4]
+    D = 3
+    res = sol.shipWithinDays(weights, D)
+    print(res)
+
+    weights = [1, 2, 3, 1, 1]
+    D = 4
+    res = sol.shipWithinDays(weights, D)
+    print(res)
+
+
+if __name__ == '__main__':
+    main()

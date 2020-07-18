@@ -24,8 +24,34 @@ class Solution:
         return steps
 
 
+# 以下为自我练习
+# 最佳解法
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        # 当前能到的最大值
+        cur = 0
+        # 一旦超过当前能到的最大值，下一步可以走到的最远位置是哪里
+        cur_max = 0
+        # 记录一共需要多少步
+        steps = 0
+
+        for i in range(len(nums)):
+            # 如果这个位置比能到达的最大值要大了，就步数加一，并且把当前最大值更新为当前已经加一的这一步的上一步能到达的最大值
+            if i > cur:
+                steps += 1
+                cur = cur_max
+            # 更新在这一步范围内，下一步能到达的最大值
+            cur_max = max(cur_max, nums[i] + i)
+
+        return steps
+
+
 def main():
-    pass
+    nums = [2, 3, 1, 1, 4]
+    nums = [0]
+    sol = Solution()
+    res = sol.jump(nums)
+    print(res)
 
 
 if __name__ == '__main__':

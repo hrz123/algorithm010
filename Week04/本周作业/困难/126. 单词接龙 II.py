@@ -193,16 +193,53 @@ class Solution:
         return bt(beginWord)
 
 
+class Solution:
+    def findLadders(self, beginWord: str, endWord: str,
+                    wordList: List[str]) -> List[List[str]]:
+        words = set(wordList)
+        if endWord not in words:
+            return []
+        found, bq, eq, nq, rev, n, tree = False, {beginWord}, {endWord}, \
+                                          set(), False, len(endWord), \
+                                          defaultdict(set)
+
+        while bq and not found:
+            words -= bq
+
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          "qwertyuiopasdfghjklzxcvbnm"]:
+                    if y in words:
+                        if y in eq:
+                            found = True
+                        else:
+                            nq.add(y)
+                        tree[y].add(x) if rev else tree[x].add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq, rev = eq, bq, not rev
+
+        def bt(x):
+            return [[x]] if x == endWord else [[x] + rest for y in tree[x]
+                                               for rest in bt(y)]
+
+        return bt(beginWord)
+
+
 def main():
+    sol = Solution()
+
     beginWord = "hit"
     endWord = "cog"
     wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
 
-    # beginWord = "hit"
-    # endWord = "hot"
-    # wordList = ["hot", "hat"]
+    res = sol.findLadders(beginWord, endWord, wordList)
+    print(res)
 
-    sol = Solution()
+    beginWord = "hit"
+    endWord = "cog"
+    wordList = ["hot", "dot", "dog", "lot", "log"]
+
     res = sol.findLadders(beginWord, endWord, wordList)
     print(res)
 

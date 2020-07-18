@@ -1,0 +1,80 @@
+# 97. 交错字符串.py
+
+
+# 思路，一次拿掉一个字符，如果s1和s2开头都是这个字符，那么就开分支
+from functools import lru_cache
+
+
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        n1, n2, n3 = len(s1), len(s2), len(s3)
+        if n1 + n2 != n3:
+            return False
+
+        @lru_cache(None)
+        def dfs(i, j):
+            if i == n1 and j == n2:
+                return True
+            if i == n1:
+                return s3[i + j:] == s2[j:]
+            if j == n2:
+                return s3[i + j:] == s1[i:]
+            if s3[i + j] != s1[i] and s3[i + j] != s2[j]:
+                return False
+            if s3[i + j] == s1[i] and s3[i + j] == s2[j]:
+                return dfs(i + 1, j) or dfs(i, j + 1)
+            elif s3[i + j] == s1[i]:
+                return dfs(i + 1, j)
+            return dfs(i, j + 1)
+
+        return dfs(0, 0)
+
+
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        n1, n2, n3 = len(s1), len(s2), len(s3)
+        if n1 + n2 != n3:
+            return False
+        memo = {}
+
+        def dfs(i, j):
+            if (i, j) in memo:
+                return memo[(i, j)]
+
+            if i == n1 and j == n2:
+                memo[(i, j)] = True
+            elif i == n1:
+                memo[(i, j)] = s3[i + j:] == s2[j:]
+            elif j == n2:
+                memo[(i, j)] = s3[i + j:] == s1[i:]
+            elif s3[i + j] == s1[i] and s3[i + j] == s2[j]:
+                memo[(i, j)] = dfs(i + 1, j) or dfs(i, j + 1)
+            elif s3[i + j] == s1[i]:
+                memo[(i, j)] = dfs(i + 1, j)
+            elif s3[i + j] == s2[j]:
+                memo[(i, j)] = dfs(i, j + 1)
+            else:
+                memo[(i, j)] = False
+            return memo[(i, j)]
+
+        return dfs(0, 0)
+
+
+def main():
+    sol = Solution()
+
+    s1 = "aabcc"
+    s2 = "dbbca"
+    s3 = "aadbbcbcac"
+    res = sol.isInterleave(s1, s2, s3)
+    print(res)
+
+    s1 = "aabcc"
+    s2 = "dbbca"
+    s3 = "aadbbbaccc"
+    res = sol.isInterleave(s1, s2, s3)
+    print(res)
+
+
+if __name__ == '__main__':
+    main()
