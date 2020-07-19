@@ -1,0 +1,40 @@
+# 83. 删除排序链表中的重复元素.py
+
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        visited = set()
+        cur = head
+        prev = None
+        while cur:
+            if cur.val in visited:
+                prev.next = cur.next
+            else:
+                visited.add(cur.val)
+                prev = cur
+            cur = cur.next
+        return head
+
+
+def main():
+    sol = Solution()
+
+    a = ListNode(1)
+    a.next = ListNode(1)
+    a.next.next = ListNode(2)
+
+    res = sol.deleteDuplicates(a)
+    print(res.val)
+    print(res.next.val)
+    print(res.next.next)
+
+
+if __name__ == '__main__':
+    main()
