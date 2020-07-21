@@ -51,8 +51,22 @@ class Solution:
         return self.memo[n]
 
 
+# 以下为自我练习
+class Solution:
+    @lru_cache(None)
+    def numTrees(self, n: int) -> int:
+        if n == 0:
+            return 1
+        res = 0
+        for i in range(n // 2):
+            res += 2 * self.numTrees(i) * self.numTrees(n - 1 - i)
+        if n & 1:
+            res += self.numTrees(n // 2) ** 2
+        return res
+
+
 def main():
-    n = 4
+    n = 3
     sol = Solution()
     res = sol.numTrees(n)
     print(res)

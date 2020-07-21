@@ -110,6 +110,49 @@ class Solution:
         return max_len
 
 
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        lookup = defaultdict(int)
+        l = r = 0
+        flag = False
+        max_len = 0
+        n = len(s)
+        while r < n:
+            if lookup[s[r]] > 0:
+                flag = True
+            lookup[s[r]] += 1
+            r += 1
+
+            while flag:
+                if lookup[s[l]] == 2:
+                    flag = False
+                lookup[s[l]] -= 1
+                l += 1
+            max_len = max(max_len, r - l)
+        return max_len
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        lookup = defaultdict(int)
+        l = r = 0
+        n = len(s)
+        flag = False
+        max_len = 0
+        while r < n:
+            if lookup[s[r]] > 0:
+                flag = True
+            lookup[s[r]] += 1
+            r += 1
+            while flag:
+                if lookup[s[l]] == 2:
+                    flag = False
+                lookup[s[l]] -= 1
+                l += 1
+            max_len = max(max_len, r - l)
+        return max_len
+
+
 def main():
     sol = Solution()
 

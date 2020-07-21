@@ -63,6 +63,27 @@ class Solution:
         return max(d00, d10, d20)
 
 
+# 以下为自我练习
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        if not prices:
+            return 0
+
+        dp00 = dp10 = dp20 = 0
+        dp01 = dp11 = -prices[0]
+
+        for i in range(1, len(prices)):
+            dp10, dp20, dp01, dp11 = (
+                max(dp10, dp01 + prices[i]),
+                max(dp20, dp11 + prices[i]),
+                max(dp01, dp00 - prices[i]),
+                max(dp11, dp10 - prices[i])
+            )
+        # dp10永远为0，dp10永远大于等于0
+        return max(dp10, dp20)
+
+
 def main():
     nums = [3, 3, 5, 0, 0, 3, 1, 4]
     nums = [1, 2, 3, 4, 5]

@@ -171,6 +171,73 @@ class Solution:
                     ans.append(l)
 
 
+# 要求无重复的时候最好新建一个curr的查找表，否则要一个一个清除，不如直接clear这个查找表
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words or not words[0]:
+            return []
+
+        req = defaultdict(int)
+        for w in words:
+            req[w] += 1
+
+        n = len(s)
+        k = len(words[0])
+        t = len(words) * k
+        ans = []
+        for i in range(min(k, n - t + 1)):
+            self._findSubstring(i, i, n, k, t, s, req, ans)
+        return ans
+
+    def _findSubstring(self, l, r, n, k, t, s, req, ans):
+        curr = defaultdict(int)
+        while r + k <= n:
+            w = s[r:r + k]
+            r += k
+            if w not in req:
+                l = r
+                curr.clear()
+            else:
+                curr[w] += 1
+                while curr[w] > req[w]:
+                    curr[s[l:l + k]] -= 1
+                    l += k
+                if r - l == t:
+                    ans.append(l)
+
+
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words or not words[0]:
+            return []
+        lookup = defaultdict(int)
+        for w in words:
+            lookup[w] += 1
+        n = len(s)
+        k = len(words[0])
+        t = k * len(words)
+        ans = []
+        for i in range(min(k, n - t + 1)):
+            self._findSubstring(i, i, n, k, t, s, lookup, ans)
+        return ans
+
+    def _findSubstring(self, l, r, n, k, t, s, req, ans):
+        curr = defaultdict(int)
+        while r + k <= n:
+            w = s[r:r + k]
+            r += k
+            if w not in req:
+                l = r
+                curr.clear()
+            else:
+                curr[w] += 1
+                while curr[w] > req[w]:
+                    curr[s[l: l + k]] -= 1
+                    l += k
+                if r - l == t:
+                    ans.append(l)
+
+
 def main():
     sol = Solution()
 

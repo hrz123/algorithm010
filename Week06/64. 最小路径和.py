@@ -30,13 +30,47 @@ class Solution:
         return dp[0]
 
 
+# 以下为自我练习
+# 子问题
+# i， j走到m-1,n-1位置的最小值
+# 最后返回0，0的最小值
+# 定义状态数组
+# f(i, j) = min(f(i+1, j), f(i, j+1)) + grid[i][j]
+# 递推方程
+# f(i, j) = min(f(i+1, j), f(i, j+1)) + grid[i][j]
+# 初始化：
+# f(m-1, n-1) = grid[m-1, n-1]
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+
+        h, w = len(grid), len(grid[0])
+        dp = grid[h - 1][:]
+        for j in range(w - 2, -1, -1):
+            dp[j] += dp[j + 1]
+
+        for i in range(h - 2, -1, -1):
+            dp[w - 1] += grid[i][w - 1]
+            for j in range(w - 2, -1, -1):
+                dp[j] = min(dp[j], dp[j + 1]) + grid[i][j]
+        return dp[0]
+
+
 def main():
+    sol = Solution()
+
     grid = [
         [1, 3, 1],
         [1, 5, 1],
         [4, 2, 1]
     ]
-    sol = Solution()
+    res = sol.minPathSum(grid)
+    print(res)
+
+    grid = [
+        [1]
+    ]
     res = sol.minPathSum(grid)
     print(res)
 

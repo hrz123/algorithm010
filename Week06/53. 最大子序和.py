@@ -30,6 +30,24 @@ class Solution:
         return res
 
 
+# 子问题
+# 定义到i位置，且必须包含i位置的连续数组最大和为dp(i)
+# 最终返回max(dp(i)), i 0..n-1
+# 定义状态数组
+# dp(i)
+# 递推方程
+# dp(i) = max(dp(i-1), 0) + nums[i]
+# 初始化dp(0) = nums[0]
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        local_max = nums[0]
+        global_max = local_max
+        for i in range(1, len(nums)):
+            local_max = max(0, local_max) + nums[i]
+            global_max = max(global_max, local_max)
+        return global_max
+
+
 def main():
     nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
     sol = Solution()

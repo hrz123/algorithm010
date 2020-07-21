@@ -71,6 +71,19 @@ class Solution:
         return [dp[amount], -1][dp[amount] == MAX]
 
 
+# 以下为自我练习
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        max_value = float('inf')
+        dp = [0] + [max_value] * amount
+        for i in range(1, amount + 1):
+            dp[i] = min(dp[i - c] if i - c >= 0 else max_value for c in
+                        coins) + 1
+            if i == 1:
+                print(dp[i])
+        return -1 if dp[amount] == max_value else dp[amount]
+
+
 def main():
     coins = [1, 2, 5]
     amount = 80

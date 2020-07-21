@@ -42,6 +42,26 @@ class Solution:
         return dp[n - 1]
 
 
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        if not obstacleGrid or not obstacleGrid[0]:
+            return 0
+        h, w = len(obstacleGrid), len(obstacleGrid[0])
+        if obstacleGrid[0][0] or obstacleGrid[h - 1][w - 1]:
+            return 0
+
+        dp = [0] * w
+        dp[w - 1] = 1
+        for i in range(h - 1, -1, -1):
+            for j in range(w - 1, -1, -1):
+                if obstacleGrid[i][j]:
+                    dp[j] = 0
+                elif j != w - 1:
+                    dp[j] += dp[j + 1]
+
+        return dp[0]
+
+
 def main():
     matrix = [
         [0, 0, 0],

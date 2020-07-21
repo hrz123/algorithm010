@@ -99,6 +99,23 @@ class Solution:
         return res
 
 
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        deq = deque()
+        n = len(nums)
+        res = [0] * (n - k + 1)
+        for i in range(n):
+            while deq and nums[deq[-1]] < nums[i]:
+                deq.pop()
+            deq.append(i)
+            idx = i - k + 1
+            if idx >= 0:
+                res[idx] = nums[deq[0]]
+                if idx == deq[0]:
+                    deq.popleft()
+        return res
+
+
 def main():
     nums = [1, 3, -1, -3, 5, 3, 6, 7]
     k = 3

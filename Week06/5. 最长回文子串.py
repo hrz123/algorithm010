@@ -142,6 +142,31 @@ class Solution:
         return res
 
 
+# 递推公式dp(i, j) = dp(i + 1, j-1)+2
+# dp(i, i) = 1 i 0..n-1
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        if not s:
+            return ""
+        n = len(s)
+        dp = [[0] * n for _ in range(n)]
+        max_len = 1
+        res = s[0]
+
+        for i in range(n):
+            dp[i][i] = 1
+        for i in range(n - 1, -1, -1):
+            for j in range(i + 1, n):
+                if s[i] == s[j]:
+                    dp[i][j] = dp[i + 1][j - 1] + 2
+                    if dp[i][j] > max_len:
+                        max_len = dp[i][j]
+                        res = s[i:j + 1]
+                else:
+                    dp[i][j] = float('-inf')
+        return res
+
+
 def main():
     sol = Solution()
 
