@@ -7,7 +7,7 @@ class UnionFind(object):
 
     def __init__(self, n):
         """长度为n的并查集"""
-        self.uf = [-1 for i in range(n + 1)]  # 列表0位置空出
+        self.uf = [-1 for _ in range(n + 1)]  # 列表0位置空出
         self.sets_count = n  # 判断并查集里共有几个集合, 初始化默认互相独立
 
     # def find(self, p):
@@ -59,6 +59,90 @@ class Solution:
                 if M[i][j] == 1:
                     union_find.union(i, j)
         return union_find.sets_count
+
+
+class Solution:
+    def findCircleNum(self, M: List[List[int]]) -> int:
+        if not M or not M[0]:
+            return 0
+        n = len(M)
+        visited = [0] * n
+        res = 0
+        for i in range(n):
+            if not visited[i]:
+                self.dfs(M, visited, i)
+                res += 1
+        return res
+
+    def dfs(self, M, visited, i):
+        for j in range(len(M)):
+            if M[i][j] == 1 and not visited[j]:
+                visited[j] = True
+                self.dfs(M, visited, j)
+
+
+# 以下为自我练习
+class UnionFind:
+    def __init__(self, n):
+        self.uf = [-1] * (n + 1)
+        self.sets_count = n
+
+    def find(self, p):
+        if self.uf[p] < 0:
+            return p
+        self.uf[p] = self.find(self.uf[p])
+        return self.uf[p]
+
+    def union(self, p, q):
+        p_root = self.find(p)
+        q_root = self.find(q)
+
+        if p_root == q_root:
+            return
+
+        if self.uf[p_root] > self.uf[q_root]:
+            # 说明p_root的规模较小
+            self.uf[q_root] += self.uf[p_root]
+            self.uf[p_root] = q_root
+        else:
+            self.uf[p_root] += self.uf[q_root]
+            self.uf[q_root] = p_root
+
+        self.sets_count -= 1
+
+    def is_connected(self, p, q):
+        return self.find(p) == self.find(q)
+
+
+class Solution:
+    def findCircleNum(self, M: List[List[int]]) -> int:
+        n = len(M)
+        uf = UnionFind(n)
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                if M[i][j]:
+                    uf.union(i, j)
+        return uf.sets_count
+
+
+# dfs做法
+class Solution:
+    def findCircleNum(self, M: List[List[int]]) -> int:
+        n = len(M)
+        visited = [False] * n
+        res = 0
+        for i in range(n):
+            if not visited[i]:
+                self.__dfs(M, visited, i)
+                res += 1
+        return res
+
+    def __dfs(self, M, visited, i):
+        for j in range(len(M)):
+            if M[i][j] and not visited[j]:
+                visited[j] = True
+                self.__dfs(M, visited, j)
 
 
 def main():

@@ -1,4 +1,5 @@
 # 127. 单词接龙.py
+import string
 from collections import deque, defaultdict
 from typing import List
 
@@ -396,6 +397,55 @@ class Solution:
             if len(bq) > len(eq):
                 bq, eq = eq, bq
 
+        return 0
+
+
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+        words = set(wordList)
+        if endWord not in words:
+            return 0
+        bq, eq, nq, n = {beginWord}, {endWord}, set(), len(endWord)
+        res = 1
+        while bq:
+            words -= bq
+            res += 1
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          "qwertyuiopasdfghjklzxcvbnm"]:
+                    if y in words:
+                        if y in eq:
+                            return res
+                        nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+
+        return 0
+
+
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+        words = set(wordList)
+        if endWord not in words:
+            return 0
+        bq, eq, nq, n, res = {beginWord}, {endWord}, set(), len(endWord), 1
+
+        while bq:
+            words -= bq
+            res += 1
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          string.ascii_lowercase]:
+                    if y in words:
+                        if y in eq:
+                            return res
+                        nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
         return 0
 
 

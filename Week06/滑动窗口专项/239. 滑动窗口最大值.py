@@ -64,6 +64,41 @@ class Solution:
         return res
 
 
+# 单调双端队列
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        res = []
+        deq = deque()
+        for i in range(len(nums)):
+            while deq and nums[i] > nums[deq[-1]]:
+                deq.pop()
+            deq.append(i)
+            index = i - k + 1
+            if index >= 0:
+                res.append(nums[deq[0]])
+                if deq[0] == index:
+                    deq.popleft()
+        return res
+
+
+# 单调双端队列，队列存索引，因为需要索引排除窗口最左端
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        deq = deque()
+        n = len(nums)
+        res = [0] * (n - k + 1)
+        for i in range(n):
+            while deq and nums[deq[-1]] < nums[i]:
+                deq.pop()
+            deq.append(i)
+            idx = i - k + 1
+            if idx >= 0:
+                res[idx] = nums[deq[0]]
+                if deq[0] == idx:
+                    deq.popleft()
+        return res
+
+
 def main():
     nums = [1, 3, -1, -3, 5, 3, 6, 7]
     k = 3

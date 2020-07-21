@@ -46,10 +46,29 @@ class Solution:
         return steps
 
 
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        # 当前能走到的最远
+        cur_max = 0
+        # 下一步能走到的最远
+        next_max = 0
+        steps = 0
+        for i in range(len(nums)):
+            if i > cur_max:
+                steps += 1
+                cur_max = next_max
+            next_max = max(next_max, i + nums[i])
+        return steps
+
+
 def main():
-    nums = [2, 3, 1, 1, 4]
-    nums = [0]
     sol = Solution()
+
+    nums = [2, 3, 1, 1, 4]
+    res = sol.jump(nums)
+    print(res)
+
+    nums = [0]
     res = sol.jump(nums)
     print(res)
 

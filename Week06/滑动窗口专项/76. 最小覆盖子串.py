@@ -210,6 +210,59 @@ class Solution:
         return res
 
 
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        lookup = defaultdict(int)
+        for c in t:
+            lookup[c] += 1
+        start = end = 0
+        counter = len(t)
+        min_len = float('inf')
+        res = ''
+
+        while end < len(s):
+            if lookup[s[end]] > 0:
+                counter -= 1
+            lookup[s[end]] -= 1
+            end += 1
+            while counter == 0:
+                if end - start < min_len:
+                    min_len = end - start
+                    res = s[start:end]
+                if lookup[s[start]] == 0:
+                    counter += 1
+                lookup[s[start]] += 1
+                start += 1
+
+        return res
+
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        lookup = defaultdict(int)
+        for c in t:
+            lookup[c] += 1
+        start = end = 0
+        counter = len(t)
+        min_len = float('inf')
+        res = ''
+        n = len(s)
+        while end < n:
+            if lookup[s[end]] > 0:
+                counter -= 1
+            lookup[s[end]] -= 1
+            end += 1
+            while counter == 0:
+                if end - start < min_len:
+                    min_len = end - start
+                    res = s[start:end]
+                if lookup[s[start]] == 0:
+                    counter += 1
+                lookup[s[start]] += 1
+                start += 1
+        return res
+
+
 def main():
     sol = Solution()
 

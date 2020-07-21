@@ -69,6 +69,47 @@ class Solution:
         return max_len
 
 
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        lookup = defaultdict(int)
+        start = end = 0
+        counter = 0
+        max_len = 0
+        while end < len(s):
+            if lookup[s[end]] > 0:
+                counter += 1
+            lookup[s[end]] += 1
+            end += 1
+            while counter == 1:
+                if lookup[s[start]] == 2:
+                    counter -= 1
+                lookup[s[start]] -= 1
+                start += 1
+            max_len = max(max_len, end - start)
+        return max_len
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        lookup = defaultdict(int)
+        start = end = 0
+        counter = 0
+        max_len = 0
+        n = len(s)
+        while end < n:
+            if lookup[s[end]] > 0:
+                counter += 1
+            lookup[s[end]] += 1
+            end += 1
+            while counter == 1:
+                if lookup[s[start]] == 2:
+                    counter -= 1
+                lookup[s[start]] -= 1
+                start += 1
+            max_len = max(max_len, end - start)
+        return max_len
+
+
 def main():
     sol = Solution()
 

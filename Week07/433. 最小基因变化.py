@@ -105,10 +105,61 @@ class Solution:
                 yield cur[:i] + ch + cur[i + 1:]
 
 
+# 以下为自我练习
+class Solution:
+    def minMutation(self, start: str, end: str, bank: List[str]) -> int:
+        bank = set(bank)
+        if end not in bank:
+            return -1
+        bq, eq, nq, n = {start}, {end}, set(), 8
+        res = 0
+
+        while bq:
+            bank -= bq
+            res += 1
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          "AGCT"]:
+                    if y in bank:
+                        if y in eq:
+                            return res
+                        nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
+class Solution:
+    def minMutation(self, start: str, end: str, bank: List[str]) -> int:
+        bank = set(bank)
+        if end not in bank:
+            return -1
+        bq, eq, nq, n = {start}, {end}, set(), 8
+        res = 0
+        while bq:
+            bank -= bq
+            res += 1
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          "AGCT"]:
+                    if y in bank:
+                        if y in eq:
+                            return res
+                        nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
 def main():
     sol = Solution()
-    res = sol.minMutation("AAAAACCC", "AACCCCCA",
-                          ["AAAACCCC", "AAACCCCC", "AACCCCCC"])
+    start = "AAAAACCC"
+    end = "AACCCCCC"
+    bank = ["AAAACCCC", "AAACCCCC", "AACCCCCC"]
+
+    res = sol.minMutation(start, end, bank)
     print(res)
 
 
