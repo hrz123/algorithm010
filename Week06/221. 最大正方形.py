@@ -59,13 +59,53 @@ class Solution:
         return maxSide * maxSide
 
 
+# 以下为自我练习
+# 定义子问题，以i， j为右下角的正方形的最大边长
+# 定义状态数组
+# dp(i, j)
+# 递推方程
+# f(i, j) = min(f(i-1, j), f(i, j-1), f(i-1, j-1)) + 1 if (i, j)位置为1
+#         = 0   else
+# 返回值
+# 取每一步中的最大值，再平方
+# 优化空间复杂度
+# 可以只使用一个数组，长度为矩阵的宽或高
+class Solution:
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        if not matrix:
+            return 0
+        h, w = len(matrix), len(matrix[0])
+        dp = [int(e) for e in matrix[0]]
+        dp_ = [0] * w
+        max_side = any(dp)
+
+        for i in range(1, h):
+            dp_[0] = int(matrix[i][0])
+            max_side = max(max_side, dp_[0])
+            for j in range(1, w):
+                if int(matrix[i][j]):
+                    dp_[j] = min(dp[j], dp_[j - 1], dp[j - 1]) + 1
+                    max_side = max(max_side, dp_[j])
+                else:
+                    dp_[j] = 0
+            dp, dp_ = dp_, dp
+        return max_side * max_side
+
+
 def main():
+    sol = Solution()
+
     matrix = [["0", "0", "0", "1"],
               ["1", "1", "0", "1"],
               ["1", "1", "1", "1"],
               ["0", "1", "1", "1"],
               ["0", "1", "1", "1"]]
-    sol = Solution()
+    res = sol.maximalSquare(matrix)
+    print(res)
+
+    matrix = [
+        ["1"]
+    ]
     res = sol.maximalSquare(matrix)
     print(res)
 

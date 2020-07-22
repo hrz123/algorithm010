@@ -87,7 +87,17 @@ class Solution:
         return max(f20, f10, f11, f01)
 
 
-# 未完待续
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        def helper(nums):
+            cur, pre = 0, 0
+            for num in nums:
+                cur, pre = max(pre + num, cur), cur
+            return cur
+
+        return nums[0] if len(nums) == 1 else max(helper(nums[:-1]), helper(
+            nums[1:]))
+
 
 def main():
     sol = Solution()
