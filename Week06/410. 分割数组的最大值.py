@@ -27,6 +27,34 @@ class Solution:
         return left
 
 
+# 以下为自我练习
+# 二分法
+class Solution:
+    def splitArray(self, nums: List[int], m: int) -> int:
+        lo, hi = 0, 0
+        for num in nums:
+            hi += num
+            lo = max(lo, num)
+        while lo < hi:
+            mid = lo + ((hi - lo) >> 1)
+            count = self.count_parts(nums, mid)
+            if count > m:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    def count_parts(self, nums, _max):
+        count = 1
+        cur = 0
+        for num in nums:
+            cur += num
+            if cur > _max:
+                count += 1
+                cur = num
+        return count
+
+
 def main():
     sol = Solution()
 

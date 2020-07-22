@@ -26,25 +26,26 @@ class Solution:
 # 时间复杂度: O(N^2*M^2) N是列数，M是行数
 # 空间复杂度: O(1)常数空间
 
-
+# 固定左右边界，前缀和+二分
 class Solution:
     def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:
         row = len(matrix)
         col = len(matrix[0])
         res = float("-inf")
-        _sum = [0] * row
+        _sums = [0] * row
         for left in range(col):
             # 以left为左边界，每行的总和
-            _sum = [0] * row
+            _sums[:] = [0] * row
             for right in range(left, col):
-                for j in range(row):
-                    _sum[j] += matrix[j][right]
+                for i in range(row):
+                    _sums[i] += matrix[i][right]
                 # 在left，right为边界下的矩阵，求不超过K的最大数值和
+                # 初始化前缀和数组，和前缀和
                 arr = [0]
                 cur = 0
-                for tmp in _sum:
-                    cur += tmp
-                    # 二分法
+                for r in _sums:
+                    cur += r
+                    # 二分法查找
                     loc = bisect.bisect_left(arr, cur - k)
                     if loc < len(arr):
                         res = max(cur - arr[loc], res)
@@ -55,6 +56,29 @@ class Solution:
 
 # 时间复杂度没变: O(N^2*M^2) N是列数，M是行数，但是系数小了
 # 空间复杂度: O(M)常数空间, M是行数
+
+# 以下为自我练习
+class Solution:
+    def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:
+        row, col = len(matrix), len(matrix[0])
+        res = float('-inf')
+        _sum = [0] * row
+        for left in range(col):
+            _sum[:] = [0] * row
+            for right in range(left, col):
+                for i in range(row):
+                    _sum[i] += matrix[i][right]
+                # 初始化前缀和数组和前缀和
+                arr = [0]
+                cur = 0
+                for r in _sum:
+                    cur += r
+                    loc = bisect.bisect_left(arr, cur - k)
+                    if loc < len(arr):
+                        res = max(res, cur - arr[loc])
+                    bisect.insort(arr, cur)
+        return res
+
 
 def main():
     sol = Solution()
