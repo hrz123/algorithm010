@@ -84,9 +84,29 @@ class Solution:
         return -1 if dp[amount] == max_value else dp[amount]
 
 
+# 定义子问题
+# 凑成i的最少硬币数是多少个，凑不成我们就返回一个大值
+# 定义状态数组
+# f(i)
+# 递推方程
+# f(i) = min(f(i-c) if i >=c ) + 1
+# 初始化
+# f(0)= 0
+# 返回值
+# 返回f(amount)
+# 优化空间复杂度：没必要
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [0] * (amount + 1)
+        max_value = float('inf')
+        for i in range(1, amount + 1):
+            dp[i] = min(dp[i - c] if i >= c else max_value for c in coins) + 1
+        return -1 if dp[amount] == max_value else dp[amount]
+
+
 def main():
     coins = [1, 2, 5]
-    amount = 80
+    amount = 11
     sol = Solution()
     res = sol.coinChange(coins, amount)
     print(res)
