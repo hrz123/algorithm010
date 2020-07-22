@@ -28,7 +28,7 @@ from typing import List
 # 1. 计算每个任务出现的次数
 # 2. 找出出现次数最多的任务，假设出现次数为 x
 # 3. 计算至少需要的时间 (x-1) * (n+1)，记为min_time
-# 4. 计算出现次数为 x 的任务总数 count，计算最终结果为min_time + count
+# 4. 计算出现次数为 x 的任务总数 count_parts，计算最终结果为min_time + count_parts
 # 特殊情况
 # 然而存在一种特殊情况，例如：
 # 输入：tasks = ["A", "A", "A", "B", "B", "B", "C", "C", "D", "D"], n=2
@@ -94,6 +94,44 @@ class Solution:
         num_max_task_counts = tuple(counter.values()).count(max_task_count)
 
         return max(size, (max_task_count - 1) * (n + 1) + num_max_task_counts)
+
+
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        counter = [0] * 26
+        start = ord('A')
+        for t in tasks:
+            counter[ord(t) - start] += 1
+        _max_count = 0
+        num_max_count = 0
+        for c in counter:
+            if c > _max_count:
+                _max_count = c
+                num_max_count = 1
+            elif c == _max_count:
+                num_max_count += 1
+
+        return max((_max_count - 1) * (n + 1) + num_max_count, len(tasks))
+
+
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        counter = [0] * 26
+        start = ord('A')
+        for t in tasks:
+            counter[ord(t) - start] += 1
+        _max_count = max(counter)
+        num_max_count = counter.count(_max_count)
+        return max((_max_count - 1) * (n + 1) + num_max_count, len(tasks))
+
+
+# 充分利用python api
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        counter = Counter(tasks).values()
+        _max_count = max(counter)
+        num_max_count = tuple(counter).count(_max_count)
+        return max((_max_count - 1) * (n + 1) + num_max_count, len(tasks))
 
 
 def main():

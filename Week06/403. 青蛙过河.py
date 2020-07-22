@@ -280,6 +280,57 @@ class Solution(object):
         return False
 
 
+# 子问题 第i个石子能否到达
+# 定义子问题，第i个石子能否到达，且此时速度为j
+# 定义状态数组
+# f(i, j), i表示当前索引 0..n-1，j表示当前速度0..n
+# 递推方程， j最大为i+1
+# f(i, j) =
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        n = len(stones)
+
+        dp = [[False] * n for _ in range(n)]
+
+        dp[0][1] = True
+        for i in range(1, n):
+            for j in range(i - 1, -1, -1):
+                dist = stones[i] - stones[j]
+                if dist > i:
+                    break
+                if dp[j][dist]:
+                    if i == n - 1:
+                        return True
+                    dp[i][dist] = True
+                    dp[i][dist - 1] = True
+                    dp[i][dist + 1] = True
+        return any(dp[n - 1])
+
+
+# dfs方法
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        target = stones[-1]
+        stones = set(stones)
+        memo = set()
+
+        def dfs(cur, speed):
+            if cur == target:
+                return True
+            if (cur, speed) in memo:
+                return False
+            for c in (speed - 1, speed, speed + 1):
+                # c != 0防止无限递归
+                if c and cur + c in stones:
+                    if dfs(cur + c, c):
+                        return True
+            memo.add((cur, speed))
+            return False
+
+        # 这里开始速度设为0，因为1最大可以取到，如果设成1，那么第一步可能走2，-1和0都不可能走
+        return dfs(0, 0)
+
+
 def main():
     sol = Solution()
 
@@ -288,6 +339,10 @@ def main():
     print(res)
 
     stones = [0, 1, 2, 3, 4, 8, 9, 11]
+    res = sol.canCross(stones)
+    print(res)
+
+    stones = [0, 1, 3, 6, 10, 15]
     res = sol.canCross(stones)
     print(res)
 

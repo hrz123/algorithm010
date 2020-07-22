@@ -1,4 +1,4 @@
-# 零钱兑换 II.py
+# 518. 零钱兑换 II.py
 from typing import List
 
 
@@ -84,10 +84,40 @@ class Solution:
 # 但是对于第二种循环，对于楼梯3，你只能先1再2，不能先2再1。（假如coins中1在2前面）
 
 
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [1] + [0] * amount
+        for c in coins:
+            for i in range(1, amount + 1):
+                dp[i] += dp[i - c] if i >= c else 0
+        return dp[amount]
+
+
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [1] + [0] * amount
+        for c in coins:
+            for i in range(1, amount + 1):
+                if i >= c:
+                    dp[i] += dp[i - c]
+        return dp[amount]
+
+
 def main():
+    sol = Solution()
+
     amount = 5
     coins = [1, 2, 5]
-    sol = Solution()
+    res = sol.change(amount, coins)
+    print(res)
+
+    amount = 3
+    coins = [2]
+    res = sol.change(amount, coins)
+    print(res)
+
+    amount = 10
+    coins = [10]
     res = sol.change(amount, coins)
     print(res)
 

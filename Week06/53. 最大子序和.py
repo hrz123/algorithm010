@@ -48,6 +48,15 @@ class Solution:
         return global_max
 
 
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        _sum, res = 0, float('-inf')
+        for num in nums:
+            _sum = max(_sum + num, num)
+            res = max(res, _sum)
+        return res
+
+
 def main():
     nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
     sol = Solution()

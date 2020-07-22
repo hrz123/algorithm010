@@ -30,6 +30,33 @@ class Solution:
         return dp0
 
 
+# 以下为自我练习
+# 子问题
+# 到第i天，手里有j个股票的，最大收益是多少
+# 定义状态数组
+# f(i, 0), f(i, 1)
+# 递推方程
+# f(i, 0) = max 不动 f(i-1, 0) 买入 不可能 卖出 f(i-1, 1) + a[i] -fee
+# f(i, 1) = max 不动 f(i-1, 1) 买入 f(i-1, 0) - a[i] 卖出 不可能
+# 初始化
+# f(0, 0) = 0
+# f(0, 1) = -a[0]
+# 返回值f(n-1, 0)
+# 优化空间复杂度
+# 可以只用两个值
+#
+# 再进一步优化，发现可以用0和负无穷初始化两个数值
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        f0, f1 = 0, float('-inf')
+        for p in prices:
+            f0, f1 = (
+                max(f0, f1 + p - fee),
+                max(f1, f0 - p)
+            )
+        return f0
+
+
 def main():
     prices = [1, 3, 2, 8, 4, 9]
     # prices = [1, 5, 9]
