@@ -80,6 +80,7 @@ class Solution:
         return dfs(0, n - 1)
 
 
+# 以下为自我练习
 class Solution:
     def maxCoins(self, nums: List[int]) -> int:
         nums = [1] + nums + [1]
@@ -142,6 +143,36 @@ class Solution:
                                    dp[i][k] +
                                    dp[k][j] +
                                    nums[i] * nums[j] * nums[k])
+        return dp[0][n - 1]
+
+
+# 子问题
+# 不戳破两边的气球，所能获得的最大值
+# f(i, j)
+# 预处理nums变为[1] + nums + [1]
+# 定义状态数组
+# f(i, j)
+# 递推方程
+# f(i,j) = max(f(i, k) + f(k, j) + nums[ijk]), k i+1 .. j-1
+# 初始化
+# f(i, i+1) = 0
+# 从gap为2开始， 最大gap为n-1
+# 返回值
+# f(0, n-1)
+# 优化空间复杂度
+# 没有很好的优化方式，使用一个矩阵的右上或者左下半角，且状态都需要
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1] + nums + [1]
+        n = len(nums)
+        dp = [[0] * n for _ in range(n)]
+        for gap in range(2, n):
+            for i in range(n - gap):
+                j = i + gap
+                dp[i][j] = max(
+                    dp[i][k] + dp[k][j] + nums[i] * nums[j] * nums[k]
+                    for k in range(i + 1, j)
+                )
         return dp[0][n - 1]
 
 
