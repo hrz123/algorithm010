@@ -207,8 +207,170 @@ class Solution:
 
         nums.sort()
         results = []
-        findNsum(0, len(nums) - 1, target, 4, [], results)
+        findNsum(0, len(nums) - 1, 4, target, [], results)
         return results
+
+
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def findNSum(l, r, N, target, result, results):
+            if r - l + 1 < N \
+                    or N < 2 \
+                    or nums[l] * N > target \
+                    or nums[r] * N < target:
+                return
+
+            if N == 2:
+                while l < r:
+                    s = nums[l] + nums[r]
+                    if s == target:
+                        results.append(result + [nums[l], nums[r]])
+                        l += 1
+                        while l < r and nums[l] == nums[l - 1]:
+                            l += 1
+                    elif s < target:
+                        l += 1
+                    else:
+                        r -= 1
+            else:
+                for i in range(l, r):
+                    if i == l or nums[i] != nums[i - 1]:
+                        findNSum(i + 1, r, N - 1, target - nums[i],
+                                 result + [nums[i]], results)
+
+        nums.sort()
+        results = []
+        findNSum(0, len(nums) - 1, 4, target, [], results)
+        return results
+
+
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def findNSum(l, r, N, target, result, results):
+            if r - l + 1 < N \
+                    or N < 2 \
+                    or target < nums[l] * N \
+                    or target > nums[r] * N:
+                return
+
+            if N == 2:
+                while l < r:
+                    s = nums[l] + nums[r]
+                    if s == target:
+                        results.append(result + [nums[l], nums[r]])
+                        l += 1
+                        while l < r and nums[l] == nums[l - 1]:
+                            l += 1
+                    elif target > s:
+                        l += 1
+                    else:
+                        r -= 1
+            else:
+                for i in range(l, r):
+                    if i == l or nums[i] != nums[i - 1]:
+                        findNSum(i + 1, r, N - 1, target - nums[i], result + [
+                            nums[i]], results)
+
+        nums.sort()
+        results = []
+        findNSum(0, len(nums) - 1, 4, target, [], results)
+        return results
+
+
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def findNSum(l, r, N, target, result, results):
+            if r - l + 1 < N \
+                    or N < 2 \
+                    or target < nums[l] * N \
+                    or target > nums[r] * N:
+                return
+
+            if N == 2:
+                while l < r:
+                    s = nums[l] + nums[r]
+                    if s == target:
+                        results.append(result + [nums[l], nums[r]])
+                        l += 1
+                        while l < r and nums[l] == nums[l - 1]:
+                            l += 1
+                    elif s < target:
+                        l += 1
+                    else:
+                        r -= 1
+            else:
+                for i in range(l, r):
+                    if i == l or nums[i] != nums[i - 1]:
+                        findNSum(i + 1, r, N - 1, target - nums[i],
+                                 result + [nums[i]], results)
+
+        nums.sort()
+        results = []
+        findNSum(0, len(nums) - 1, 4, target, [], results)
+        return results
+
+
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def findNSum(l, r, N, target, result, results):
+            if r - l + 1 < N \
+                    or N < 2 \
+                    or nums[l] * N > target \
+                    or nums[r] * N < target:
+                return
+            if N == 2:
+                while l < r:
+                    _sum = nums[l] + nums[r]
+                    if _sum == target:
+                        results.append(result + [nums[l], nums[r]])
+                        l += 1
+                    elif _sum < target:
+                        l += 1
+                    else:
+                        r -= 1
+            else:
+                for i in range(l, r):
+                    if i == l or nums[i] != nums[i - 1]:
+                        findNSum(i + 1, r, N - 1, target - nums[i], result + [
+                            nums[i]], results)
+
+        nums.sort()
+        res = []
+        findNSum(0, len(nums) - 1, 4, target, [], res)
+        return res
+
+
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def findKSum(l, r, k, target, result, results):
+            if r - l + 1 < k \
+                    or k < 2 \
+                    or target < nums[l] * k \
+                    or target > nums[r] * k:
+                return
+            if k == 2:
+                while l < r:
+                    _sum = nums[l] + nums[r]
+                    if _sum == target:
+                        results.append(result + [nums[l], nums[r]])
+                        l += 1
+                        # 去重
+                        while l < r and nums[l] == nums[l - 1]:
+                            l += 1
+                    elif _sum < target:
+                        l += 1
+                    else:
+                        r -= 1
+            else:
+                for i in range(l, r):
+                    if i == l or nums[i] != nums[i - 1]:
+                        findKSum(i + 1, r, k - 1, target - nums[i],
+                                 result + [nums[i]], results)
+
+        nums.sort()
+        res = []
+        findKSum(0, len(nums) - 1, 4, target, [], res)
+        return res
 
 
 def main():

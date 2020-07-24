@@ -53,9 +53,59 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+# 牛顿法
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        res = x
+        while res * res > x:
+            res = (res + x // res) // 2
+        return res
+
+
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        if x == 1:
+            return 1
+        left = 1
+        right = x // 2
+        while left <= right:
+            mid = left + ((right - left) >> 1)
+            if mid * mid == x:
+                return mid
+            if mid * mid > x:
+                right = mid - 1
+            else:
+                left = mid + 1
+        return right
+
+
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        left = 1
+        right = x
+        while left <= right:
+            mid = left + ((right - left) >> 1)
+            if mid * mid == x:
+                return mid
+            if mid * mid > x:
+                right = mid - 1
+            else:
+                left = mid + 1
+        return right
+
+
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        res = x
+        while res * res > x:
+            res = (res + x // res) >> 1
+        return res
+
+
 def main():
     sol = Solution()
-    res = sol.mySqrt(1)
+    res = sol.mySqrt(2)
     print(res)
 
 

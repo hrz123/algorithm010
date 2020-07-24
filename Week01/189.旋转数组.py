@@ -56,6 +56,28 @@ class Solution:
         nums[:] = nums[n - k:] + nums[:n - k]
 
 
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        k %= len(nums)
+        nums[:] = nums[::-1]
+        nums[:k] = nums[:k][::-1]
+        nums[k:] = nums[k:][::-1]
+
+
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+
+        n = len(nums)
+        k %= n
+        nums[:] = nums[n - k:] + nums[:n - k]
+
+
 def main():
     s = Solution()
     array = [1, 2, 3, 4, 5, 6, 7]

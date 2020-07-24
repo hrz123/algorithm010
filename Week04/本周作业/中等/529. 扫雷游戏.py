@@ -251,6 +251,44 @@ class Solution:
         return count
 
 
+class Solution:
+    def __init__(self):
+        self.dx = (0, 1, 0, -1, 1, 1, -1, -1)
+        self.dy = (1, 0, -1, 0, 1, -1, -1, 1)
+
+    def updateBoard(self, board: List[List[str]], click: List[int]) -> List[
+        List[str]]:
+        m = len(board)
+        n = len(board[0])
+        x, y = click
+        self.__dfs_update(board, m, n, x, y)
+        return board
+
+    def __dfs_update(self, board, m, n, x, y):
+        if x < 0 or x >= m or y < 0 or y >= n:
+            return
+        if board[x][y] == 'M':
+            board[x][y] = 'X'
+        elif board[x][y] == 'E':
+            mines = self.__get_adjacent_mines(board, m, n, x, y)
+            if mines > 0:
+                board[x][y] = str(mines)
+            else:
+                board[x][y] = 'B'
+                for k in range(8):
+                    self.__dfs_update(board, m, n, x + self.dx[k],
+                                      y + self.dy[k])
+
+    def __get_adjacent_mines(self, board, m, n, x, y):
+        count = 0
+        for k in range(8):
+            x_new = x + self.dx[k]
+            y_new = y + self.dy[k]
+            if 0 <= x_new < m and 0 <= y_new < n and board[x_new][y_new] == 'M':
+                count += 1
+        return count
+
+
 def main():
     sol = Solution()
 

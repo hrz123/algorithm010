@@ -145,16 +145,50 @@ class Solution:
                 self.__dfs(M, visited, j)
 
 
+# 思路
+# 对于每一个人，如果没被访问过，将它的所有好友（包括自己）都记录为访问过
+# 记录他好友的好友，只要没被访问，也记为访问过
+# dfs直到他好友以及好友的好友，只要有关联，都被记为访问过
+# count + 1
+# 如果已经被访问，继续下一个
+# 这边遍历完的结果就得到了
+class Solution:
+    def findCircleNum(self, M: List[List[int]]) -> int:
+        n = len(M)
+        visited = [False] * n
+        res = 0
+        for i in range(n):
+            if not visited[i]:
+                self._dfs(i, M, visited, n)
+                res += 1
+        return res
+
+    def _dfs(self, i, M, visited, n):
+        for j in range(n):
+            if M[i][j] and not visited[j]:
+                visited[j] = True
+                self._dfs(j, M, visited, n)
+
+
 def main():
+    sol = Solution()
+
     M = [[1, 1, 0],
          [1, 1, 0],
          [0, 0, 1]]
-    sol = Solution()
     res = sol.findCircleNum(M)
     print(res)
+
     M = [[1, 1, 1],
          [1, 1, 1],
          [1, 1, 1]]
+    res = sol.findCircleNum(M)
+    print(res)
+
+    M = [[1, 0, 0, 1],
+         [0, 1, 1, 0],
+         [0, 1, 1, 1],
+         [1, 0, 1, 1]]
     res = sol.findCircleNum(M)
     print(res)
 

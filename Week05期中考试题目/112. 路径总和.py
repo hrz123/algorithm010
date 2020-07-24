@@ -35,6 +35,17 @@ class Solution:
                self.hasPathSum(root.right, sum)
 
 
+# 以下为自我练习
+class Solution:
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+        if not root:
+            return False
+        if not root.left and not root.right:
+            return root.val == sum
+        return self.hasPathSum(root.left, sum - root.val) or self.hasPathSum(
+            root.right, sum - root.val)
+
+
 def main():
     pass
 

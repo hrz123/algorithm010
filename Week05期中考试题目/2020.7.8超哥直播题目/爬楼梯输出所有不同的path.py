@@ -54,8 +54,40 @@ class Solution:
 #         return b
 
 
+class Solution:
+    def climbStairs(self, n: int, steps: List[int]) -> List[List[int]]:
+        res = []
+        self.__dfs(n, steps, [], res)
+        return res
+
+    def __dfs(self, n, steps, pre, res):
+        if n == 0:
+            res.append(pre)
+            return
+
+        for s in steps:
+            if n >= s:
+                self.__dfs(n - s, steps, [s] + pre, res)
+
+
+class Solution:
+    def climbStairs(self, n: int, steps: List[int]) -> List[List[int]]:
+        res = []
+        self.__dfs(n, steps, [], res)
+        return res
+
+    def __dfs(self, n, steps, pre, res):
+        if n == 0:
+            res.append(pre)
+            return
+
+        for s in steps:
+            if n >= s and (not pre or pre[0] != s):
+                self.__dfs(n - s, steps, [s] + pre, res)
+
+
 def main():
-    n = 4
+    n = 3
     steps = [1, 2, 3]
 
     sol = Solution()

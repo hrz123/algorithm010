@@ -1,4 +1,4 @@
-# 爬楼梯不相同.py
+# 爬楼梯相邻的步数不相同.py
 from functools import lru_cache
 from typing import List
 
@@ -35,6 +35,26 @@ class Solution:
                     sum(dp[i - steps[j]][k] for k in range(ns)
                         if k != j and i >= steps[j])
 
+        return sum(dp[n])
+
+
+# 这里用dp一维就不够了
+# 需要用两维
+# f(i, j) i表示当前走到i，j表示当前走到i的步数
+# f(i, j) = sum(f(i-j, k)) k != j
+# 初始化
+# f(k, k) = 1
+class Solution:
+    def climbStairs(self, n: int, steps: List[int]) -> int:
+        ns = len(steps)
+        dp = [[0] * ns for _ in range(n + 1)]
+        for i in range(1, n + 1):
+            for j in range(ns):
+                if i == steps[j]:
+                    dp[i][j] = 1
+                else:
+                    dp[i][j] = sum(dp[i - steps[j]][k] if k != j else 0 for k in
+                                   range(ns))
         return sum(dp[n])
 
 

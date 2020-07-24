@@ -122,6 +122,71 @@ class Solution:
         return list(res)
 
 
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        trie = {}
+        for w in words:
+            node = trie
+            for c in w:
+                node = node.setdefault(c, {})
+            node['#'] = True
+
+        def dfs(i, j, pre, node, visited):
+            if '#' in node:
+                res.add(pre)
+            for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+                _i, _j = i + dx, j + dy
+                if -1 < _i < h and -1 < _j < w \
+                        and (_i, _j) not in visited \
+                        and board[_i][_j] in node:
+                    dfs(_i, _j, pre + board[_i][_j],
+                        node[board[_i][_j]], visited | {(_i, _j)})
+
+        h, w = len(board), len(board[0])
+        res = set()
+        for i in range(h):
+            for j in range(w):
+                if board[i][j] in trie:
+                    dfs(i, j, board[i][j], trie[board[i][j]], {(i, j)})
+
+        return list(res)
+
+
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        if not board or not board[0]:
+            return []
+        trie = {}
+
+        for w in words:
+            node = trie
+            for c in w:
+                node = node.setdefault(c, {})
+            node['#'] = True
+
+        h, w = len(board), len(board[0])
+        res = set()
+        for i in range(h):
+            for j in range(w):
+                if board[i][j] in trie:
+                    s = board[i][j]
+                    self.dfs(i, j, s, trie[s], res, {(i, j)}, board, h, w)
+        return list(res)
+
+    def dfs(self, i, j, pre, node, res, visited, board, h, w):
+        if '#' in node:
+            res.add(pre)
+
+        for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+            _i, _j = i + dx, j + dy
+            if -1 < _i < h and -1 < _j < w \
+                    and (_i, _j) not in visited \
+                    and board[_i][_j] in node:
+                s = board[_i][_j]
+                self.dfs(_i, _j, pre + s, node[s], res, visited | {(_i, _j)},
+                         board, h, w)
+
+
 def main():
     sol = Solution()
 
@@ -132,7 +197,11 @@ def main():
         ['i', 'h', 'k', 'r'],
         ['i', 'f', 'l', 'v']
     ]
+    res = sol.findWords(board, words)
+    print(res)
 
+    board = [["a", "a"]]
+    words = ["a"]
     res = sol.findWords(board, words)
     print(res)
 

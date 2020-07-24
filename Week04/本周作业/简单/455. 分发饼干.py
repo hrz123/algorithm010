@@ -40,6 +40,20 @@ class Solution:
 
 # 时间复杂度：主要在排序上
 
+class Solution:
+    def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        g.sort()
+        s.sort()
+
+        cookie = 0
+        child = 0
+
+        while child < len(g) and cookie < len(s):
+            if s[cookie] >= g[child]:
+                child += 1
+            cookie += 1
+        return child
+
 
 def main():
     g = [1, 2, 3]

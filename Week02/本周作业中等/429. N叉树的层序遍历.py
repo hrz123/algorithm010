@@ -16,15 +16,15 @@ class Node:
 # 1.迭代。bfs，使用队列。
 # if not root:
 #     return []
-# deq = [root], res = []
-# while deq:
+# data = [root], res = []
+# while data:
 #     output = []
-#     size = len(deq)
+#     size = len(data)
 #     for _ in range(size):
-#         node = deq.popleft()
+#         node = data.popleft()
 #         output.append(node.val)  # 这里访问了node.val，那么要做node为null的处理
 #         for child in node.children:
-#             deq.append(child)
+#             data.append(child)
 #     res.append(output)
 # return res
 # 2.bfs的简化

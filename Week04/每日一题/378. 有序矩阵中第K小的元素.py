@@ -64,12 +64,53 @@ class Solution:
         return count
 
 
+# 以下为自我练习
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        heap = []
+        for row in matrix:
+            for e in row:
+                if len(heap) == k:
+                    if e < -heap[0]:
+                        heapq.heappushpop(heap, -e)
+                else:
+                    heapq.heappush(heap, -e)
+        return -heap[0]
+
+
+# 对数做二分查找
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        h, w = len(matrix), len(matrix[0])
+        left = matrix[0][0]
+        right = matrix[h - 1][w - 1]
+        while left < right:
+            mid = left + ((right - left) >> 1)
+            if self.findNotBiggerThanMid(matrix, mid, h, w) < k:
+                left = mid + 1
+            else:
+                right = mid
+        return left
+
+    def findNotBiggerThanMid(self, matrix, mid, h, w):
+        i = h - 1
+        j = 0
+        count = 0
+        while i >= 0 and j < w:
+            if matrix[i][j] <= mid:
+                count += i + 1
+                j += 1
+            else:
+                i -= 1
+        return count
+
+
 def main():
     matrix = [
         [1, 2],
         [1, 3]
     ]
-    k = 2
+    k = 3
     sol = Solution()
     res = sol.kthSmallest(matrix, k)
     print(res)

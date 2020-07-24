@@ -26,7 +26,7 @@ class Solution:
         elems = set(elems)
         if end not in elems:
             return -1
-        bq, eq, nq, n = {start}, {end}, set(), len(end)
+        bq, eq, nq, visited, n = {start}, {end}, set(), set(), len(end)
         res = 0
         while bq:
             elems -= bq

@@ -48,6 +48,25 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        def dfs(right_size, left_size, pre):
+            if right_size == n:
+                res.append(pre)
+                return
+
+            if left_size < n:
+                dfs(right_size, left_size + 1, pre + '(')
+
+            if right_size < left_size:
+                dfs(right_size + 1, left_size, pre + ')')
+
+        res = []
+        dfs(0, 0, '')
+        return res
+
+
 def main():
     n = 3
     sol = Solution()

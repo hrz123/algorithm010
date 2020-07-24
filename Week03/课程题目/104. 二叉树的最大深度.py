@@ -2,6 +2,7 @@
 
 
 # Definition for a binary tree node.
+from collections import deque
 
 
 class TreeNode:
@@ -143,6 +144,35 @@ class Solution:
                     nq.append(node.right)
             q, nq = nq, []
 
+        return res
+
+
+# 递归
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        # recursion terminator
+        if not root:
+            return 0
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+
+
+# bfs
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        # 特殊处理
+        if not root:
+            return 0
+        deq = deque([root])
+        res = 0
+        while deq:
+            res += 1
+            size = len(deq)
+            for _ in range(size):
+                root = deq.popleft()
+                if root.left:
+                    deq.append(root.left)
+                if root.right:
+                    deq.append(root.right)
         return res
 
 

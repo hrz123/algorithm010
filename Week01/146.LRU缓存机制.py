@@ -63,7 +63,7 @@ class LRUCache(object):
     def addToHead(self, node: DLinkedNode) -> None:
         node.prev = self.head
         node.next = self.head.next
-        self.head.next.prev = node
+        node.next.prev = node
         self.head.next = node
 
     def removeTail(self) -> DLinkedNode:
@@ -152,17 +152,75 @@ class LRUCache:
         self.addToHead(node)
 
     def removeNode(self, node):
-        prev = node.prev
-        nxt = node.next
-
-        prev.next = nxt
-        nxt.prev = prev
+        node.prev.next = node.next
+        node.next.prev = node.prev
 
     def addToHead(self, node):
         node.prev = self.head
         node.next = self.head.next
         node.next.prev = node
         self.head.next = node
+
+    def removeTail(self):
+        node = self.tail.prev
+        self.removeNode(node)
+        return node
+
+
+class DLinkedNode(object):
+    def __init__(self, key=0, val=0):
+        self.key = key
+        self.val = val
+        self.prev = None
+        self.next = None
+
+
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.size = 0
+        self.capacity = capacity
+        self.memo = {}
+        self.head = DLinkedNode()
+        self.tail = DLinkedNode()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def get(self, key: int) -> int:
+        if key in self.memo:
+            node = self.memo[key]
+            self.moveToHead(node)
+            return node.val
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.memo:
+            node = self.memo[key]
+            node.val = value
+            self.moveToHead(node)
+        else:
+            if self.size == self.capacity:
+                node = self.removeTail()
+                self.memo.pop(node.key)
+                self.size -= 1
+            node = DLinkedNode(key, value)
+            self.memo[key] = node
+            self.addToHead(node)
+            self.size += 1
+
+    def moveToHead(self, node):
+        self.removeNode(node)
+        self.addToHead(node)
+
+    def addToHead(self, node):
+        node.next = self.head.next
+        node.prev = self.head
+        node.next.prev = node
+        self.head.next = node
+
+    def removeNode(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
 
     def removeTail(self):
         node = self.tail.prev
@@ -177,13 +235,17 @@ class LRUCache:
 
 
 def main():
-    lru = LRUCache(2)
-    lru.put(1, 1)
-    lru.put(2, 2)
-    assert lru.get(1) == 1
-    lru.put(3, 3)
-    assert lru.get(1) == -1
-    assert lru.get(3) == 3
+    cache = LRUCache(2)
+
+    cache.put(1, 1)
+    cache.put(2, 2)
+    print(cache.get(1))
+    cache.put(3, 3)
+    print(cache.get(2))
+    cache.put(4, 4)
+    print(cache.get(1))
+    print(cache.get(3))
+    print(cache.get(4))
 
 
 if __name__ == '__main__':

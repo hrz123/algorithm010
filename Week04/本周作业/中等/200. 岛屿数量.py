@@ -207,6 +207,36 @@ class Solution:
         return res
 
 
+class Solution:
+    def __init__(self):
+        self.dx = (0, 1, 0, -1)
+        self.dy = (1, 0, -1, 0)
+
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        m = len(grid)
+        n = len(grid[0])
+        res = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    self.__dfs_marking(grid, i, j, m, n)
+                    res += 1
+        return res
+
+    def __dfs_marking(self, grid, i, j, m, n):
+        # recursion terminator
+        if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] == '0':
+            return
+        grid[i][j] = '0'
+        for k in range(4):
+            self.__dfs_marking(grid, i + self.dx[k], j + self.dy[k], m, n)
+
+
+
+
+
 def main():
     grid = [["1", "1", "0", "0", "0"],
             ["1", "1", "0", "0", "0"],

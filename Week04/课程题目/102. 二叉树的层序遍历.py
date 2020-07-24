@@ -96,6 +96,74 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+
+        res = []
+        deq = deque([root])
+
+        while deq:
+            output = []
+            size = len(deq)
+            for _ in range(size):
+                root = deq.popleft()
+                output.append(root.val)
+                if root.left:
+                    deq.append(root.left)
+                if root.right:
+                    deq.append(root.right)
+            res.append(output)
+        return res
+
+
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+
+        res = []
+        q, nq = [root], []
+
+        while q:
+            size = len(q)
+            output = [0] * size
+            for i in range(size):
+                root = q[i]
+                output[i] = root.val
+                if root.left:
+                    nq.append(root.left)
+                if root.right:
+                    nq.append(root.right)
+            q, nq = nq, []
+            res.append(output)
+
+        return res
+
+
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+
+        res = []
+        self.__dfs(0, root, res)
+        return res
+
+    def __dfs(self, level, root, res):
+        if len(res) == level:
+            res.append([])
+
+        res[level].append(root.val)
+
+        if root.left:
+            self.__dfs(level + 1, root.left, res)
+        if root.right:
+            self.__dfs(level + 1, root.right, res)
+
+
 def main():
     root = TreeNode(3)
     root.left = TreeNode(9)

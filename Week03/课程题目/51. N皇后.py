@@ -144,6 +144,43 @@ class Solution:
         # reverse current level status if needed
 
 
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        self.__dfs(0, [], set(), set(), n, res)
+        return [['.' * c + 'Q' + '.' * (n - c - 1) for c in sol] for sol in res]
+
+    def __dfs(self, r, pre, xy_sum, xy_dif, n, res):
+        if r == n:
+            res.append(pre)
+            return
+
+        for c in range(n):
+            if c not in pre and r + c not in xy_sum and r - c not in xy_dif:
+                self.__dfs(r + 1, pre + [c], xy_sum | {r + c}, xy_dif | {
+                    r - c}, n, res)
+
+
+# 位运算
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        self.__dfs(0, [], 0, 0, 0, n, res)
+        return [['.' * c + 'Q' + '.' * (n - c - 1) for c in sol] for sol in res]
+
+    def __dfs(self, r, pre, y, xy_sum, xy_dif, n, res):
+        if r == n:
+            res.append(pre)
+            return
+
+        for c in range(n):
+            s = 1 << (r + c)
+            d = 1 << (r - c + n - 1)
+            if not 1 << c & y and not s & xy_sum and not d & xy_dif:
+                self.__dfs(r + 1, pre + [c], y + (1 << c), xy_sum + s,
+                           xy_dif + d, n, res)
+
+
 def main():
     n = 4
     sol = Solution()

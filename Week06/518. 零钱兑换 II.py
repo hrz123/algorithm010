@@ -103,6 +103,15 @@ class Solution:
         return dp[amount]
 
 
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [1] + [0] * amount
+        for c in coins:
+            for i in range(1, amount + 1):
+                dp[i] += dp[i - c] if i >= c else 0
+        return dp[amount]
+
+
 def main():
     sol = Solution()
 

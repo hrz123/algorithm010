@@ -27,9 +27,20 @@ class Solution:
 #             (n - 1) % 26 + 65)
 
 
+# 以下为自我练习
+class Solution:
+    def convertToTitle(self, n: int) -> str:
+        res = ""
+        while n:
+            n -= 1
+            n, mod = divmod(n, 26)
+            res = chr(65 + mod) + res
+        return res
+
+
 def main():
     s = Solution()
-    res = s.convertToTitle(1)
+    res = s.convertToTitle(26)
     print(res)
 
 

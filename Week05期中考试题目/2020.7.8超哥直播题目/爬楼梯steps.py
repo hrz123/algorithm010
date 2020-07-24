@@ -34,9 +34,18 @@ class Solution:
         return dp[n]
 
 
+class Solution:
+    def climbStairs(self, n: int, steps: List[int]) -> int:
+        dp = [1] + [0] * n
+
+        for i in range(1, n + 1):
+            dp[i] = sum(dp[i - c] if i >= c else 0 for c in steps)
+        return dp[n]
+
+
 def main():
-    n = 5
-    steps = [3, 2]
+    n = 3
+    steps = [1, 2]
 
     sol = Solution()
     res = sol.climbStairs(n, steps)

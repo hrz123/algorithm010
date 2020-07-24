@@ -57,6 +57,37 @@ class Solution:
         return dp[0]
 
 
+# 定义子问题
+# i， j到终点的最小值
+# 状态数组
+# f(i, j) = min(f(i+1, j), f(i, j+1)) + a[i][j]
+# 递推方程
+# f(i, j) = min(f(i+1, j), f(i, j+1)) + a[i][j]
+# 初始化
+# f(m-1, n-1) = a[m-1][n-1]
+# 返回值
+# f(0,0）
+# 优化空间复杂度
+# 只需要一个数组
+#
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        h, w = len(grid), len(grid[0])
+
+        dp = grid[h - 1][:]
+        for i in range(w - 1, 0, -1):
+            dp[i - 1] += dp[i]
+
+        for i in range(h - 2, -1, -1):
+            dp[w - 1] += grid[i][w - 1]
+            for j in range(w - 2, -1, -1):
+                dp[j] = min(dp[j], dp[j + 1]) + grid[i][j]
+
+        return dp[0]
+
+
 def main():
     sol = Solution()
 

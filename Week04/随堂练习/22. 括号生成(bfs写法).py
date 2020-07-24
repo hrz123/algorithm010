@@ -52,6 +52,22 @@ class Solution:
 #     }
 
 
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+        deq = deque([('', 0, 0)])
+
+        while deq:
+            pre, left, right = deq.popleft()
+            if right == n:
+                res.append(pre)
+            if left < n:
+                deq.append((pre + '(', left + 1, right))
+            if right < left:
+                deq.append((pre + ')', left, right + 1))
+        return res
+
+
 def main():
     n = 3
     sol = Solution()

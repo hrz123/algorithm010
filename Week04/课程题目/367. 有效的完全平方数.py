@@ -23,7 +23,7 @@ class Solution:
 
 
 # 数学规律，等差数列
-# 所有平方都可以协程奇书相加的形式
+# 所有平方都可以写成奇数相加的形式
 class Solution:
     def isPerfectSquare(self, num: int) -> bool:
         num1 = 1
@@ -42,9 +42,54 @@ class Solution:
         return ans * ans == num
 
 
+# 以下为自我练习
+# 牛顿法
+class Solution:
+    def isPerfectSquare(self, num: int) -> bool:
+        ans = num
+        while ans * ans > num:
+            ans = (ans + num // ans) // 2
+        return ans * ans == num
+
+
+# 二分查找
+class Solution:
+    def isPerfectSquare(self, num: int) -> bool:
+        l, r = 1, num
+
+        while l <= r:
+            mid = l + ((r - l) >> 1)
+            if mid * mid == num:
+                return True
+            if mid * mid > num:
+                r = mid - 1
+            else:
+                l = mid + 1
+
+        return False
+
+
+class Solution:
+    def isPerfectSquare(self, num: int) -> bool:
+        l, r = 1, num
+
+        while l < r:
+            mid = l + ((r - l) >> 1)
+            if mid * mid < num:
+                l = mid + 1
+            else:
+                r = mid
+
+        return l * l == num
+
+
 def main():
     sol = Solution()
+
     res = sol.isPerfectSquare(15)
+    print(res)
+
+    res = sol.isPerfectSquare(16)
     print(res)
 
 

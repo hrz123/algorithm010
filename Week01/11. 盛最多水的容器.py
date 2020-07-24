@@ -32,6 +32,22 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        max_area = 0
+        l, r = 0, len(height) - 1
+        while l < r:
+            left, right = height[l], height[r]
+            if left <= right:
+                max_area = max(max_area, left * (r - l))
+                l += 1
+            else:
+                max_area = max(max_area, right * (r - l))
+                r -= 1
+        return max_area
+
+
 def main():
     nums = [1, 8, 6, 2, 5, 4, 8, 3, 7]
     nums = [3, 1, 2]

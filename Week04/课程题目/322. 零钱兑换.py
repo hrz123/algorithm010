@@ -39,10 +39,28 @@ class Solution:
         return -1 if dp[-1] == float("inf") else dp[-1]
 
 
+# 以下为自我练习
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        max_value = float('inf')
+        dp = [0] + [max_value] * amount
+
+        for i in range(1, amount + 1):
+            dp[i] = min(dp[i - c] if i >= c else max_value for c in coins) + 1
+
+        return -1 if dp[amount] == max_value else dp[amount]
+
+
 def main():
+    sol = Solution()
+
+    coins = [1, 2, 5]
+    amount = 11
+    res = sol.coinChange(coins, amount)
+    print(res)
+
     coins = [2]
     amount = 3
-    sol = Solution()
     res = sol.coinChange(coins, amount)
     print(res)
 

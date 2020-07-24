@@ -31,6 +31,25 @@ class Solution:
         return dp[0]
 
 
+# 子问题
+# 定义状态数组
+# 递推方程
+# f(i, j) = f(i+1, j) + f(i, j+1)
+# 初始化
+# f(m-1, n-1) = 1
+# 优化空间复杂度
+# 只使用一维数组即可，m,n中取最小值
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        if m < n:
+            m, n = n, m
+        dp = [1] * n
+        for i in range(m - 2, -1, -1):
+            for j in range(n - 2, -1, -1):
+                dp[j] += dp[j + 1]
+        return dp[0]
+
+
 def main():
     m = 7
     n = 3

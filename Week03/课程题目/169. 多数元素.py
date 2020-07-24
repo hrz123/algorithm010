@@ -115,7 +115,7 @@ class Solution:
             if left == right:
                 return left
 
-            # otherwise, count each element and return the "winner".
+            # otherwise, count_parts each element and return the "winner".
             left_count = sum(1 for i in range(lo, hi + 1) if nums[i] == left)
             right_count = sum(1 for i in range(lo, hi + 1) if nums[i] == right)
 
@@ -134,11 +134,11 @@ class Solution:
 # 从结果本身我们可以看出众数比其他数多。
 # 算法
 # Boyer-Moore 算法的本质和方法四中的分治十分类似。我们首先给出 Boyer-Moore 算法的详细步骤：
-# 我们维护一个候选众数 candidate 和它出现的次数 count。初始时 candidate 可以为任意值，count 为 0；
+# 我们维护一个候选众数 candidate 和它出现的次数 count_parts。初始时 candidate 可以为任意值，count_parts 为 0；
 # 我们遍历数组 nums 中的所有元素，对于每个元素 x，在判断 x 之前，
-# 如果 count 的值为 0，我们先将 x 的值赋予 candidate，随后我们判断 x：
-# 如果 x 与 candidate 相等，那么计数器 count 的值增加 1；
-# 如果 x 与 candidate 不等，那么计数器 count 的值减少 1。
+# 如果 count_parts 的值为 0，我们先将 x 的值赋予 candidate，随后我们判断 x：
+# 如果 x 与 candidate 相等，那么计数器 count_parts 的值增加 1；
+# 如果 x 与 candidate 不等，那么计数器 count_parts 的值减少 1。
 # 在遍历完成后，candidate 即为整个数组的众数。
 # 算法的正确性较难证明
 class Solution:
@@ -166,6 +166,17 @@ class Solution:
             if count == 0:
                 candidate = num
             count += (1 if num == candidate else -1)
+        return candidate
+
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        counter = 0
+        candidate = None
+        for n in nums:
+            if counter == 0:
+                candidate = n
+            counter += 1 if candidate == n else -1
         return candidate
 
 

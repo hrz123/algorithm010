@@ -210,6 +210,20 @@ class Solution:
         return res
 
 
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        heights.append(0)
+        stack = [-1]
+        max_area = 0
+
+        for i in range(len(heights)):
+            while heights[i] < heights[stack[-1]]:
+                h = heights[stack.pop()]
+                max_area = max(max_area, h * (i - stack[-1] - 1))
+            stack.append(i)
+        return max_area
+
+
 def main():
     heights = [2, 1, 5, 6, 2, 3]
     sol = Solution()

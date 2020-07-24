@@ -163,6 +163,38 @@ class Solution:
         return True
 
 
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        def helper(node, lo, hi):
+            # recursion terminator
+            if not node:
+                return True
+            # process current level logic
+            if node.val >= hi or node.val <= lo:
+                return False
+            return helper(node.left, lo, node.val) and helper(node.right,
+                                                              node.val, hi)
+
+        return helper(root, float('-inf'), float('inf'))
+
+
+# 二叉搜索树中序遍历是严格递增的
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        stack = []
+        prev = float('-inf')
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            if root.val <= prev:
+                return False
+            prev = root.val
+            root = root.right
+        return True
+
+
 def main():
     root = TreeNode(2)
     root.left = TreeNode(1)

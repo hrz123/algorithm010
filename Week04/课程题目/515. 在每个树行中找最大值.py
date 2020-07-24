@@ -58,6 +58,30 @@ class Solution:
         # reverse current level status if needed
 
 
+# 以下为自我练习
+class Solution:
+    def largestValues(self, root: TreeNode) -> List[int]:
+        # bfs
+        if not root:
+            return []
+
+        q, nq = [root], []
+        res = []
+
+        while q:
+            level_max = float('-inf')
+            for root in q:
+                level_max = max(level_max, root.val)
+                if root.left:
+                    nq.append(root.left)
+                if root.right:
+                    nq.append(root.right)
+            q, nq = nq, []
+            res.append(level_max)
+
+        return res
+
+
 def main():
     root = TreeNode(1)
     root.left = TreeNode(3)

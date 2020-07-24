@@ -70,8 +70,53 @@ class Solution:
 #                     return i, j
 
 
+# 以下为自我练习
+class Solution:
+    def slidingPuzzle(self, board: List[List[int]]) -> int:
+        moves = (
+            (1, 3),
+            (0, 2, 4),
+            (1, 5),
+            (0, 4),
+            (1, 3, 5),
+            (2, 4)
+        )
+
+        s = ""
+        for row in board:
+            for i in row:
+                s += str(i)
+        if s == "123450":
+            return 0
+        # 双向bfs
+        bq, eq, nq, res, visited = {(s, s.index('0'))}, {
+            ("123450", 5)}, set(), 0, set()
+
+        while bq:
+            visited |= bq
+            res += 1
+            for x, zero_idx in bq:
+                for nxt_ind in moves[zero_idx]:
+                    _x = list(x)
+                    _x[zero_idx], _x[nxt_ind] = _x[nxt_ind], _x[zero_idx]
+                    _x = ''.join(_x)
+                    elem = (_x, nxt_ind)
+                    if elem not in visited:
+                        if elem in eq:
+                            return res
+                        nq.add(elem)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
 def main():
     sol = Solution()
+
+    board = [[1, 2, 3], [4, 5, 0]]
+    res = sol.slidingPuzzle(board)
+    print(res)
 
     board = [[1, 2, 3], [4, 0, 5]]
     res = sol.slidingPuzzle(board)

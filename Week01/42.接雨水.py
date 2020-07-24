@@ -270,6 +270,40 @@ class Solution:
         return res
 
 
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        l, r = 0, len(height) - 1
+        # 不断记录左右两侧的最高值
+        left = right = res = 0
+        while l < r:
+            left, right = max(left, height[l]), max(right, height[r])
+
+            while l < r and height[l] <= left <= right:
+                res += left - height[l]
+                l += 1
+
+            while l < r and height[r] <= right <= left:
+                res += right - height[r]
+                r -= 1
+        return res
+
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        l, r = 0, len(height) - 1
+        left_max = right_max = res = 0
+        while l < r:
+            left_max = max(left_max, height[l])
+            right_max = max(right_max, height[r])
+
+            while l < r and height[l] <= left_max <= right_max:
+                res += left_max - height[l]
+                l += 1
+            while l < r and height[r] <= right_max <= left_max:
+                res += right_max - height[r]
+        return res
+
+
 def main():
     heights = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
     s = Solution()

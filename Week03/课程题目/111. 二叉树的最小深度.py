@@ -124,6 +124,56 @@ class Solution:
         return min(left, right) + 1
 
 
+# 递归
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        # 特殊处理
+        if not root:
+            return 0
+        if not root.left and not root.right:
+            return 1
+        if not root.right:
+            return 1 + self.minDepth(root.left)
+        if not root.left:
+            return 1 + self.minDepth(root.right)
+        return 1 + min(self.minDepth(root.left), self.minDepth(root.right))
+
+
+# bfs
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        # 特殊处理
+        if not root:
+            return 0
+        deq = deque([root])
+        res = 0
+
+        while deq:
+            res += 1
+            size = len(deq)
+            for _ in range(size):
+                root = deq.popleft()
+                if not root.left and not root.right:
+                    return res
+                if root.left:
+                    deq.append(root.left)
+                if root.right:
+                    deq.append(root.right)
+
+
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        if not root.left and not root.right:
+            return 1
+        if not root.left:
+            return 1 + self.minDepth(root.right)
+        if not root.right:
+            return 1 + self.minDepth(root.left)
+        return 1 + min(self.minDepth(root.left), self.minDepth(root.right))
+
+
 def main():
     root = TreeNode(3)
     root.left = TreeNode(9)

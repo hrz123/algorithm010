@@ -201,6 +201,40 @@ class Solution:
         return -1
 
 
+# 以下为自我练习
+# 双向bfs
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        # 防止起点或终点无法访问到
+        if grid[0][0] or grid[n - 1][n - 1]:
+            return -1
+        # 防止起点就是终点
+        if n == 1:
+            return 1
+        # 双向bfs所需，从开始的队列，从结尾的队列，下一个队列，记录访问集合
+        bq, eq, nq, visited, res = {(0, 0)}, {(n - 1, n - 1)}, set(), set(), 1
+
+        while bq:
+            visited |= bq
+            res += 1
+            for i, j in bq:
+                for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1),
+                               (1, -1), (-1, -1), (-1, 1)):
+                    _i, _j = i + dx, j + dy
+                    # 没访问过，且不是障碍
+                    if -1 < _i < n and -1 < _j < n \
+                            and (_i, _j) not in visited \
+                            and not grid[_i][_j]:
+                        if (_i, _j) in eq:
+                            return res
+                        nq.add((_i, _j))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
 def main():
     sol = Solution()
 
@@ -219,6 +253,10 @@ def main():
             [0, 0, 1, 0, 0, 1, 0, 0, 1], [0, 1, 0, 1, 0, 0, 1, 1, 0],
             [0, 0, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 0, 0],
             [0, 1, 1, 0, 0, 0, 0, 1, 0]]
+    res = sol.shortestPathBinaryMatrix(grid)
+    print(res)
+
+    grid = [[0, 0, 0], [1, 1, 0], [1, 1, 0]]
     res = sol.shortestPathBinaryMatrix(grid)
     print(res)
 

@@ -103,6 +103,26 @@ class Solution:
         return True
 
 
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        row = [{} for _ in range(9)]
+        col = [{} for _ in range(9)]
+        box = [{} for _ in range(9)]
+        for i in range(9):
+            for j in range(9):
+                val = board[i][j]
+                if val != '.':
+                    val = int(val)
+                    b = i // 3 * 3 + j // 3
+                    row[i][val] = row[i].get(val, 0) + 1
+                    col[j][val] = col[j].get(val, 0) + 1
+                    box[b][val] = box[b].get(val, 0) + 1
+
+                    if row[i][val] > 1 or col[j][val] > 1 or box[b][val] > 1:
+                        return False
+        return True
+
+
 def main():
     sol = Solution()
 

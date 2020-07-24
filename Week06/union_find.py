@@ -80,6 +80,37 @@ class UnionFind(object):
         return self.find(p) == self.find(q)
 
 
+class UnionFind:
+    def __init__(self, n):
+        self.uf = [-1] * (n + 1)
+        self.sets_count = n
+
+    def find(self, p):
+        if self.uf[p] < 0:
+            return p
+        self.uf[p] = self.find(self.uf[p])
+        return self.uf[p]
+
+    def union(self, p, q):
+        p_root = self.find(p)
+        q_root = self.find(q)
+
+        if p_root == q_root:
+            return
+
+        if self.uf[p_root] > self.uf[q_root]:
+            self.uf[q_root] += self.uf[p_root]
+            self.uf[p_root] = q_root
+        else:
+            self.uf[p_root] += self.uf[q_root]
+            self.uf[q_root] = p_root
+
+        self.sets_count -= 1
+
+    def is_connected(self, p, q):
+        return self.find(p) == self.find(q)
+
+
 def main():
     pass
 

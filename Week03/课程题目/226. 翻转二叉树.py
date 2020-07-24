@@ -35,6 +35,16 @@ class Solution:
         return root
 
 
+class Solution:
+    def invertTree(self, root: TreeNode) -> TreeNode:
+        # recursion terminator
+        if not root:
+            return
+        root.left, root.right = self.invertTree(root.right), self.invertTree(
+            root.left)
+        return root
+
+
 def main():
     root = TreeNode(4)
     root.left = TreeNode(2)
