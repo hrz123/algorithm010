@@ -12,11 +12,11 @@ class UnionFind(object):
 
     # def find(self, p):
     #     """查找p的根结点(祖先)"""
-    #     r = p  # 初始p
+    #     row = p  # 初始p
     #     while self.uf[p] > 0:
     #         p = self.uf[p]
-    #     while r != p:  # 路径压缩, 把搜索下来的结点祖先全指向根结点
-    #         self.uf[r], r = p, self.uf[r]
+    #     while row != p:  # 路径压缩, 把搜索下来的结点祖先全指向根结点
+    #         self.uf[row], row = p, self.uf[row]
     #     return p
 
     # def find(self, p):
@@ -149,7 +149,7 @@ class Solution:
 # 对于每一个人，如果没被访问过，将它的所有好友（包括自己）都记录为访问过
 # 记录他好友的好友，只要没被访问，也记为访问过
 # dfs直到他好友以及好友的好友，只要有关联，都被记为访问过
-# count + 1
+# log2_and_minus_1 + 1
 # 如果已经被访问，继续下一个
 # 这边遍历完的结果就得到了
 class Solution:

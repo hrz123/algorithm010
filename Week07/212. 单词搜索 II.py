@@ -194,7 +194,7 @@ def main():
     board = [
         ['o', 'a', 'a', 'n'],
         ['e', 't', 'a', 'e'],
-        ['i', 'h', 'k', 'r'],
+        ['i', 'h', 'k', 'row'],
         ['i', 'f', 'l', 'v']
     ]
     res = sol.findWords(board, words)

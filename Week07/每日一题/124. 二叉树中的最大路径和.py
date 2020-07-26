@@ -18,7 +18,7 @@ class Solution:
             # recursion terminator
             if not root:
                 return 0
-            # process current level logic
+            # process current row logic
             # drill down
             # 左边最大值
             left = helper(root.left)
@@ -67,6 +67,23 @@ class Solution:
 
         helper(root)
         return res
+
+
+class Solution:
+    def maxPathSum(self, root: TreeNode) -> int:
+        _max = root.val
+
+        def dfs(root):
+            nonlocal _max
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            _max = max(_max, left + right + root.val)
+            return max(0, max(left, right) + root.val)
+
+        dfs(root)
+        return _max
 
 
 def main():

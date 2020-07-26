@@ -12,7 +12,7 @@ class Solution:
                 if e != '.' and e in seen:
                     return False
                 seen.add(e)
-        # judge col
+        # judge pre
         for j in range(9):
             seen = set()
             for i in range(9):

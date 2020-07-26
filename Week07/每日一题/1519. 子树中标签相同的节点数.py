@@ -88,6 +88,28 @@ class Solution:
         return ans
 
 
+class Solution:
+    def countSubTrees(self, n: int, edges: List[List[int]], labels: str) -> \
+            List[int]:
+        edge_map = defaultdict(list)
+        for e in edges:
+            edge_map[e[0]].append(e[1])
+            edge_map[e[1]].append(e[0])
+
+        ans = [1] * n
+
+        def dfs(i, pre):
+            data = Counter({labels[i]: 1})
+            for nxt in edge_map[i]:
+                if nxt != pre:
+                    data += dfs(nxt, i)
+            ans[i] = data[labels[i]]
+            return data
+
+        dfs(0, 0)
+        return ans
+
+
 def main():
     sol = Solution()
 

@@ -31,14 +31,14 @@ class Solution:
             if end == start:
                 if min_count == -1 or count < min_count:
                     min_count = count
-            # process current level logic
+            # process current row logic
             for elem in bank:
                 if elem not in visited:
                     if __diff(elem, start) == 1:
                         visited.add(elem)
                         # drill down
                         __dfs(elem, end, bank, visited, count + 1)
-                        # reverse current level status
+                        # reverse current row status
                         visited.remove(elem)
 
         __dfs(start, end, bank, set(), 0)
@@ -48,7 +48,7 @@ class Solution:
 
 # 第二种解法，
 # bfs
-# bfs(level, start, end， visited)
+# bfs(row, start, end， visited)
 # 终止条件
 # 若start等于end，返回level
 # 每次

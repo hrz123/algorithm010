@@ -18,11 +18,13 @@ dfs有四个方向 4
 
 ## 双向bfs模板
 
+双向bfs的模板有两种，一种用visited记录已经访问的节点，在新一层处更新，一种用available记录可以使用的节点，在新一层处删除
+
 输出路径长度的值，a->b路径长度为1
 
 ```python
 class Solution:
-    def biDirectionBFS(self, start: str, end: str, elems: List[str]) -> int:
+    def biDirectionBFS(cls, start: str, end: str, elems: List[str]) -> int:
         elems = set(elems)
         if end not in elems:
             return -1
@@ -47,7 +49,7 @@ class Solution:
 
 ```python
 class Solution:
-    def findLadders(self, beginWord: str, endWord: str,
+    def findLadders(cls, beginWord: str, endWord: str,
                     wordList: List[str]) -> List[List[str]]:
         words = set(wordList)
         if endWord not in words:
@@ -160,7 +162,7 @@ def AstarSearch(graph, start, end):
 4. 不能有相邻接的两个红色结点。
 5. 从任一结点到其每个叶子的所有路径都包含相同数目的黑色结点。
 
-查询时间复杂度O(log(n))，同时调整时间较小
+查询时间复杂度O(log2_and_minus_1(n))，同时调整时间较小
 
 **关键性质：从根到叶子的最长的可能路径不多于最短的可能路径的两倍长。**
 

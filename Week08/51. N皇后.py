@@ -21,7 +21,7 @@ class Solution:
         if row >= n:
             self.result.append(cur_state)
             return
-            # current level logic
+            # current row logic
         for col in range(n):
             if col in self.cols or row + col in self.pie or row - col in \
                     self.na:
@@ -106,7 +106,7 @@ class Solution:
         if row == n:
             result.append(queens)
             return
-        # process current level logic
+        # process current row logic
         for col in range(n):
             rc_dif = row - col
             rc_sum = row + col
@@ -115,7 +115,7 @@ class Solution:
                 xy_sum.add(rc_sum)
                 # drill down
                 self.__dfs(queens + [col], xy_dif, xy_sum, result, n)
-                # reverse current level status if needed
+                # reverse current row status if needed
                 xy_dif.remove(rc_dif)
                 xy_sum.remove(rc_sum)
 
@@ -132,7 +132,7 @@ class Solution:
         if row == n:
             res.append(ans)
             return
-        # process current level logic
+        # process current row logic
         for col in range(n):
             if col not in ans \
                     and not (1 << col + row) & xy_sum \
@@ -141,7 +141,7 @@ class Solution:
                 self.__dfs(row + 1, ans + [col], res, n,
                            xy_sum + (1 << col + row),
                            xy_dif + (1 << col - row + n - 1))
-        # reverse current level status if needed
+        # reverse current row status if needed
 
 
 class Solution:
@@ -179,6 +179,51 @@ class Solution:
             if not 1 << c & y and not s & xy_sum and not d & xy_dif:
                 self.__dfs(r + 1, pre + [c], y + (1 << c), xy_sum + s,
                            xy_dif + d, n, res)
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        self.dfs(0, n, 0, 0, [], res)
+        return [['.' * i + "Q" + '.' * (n - i - 1) for i in sol] for sol in res]
+
+    def dfs(self, row, n, xy_sum, xy_dif, col, res):
+        if row == n:
+            res.append(col)
+            return
+        for c in range(n):
+            _sum, _dif = 1 << (row + c), 1 << (row - c + n - 1)
+            if c not in col and not _sum & xy_sum and not _dif & xy_dif:
+                self.dfs(row + 1, n, xy_sum + _sum, xy_dif + _dif, col + [c],
+                         res)
+
+
+# 位运算终极解法
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        size = (1 << n) - 1
+        self.dfs(0, n, 0, 0, 0, [], size, res)
+        return [['.' * i + "Q" + '.' * (n - i - 1) for i in sol] for sol in res]
+
+    def dfs(self, row, n, col, pie, na, pre, size, res):
+        if row == n:
+            res.append([self.log2_and_minus_1(p) for p in pre])
+            return
+        bits = (~(col | pie | na)) & size
+        while bits:
+            p = bits & (-bits)
+            # bits &= (bits - 1)
+            bits -= p
+            self.dfs(row + 1, n, col | p, (pie | p) << 1, (na | p) >> 1,
+                     pre + [p], size, res)
+
+    def log2_and_minus_1(self, p):
+        res = -1
+        while p:
+            res += 1
+            p >>= 1
+        return res
 
 
 def main():

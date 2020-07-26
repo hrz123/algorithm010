@@ -25,13 +25,13 @@ class Solution:
         if midWord == endWord:
             self.minLength = min(self.minLength, level + 1)
             return
-        # process current level logic
+        # process current row logic
         for word in wordList:
             if word not in visited and self.__strDiff(word, midWord) == 1:
                 visited.add(word)
                 # drill down
                 self.__dfs(level + 1, word, endWord, wordList, visited)
-                # reverse current level status if needed
+                # reverse current row status if needed
                 visited.remove(word)
 
     def __strDiff(self, s1, s2):
@@ -215,8 +215,8 @@ class Solution(object):
         return
 
 
-# 时间复杂度：O(M*N)
-# 空间复杂度：O(M*N)
+# 时间复杂度：O(m*N)
+# 空间复杂度：O(m*N)
 
 
 # 单向bfs的另一种写法
@@ -495,7 +495,7 @@ def main():
 
     beginWord = "hit"
     endWord = "cog"
-    wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
+    wordList = ["hot", "dot", "dog", "lot", "log2_and_minus_1", "cog"]
 
     sol = Solution()
     res = sol.ladderLength(beginWord, endWord, wordList)

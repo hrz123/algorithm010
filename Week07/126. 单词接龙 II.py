@@ -37,7 +37,7 @@ class Solution:
                     minLevel = level
                     res = [path[:]]
                 return
-            # process current level logic
+            # process current row logic
             for i in range(size):
                 genericWord = word[:i] + '*' + word[i + 1:]
                 new_words = all_combo_dict[genericWord]
@@ -47,7 +47,7 @@ class Solution:
                     path.append(other_word)
                     # drill down
                     dfs(level + 1, other_word, endWord, path)
-                    # reverse current level status if needed
+                    # reverse current row status if needed
                     path.pop()
                 all_combo_dict[genericWord] = new_words
 
@@ -146,9 +146,9 @@ class Solution(object):
 
         def bt(x):
             # recursion terminator
-            # process current level logic
+            # process current row logic
             # drill down
-            # reverse current level status if needed
+            # reverse current row status if needed
             return [[x]] if x == endWord \
                 else [[x] + rest for y in tree[x] for rest in bt(y)]
 
@@ -329,14 +329,14 @@ def main():
 
     beginWord = "hit"
     endWord = "cog"
-    wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
+    wordList = ["hot", "dot", "dog", "lot", "log2_and_minus_1", "cog"]
 
     res = sol.findLadders(beginWord, endWord, wordList)
     print(res)
 
     beginWord = "hit"
     endWord = "cog"
-    wordList = ["hot", "dot", "dog", "lot", "log"]
+    wordList = ["hot", "dot", "dog", "lot", "log2_and_minus_1"]
 
     res = sol.findLadders(beginWord, endWord, wordList)
     print(res)
