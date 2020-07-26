@@ -36,6 +36,20 @@ class Solution:
         return helper(root, 0)
 
 
+class Solution:
+    def sumNumbers(self, root: TreeNode) -> int:
+        def helper(root, pre):
+            if not root:
+                return 0
+            res = pre * 10 + root.val
+            # 算出该节点的最终表示结果
+            if not root.left and not root.right:
+                return res
+            return helper(root.left, res) + helper(root.right, res)
+
+        return helper(root, 0)
+
+
 def main():
     sol = Solution()
     a = TreeNode(1)
