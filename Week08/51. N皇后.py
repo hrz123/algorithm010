@@ -208,7 +208,7 @@ class Solution:
 
     def dfs(self, row, n, col, pie, na, pre, size, res):
         if row == n:
-            res.append([self.log2_and_minus_1(p) for p in pre])
+            res.append([self.log2_minus_1(p) for p in pre])
             return
         bits = (~(col | pie | na)) & size
         while bits:
@@ -218,7 +218,59 @@ class Solution:
             self.dfs(row + 1, n, col | p, (pie | p) << 1, (na | p) >> 1,
                      pre + [p], size, res)
 
-    def log2_and_minus_1(self, p):
+    def log2_minus_1(self, p):
+        res = -1
+        while p:
+            res += 1
+            p >>= 1
+        return res
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        size = (1 << n) - 1
+        self.dfs(0, n, 0, 0, 0, size, [], res)
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in res]
+
+    def dfs(self, row, n, col, pie, na, size, pre, res):
+        if row == n:
+            res.append([self.log2_minus_one(p) for p in pre])
+            return
+        bits = (~(col | pie | na)) & size
+        while bits:
+            p = bits & (-bits)
+            bits -= p
+            self.dfs(row + 1, n, col | p, (pie | p) << 1, (na | p) >> 1, size,
+                     pre + [p], res)
+
+    def log2_minus_one(self, p):
+        res = -1
+        while p:
+            res += 1
+            p >>= 1
+        return res
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        size = (1 << n) - 1
+        self.dfs(0, n, 0, 0, 0, size, [], res)
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in res]
+
+    def dfs(self, row, n, col, pie, na, size, pre, res):
+        if row == n:
+            res.append([self.log2_minus_one(p) for p in pre])
+            return
+        bits = (~(col | pie | na)) & size
+        while bits:
+            p = bits & (-bits)
+            bits -= p
+            self.dfs(row + 1, n, col | p, (pie | p) << 1, (na | p) >> 1,
+                     size, pre + [p], res)
+
+    def log2_minus_one(self, p):
         res = -1
         while p:
             res += 1

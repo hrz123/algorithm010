@@ -1,5 +1,9 @@
 # 236. 二叉树的最近公共祖先.py
 
+# 1. parent node --> 往上走，common node
+# 2. 遍历：Path1(root-->p), Path2(root-->q), 找分叉点
+# 3. DFS
+
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -103,11 +107,27 @@ class Solution:
 
         left = self.lowestCommonAncestor(root.left, p, q)
         right = self.lowestCommonAncestor(root.right, p, q)
-        if not left:
-            return right
-        if not right:
-            return left
-        return root
+        return root if left and right else left if left else right
+
+
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode',
+                             q: 'TreeNode') -> 'TreeNode':
+        if not root or root is p or root is q:
+            return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        return root if left and right else left if left else right
+
+
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode',
+                             q: 'TreeNode') -> 'TreeNode':
+        if not root or root == p or root == q:
+            return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        return root if left and right else left if left else right
 
 
 def main():

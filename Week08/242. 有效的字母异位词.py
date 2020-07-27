@@ -73,6 +73,33 @@ class Solution:
 
 
 # unicode的话就用256大小的数组存
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
+        counter = [0] * 256
+        for c in s:
+            counter[ord(c)] += 1
+        for c in t:
+            if counter[ord(c)] == 0:
+                return False
+            counter[ord(c)] -= 1
+        return True
+
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        count = [0] * 256
+        for c in s:
+            count[ord(c)] += 1
+        for c in t:
+            if not count[ord(c)]:
+                return False
+            count[ord(c)] -= 1
+        return True
 
 
 def main():
