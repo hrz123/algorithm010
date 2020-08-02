@@ -62,16 +62,16 @@ class Solution:
 
     # def partition1(self, nums, l, r):
     #     pivot = l
-    #     left = r
+    #     right = r
     #     i = l + 1
-    #     while i <= left:
+    #     while i <= right:
     #         if nums[i] > nums[pivot]:
-    #             nums[i], nums[left] = nums[left], nums[i]
-    #             left -= 1
+    #             nums[i], nums[right] = nums[right], nums[i]
+    #             right -= 1
     #         else:
     #             i += 1
-    #     nums[left], nums[pivot] = nums[pivot], nums[left]
-    #     return left
+    #     nums[right], nums[pivot] = nums[pivot], nums[right]
+    #     return right
 
 
 class Solution:
@@ -144,6 +144,107 @@ class Solution:
         return left
 
 
+class Solution:
+    def quickSort(self, nums: List[int]):
+        self.quickSortHelper(nums, 0, len(nums) - 1)
+
+    def quickSortHelper(self, nums, l, r):
+        if l >= r:
+            return
+        pivot = self.partition(nums, l, r)
+        self.quickSortHelper(nums, l, pivot - 1)
+        self.quickSortHelper(nums, pivot + 1, r)
+
+    def partition1(self, nums, l, r):
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] <= nums[pivot]:
+                nums[right], nums[i] = nums[i], nums[right]
+                right += 1
+        nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+    def partition(self, nums, l, r):
+        pivot = l
+        left = r
+        i = l + 1
+        while i <= left:
+            if nums[i] >= nums[pivot]:
+                nums[left], nums[i] = nums[i], nums[left]
+                left -= 1
+            else:
+                i += 1
+        nums[left], nums[pivot] = nums[pivot], nums[left]
+        return left
+
+
+class Solution:
+    def quickSort(self, nums: List[int]):
+        self.quickSortHelper(nums, 0, len(nums) - 1)
+
+    def quickSortHelper(self, nums, l, r):
+        if l >= r:
+            return
+        pivot = self.partition(nums, l, r)
+        self.quickSortHelper(nums, l, pivot - 1)
+        self.quickSortHelper(nums, pivot + 1, r)
+
+    def partition(self, nums, l, r):
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] <= nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+
+class Solution:
+    def quickSort(self, nums: List[int]):
+        return self.quickSortHelper(nums, 0, len(nums) - 1)
+
+    def quickSortHelper(self, nums, l, r):
+        if l >= r:
+            return
+        pivot = self.partition(nums, l, r)
+        self.quickSortHelper(nums, l, pivot - 1)
+        self.quickSortHelper(nums, pivot + 1, r)
+
+    def partition(self, nums, l, r):
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] <= nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[pivot], nums[right] = nums[right], nums[pivot]
+        return right
+
+
+class Solution:
+    def quickSort(self, nums: List[int]):
+        return self.quickSortHelper(nums, 0, len(nums) - 1)
+
+    def quickSortHelper(self, nums: List[int], l: int, r: int):
+        if l >= r:
+            return
+        pivot = self.partition(nums, l, r)
+        self.quickSortHelper(nums, l, pivot - 1)
+        self.quickSortHelper(nums, pivot + 1, r)
+
+    def partition(self, nums, l, r):
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] <= nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+
 def main():
     sol = Solution()
     nums = [3, 2, 4, 1, 5]
@@ -159,6 +260,14 @@ def main():
     print(nums)
 
     nums = [5, 4, 3, 2, 1]
+    sol.quickSort(nums)
+    print(nums)
+
+    nums = [5]
+    sol.quickSort(nums)
+    print(nums)
+
+    nums = []
     sol.quickSort(nums)
     print(nums)
 

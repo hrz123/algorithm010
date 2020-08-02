@@ -28,7 +28,7 @@ class Solution:
             else:
                 # 如果不为0，则更新当前结点的值为地雷数量
                 board[x][y] = str(count)
-        elif board[x][y] == 'M':
+        elif board[x][y] == 'm':
             board[x][y] = 'X'
 
     def getAdjacentMines(self, board, x, y):
@@ -40,7 +40,7 @@ class Solution:
             newY = y + self.dy[i]
             if newX < 0 or newX >= r or newY < 0 or newY >= c:
                 continue
-            if board[newX][newY] == 'M':
+            if board[newX][newY] == 'm':
                 count += 1
         return count
 
@@ -55,8 +55,8 @@ class Solution:
         m, n = len(board), len(board[0])
         i, j = click[0], click[1]
 
-        # If a mine ('M') is revealed, then the game is over - change it to 'X'.
-        if board[i][j] == 'M':
+        # If a mine ('m') is revealed, then the game is over - change it to 'X'.
+        if board[i][j] == 'm':
             board[i][j] = 'X'
             return board
 
@@ -75,7 +75,7 @@ class Solution:
 
         for d in directions:
             ni, nj = i + d[0], j + d[1]
-            if 0 <= ni < m and 0 <= nj < n and board[ni][nj] == 'M':
+            if 0 <= ni < m and 0 <= nj < n and board[ni][nj] == 'm':
                 mine_count += 1
 
         if mine_count == 0:
@@ -109,7 +109,7 @@ class Solution:
     def __dfs(self, board, row, col, x, y):
         if x < 0 or x >= row or y < 0 or y >= col:
             return
-        if board[x][y] == 'M':
+        if board[x][y] == 'm':
             board[x][y] = 'X'
         elif board[x][y] == 'E':
             # 如果当前为E，才进行判断是否是要递归相邻节点
@@ -128,7 +128,7 @@ class Solution:
         for i in range(8):
             newx = x + self.dx[i]
             newy = y + self.dy[i]
-            if 0 <= newx < row and 0 <= newy < col and board[newx][newy] == 'M':
+            if 0 <= newx < row and 0 <= newy < col and board[newx][newy] == 'm':
                 count += 1
         return count
 
@@ -158,7 +158,7 @@ class Solution:
                     self.__dfs(board, x + self.dx[i], y + self.dy[i], row, col)
             else:
                 board[x][y] = str(count)
-        elif board[x][y] == 'M':
+        elif board[x][y] == 'm':
             board[x][y] = 'X'
 
     def getAdjacentMines(self, board, x, y, row, col):
@@ -167,7 +167,7 @@ class Solution:
             newx = x + self.dx[i]
             newy = y + self.dy[i]
 
-            if 0 <= newx < row and 0 <= newy < col and board[newx][newy] == 'M':
+            if 0 <= newx < row and 0 <= newy < col and board[newx][newy] == 'm':
                 count += 1
         return count
 
@@ -189,7 +189,7 @@ class Solution:
         if x < 0 or x >= row or y < 0 or y >= col:
             return
 
-        if board[x][y] == 'M':
+        if board[x][y] == 'm':
             board[x][y] = 'X'
         elif board[x][y] == 'E':
             board[x][y] = 'B'
@@ -207,7 +207,7 @@ class Solution:
         for i in range(8):
             newx, newy = x + self.dx[i], y + self.dy[i]
 
-            if 0 <= newx < row and 0 <= newy < col and board[newx][newy] == 'M':
+            if 0 <= newx < row and 0 <= newy < col and board[newx][newy] == 'm':
                 count += 1
         return count
 
@@ -238,7 +238,7 @@ class Solution:
             else:
                 board[i][j] = str(mines)
 
-        elif board[i][j] == 'M':
+        elif board[i][j] == 'm':
             board[i][j] = 'X'
 
     def __getAdjacentMines(self, board, i, j, m, n):
@@ -246,7 +246,7 @@ class Solution:
         for k in range(8):
             if 0 <= i + self.dx[k] < m \
                     and 0 <= j + self.dy[k] < n \
-                    and board[i + self.dx[k]][j + self.dy[k]] == 'M':
+                    and board[i + self.dx[k]][j + self.dy[k]] == 'm':
                 count += 1
         return count
 
@@ -267,7 +267,7 @@ class Solution:
     def __dfs_update(self, board, m, n, x, y):
         if x < 0 or x >= m or y < 0 or y >= n:
             return
-        if board[x][y] == 'M':
+        if board[x][y] == 'm':
             board[x][y] = 'X'
         elif board[x][y] == 'E':
             mines = self.__get_adjacent_mines(board, m, n, x, y)
@@ -284,7 +284,7 @@ class Solution:
         for k in range(8):
             x_new = x + self.dx[k]
             y_new = y + self.dy[k]
-            if 0 <= x_new < m and 0 <= y_new < n and board[x_new][y_new] == 'M':
+            if 0 <= x_new < m and 0 <= y_new < n and board[x_new][y_new] == 'm':
                 count += 1
         return count
 
@@ -293,7 +293,7 @@ def main():
     sol = Solution()
 
     board = [['E', 'E', 'E', 'E', 'E'],
-             ['E', 'E', 'M', 'E', 'E'],
+             ['E', 'E', 'm', 'E', 'E'],
              ['E', 'E', 'E', 'E', 'E'],
              ['E', 'E', 'E', 'E', 'E']]
     click = [3, 0]
@@ -302,7 +302,7 @@ def main():
     print(res)
 
     board = [['B', '1', 'E', '1', 'B'],
-             ['B', '1', 'M', '1', 'B'],
+             ['B', '1', 'm', '1', 'B'],
              ['B', '1', '1', '1', 'B'],
              ['B', 'B', 'B', 'B', 'B']]
     click = [1, 2]
@@ -311,24 +311,24 @@ def main():
     print(res)
 
     board = [["E", "E", "E", "E", "E", "E", "E", "E"],
-             ["E", "E", "E", "E", "E", "E", "E", "M"],
-             ["E", "E", "M", "E", "E", "E", "E", "E"],
-             ["M", "E", "E", "E", "E", "E", "E", "E"],
+             ["E", "E", "E", "E", "E", "E", "E", "m"],
+             ["E", "E", "m", "E", "E", "E", "E", "E"],
+             ["m", "E", "E", "E", "E", "E", "E", "E"],
              ["E", "E", "E", "E", "E", "E", "E", "E"],
              ["E", "E", "E", "E", "E", "E", "E", "E"],
              ["E", "E", "E", "E", "E", "E", "E", "E"],
-             ["E", "E", "M", "M", "E", "E", "E", "E"]]
+             ["E", "E", "m", "m", "E", "E", "E", "E"]]
 
     click = [0, 0]
 
     expect = [["B", "B", "B", "B", "B", "B", "1", "E"],
-              ["B", "1", "1", "1", "B", "B", "1", "M"],
-              ["1", "2", "M", "1", "B", "B", "1", "1"],
-              ["M", "2", "1", "1", "B", "B", "B", "B"],
+              ["B", "1", "1", "1", "B", "B", "1", "m"],
+              ["1", "2", "m", "1", "B", "B", "1", "1"],
+              ["m", "2", "1", "1", "B", "B", "B", "B"],
               ["1", "1", "B", "B", "B", "B", "B", "B"],
               ["B", "B", "B", "B", "B", "B", "B", "B"],
               ["B", "1", "2", "2", "1", "B", "B", "B"],
-              ["B", "1", "M", "M", "1", "B", "B", "B"]]
+              ["B", "1", "m", "m", "1", "B", "B", "B"]]
 
     res = sol.updateBoard(board, click)
     print(res)

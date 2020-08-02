@@ -67,6 +67,26 @@ class Solution:
         return res
 
 
+class Solution:
+    def totalNQueens(self, n: int) -> int:
+        res = 0
+        size = (1 << n) - 1
+
+        def dfs(row, col, pie, na):
+            nonlocal res
+            if row == n:
+                res += 1
+                return
+            bits = (~(col | pie | na)) & size
+            while bits:
+                p = bits & (-bits)
+                bits -= p
+                dfs(row + 1, col | p, (pie | p) << 1, (na | p) >> 1)
+
+        dfs(0, 0, 0, 0)
+        return res
+
+
 def main():
     sol = Solution()
 

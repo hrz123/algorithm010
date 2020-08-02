@@ -28,7 +28,7 @@ class Solution:
         # recursion terminator
         if i < 0 or i >= row or j < 0 or j >= col or grid[i][j] == '0':
             return
-        # process current level logic
+        # process current row logic
         grid[i][j] = '0'
         # drill down
         for k in range(4):
@@ -95,14 +95,14 @@ class Solution:
             if r < 0 or r >= m or c < 0 or c >= n or grid[r][c] != '1':
                 return
 
-            # process current level logic
+            # process current row logic
             grid[r][c] = 0
 
             # drill down
             for i in range(4):
                 dfs_marking(r + self.dx[i], c + self.dy[i])
 
-            # reverse current level status if needed
+            # reverse current row status if needed
 
         res = 0
         for i in range(m):

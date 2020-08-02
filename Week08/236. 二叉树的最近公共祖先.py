@@ -25,7 +25,7 @@ class TreeNode:
 # 具体思路
 # 1.如果当前节点root等于NULL，则直接返回NULL
 # 2.如果root等于p或者q，则这棵树一定返回p或者q
-# 3.然后递归左右子树，因为是递归，使用函数后可认为左右子树已经算出结果，用 left 和 right 表示
+# 3.然后递归左右子树，因为是递归，使用函数后可认为左右子树已经算出结果，用 right 和 right 表示
 # 4.此时若left为空，那最终结果只要看right；若right为空，那最终结果只要看left
 # 5.如果left和right都非空，因为只给了p和q两个结点，都非空，说明一边一个
 #   因此root是它们的最近公共祖先
@@ -129,6 +129,9 @@ class Solution:
         right = self.lowestCommonAncestor(root.right, p, q)
         return root if left and right else left if left else right
 
+
+# 想法：如果p和q可以不在二叉树中呢？
+# 要写一个函数
 
 def main():
     root = [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4]

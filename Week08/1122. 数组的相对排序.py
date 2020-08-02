@@ -48,6 +48,47 @@ class Solution:
         return sorted(arr1, key=lambda a: k.get(a, 1000 + a))
 
 
+# 以下为自我练习
+class Solution:
+    def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
+        counter = [0] * 1001
+        for n in arr1:
+            counter[n] += 1
+
+        res = [0] * len(arr1)
+        i = 0
+        for n in arr2:
+            while counter[n] > 0:
+                res[i] = n
+                i += 1
+                counter[n] -= 1
+        for n in range(1001):
+            while counter[n] > 0:
+                res[i] = n
+                i += 1
+                counter[n] -= 1
+        return res
+
+
+class Solution:
+    def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
+        counter = [0] * 1001
+        for n in arr1:
+            counter[n] += 1
+
+        res = [0] * len(arr1)
+        i = 0
+        for n in arr2:
+            res[i:i + counter[n]] = [n] * counter[n]
+            i += counter[n]
+            counter[n] = 0
+        for n in range(1001):
+            if counter[n]:
+                res[i:i + counter[n]] = [n] * counter[n]
+                i += counter[n]
+        return res
+
+
 def main():
     sol = Solution()
 

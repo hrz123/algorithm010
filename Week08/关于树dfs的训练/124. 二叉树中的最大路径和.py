@@ -86,6 +86,64 @@ class Solution:
         return _max
 
 
+# 最大路径和等于
+# 左侧的最大路径和，右边的最大路径和，root的值加上左边从根节点延伸的最大值 右边从根节点延伸的最大值
+# 我们要构造的函数是 左边从根节点延伸到最大值的函数
+# 等于max(root.val + max(right + right), 0)
+# 同时更新一个全局的变量
+
+class Solution:
+    def maxPathSum(self, root: TreeNode) -> int:
+        res = float('-inf')
+
+        def dfs(root):
+            nonlocal res
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            res = max(res, left + right + root.val)
+            return max(max(left, right) + root.val, 0)
+
+        print(dfs(root))
+        return res
+
+
+class Solution:
+    def maxPathSum(self, root: TreeNode) -> int:
+        res = float('-inf')
+
+        def dfs(root):
+            nonlocal res
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            res = max(res, left + right + root.val)
+            return max(0, max(left, right) + root.val)
+
+        dfs(root)
+        return res
+
+
+# 以下为自我练习
+class Solution:
+    def maxPathSum(self, root: TreeNode) -> int:
+        res = float('-inf')
+
+        def dfs(root):
+            nonlocal res
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            res = max(res, left + right + root.val)
+            return max(max(left, right) + root.val, 0)
+
+        dfs(root)
+        return res
+
+
 def main():
     sol = Solution()
 
