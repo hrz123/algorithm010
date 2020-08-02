@@ -21,8 +21,29 @@ class Solution:
         return arr[i]
 
 
+class Solution:
+    def getWinner(self, arr: List[int], k: int) -> int:
+        if k >= len(arr) - 1:
+            return max(arr)
+        cur, tmp = arr[0], k
+        for i in range(1, len(arr)):
+            if cur > arr[i]:
+                tmp -= 1
+            else:
+                cur = arr[i]
+                tmp = k - 1
+            if tmp == 0:
+                return cur
+        return cur
+
+
 def main():
-    pass
+    sol = Solution()
+
+    arr = [2, 1, 3, 5, 4, 6, 7]
+    k = 2
+    res = sol.getWinner(arr, k)
+    print(res)
 
 
 if __name__ == '__main__':
