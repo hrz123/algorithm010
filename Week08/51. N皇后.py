@@ -329,6 +329,25 @@ class Solution:
         return res
 
 
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        mask = (1 << n) - 1
+        self._dfs(0, n, 0, 0, 0, mask, [], res)
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in res]
+
+    def _dfs(self, row, n, col, pie, na, mask, pre, res):
+        if row == n:
+            res.append((c.bit_length() - 1 for c in pre))
+            return
+        bits = (~(col | pie | na)) & mask
+        while bits:
+            p = bits & (-bits)
+            bits -= p
+            self._dfs(row + 1, n, col | p, (pie | p) << 1, (na | p) >> 1, mask,
+                      pre + [p], res)
+
+
 def main():
     n = 4
     sol = Solution()

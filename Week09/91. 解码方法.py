@@ -1,4 +1,5 @@
 # 91. 解码方法.py
+from functools import lru_cache
 
 
 # 定义子问题
@@ -66,6 +67,47 @@ class Solution:
         return dp1
 
 
+class Solution:
+    @lru_cache(None)
+    def numDecodings(self, s: str) -> int:
+        if len(s) == 0:
+            return 1
+
+        cnt = 0
+
+        if s[0] != '0':
+            cnt += self.numDecodings(s[1:])
+        if 10 <= int(s[0:2]) <= 26:
+            cnt += self.numDecodings(s[2:])
+        return cnt
+
+
+class Solution:
+    @lru_cache(None)
+    def numDecodings(self, s: str) -> int:
+        if len(s) == 0:
+            return 1
+        cnt = 0
+        if s[0] != '0':
+            cnt += self.numDecodings(s[1:])
+        if 10 <= int(s[:2]) <= 26:
+            cnt += self.numDecodings(s[2:])
+        return cnt
+
+
+# dp
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        if s[0] == '0':
+            return 0
+        n = len(s)
+        f0, f1 = 1, 1
+        for i in range(1, n):
+            f0, f1 = f1, (0 if s[i] == '0' else f1) \
+                     + (f0 if 10 <= int(s[i - 1:i + 1]) <= 26 else 0)
+        return f1
+
+
 def main():
     sol = Solution()
 
@@ -74,6 +116,10 @@ def main():
     print(res)
 
     s = "12"
+    res = sol.numDecodings(s)
+    print(res)
+
+    s = "10"
     res = sol.numDecodings(s)
     print(res)
 
