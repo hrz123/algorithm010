@@ -258,13 +258,13 @@ class Solution:
 
     def partition(self, nums, l, r):
         pivot = r
-        right = l
+        counter = l
         for i in range(l, r):
             if nums[i] <= nums[pivot]:
-                nums[i], nums[right] = nums[right], nums[i]
-                right += 1
-        nums[right], nums[pivot] = nums[pivot], nums[right]
-        return right
+                nums[i], nums[counter] = nums[counter], nums[i]
+                counter += 1
+        nums[counter], nums[pivot] = nums[pivot], nums[counter]
+        return counter
 
 
 def main():
