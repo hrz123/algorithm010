@@ -24,17 +24,17 @@ class Solution:
         nums[right], nums[pivot] = nums[pivot], nums[right]
         return right
 
-    # def partition(self, nums, l, r):
+    # def partition(self, arr, l, r):
     #     pivot = l
     #     p_larger = r
     #     i = l + 1
     #     while i <= p_larger:
-    #         if nums[i] >= nums[pivot]:
-    #             nums[i], nums[p_larger] = nums[p_larger], nums[i]
+    #         if arr[i] >= arr[pivot]:
+    #             arr[i], arr[p_larger] = arr[p_larger], arr[i]
     #             p_larger -= 1
     #         else:
     #             i += 1
-    #     nums[pivot], nums[p_larger] = nums[p_larger], nums[pivot]
+    #     arr[pivot], arr[p_larger] = arr[p_larger], arr[pivot]
     #     return p_larger
 
 
@@ -60,17 +60,17 @@ class Solution:
         nums[right], nums[pivot] = nums[pivot], nums[right]
         return right
 
-    # def partition1(self, nums, l, r):
+    # def partition1(self, arr, l, r):
     #     pivot = l
     #     right = r
     #     i = l + 1
     #     while i <= right:
-    #         if nums[i] > nums[pivot]:
-    #             nums[i], nums[right] = nums[right], nums[i]
+    #         if arr[i] > arr[pivot]:
+    #             arr[i], arr[right] = arr[right], arr[i]
     #             right -= 1
     #         else:
     #             i += 1
-    #     nums[right], nums[pivot] = nums[pivot], nums[right]
+    #     arr[right], arr[pivot] = arr[pivot], arr[right]
     #     return right
 
 

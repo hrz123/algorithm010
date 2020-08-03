@@ -3,12 +3,24 @@ from typing import List
 
 
 class Solution:
-    def bubbleSort(self, nums: List[int]):
-        n = len(nums)
+    def bubbleSort(self, arr: List[int]):
+        n = len(arr)
         for i in range(n - 1, 0, -1):
             for j in range(i):
-                if nums[j] > nums[j + 1]:
-                    nums[j], nums[j + 1] = nums[j + 1], nums[j]
+                if arr[j] > arr[j + 1]:
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+
+class Solution:
+    def bubbleSort(self, arr: List[int]):
+        n = len(arr)
+        for i in range(n - 1):
+            for j in range(n - 1 - i):
+                if arr[j] > arr[j + 1]:
+                    t = arr[j + 1]
+                    arr[j + 1] = arr[j]
+                    arr[j] = t
+        return arr
 
 
 def main():

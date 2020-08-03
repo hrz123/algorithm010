@@ -3,14 +3,28 @@ from typing import List
 
 
 class Solution:
-    def selectionSort(self, nums: List[int]):
-        n = len(nums)
+    def selectionSort(self, arr: List[int]):
+        n = len(arr)
         for i in range(n - 1):
-            smallest = i
+            min_index = i
             for j in range(i + 1, n):
-                if nums[j] < nums[smallest]:
-                    smallest = j
-            nums[i], nums[smallest] = nums[smallest], nums[i]
+                if arr[j] < arr[min_index]:
+                    min_index = j
+            arr[i], arr[min_index] = arr[min_index], arr[i]
+
+
+class Solution:
+    def selectionSort(self, arr: List[int]):
+        n = len(arr)
+        for i in range(n - 1):
+            min_index = i
+            for j in range(i + 1, n):
+                if arr[j] < arr[min_index]:
+                    min_index = j
+            t = arr[i]
+            arr[i] = arr[min_index]
+            arr[min_index] = t
+        return arr
 
 
 def main():
