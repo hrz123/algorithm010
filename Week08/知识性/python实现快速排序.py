@@ -245,6 +245,28 @@ class Solution:
         return right
 
 
+class Solution:
+    def quickSort(self, nums: List[int]):
+        return self.quickSortHelper(nums, 0, len(nums) - 1)
+
+    def quickSortHelper(self, nums: List[int], l: int, r: int):
+        if l >= r:
+            return
+        pivot = self.partition(nums, l, r)
+        self.quickSortHelper(nums, l, pivot - 1)
+        self.quickSortHelper(nums, pivot + 1, r)
+
+    def partition(self, nums, l, r):
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] <= nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+
 def main():
     sol = Solution()
     nums = [3, 2, 4, 1, 5]
