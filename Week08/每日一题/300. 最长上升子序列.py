@@ -75,16 +75,35 @@ class Solution:
         return len(stack)
 
 
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for n in nums:
+            if not stack or stack[-1] < n:
+                stack.append(n)
+            l, r = 0, len(stack) - 1
+            while l < r:
+                mid = l + ((r - l) >> 1)
+                if stack[mid] < n:
+                    l = mid + 1
+                else:
+                    r = mid
+            stack[l] = n
+        return len(stack)
+
+
 def main():
     sol = Solution()
 
     nums = [10, 9, 2, 5, 3, 7, 101, 18]
     res = sol.lengthOfLIS(nums)
     print(res)
+    # 4
 
     nums = [10, 9, 2, 5, 3, 4]
     res = sol.lengthOfLIS(nums)
     print(res)
+    # 3
 
 
 if __name__ == '__main__':
