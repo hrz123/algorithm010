@@ -58,10 +58,40 @@ class Solution:
         if n == 0:
             return 1
         res = 0
-        for i in range(n // 2):
+        for i in range(n >> 1):
             res += 2 * self.numTrees(i) * self.numTrees(n - 1 - i)
         if n & 1:
-            res += self.numTrees(n // 2) ** 2
+            res += self.numTrees(n >> 1) ** 2
+        return res
+
+
+class Solution:
+    memo = {}
+
+    def numTrees(self, n: int) -> int:
+        if n == 0:
+            return 1
+        if n in self.memo:
+            return self.memo[n]
+        res = 0
+        for i in range(n >> 1):
+            res += 2 * self.numTrees(i) * self.numTrees(n - i - 1)
+        if n & 1:
+            res += self.numTrees(n >> 1) * self.numTrees(n >> 1)
+        self.memo[n] = res
+        return res
+
+
+class Solution:
+    memo = {0: 1, 1: 1}
+
+    def numTrees(self, n: int) -> int:
+        if n in self.memo:
+            return self.memo[n]
+        res = 0
+        for i in range(n):
+            res += self.numTrees(i) * self.numTrees(n - i - 1)
+        self.memo[n] = res
         return res
 
 

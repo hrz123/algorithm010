@@ -42,7 +42,6 @@ class Solution:
                 node = node.left
             node = stack.pop()
             node = node.right
-        print([n.val for n in preorderList])
         size = len(preorderList)
         for i in range(1, size):
             prev, curr = preorderList[i - 1], preorderList[i]
@@ -77,6 +76,120 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
+        cur = root
+        while cur:
+            if cur.left:
+                p = cur.left
+                while p.right:
+                    p = p.right
+                p.right = cur.right
+                cur.right = cur.left
+                cur.left = None
+            cur = cur.right
+
+
+# 以下为自我练习
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        cur = root
+        while cur:
+            if cur.left:
+                p = cur.left
+                while p.right:
+                    p = p.right
+                p.right = cur.right
+                cur.right = cur.left
+                cur.left = None
+            cur = cur.right
+
+
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        cur = root
+        while cur:
+            if cur.left:
+                p = cur.left
+                while p.right:
+                    p = p.right
+                p.right = cur.right
+                cur.right = cur.left
+                cur.left = None
+            cur = cur.right
+
+
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+        stack = []
+        preorderlist = []
+        node = root
+        while node or stack:
+            while node:
+                stack.append(node)
+                preorderlist.append(node)
+                node = node.left
+            node = stack.pop()
+            node = node.right
+        size = len(preorderlist)
+        for i in range(size - 1):
+            prev, cur = preorderlist[i], preorderlist[i + 1]
+            prev.left = None
+            prev.right = cur
+
+
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+        cur = root
+        while cur:
+            if cur.left:
+                p = cur.left
+                while p.right:
+                    p = p.right
+                p.right = cur.right
+                cur.right = cur.left
+                cur.left = None
+            cur = cur.right
+
+
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+        if not root:
+            return
+        stack = [root]
+        prev = None
+        while stack:
+            node = stack.pop()
+            if prev:
+                prev.left = None
+                prev.right = node
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+            prev = node
+
+
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+        cur = root
+        while cur:
+            if cur.left:
+                p = cur.left
+                while p.right:
+                    p = p.right
+                p.right = cur.right
+                cur.right = cur.left
+                cur.left = None
+            cur = cur.rightss
+
+
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
         cur = root
         while cur:
             if cur.left:

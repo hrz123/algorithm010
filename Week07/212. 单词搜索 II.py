@@ -12,7 +12,7 @@ class Solution:
             node['#'] = True
 
         def search(i, j, node, pre,
-                   visited):  # (i,j)当前坐标，node当前trie树结点，pre前面的字符串，visited已访问坐标
+                   visited):  # (start,j)当前坐标，node当前trie树结点，pre前面的字符串，visited已访问坐标
             if '#' in node:  # 已有字典树结束
                 res.add(pre)  # 添加答案
             for (di, dj) in ((-1, 0), (1, 0), (0, -1), (0, 1)):
@@ -42,7 +42,7 @@ class Solution:
             node['#'] = True
 
         def search(i, j, node, pre, visited):
-            # i, j当前坐标，node当前trie结点，pre前面的字符串，visited已访问坐标
+            # start, j当前坐标，node当前trie结点，pre前面的字符串，visited已访问坐标
             if '#' in node:
                 res.add(pre)
             for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0)):
@@ -187,6 +187,35 @@ class Solution:
                          board, h, w)
 
 
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        trie = {}
+        for w in words:
+            node = trie
+            for c in w:
+                node = node.setdefault(c, {})
+            node['#'] = True
+        res = set()
+        h, w = len(board), len(board[0])
+        for i in range(h):
+            for j in range(w):
+                if board[i][j] in trie:
+                    self.dfs(i, j, board[i][j], trie[board[i][j]], res, h, w,
+                             board, {(i, j)})
+        return list(res)
+
+    def dfs(self, i, j, pre, node, res, h, w, board, visited):
+        if '#' in node:
+            res.add(pre)
+        for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+            _i, _j = i + dx, j + dy
+            if -1 < _i < h and -1 < _j < w \
+                    and (_i, _j) not in visited \
+                    and board[_i][_j] in node:
+                self.dfs(_i, _j, pre + board[_i][_j], node[board[_i][_j]],
+                         res, h, w, board, visited | {(_i, _j)})
+
+
 def main():
     sol = Solution()
 
@@ -194,8 +223,8 @@ def main():
     board = [
         ['o', 'a', 'a', 'n'],
         ['e', 't', 'a', 'e'],
-        ['i', 'h', 'k', 'row'],
-        ['i', 'f', 'l', 'v']
+        ['start', 'h', 'k', 'row'],
+        ['start', 'f', 'l', 'v']
     ]
     res = sol.findWords(board, words)
     print(res)

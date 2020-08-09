@@ -39,8 +39,8 @@ from typing import List
 # 定义递推方程
 # 这道题的子问题应该这么定义
 # 前k个硬币凑齐i金额的组合数等于前k-1个硬币凑齐i金额的组合数和前k个硬币凑齐i-coins[k]金额的组合数
-# f(k, i) = f(k-1, i) + f(k, i - coins[k-1])  if i >= coins[k]
-# f(k, i) = f(k-1, i)                       else
+# f(k, start) = f(k-1, start) + f(k, start - coins[k-1])  if start >= coins[k]
+# f(k, start) = f(k-1, start)                       else
 # f(0, 0) = 1
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
@@ -60,9 +60,9 @@ class Solution:
 # 之前爬楼梯问题中，我们将一维数组降维成点。这里问题能不能也试着降低一个维度，只用一个数组进行表示呢
 # 这个时候，我们就需要重新定义我们的子问题了。
 # 此时的子问题是，对于硬币从0到k，我们必须使用第k个硬币的时候，当前金额的组合数。
-# 因此状态数组DP[i]表示的是对于第k个硬币能凑的组合数。
+# 因此状态数组DP[start]表示的是对于第k个硬币能凑的组合数。
 # 状态转移方程如下
-# dp[i] = dp[i] + dp[i-coins[k]]
+# dp[start] = dp[start] + dp[start-coins[k]]
 # 于是得到solution
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
@@ -112,11 +112,20 @@ class Solution:
         return dp[amount]
 
 
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [1] + [0] * amount
+        for c in coins:
+            for i in range(1, amount + 1):
+                dp[i] += dp[i - c] if i >= c else 0
+        return dp[amount]
+
+
 def main():
     sol = Solution()
 
     amount = 5
-    coins = [1, 2, 5]
+    coins = [5, 2, 1]
     res = sol.change(amount, coins)
     print(res)
 

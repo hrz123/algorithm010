@@ -49,16 +49,47 @@ class Solution:
         child = 0
 
         while child < len(g) and cookie < len(s):
-            if s[cookie] >= g[child]:
+            if g[child] <= s[cookie]:
                 child += 1
             cookie += 1
         return child
 
 
+class Solution:
+    def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        g.sort()
+        s.sort()
+        i = j = 0
+        while i < len(g) and j < len(s):
+            if g[i] <= s[j]:
+                i += 1
+            j += 1
+        return i
+
+
+class Solution:
+    def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        g.sort()
+        s.sort()
+        i, j = 0, 0
+        m, n = len(g), len(s)
+        while i < n and j < m:
+            if g[j] <= s[i]:
+                j += 1
+            i += 1
+        return j
+
+
 def main():
+    sol = Solution()
+
     g = [1, 2, 3]
     s = [1, 2, 3]
-    sol = Solution()
+    res = sol.findContentChildren(g, s)
+    print(res)
+
+    g = [1, 2]
+    s = [1, 2, 3]
     res = sol.findContentChildren(g, s)
     print(res)
 

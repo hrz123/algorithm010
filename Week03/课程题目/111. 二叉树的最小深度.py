@@ -12,15 +12,15 @@ class TreeNode:
 
 
 # 递归
-# helper(level, node)
+# helper(row, node)
 # 终止条件
-# if not node.left or not node.right
-#      return level
-# level += 1
-# left = helper(level, node.left)
-# right = helper(level, node.right)
-# reverse current level status
-# return 1 + min(left, right)
+# if not node.r or not node.r
+#      return row
+# row += 1
+# r = helper(row, node.r)
+# r = helper(row, node.r)
+# reverse current row status
+# return 1 + min(r, r)
 class Solution:
     def minDepth(self, root: TreeNode) -> int:
         if not root:
@@ -39,7 +39,7 @@ class Solution:
 
 
 # 时间复杂度：O(n)，遍历了所有的点
-# 空间复杂度：O(log(n))，树的高度
+# 空间复杂度：O(log2_minus_1(n))，树的高度
 
 # dfs递归
 class Solution:
@@ -55,7 +55,7 @@ class Solution:
             if not node.left and not node.right:
                 if level < min_depth:
                     min_depth = level
-            # process current level logic
+            # process current row logic
             level += 1
             # drill down
             if node.left:
@@ -161,6 +161,7 @@ class Solution:
                     deq.append(root.right)
 
 
+# 因为这道题认为根节点不是叶子节点，所以很麻烦
 class Solution:
     def minDepth(self, root: TreeNode) -> int:
         if not root:
@@ -172,6 +173,77 @@ class Solution:
         if not root.right:
             return 1 + self.minDepth(root.left)
         return 1 + min(self.minDepth(root.left), self.minDepth(root.right))
+
+
+# 这道最适合的解法应该是bfs实现的层次遍历，递归本质上是dfs
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        deq = deque([root])
+        res = 0
+        while deq:
+            res += 1
+            for _ in range(len(deq)):
+                root = deq.popleft()
+                if not (root.left or root.right):
+                    return res
+                if root.left:
+                    deq.append(root.left)
+                if root.right:
+                    deq.append(root.right)
+
+
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        stack = [(root, 1)]
+        res = float('inf')
+        while stack:
+            root, level = stack.pop()
+            if not (root.left or root.right):
+                res = min(res, level)
+            if root.left:
+                stack.append((root.left, level + 1))
+            if root.right:
+                stack.append((root.right, level + 1))
+        return res
+
+
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        res = float('inf')
+
+        def dfs(level, root):
+            nonlocal res
+            if not (root.left or root.right):
+                res = min(res, level)
+                return
+            if root.left:
+                dfs(level + 1, root.left)
+            if root.right:
+                dfs(level + 1, root.right)
+
+        dfs(1, root)
+        return res
+
+
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        deq = deque([(root, 1)])
+        while deq:
+            root, level = deq.popleft()
+            if not root.left and not root.right:
+                return level
+            if root.left:
+                deq.append((root.left, level + 1))
+            if root.right:
+                deq.append((root.right, level + 1))
 
 
 def main():

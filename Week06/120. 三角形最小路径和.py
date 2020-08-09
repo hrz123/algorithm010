@@ -2,12 +2,12 @@
 from typing import List
 
 
-# 1. brute-force, 递归，n层：left or right: 2^n
+# 1. brute-force, 递归，n层：r or r: 2^n
 
 # 2.DP
-# a.重复性（分治） problem(i, j) = min(sub(i+1, j), sub(i+1, j+1)) + a[i, j]
-# b.定义状态数组：f(i, j)
-# c.DP方程：f(i, j) = min(f(i+1, j), f(i+1, j+1)) + a[i, j]
+# a.重复性（分治） problem(start, j) = min(sub(start+1, j), sub(start+1, j+1)) + a[start, j]
+# b.定义状态数组：f(start, j)
+# c.DP方程：f(start, j) = min(f(start+1, j), f(start+1, j+1)) + a[start, j]
 #   初始状态： f(n-1, j) = a[n-1, j]
 
 class Solution:
@@ -48,15 +48,67 @@ class Solution:
         return dp[0]
 
 
+# 子问题
+# 定义状态数组：f(start, j) = min(f(start+1, j), f(start+1, j+1)) + a[start,j]
+# 返回f(0, 0)
+# 递推方程
+# f(start, j) = min(f(start+1, j), f(start+1, j+1)) + a[start,j]
+# 初始状态
+# f(n-1, j) = a[n-1, j]
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        n = len(triangle)
+        dp = triangle[n - 1][:]
+
+        for i in range(n - 2, -1, -1):
+            for j in range(i + 1):
+                dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j]
+
+        return dp[0]
+
+
+# 定义子问题
+# 到这一层的所有结点的最小路径和
+# 定义状态数组f(start,j) start 0..h-1 j 0..w-1
+# 递推方程
+# f(start, j) = min(f(start+1, j), f(start+1, j+1)) + a[start][j]
+# 初始化
+# f(h-1, j) = a(h-1, j)
+# 返回值f(0,0）
+# 优化空间复杂度
+# 可以只使用最后一层，从左往右递推可以原地改变值
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        n = len(triangle)
+        dp = triangle[n - 1][:]
+        for i in range(n - 2, -1, -1):
+            for j in range(i + 1):
+                dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j]
+        return dp[0]
+
+
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        n = len(triangle)
+        dp = triangle[n - 1][:]
+        for i in range(n - 2, -1, -1):
+            for j in range(i + 1):
+                dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j]
+        return dp[0]
+
+
 def main():
+    sol = Solution()
     triangle = [
         [2],
         [3, 4],
         [6, 5, 7],
         [4, 1, 8, 3]
     ]
+    res = sol.minimumTotal(triangle)
+    print(res)
+
     triangle = [[1], [2, 3]]
-    sol = Solution()
     res = sol.minimumTotal(triangle)
     print(res)
 

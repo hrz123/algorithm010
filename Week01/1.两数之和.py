@@ -21,23 +21,23 @@ class Solution:
 # 两数之和双指针解法
 # 错误的解法
 # class Solution:
-#     def twoSum(self, nums: List[int], target: int) -> List[int]:
-#         l, r = 0, len(nums) - 1
-#         nums_copy = nums[:]
-#         nums.sort()
+#     def twoSum(self, arr: List[int], target: int) -> List[int]:
+#         l, row = 0, len(arr) - 1
+#         nums_copy = arr[:]
+#         arr.sort()
 #         res = []
-#         while l < r:
-#             s = nums[l] + nums[r]
+#         while l < row:
+#             s = arr[l] + arr[row]
 #             if s == target:
-#                 res.append([nums[l], nums[r]])
+#                 res.append([arr[l], arr[row]])
 #                 l += 1
-#                 while l < r and nums[l] == nums[l - 1]:
+#                 while l < row and arr[l] == arr[l - 1]:
 #                     l += 1
 #             elif s < target:
 #                 l += 1
 #             else:
-#                 r -= 1
-#         return [nums_copy.index(i) for i in res[0]] if res else res
+#                 row -= 1
+#         return [nums_copy.index(start) for start in res[0]] if res else res
 
 # 以下为自我练习
 class Solution:
@@ -50,6 +50,29 @@ class Solution:
                 return [memo[num], i]
             memo[target - num] = i
 
+        return []
+
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        memo = {}
+        for i in range(len(nums)):
+            num = nums[i]
+            if num in memo:
+                return [memo[num], i]
+            else:
+                memo[target - num] = i
+        return []
+
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        mem = {}
+        for i in range(len(nums)):
+            if nums[i] in mem:
+                return [mem[nums[i]], i]
+            else:
+                mem[target - nums[i]] = i
         return []
 
 

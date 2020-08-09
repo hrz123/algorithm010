@@ -1,5 +1,6 @@
 # 78. 子集.py
 import itertools
+from functools import reduce
 from typing import List
 
 
@@ -92,8 +93,35 @@ class Solution:
         res = [[]]
 
         for num in nums:
+            # 注意这里不加最外面的中括号会报错
             res.extend([ans + [num] for ans in res])
         return res
+
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+
+        for num in nums:
+            res.extend([ans + [num] for ans in res])
+        return res
+
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for n in nums:
+            res.extend([ans + [n] for ans in res])
+        return res
+
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        return reduce(
+            lambda acc, x: acc + [ans + [x] for ans in acc],
+            nums,
+            [[]]
+        )
 
 
 def main():

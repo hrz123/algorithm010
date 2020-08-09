@@ -24,6 +24,35 @@ class Solution:
         return clone_node
 
 
+# 以下为自我练习
+class Solution:
+    visited = {}
+
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node:
+            return node
+        if node in self.visited:
+            return self.visited[node]
+        clone_node = Node(node.val)
+        self.visited[node] = clone_node
+        clone_node.neighbors = [self.cloneGraph(n) for n in node.neighbors]
+        return clone_node
+
+
+class Solution:
+    visited = {}
+
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node:
+            return node
+        if node in self.visited:
+            return self.visited[node]
+        clone_node = Node(node.val)
+        self.visited[node] = clone_node
+        clone_node.neighbors = [self.cloneGraph(n) for n in node.neighbors]
+        return clone_node
+
+
 def main():
     pass
 

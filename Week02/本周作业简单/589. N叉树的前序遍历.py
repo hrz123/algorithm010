@@ -84,6 +84,52 @@ class Solution:
         return res
 
 
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        res = []
+
+        def dfs(root):
+            if not root:
+                return
+            res.append(root.val)
+            if root.children:
+                for child in root.children:
+                    dfs(child)
+
+        dfs(root)
+        return res
+
+
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        if not root:
+            return []
+        stack = [root]
+        res = []
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.children:
+                for child in root.children[::-1]:
+                    stack.append(child)
+        return res
+
+
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        if not root:
+            return []
+        stack = [root]
+        res = []
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.children:
+                for node in root.children[::-1]:
+                    stack.append(node)
+        return res
+
+
 def main():
     root = Node(1)
     node = Node(3)

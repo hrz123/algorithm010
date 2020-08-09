@@ -60,6 +60,62 @@ class Solution:
         return dfs(0, 0)
 
 
+# 使用dfs
+# 递归要找到重复性和终止条件
+# dfs(start, j)
+# 如果i < l1 and s1[start] == s3[start+j] dfs(start+1,j)
+# 如果j < l2 and s2[j] == s3[start+j] dfs(start,j+1)
+# 如果i == len(s1)并且 j == len(s2)时返回true
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        memo = {}
+        l1, l2 = len(s1), len(s2)
+        if l1 + l2 != len(s3):
+            return False
+
+        def dfs(i, j):
+            if i == l1 and j == l2:
+                return True
+            if (i, j) in memo:
+                return memo[i, j]
+            if i < l1 and s1[i] == s3[i + j]:
+                if dfs(i + 1, j):
+                    memo[i, j] = True
+                    return True
+            if j < l2 and s2[j] == s3[i + j]:
+                if dfs(i, j + 1):
+                    memo[i, j] = True
+                    return True
+            memo[i, j] = False
+            return False
+
+        return dfs(0, 0)
+
+
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        m, n = len(s1), len(s2)
+        if m + n != len(s3):
+            return False
+        memo = set()
+
+        def dfs(i, j):
+            if i == m and j == n:
+                return True
+            if (i, j) in memo:
+                return False
+            if i < m and s3[i + j] == s1[i]:
+                if dfs(i + 1, j):
+                    return True
+            if j < n and s3[i + j] == s2[j]:
+                if dfs(i, j + 1):
+                    return True
+            memo.add((i, j))
+            return False
+
+        return dfs(0, 0)
+
+
 def main():
     sol = Solution()
 
@@ -72,6 +128,12 @@ def main():
     s1 = "aabcc"
     s2 = "dbbca"
     s3 = "aadbbbaccc"
+    res = sol.isInterleave(s1, s2, s3)
+    print(res)
+
+    s1 = ""
+    s2 = ""
+    s3 = "a"
     res = sol.isInterleave(s1, s2, s3)
     print(res)
 

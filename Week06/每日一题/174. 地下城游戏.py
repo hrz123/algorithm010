@@ -44,7 +44,7 @@ class Solution:
             # 如果当前所需最小血量，已经比某一条路求出来的血量要多了，那么可以剪枝
             if min_hp > min_health_points:
                 return
-            # process current level logic
+            # process current row logic
             # 更新当前损失血量
             cur_hl += dungeon[i][j]
             cur_hp = -cur_hl + 1
@@ -56,7 +56,7 @@ class Solution:
             dfs(i + 1, j, cur_hl, min_hp)
             dfs(i, j + 1, cur_hl, min_hp)
 
-            # reverse current level status if needed
+            # reverse current row status if needed
 
         # 最小是1点血
         dfs(0, 0, 0, 1)
@@ -71,9 +71,9 @@ class Solution:
 # -3, -3, -3
 # 所以这道题的动态递推是有方向的
 # 状态定义
-# dp(i, j)到i，j所需的最小生命值
+# dp(start, j)到i，j所需的最小生命值
 # 递推方程：
-# dp(i, j) = max(1, min(dp(i+1, j),dp(i, j+1)) - matrix[i][j])
+# dp(start, j) = max(1, min(dp(start+1, j),dp(start, j+1)) - matrix[start][j])
 # dp(m-1, n-1) = 1 - matrix[m-1][n-1]
 class Solution:
     def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
@@ -122,20 +122,72 @@ class Solution:
 #
 #         dungeon[0][0] = max(1, 1 - dungeon[0][0])
 #
-#         for i in range(m):
+#         for start in range(m):
 #             for j in range(n):
 #                 # 处理边缘
-#                 if i == 0 and j == 0:
+#                 if start == 0 and j == 0:
 #                     continue
-#                 if i == 0:
-#                     dungeon[i][j] = max(1, dungeon[i][j - 1] - dungeon[i][j])
+#                 if start == 0:
+#                     dungeon[start][j] = max(1, dungeon[start][j - 1] - dungeon[start][j])
 #                 elif j == 0:
-#                     dungeon[i][j] = max(1, dungeon[i - 1][j] - dungeon[i][j])
+#                     dungeon[start][j] = max(1, dungeon[start - 1][j] - dungeon[start][j])
 #                 else:
-#                     dungeon[i][j] = max(1, min(dungeon[i - 1][j], dungeon[i][
-#                         j - 1]) - dungeon[i][j])
+#                     dungeon[start][j] = max(1, min(dungeon[start - 1][j], dungeon[start][
+#                         j - 1]) - dungeon[start][j])
 #         print(dungeon)
 #         return dungeon[m - 1][n - 1]
+
+
+# 以下为自我练习
+# 定义子问题
+# 从i，j到终点需要的最低血量
+# 定义状态数组
+# f(start, j)
+# 递推方程
+# f(start, j) = max(min(f(start+1, j), f(start, j+1)) - m[start,j], 1)
+# 初始化
+# f(h-1, w-1) = max(1 - m[h-1,w-1], 1)
+# 返回值
+# f(0, 0)
+# 优化空间复杂度，可以只用一维的数组，从右向左原地更新
+class Solution:
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        if not dungeon or not dungeon[0]:
+            return 1
+        h, w = len(dungeon), len(dungeon[0])
+        dp = [0] * (w - 1) + [max(1, 1 - dungeon[h - 1][w - 1])]
+        for j in range(w - 2, -1, -1):
+            dp[j] = max(1, dp[j + 1] - dungeon[h - 1][j])
+        for i in range(h - 2, -1, -1):
+            dp[w - 1] = max(1, dp[w - 1] - dungeon[i][w - 1])
+            for j in range(w - 2, -1, -1):
+                dp[j] = max(1, min(dp[j], dp[j + 1]) - dungeon[i][j])
+        return dp[0]
+
+
+# 定义子问题
+# f(i，j)为m[i][j]位置到终点需要的最低血量
+# f(i, j) = max(min(f(i+1, j), f(i, j+1)) - m[i][j], 1)
+# 初始化
+# f(m, n) = max(1, -matrix[m][n] + 1)
+# 我们可以增加一层哨兵
+# 让哨兵层等于一个最大值，这样最后一层只能从右侧来
+# m,n处放上1，这样f(m, n)= max(1 - m[i][j], 1)
+# 其他因为我们要取最小值，所以我们放一个最大值
+# 返回值
+# 返回f(0, 0)
+# 优化复杂度
+# 只需要一个一维数组从j+1往j方向可以原地更新
+class Solution:
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        if not dungeon or not dungeon[0]:
+            return 1
+        m, n = len(dungeon), len(dungeon[0])
+        dp = [float('inf')] * (n - 1) + [1] + [float('inf')]
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                dp[j] = max(min(dp[j], dp[j + 1]) - dungeon[i][j], 1)
+        return dp[0]
 
 
 def main():
@@ -145,7 +197,7 @@ def main():
         [10, 30, -5]
     ]
 
-    dungeon1 = [
+    dungeon = [
         [2, -8, -79, -88, -12, -87, -5, -56, -55, -42, 18, -91, 1, -30, -36, 42,
          -96, -26, -17, -69, 38, 18, 44, -58, -33, 20, -45, -11, 11, 15, -40,
          -92, -62, -51, -23, 20, -86, -2, -90, -64, -100, -42, -16, -55, 29,

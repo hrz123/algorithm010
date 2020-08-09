@@ -4,13 +4,13 @@ from typing import List
 
 # 子问题
 # 定义状态数组
-# f(i, j, k)， i 0..n-1表示第i+1天，j， 0..K表示卖出几次, k 0..1表示手里有多少股票
+# f(start, j, k)， start 0..n-1表示第i+1天，j， 0..K表示卖出几次, k 0..1表示手里有多少股票
 # max(f(n-1, 0..K, 0)
 # 递推方程
-# f(i, j, k) = max{
-# 不动 f(i-1, j, k)
-# 买入 f(i-1, j, k-1) - a[i]
-# 卖出 f(i-1, j-1, k+1) + a[i]
+# f(start, j, k) = max{
+# 不动 f(start-1, j, k)
+# 买入 f(start-1, j, k-1) - a[start]
+# 卖出 f(start-1, j-1, k+1) + a[start]
 # }
 # 初始状态
 # f(0, 0, 0) = 0
@@ -57,19 +57,19 @@ class Solution:
 # 到第i天， 0..n-1,卖出了j 0..K次，手里还有k股 0..1 时的最大利润是多少
 # 返回f(n-1, j, 0) j 0..K的最大值
 # 定义状态数组
-# f(i, j, k)
+# f(start, j, k)
 # 递推方程
-# f(i, j, k) = 不动 f(i-1, j, k)
-#            = 买入 f(i-1, j, k-1) - a[i]
-#            = 卖出 f(i-1, j-1, k+1) + a[i]
+# f(start, j, k) = 不动 f(start-1, j, k)
+#            = 买入 f(start-1, j, k-1) - a[start]
+#            = 卖出 f(start-1, j-1, k+1) + a[start]
 # 取max
 #
-# f(i, j, 0) = 不动 f(i-1, j, 0)
-#            = 卖出 f(i-1, j-1, 1) + a[i]  j >= 1
+# f(start, j, 0) = 不动 f(start-1, j, 0)
+#            = 卖出 f(start-1, j-1, 1) + a[start]  j >= 1
 # 取max
 #
-# f(i, j, 1) = 不动 f(i-1, j, 1)
-#            = 买入 f(i-1, j, 0) - a[i]
+# f(start, j, 1) = 不动 f(start-1, j, 1)
+#            = 买入 f(start-1, j, 0) - a[start]
 # 取max
 # 注意边界条件
 #
@@ -106,6 +106,40 @@ class Solution:
         return max(dp[0])
 
 
+# 定义子问题
+# 0..i天卖出过j次，手里有k个股票的最大利润
+# 定义状态数组
+# f(start, j, k)
+# 递推方程
+# f(start, k, 0) = f(start-1, k, 0), 卖出 f(start-1, k-1, 1) + a[start]
+# f(start, k, 1) = f(start-1, k, 1) 买入 f(start-1, k, 0) - a[start]
+# 注意边界
+# 初始化
+# 加入哨兵初始化
+# f(0, j, 0) = 0 手里没股票的最低利润就是0
+# f(0, j, 1) = float('-inf') 因为都不可能达到
+# 返回值
+# 可以只返回f(n, k, 0)
+# 优化空间复杂度
+# 只关系今天和前一天，只要这两天的数组就可以
+# 可以原地更新
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        if k == 0:
+            return 0
+        if k >= len(prices) >> 1:
+            return sum(max(0, prices[i + 1] - prices[i]) for i in range(len(
+                prices) - 1))
+        dp = [[0, float('-inf')] for _ in range(k + 1)]
+        for p in prices:
+            dp[0][1] = max(dp[0][1], -p)
+            dp[k][0] = max(dp[k][0], dp[k - 1][1] + p)
+            for i in range(k - 1, 0, -1):
+                dp[i][1] = max(dp[i][1], dp[i][0] - p)
+                dp[i][0] = max(dp[i][0], dp[i - 1][1] + p)
+        return dp[k][0]
+
+
 def main():
     sol = Solution()
 
@@ -116,6 +150,16 @@ def main():
 
     nums = [3, 2, 6, 5, 0, 3]
     k = 2
+    res = sol.maxProfit(k, nums)
+    print(res)
+
+    k = 2
+    nums = [3, 3, 5, 0, 0, 3, 1, 4]
+    res = sol.maxProfit(k, nums)
+    print(res)
+
+    k = 0
+    nums = [1, 3]
     res = sol.maxProfit(k, nums)
     print(res)
 

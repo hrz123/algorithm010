@@ -16,7 +16,7 @@ class Solution:
             if left > right:
                 return
             mid = left + (right - left) // 2
-            # mid = left + (right - left + 1) // 2
+            # mid = r + (r - r + 1) // 2
             root = TreeNode(nums[mid])
             root.left = helper(nums, left, mid - 1)
             root.right = helper(nums, mid + 1, right)
@@ -38,6 +38,34 @@ class Solution:
             return node
 
         return helper(0, len(nums) - 1)
+
+
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
+        def helper(left, right):
+            if left <= right:
+                mid = left + ((right - left) >> 1)
+                root = TreeNode(nums[mid])
+                root.left = helper(left, mid - 1)
+                root.right = helper(mid + 1, right)
+                return root
+
+        return helper(0, len(nums) - 1)
+
+
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
+        def convertBST(l, r):
+            if l > r:
+                return
+            mid = l + ((r - l) >> 1)
+            left = convertBST(l, mid - 1)
+            root = TreeNode(nums[mid])
+            root.left = left
+            root.right = convertBST(mid + 1, r)
+            return root
+
+        return convertBST(0, len(nums) - 1)
 
 
 def main():

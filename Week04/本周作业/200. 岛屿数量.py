@@ -234,7 +234,53 @@ class Solution:
             self.__dfs_marking(grid, i + self.dx[k], j + self.dy[k], m, n)
 
 
+# 两种解法，dfs marking 并查集
+# dfs
+class Solution:
+    def __init__(self):
+        self.di = (0, 1, 0, -1)
+        self.dj = (1, 0, -1, 0)
 
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        h, w = len(grid), len(grid[0])
+        res = 0
+        for i in range(h):
+            for j in range(w):
+                if grid[i][j] == '1':
+                    res += 1
+                    self._dfs_marking(i, j, grid, h, w)
+        return res
+
+    def _dfs_marking(self, i, j, grid, h, w):
+        grid[i][j] = '0'
+        for k in range(4):
+            _i, _j = i + self.di[k], j + self.dj[k]
+            if -1 < _i < h and -1 < _j < w and grid[_i][_j] == '1':
+                self._dfs_marking(_i, _j, grid, h, w)
+
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        res = 0
+        m, n = len(grid), len(grid[0])
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    res += 1
+                    self._dfs_marking(grid, i, j, m, n)
+        return res
+
+    def _dfs_marking(self, grid, i, j, m, n):
+        grid[i][j] = '#'
+        for di, dj in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+            _i, _j = i + di, j + dj
+            if -1 < _i < m and -1 < _j < n \
+                    and grid[_i][_j] == '1':
+                self._dfs_marking(grid, _i, _j, m, n)
 
 
 def main():

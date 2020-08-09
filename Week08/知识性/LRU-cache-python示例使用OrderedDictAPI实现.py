@@ -26,6 +26,29 @@ class LRUCache(object):
         self.dic[key] = value
 
 
+class LRUCache(object):
+    def __init__(self, cap):
+        self.dic = collections.OrderedDict()
+        self.remain = cap
+
+    def get(self, key):
+        if key not in self.dic:
+            return -1
+        v = self.dic.pop(key)
+        self.dic[key] = v
+        return v
+
+    def put(self, key, val):
+        if key in self.dic:
+            self.dic.pop(key)
+        else:
+            if self.remain > 0:
+                self.remain -= 1
+            else:
+                self.dic.popitem(last=True)
+        self.dic[key] = val
+
+
 def main():
     pass
 

@@ -93,8 +93,47 @@ class Solution:
         return res
 
 
+class Solution:
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        res = []
+        stack = [root]
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.left:
+                stack.append(root.left)
+            if root.right:
+                stack.append(root.right)
+
+        return res[::-1]
+
+
+class Solution:
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        stack = [root]
+        res = []
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.left:
+                stack.append(root.left)
+            if root.right:
+                stack.append(root.right)
+        return res[::-1]
+
+
 def main():
-    pass
+    sol = Solution()
+
+    root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.right = TreeNode(3)
+    res = sol.postorderTraversal(root)
+    print(res)
 
 
 if __name__ == '__main__':

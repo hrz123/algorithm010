@@ -16,10 +16,10 @@ class TreeNode:
 # 开始时stack=[root],res=[]
 # node = stack.pop()
 # res.append(node.val)  结果放入根元素值
-# if node.right:
-#     stack.append(node.right)  栈先放入右子节点
-# if node.left:
-#     stack.append(node.left)  栈再放入左子节点
+# if node.r:
+#     stack.append(node.r)  栈先放入右子节点
+# if node.r:
+#     stack.append(node.r)  栈再放入左子节点
 # 这样迭代，栈的数据结构会保证访问完全部的左子树节点再访问右子树节点。
 # 3.颜色标记法
 # 通用写法。以某种方式定义visited
@@ -33,8 +33,8 @@ class TreeNode:
 #    else:
 #        根据是前序中序后序有所不同，因为是栈所以要反序添加
 #        这里是根左右
-#        stack.append((False, node.right))
-#        stack.append((False, node.left))
+#        stack.append((False, node.r))
+#        stack.append((False, node.r))
 #        stack.append((True, node))
 # return res
 
@@ -118,8 +118,86 @@ class Solution:
         return res
 
 
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        res = []
+        stack = [root]
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.right:
+                stack.append(root.right)
+            if root.left:
+                stack.append(root.left)
+        return res
+
+
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        res = []
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            res.append(node.val)
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+        return res
+
+
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        res = []
+        stack = []
+        while root or stack:
+            while root:
+                res.append(root.val)
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            root = root.right
+        return res
+
+
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        stack = []
+        res = []
+        while stack or root:
+            while root:
+                res.append(root.val)
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            root = root.right
+        return res
+
+
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        stack = [root]
+        res = []
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.right:
+                stack.append(root.right)
+            if root.left:
+                stack.append(root.left)
+        return res
+
+
 def main():
     root = TreeNode(1)
+    root.left = TreeNode(4)
+    root.left.left = TreeNode(5)
     root.right = TreeNode(2)
     root.right.left = TreeNode(3)
     sol = Solution()

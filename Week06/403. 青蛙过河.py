@@ -13,7 +13,7 @@ class Solution:
             # recursion terminator
             if cur_pos == n - 1:
                 return True
-            # process current level logic
+            # process current row logic
             for i in range(cur_pos + 1, n):
                 gap = stones[i] - stones[cur_pos]
                 if jump_size - 1 <= gap <= jump_size + 1:
@@ -111,7 +111,7 @@ class Solution:
 # Suppose we want to know if the frog can reach stone 2 (S2)
 # and we know the frog must come from S1
 # dist(S1 --> S2) = 1 - 0 = 1, and we know the frog is able to make a jump of
-# size 1 at S1.
+# mask 1 at S1.
 # Hence, the frog is able  to reach S2, and the next jump would be 0, 1,
 # or 2 units.
 
@@ -119,13 +119,13 @@ class Solution:
 # we jnow the frog must be at either S1 or S2 before reaching S3.
 
 # If the frog comes from S1, then
-# dist(S3 --> S1) = 3 - 0 = 3, and we know frog couldn't make a jump of size
+# dist(S3 --> S1) = 3 - 0 = 3, and we know frog couldn't make a jump of mask
 # 3 at S1.
 # So it is not possible the frog can jump from S1 to S3.
 
 # If the frog comes from S2, then
 # we know dist(S2 --> S3) = 3 - 1 = 2, and we know frog could make a jump of
-# size 2 at S2.
+# mask 2 at S2.
 # Hence the frog is able to reach S3, and the next jump could be 1, 2, 3, units.
 
 # If we repeat doing this for the rest stones, we'll end up with something
@@ -140,13 +140,13 @@ class Solution:
 #                               4
 
 # 子问题和状态
-# dp(i) denote a set containing all next jump sizes at stone i.
+# dp(start) denote a set containing all next jump sizes at stone start.
 
 # recurrence relation:
-# for any j < i:
-# dist = stones[j] - stones[i]
+# for any j < start:
+# dist = stones[j] - stones[start]
 # if dist in dp(j)
-#     put dist - 1, dist, dist + 1 into dp(i)
+#     put dist - 1, dist, dist + 1 into dp(start)
 
 # now let make this approach more efficient.
 # Because
@@ -155,19 +155,19 @@ class Solution:
 # 3. If the frog's last jump was k units, then its next jump must be either k
 # - 1, k, or k + 1 units.
 
-# The maximum jump size the frog can make at stone if possible is shown as
+# The maximum jump mask the frog can make at stone if possible is shown as
 # followings:
 # stones:        0, 1, 2, 3, 4, 5, ...
-# jump size:     1, 2, 3, 4, 5, 6, ...(suppose frog made jump with k + 1 at
+# jump mask:     1, 2, 3, 4, 5, 6, ...(suppose frog made jump with k + 1 at
 # each stone)
 
 # So instead of creating a hash set for lookup for each stone,
-# we can create a boolean array with size of N + 1 (N is the number of stones).
+# we can create a boolean array with mask of N + 1 (N is the number of stones).
 # Like in the given example, at stone 2 , the next jump could be 1, 2, or 3.
 # We can use a bool array to represent this like
 # index:    0  1  2  3  4  5 ...
 # value:   [0  1  1  1  0  0 ...]
-# index is jump size, boolean value represent if the frog can make this jump.
+# index is jump mask, boolean value represent if the frog can make this jump.
 
 # Then the 2D array will be something like below:
 
@@ -185,14 +185,14 @@ class Solution:
 
 # sub-problem and state
 
-# let dp[i][j] denote at stone i, the frog can or cannot make jump of size j
+# let dp[start][j] denote at stone start, the frog can or cannot make jump of mask j
 # recurrence relation
-# for and j < i,
-# dist = stones[i] - stones[j]
+# for and j < start,
+# dist = stones[start] - stones[j]
 # if dp[j][dist]:
-#     dp[i][dist - 1] = true
-#     dp[i][dist] = true
-#     dp[i][dist + 1] = true
+#     dp[start][dist - 1] = true
+#     dp[start][dist] = true
+#     dp[start][dist + 1] = true
 
 
 class Solution:
@@ -280,19 +280,13 @@ class Solution(object):
         return False
 
 
-# 子问题 第i个石子能否到达
-# 定义子问题，第i个石子能否到达，且此时速度为j
-# 定义状态数组
-# f(i, j), i表示当前索引 0..n-1，j表示当前速度0..n
-# 递推方程， j最大为i+1
-# f(i, j) =
 class Solution:
     def canCross(self, stones: List[int]) -> bool:
         n = len(stones)
 
         dp = [[False] * n for _ in range(n)]
 
-        dp[0][1] = True
+        dp[0][0] = True
         for i in range(1, n):
             for j in range(i - 1, -1, -1):
                 dist = stones[i] - stones[j]
@@ -328,6 +322,98 @@ class Solution:
             return False
 
         # 这里开始速度设为0，因为1最大可以取到，如果设成1，那么第一步可能走2，-1和0都不可能走
+        return dfs(0, 0)
+
+
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        target = stones[-1]
+        stones = set(stones)
+        memo = {}
+
+        def dfs(cur, speed):
+            if cur == target:
+                return True
+            if (cur, speed) in memo:
+                return memo[cur, speed]
+            for s in (speed - 1, speed, speed + 1):
+                if s and cur + s in stones:
+                    if dfs(cur + s, s):
+                        memo[cur, speed] = True
+                        return True
+            memo[cur, speed] = False
+            return False
+
+        return dfs(0, 0)
+
+
+# 定义子问题
+# 第i个石子能否到达，且j为其可能的速度
+# f(start, j)
+# 递推方程
+# f(start, j) 取决于 f(k, start-k) 是否为True 是的话 f(start, start-k\start-k-1\start-k+1) 对于所有的k 0..start-1
+# 初始化
+# f(0, 1) = True 在0这个石子只有1的速度可行
+# 返回值 f(n, k)有没有一个为True
+# 优化空间复杂度
+# 无法优化
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        n = len(stones)
+
+        dp = [[False] * n for _ in range(n)]
+        dp[0][1] = True
+        for i in range(1, n):
+            for j in range(i - 1, -1, -1):
+                dist = stones[i] - stones[j]
+                if dist > i:
+                    break
+                if dp[j][dist]:
+                    if i == n - 1:
+                        return True
+                    dp[i][dist] = dp[i][dist + 1] = dp[i][dist - 1] = True
+        return False
+
+
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        target = stones[-1]
+        stones = set(stones)
+        memo = {}
+
+        def dfs(cur, speed):
+            if cur == target:
+                return True
+            if (cur, speed) in memo:
+                return memo[cur, speed]
+            for c in (speed + 1, speed, speed - 1):
+                if c and cur + c in stones and dfs(cur + c, c):
+                    memo[cur, speed] = True
+                    return True
+            memo[cur, speed] = False
+            return False
+
+        return dfs(0, 0)
+
+
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        target = stones[-1]
+        stones = set(stones)
+        memo = {}
+
+        def dfs(cur, speed):
+            if cur == target:
+                return True
+            if (cur, speed) in memo:
+                return memo[cur, speed]
+            for c in (speed + 1, speed, speed - 1):
+                if c and cur + c in stones and dfs(cur + c, c):
+                    memo[cur, speed] = True
+                    return True
+            memo[cur, speed] = False
+            return False
+
         return dfs(0, 0)
 
 

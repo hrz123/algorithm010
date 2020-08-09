@@ -2,10 +2,10 @@
 from typing import List
 
 
-# 子问题：偷第几家房子f(i)有重复性
+# 子问题：偷第几家房子f(start)有重复性
 # 定义状态数组： 偷到第i个房子并且偷第i个房子
 # 递推方程：
-# f(i) = max(f(i-2), f(i-3)) + a[i]
+# f(start) = max(f(start-2), f(start-3)) + a[start]
 # f(0) = 0
 # f(1) = a[0]
 # f(2) = a[1]
@@ -55,12 +55,12 @@ class Solution:
 # 空间复杂度： O(n)
 
 
-# a[i]: 0..i 能偷到 max value: a[n-1]
-# a[i][0, 1]: 0:i偷， 1：i不偷
-# a[i][0] = max(a[i-1][0], a[i-1][1])
-# a[i][1] = a[i-1][0] + nums
+# a[start]: 0..start 能偷到 max value: a[n-1]
+# a[start][0, 1]: 0:i偷， 1：i不偷
+# a[start][0] = max(a[start-1][0], a[start-1][1])
+# a[start][1] = a[start-1][0] + arr
 # a[0][0] = 0
-# a[0][1] = nums[0]
+# a[0][1] = arr[0]
 class Solution:
     def rob(self, nums: List[int]) -> int:
         if not nums:
@@ -78,11 +78,11 @@ class Solution:
         return max(dp[0])
 
 
-# a[i]: 0..i 能偷到 max value: a[n]
-# a[i]: 0..i天，且nums[i]或者nums[i-1]必偷
-# a[i] = max(a[i-2] + nums[i], a[i-1])
-# a[0] = nums[0]
-# a[1] = max(nums[:1])
+# a[start]: 0..start 能偷到 max value: a[n]
+# a[start]: 0..i天，且nums[start]或者nums[start-1]必偷
+# a[start] = max(a[start-2] + arr[start], a[start-1])
+# a[0] = arr[0]
+# a[1] = max(arr[:1])
 class Solution:
     def rob(self, nums: List[int]) -> int:
         if not nums:
@@ -132,9 +132,9 @@ class Solution:
 # 到第i间房屋的最高金额，且第i间房屋一定偷
 # 返回 f(n-1) f(n-2)中的最大值
 # 定义状态数组
-# f(i)
+# f(start)
 # 递推方程
-# f(i) = max(f(i-2), f(i-3)) + a[i]
+# f(start) = max(f(start-2), f(start-3)) + a[start]
 # 初始化
 # f(0) = a[0]
 # f(1) = a[1]
@@ -155,7 +155,7 @@ class Solution:
 
 
 # 定义子问题为一定包含i这个点的最大利润
-# f(i) = max(f(i-2), f(i-3)) + a[i]
+# f(start) = max(f(start-2), f(start-3)) + a[start]
 # 最终返回max(f(n-1), f(n-2))
 # 初始化
 # f(0) = a[0]
@@ -180,7 +180,7 @@ class Solution:
 # 另一种递推
 # 状态定义：
 
-# 设动态规划列表 dp ，dp[i] 代表前 i 个房子在满足条件下的能偷窃到的最高金额。
+# 设动态规划列表 dp ，dp[start] 代表前 start 个房子在满足条件下的能偷窃到的最高金额。
 # 转移方程：
 
 # 设： 有 n 个房子，前 n 间能偷窃到的最高金额是 dp[n] ，前 n−1 间能偷窃到的最高金额是 dp[n−1] ，
@@ -221,6 +221,15 @@ class Solution:
         for num in nums:
             cur, pre = max(pre + num, cur), cur
         return cur
+
+
+# f(start) = f(start-1), f(start-2) + a[start]
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        f0, f1 = 0, 0
+        for n in nums:
+            f0, f1 = f1, max(f1, f0 + n)
+        return f1
 
 
 def main():

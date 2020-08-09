@@ -4,8 +4,8 @@ from typing import List
 
 
 # dp的方法
-# dp(i,j) = min(dp(_i, _j)) + 1 全部方向 else
-# dp(i, j) = max_value if grid[i][j] == 1
+# dp(start,j) = min(dp(_i, _j)) + 1 全部方向 else
+# dp(start, j) = max_value if grid[start][j] == 1
 # 不好做
 # dp(n-1, n-1) = 1
 # class Solution:
@@ -22,16 +22,16 @@ from typing import List
 #
 #         dp[n - 1][n - 1] = 1
 #
-#         for i in range(n - 1, -1, -1):
+#         for start in range(n - 1, -1, -1):
 #             for j in range(n - 1, -1, -1):
-#                 if grid[i][j]:
-#                     dp[i][j] = max_value
+#                 if grid[start][j]:
+#                     dp[start][j] = max_value
 #                 else:
 #                     for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1),
 #                                    (1, -1), (-1, -1), (-1, 1)):
-#                         _i, _j = i + dx, j + dy
+#                         _i, _j = start + dx, j + dy
 #                         if -1 < _i < n and -1 < _j < n:
-#                             dp[i][j] = min(dp[i][j])
+#                             dp[start][j] = min(dp[start][j])
 #         return -1 if dp[0][0] == max_value else dp[0][0]
 
 
@@ -229,6 +229,35 @@ class Solution:
                         if (_i, _j) in eq:
                             return res
                         nq.add((_i, _j))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        if grid[0][0] or grid[n - 1][n - 1]:
+            return -1
+        if n == 1:
+            return 1
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, -1),
+                (-1, 1))
+        bq, eq, nq, res, visited = {(0, 0)}, {(n - 1, n - 1)}, set(), 0, {
+            (0, 0), (n - 1, n - 1)}
+        while bq:
+            res += 1
+            for x, y in bq:
+                for dx, dy in dirs:
+                    _x, _y = x + dx, y + dy
+                    if (_x, _y) in eq:
+                        return res + 1
+                    if -1 < _x < n and -1 < _y < n \
+                            and not grid[_x][_y] \
+                            and (_x, _y) not in visited:
+                        visited.add((_x, _y))
+                        nq.add((_x, _y))
             bq, nq = nq, set()
             if len(bq) > len(eq):
                 bq, eq = eq, bq

@@ -14,11 +14,30 @@ class Solution:
         return [shorter * (k - i) + longer * i for i in range(k + 1)]
 
 
+class Solution:
+    def divingBoard(self, shorter: int, longer: int, k: int) -> List[int]:
+        if k == 0:
+            return []
+        if shorter == longer:
+            return [k * shorter]
+        return [shorter * (k - i) + longer * i for i in range(k + 1)]
+
+
+class Solution:
+    def divingBoard(self, shorter: int, longer: int, k: int) -> List[int]:
+        if not k:
+            return []
+        if shorter == longer:
+            return [shorter * k]
+        return [longer * i + shorter * (k - i) for i in range(k + 1)]
+
+
 def main():
+    sol = Solution()
+
     shorter = 1
     longer = 2
     k = 3
-    sol = Solution()
     res = sol.divingBoard(shorter, longer, k)
     print(res)
     res = sol.divingBoard(2, 2, 3)

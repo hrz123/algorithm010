@@ -32,31 +32,58 @@ class Solution:
         return not stack
 
 
+class Solution:
+    def isValid(self, s: str) -> bool:
+        hashmap = {')': '(', ']': '[', '}': '{'}
+        stack = []
+        for c in s:
+            if c in hashmap:
+                if not stack or stack.pop() != hashmap[c]:
+                    return False
+            else:
+                stack.append(c)
+        return not stack
+
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        hashmap = {')': '(', ']': '[', '}': '{'}
+        for c in s:
+            if c in hashmap:
+                if not stack or stack.pop() != hashmap[c]:
+                    return False
+            else:
+                stack.append(c)
+        return not stack
+
+
 def main():
-    s = "()[]{}"
-    s1 = "([)]"
-    s2 = "(]"
-    s3 = "()[]{([])}("
-    s4 = "[[([[)(()"
-    s5 = "    "
-    s6 = ""
-    s7 = None
     sol = Solution()
+
+    s = "()[]{}"
     res = sol.isValid(s)
     print(res)
+
+    s1 = "([)]"
     res = sol.isValid(s1)
     print(res)
+
+    s2 = "(]"
     res = sol.isValid(s2)
     print(res)
+
+    s3 = "()[]{([])}("
     res = sol.isValid(s3)
     print(res)
+    s4 = "[[([[)(()"
     res = sol.isValid(s4)
     print(res)
+    s5 = "    "
     res = sol.isValid(s5)
     print(res)
+    s6 = ""
     res = sol.isValid(s6)
-    print(res)
-    res = sol.isValid(s7)
     print(res)
 
 

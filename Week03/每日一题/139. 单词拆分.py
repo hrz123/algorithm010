@@ -38,10 +38,65 @@ class Solution:
 # 时间复杂度：
 # 空间复杂度：递归栈的大小
 
+
+# 以下为自我练习
+# 定义一个子函数
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        words = set(wordDict)
+        n = len(s)
+        memo = {}
+
+        def dfs(start):
+            if start == n:
+                return True
+            if start in memo:
+                return memo[start]
+            for end in range(start + 1, n + 1):
+                if s[start:end] in words and dfs(end):
+                    memo[start] = True
+                    return memo[start]
+            memo[start] = False
+            return memo[start]
+
+        return dfs(0)
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        words = set(wordDict)
+        n = len(s)
+        memo = {}
+
+        def dfs(start):
+            if start == n:
+                return True
+            if start in memo:
+                return memo[start]
+            for i in range(start + 1, n + 1):
+                if s[start: i] in words and dfs(i):
+                    memo[start] = True
+                    return True
+            memo[start] = False
+            return False
+
+        return dfs(0)
+
+
 def main():
     sol = Solution()
     s = "applepenapple"
     wordDict = ["apple", "pen"]
+    res = sol.wordBreak(s, wordDict)
+    print(res)
+
+    s = "catsandog"
+    wordDict = ["cats", "dog", "sand", "and", "cat"]
+    res = sol.wordBreak(s, wordDict)
+    print(res)
+
+    s = "aaaaaaa"
+    wordDict = ["aaaa", "aaa"]
     res = sol.wordBreak(s, wordDict)
     print(res)
 

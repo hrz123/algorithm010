@@ -289,11 +289,81 @@ class Solution:
         return count
 
 
+class Solution:
+    def __init__(self):
+        self.dx = (0, 1, 0, -1, 1, 1, -1, -1)
+        self.dy = (1, 0, -1, 0, 1, -1, -1, 1)
+
+    def updateBoard(self, board: List[List[str]],
+                    click: List[int]) -> List[List[str]]:
+        h, w = len(board), len(board[0])
+        self._dfs(board, click[0], click[1], h, w)
+        return board
+
+    def _dfs(self, board, x, y, h, w):
+        if board[x][y] == 'E':
+            count = self._count(board, x, y, h, w)
+            if count:
+                board[x][y] = str(count)
+            else:
+                board[x][y] = 'B'
+                for k in range(8):
+                    _x, _y = x + self.dx[k], y + self.dy[k]
+                    if -1 < _x < h and -1 < _y < w and board[_x][_y] == 'E':
+                        self._dfs(board, _x, _y, h, w)
+        elif board[x][y] == 'M':
+            board[x][y] = 'X'
+
+    def _count(self, board, x, y, h, w):
+        count = 0
+        for k in range(8):
+            _x, _y = x + self.dx[k], y + self.dy[k]
+            if -1 < _x < h and -1 < _y < w and board[_x][_y] == 'M':
+                count += 1
+        return count
+
+
+class Solution:
+    def updateBoard(self, board: List[List[str]], click: List[int]) \
+            -> List[List[str]]:
+        m, n = len(board), len(board[0])
+        x, y = click
+        self.dfs_marking(board, m, n, x, y)
+        return board
+
+    def dfs_marking(self, board, m, n, x, y):
+        if board[x][y] == 'E':
+            count = self._get_mines(board, m, n, x, y)
+            if count:
+                board[x][y] = str(count)
+            else:
+                board[x][y] = 'B'
+                for dx, dy in (
+                        (0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1),
+                        (-1, -1), (-1, 1)):
+                    _x, _y = x + dx, y + dy
+                    if -1 < _x < m and -1 < _y < n \
+                            and board[_x][_y] == 'E':
+                        self.dfs_marking(board, m, n, _x, _y)
+        elif board[x][y] == 'M':
+            board[x][y] = 'X'
+
+    def _get_mines(self, board, m, n, x, y):
+        count = 0
+        for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1),
+                       (-1, -1), (-1, 1)):
+            _x, _y = x + dx, y + dy
+            if -1 < _x < m and -1 < _y < n \
+                    and board[_x][_y] == 'M':
+                count += 1
+        return count
+
+
 def main():
     sol = Solution()
 
     board = [['E', 'E', 'E', 'E', 'E'],
-             ['E', 'E', 'm', 'E', 'E'],
+             ['E', 'E', 'M', 'E', 'E'],
              ['E', 'E', 'E', 'E', 'E'],
              ['E', 'E', 'E', 'E', 'E']]
     click = [3, 0]
@@ -302,7 +372,7 @@ def main():
     print(res)
 
     board = [['B', '1', 'E', '1', 'B'],
-             ['B', '1', 'm', '1', 'B'],
+             ['B', '1', 'M', '1', 'B'],
              ['B', '1', '1', '1', 'B'],
              ['B', 'B', 'B', 'B', 'B']]
     click = [1, 2]
@@ -311,29 +381,28 @@ def main():
     print(res)
 
     board = [["E", "E", "E", "E", "E", "E", "E", "E"],
-             ["E", "E", "E", "E", "E", "E", "E", "m"],
-             ["E", "E", "m", "E", "E", "E", "E", "E"],
-             ["m", "E", "E", "E", "E", "E", "E", "E"],
+             ["E", "E", "E", "E", "E", "E", "E", "M"],
+             ["E", "E", "M", "E", "E", "E", "E", "E"],
+             ["M", "E", "E", "E", "E", "E", "E", "E"],
              ["E", "E", "E", "E", "E", "E", "E", "E"],
              ["E", "E", "E", "E", "E", "E", "E", "E"],
              ["E", "E", "E", "E", "E", "E", "E", "E"],
-             ["E", "E", "m", "m", "E", "E", "E", "E"]]
+             ["E", "E", "M", "M", "E", "E", "E", "E"]]
 
     click = [0, 0]
 
     expect = [["B", "B", "B", "B", "B", "B", "1", "E"],
-              ["B", "1", "1", "1", "B", "B", "1", "m"],
-              ["1", "2", "m", "1", "B", "B", "1", "1"],
-              ["m", "2", "1", "1", "B", "B", "B", "B"],
+              ["B", "1", "1", "1", "B", "B", "1", "M"],
+              ["1", "2", "M", "1", "B", "B", "1", "1"],
+              ["M", "2", "1", "1", "B", "B", "B", "B"],
               ["1", "1", "B", "B", "B", "B", "B", "B"],
               ["B", "B", "B", "B", "B", "B", "B", "B"],
               ["B", "1", "2", "2", "1", "B", "B", "B"],
-              ["B", "1", "m", "m", "1", "B", "B", "B"]]
+              ["B", "1", "M", "M", "1", "B", "B", "B"]]
 
     res = sol.updateBoard(board, click)
     print(res)
     assert res == expect
-    print(res)
 
 
 if __name__ == '__main__':

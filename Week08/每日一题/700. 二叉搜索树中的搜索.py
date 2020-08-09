@@ -17,6 +17,23 @@ class Solution:
             self.searchBST(root.right, val)
 
 
+# 以下为自我练习
+class Solution:
+    def searchBST(self, root: TreeNode, val: int) -> TreeNode:
+        if not root or root.val == val:
+            return root
+        return self.searchBST(root.left, val) if val < root.val else \
+            self.searchBST(root.right, val)
+
+
+class Solution:
+    def searchBST(self, root: TreeNode, val: int) -> TreeNode:
+        if not root or root.val == val:
+            return root
+        return self.searchBST(root.left, val) if val < root.val else \
+            self.searchBST(root.right, val)
+
+
 def main():
     pass
 

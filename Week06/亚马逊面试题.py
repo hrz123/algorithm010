@@ -25,7 +25,7 @@ class Solution(object):
                     counter[word] += 1
                     visited.add(word)
         # 取数目前topNCompetitors个，堆
-        # return heapq.nlargest(topNCompetitors, counter, counter.get)
+        # return heapq.nlargest(topNCompetitors, counter, counter.build)
         # 或者手动，size为k的小顶堆，大于小顶堆顶部的就加入并pop顶部元素
         res = []
         for k, v in counter.items():

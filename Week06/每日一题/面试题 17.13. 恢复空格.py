@@ -6,8 +6,8 @@ from typing import List
 # 直接暴力解法
 
 
-# dp[i]表示s[:i]的最少未识别字符数
-# dp[i] = min(dp[i - k] + (0 if s[i - k:i] in set else k)) for k in 1..i
+# dp[start]表示s[:start]的最少未识别字符数
+# dp[start] = min(dp[start - k] + (0 if s[start - k:start] in set else k)) for k in 1..start
 # 起始条件
 # dp[0] = 0
 
@@ -69,6 +69,200 @@ class Solution:
                     dp[i] = min(dp[i], dp[i + d[j]])
 
         return dp[0]
+
+
+# 以下为自我练习
+# 定义子问题
+# 第i个字符到最后，未识别的字符数是多少, start 0..len(s)
+# 定义状态数组
+# f(start)
+# 递推方程
+# f(start) = min(f(start+l))   if s[start:start+l] in dict start+l < N  and l in lens
+#      = f(start+1) + 1  else
+# 两者取最小值
+# 初始化
+# f(n) = 0
+# 返回值
+# f(0)
+# 优化空间复杂度
+# 没法优化
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        n = len(sentence)
+        dictionary = set(dictionary)
+        dp = [0] * (n + 1)
+        for i in range(1, n + 1):
+            dp[i] = min(dp[k] if sentence[k:i] in dictionary else float('inf')
+                        for k in range(i))
+            dp[i] = min(dp[i], dp[i - 1] + 1)
+        return dp[n]
+
+
+# 1100ms
+
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        n = len(sentence)
+        dictionary = {w for w in dictionary if sentence.find(w) != -1}
+        if not dictionary:
+            return len(sentence)
+        _max_len = len(max(dictionary, key=len))
+        dp = [0] * (n + 1)
+        for i in range(1, n + 1):
+            dp[i] = min(dp[k] if sentence[k:i] in dictionary else float('inf')
+                        for k in range(i - _max_len, i))
+            dp[i] = min(dp[i], dp[i - 1] + 1)
+        return dp[n]
+
+
+# 优化
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        dictionary = {w for w in dictionary if sentence.find(w) != -1}
+        if not dictionary:
+            return len(sentence)
+        n = len(sentence)
+        lens = {len(w) for w in dictionary}
+        dp = [0] * (n + 1)
+        for i in range(1, n + 1):
+            dp[i] = min([1 + dp[i - 1]] +
+                        [dp[i - l] for l in lens
+                         if i - l >= 0 and sentence[i - l:i] in dictionary])
+        return dp[n]
+
+
+# 828ms
+
+# 定义子问题
+# 第i个字符到最后，未识别的字符数是多少, start 0..len(s)
+# 定义状态数组
+# f(start)
+# 递推方程
+# f(start) = min(f(start+l))   if s[start:start+l] in dict start+l < N  and l in lens
+#      = f(start+1) + 1  else
+# 两者取最小值
+# 初始化
+# f(n) = 0
+# 返回值
+# f(0)
+# 优化空间复杂度
+# 没法优化
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        dictionary = {w for w in dictionary if sentence.find(w) != -1}
+        if not dictionary:
+            return len(sentence)
+        n = len(sentence)
+        lens = {len(w) for w in dictionary}
+        memo = {}
+
+        def dfs(i):
+            if i == n:
+                return 0
+            if i in memo:
+                return memo[i]
+            memo[i] = min([1 + dfs(i + 1)] +
+                          [dfs(i + l) for l in lens
+                           if i + l <= n and sentence[i:i + l] in dictionary])
+
+            return memo[i]
+
+        return dfs(0)
+
+
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        dictionary = {w for w in dictionary if sentence.find(w) != -1}
+        if not dictionary:
+            return len(sentence)
+        n = len(sentence)
+        lens = {len(w) for w in dictionary}
+        dp = [0] * (n + 1)
+        for i in range(n - 1, -1, -1):
+            dp[i] = min([dp[i + l] for l in lens if i + l <= n
+                         and sentence[i:i + l] in dictionary] + [1 + dp[i + 1]])
+        return dp[0]
+
+
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        dictionary = {w for w in dictionary if sentence.find(w) != -1}
+        if not dictionary:
+            return len(sentence)
+        n = len(sentence)
+        dp = [0] * (n + 1)
+        lens = {len(w) for w in dictionary}
+        for i in range(1, n + 1):
+            dp[i] = min([1 + dp[i - 1]] +
+                        [dp[i - l] for l in lens
+                         if i - l >= 0 and sentence[i - l:i] in dictionary])
+        return dp[n]
+
+
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        dictionary = {w for w in dictionary if sentence.find(w) != -1}
+        if not dictionary:
+            return len(sentence)
+        n = len(sentence)
+        lens = {len(w) for w in dictionary}
+        memo = {}
+
+        def dfs(i):
+            if i == 0:
+                return 0
+            if i in memo:
+                return memo[i]
+            memo[i] = min([1 + dfs(i - 1)] +
+                          [dfs(i - l) for l in lens
+                           if i - l >= 0 and sentence[i - l:i] in dictionary])
+            return memo[i]
+
+        return dfs(n)
+
+
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        dictionary = {w for w in dictionary if sentence.find(w) != -1}
+        if not dictionary:
+            return len(sentence)
+        sizes = {len(w) for w in dictionary}
+        n = len(sentence)
+        memo = {}
+
+        def dfs(i):
+            if i == 0:
+                return 0
+            if i in memo:
+                return memo[i]
+            memo[i] = min([1 + dfs(i - 1)] +
+                          [dfs(i - l) for l in sizes
+                           if i - l >= 0 and sentence[i - l:i] in dictionary])
+            return memo[i]
+
+        return dfs(n)
+
+
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        dictionary = {w for w in dictionary if sentence.find(w) != -1}
+        if not dictionary:
+            return len(sentence)
+        n = len(sentence)
+        memo = {}
+        sizes = {len(w) for w in dictionary}
+
+        def dfs(i):
+            if i == 0:
+                return 0
+            if i in memo:
+                return memo[i]
+            memo[i] = min([1 + dfs(i - 1)] +
+                          [dfs(i - l) for l in sizes if i - l >= 0
+                           and sentence[i - l:i] in dictionary])
+            return memo[i]
+
+        return dfs(n)
 
 
 def main():

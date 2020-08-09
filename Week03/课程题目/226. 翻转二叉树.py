@@ -17,7 +17,7 @@ class Solution:
         if not root:
             return
 
-        # process current level logic
+        # process current row logic
         # drill down
         # 这里要同时赋值，否则要用一个tmp变量，存储中间结果
         root.left, root.right = self.invertTree(root.right), self.invertTree(
@@ -40,6 +40,54 @@ class Solution:
         # recursion terminator
         if not root:
             return
+        root.left, root.right = self.invertTree(root.right), self.invertTree(
+            root.left)
+        return root
+
+
+class Solution:
+    def invertTree(self, root: TreeNode) -> TreeNode:
+        if not root:
+            return root
+        root.left, root.right = self.invertTree(root.right), self.invertTree(
+            root.left)
+        return root
+
+
+class Solution:
+    def invertTree(self, root: TreeNode) -> TreeNode:
+        if not root:
+            return root
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            node.left, node.right = node.right, node.left
+            if node.left:
+                stack.append(node.left)
+            if node.right:
+                stack.append(node.right)
+        return root
+
+
+class Solution:
+    def invertTree(self, root: TreeNode) -> TreeNode:
+        if not root:
+            return root
+        deq = deque([root])
+        while deq:
+            node = deq.popleft()
+            node.left, node.right = node.right, node.left
+            if node.left:
+                deq.append(node.left)
+            if node.right:
+                deq.append(node.right)
+        return root
+
+
+class Solution:
+    def invertTree(self, root: TreeNode) -> TreeNode:
+        if not root:
+            return root
         root.left, root.right = self.invertTree(root.right), self.invertTree(
             root.left)
         return root

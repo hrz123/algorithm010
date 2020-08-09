@@ -38,9 +38,19 @@ class Solution:
         return res
 
 
+class Solution:
+    def convertToTitle(self, n: int) -> str:
+        res = ""
+        a_upper = ord('A')
+        while n:
+            n, mod = divmod(n - 1, 26)
+            res = chr(a_upper + mod) + res
+        return res
+
+
 def main():
     s = Solution()
-    res = s.convertToTitle(26)
+    res = s.convertToTitle(28)
     print(res)
 
 

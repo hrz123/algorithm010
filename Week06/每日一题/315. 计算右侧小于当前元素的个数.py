@@ -54,8 +54,8 @@ class Solution:
 
     def __sort_and_count_smaller(self, nums, left, mid, right, tmp, indexes,
                                  res):
-        # [left, mid]前有序数组
-        # [mid+1, right]后有序数组
+        # [r, mid]前有序数组
+        # [mid+1, r]后有序数组
         # 先拷贝，再合并
         for i in range(left, right + 1):
             tmp[i] = indexes[i]
@@ -83,7 +83,7 @@ class Solution:
                 # 注意
                 res[indexes[i]] += (r - mid - 1)
             else:
-                # assert nums[tmp[l]] > nums[tmp[r]]
+                # assert arr[tmp[l]] > arr[tmp[row]]
                 # 上面两种情况只在其中一种统计就可以了
                 # [3,5,7,9],[4,6,8,10]
                 indexes[i] = tmp[r]
@@ -107,7 +107,7 @@ class Solution:
 
             # 单点更新：将 index 这个位置 + 1
             def update(self, index, delta):
-                # 从下到上，最多到 size，可以等于 size
+                # 从下到上，最多到 mask，可以等于 mask
                 while index <= self.size:
                     self.tree[index] += delta
                     index += self.__lowbit(index)
@@ -162,8 +162,8 @@ class Solution:
 
 class Solution:
     def countSmaller(self, nums: List[int]) -> List[int]:
-        rank, N, res = {val: i + 1 for i, val in enumerate(sorted(nums))}, len(
-            nums), []
+        rank, N, res = {val: i + 1 for i, val in enumerate(sorted(nums))}, \
+                       len(nums), []
         BITree = [0] * (N + 1)
 
         def update(i):
@@ -180,6 +180,8 @@ class Solution:
 
         for x in reversed(nums):
             res += getSum(rank[x] - 1),
+            print((getSum(rank[x] - 1),))
+            print(res)
             update(rank[x])
         return res[::-1]
 
@@ -203,9 +205,67 @@ class Solution:
         return smaller
 
 
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        rank = {val: i + 1 for i, val in enumerate(sorted(nums))}
+        n = len(nums)
+        res = []
+
+        BITree = [0] * (n + 1)
+
+        def update(i, k=1):
+            while i <= n:
+                BITree[i] += k
+                i += (i & -i)
+
+        def getSum(i):
+            s = 0
+            while i:
+                s += BITree[i]
+                i -= (i & -i)
+            return s
+
+        for x in reversed(nums):
+            res.append(getSum(rank[x] - 1))
+            update(rank[x])
+        return res[::-1]
+
+
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        rank = {val: i + 1 for i, val in enumerate(sorted(nums))}
+        n = len(nums)
+        res = []
+
+        BITree = [0] * (n + 1)
+
+        def update(i, k=1):
+            while i <= n:
+                BITree[i] += k
+                i += i & -i
+
+        def getSum(i):
+            s = 0
+            while i:
+                s += BITree[i]
+                i -= i & -i
+            return s
+
+        for num in reversed(nums):
+            res.append(getSum(rank[num] - 1))
+            update(rank[num])
+
+        return res[::-1]
+
+
 def main():
-    nums = [5, 2, 6, 1]
     solution = Solution()
+
+    nums = [5, 2, 6, 1]
+    result = solution.countSmaller(nums)
+    print(result)
+
+    nums = [-1, -1]
     result = solution.countSmaller(nums)
     print(result)
 

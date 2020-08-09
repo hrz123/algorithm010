@@ -15,13 +15,13 @@ class Solution:
                 res.append(ans)
                 return
             for char in hashmap[ord(digits[index]) - 50]:
-                # process logic in current level
-                # ans += char
+                # process logic in current row
+                # pre += char
                 # drill down
-                # dfs(index + 1, ans)
+                # dfs(index + 1, pre)
                 # 合并为以下
                 dfs(index + 1, ans + char)
-            # reverse the current level status if needed
+            # reverse the current row status if needed
 
         res = []
         if digits:
@@ -34,10 +34,10 @@ class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
         phone = {'2': ['a', 'b', 'c'],
                  '3': ['d', 'e', 'f'],
-                 '4': ['g', 'h', 'i'],
+                 '4': ['g', 'h', 'start'],
                  '5': ['j', 'k', 'l'],
                  '6': ['m', 'n', 'o'],
-                 '7': ['p', 'q', 'r', 's'],
+                 '7': ['p', 'q', 'row', 's'],
                  '8': ['t', 'u', 'v'],
                  '9': ['w', 'x', 'y', 'z']}
 
@@ -125,6 +125,48 @@ class Solution:
 
         return reduce(
             lambda acc, digit: [x + y for x in acc for y in hashmap[digit]],
+            digits,
+            [""]
+        )
+
+
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits:
+            return []
+        hashmap = {
+            '2': "abc",
+            '3': "def",
+            '4': "ghi",
+            '5': "jkl",
+            '6': "mno",
+            '7': "pqrs",
+            '8': "tuv",
+            '9': "wxyz"
+        }
+        return reduce(
+            lambda acc, digit: [x + y for x in acc for y in hashmap[digit]],
+            digits,
+            [""]
+        )
+
+
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits:
+            return []
+        hashmap = {
+            '2': 'abc',
+            '3': 'def',
+            '4': 'ghi',
+            '5': 'jkl',
+            '6': 'mno',
+            '7': 'pqrs',
+            '8': 'tuv',
+            '9': 'wxyz'
+        }
+        return reduce(
+            lambda acc, x: [ans + c for c in hashmap[x] for ans in acc],
             digits,
             [""]
         )

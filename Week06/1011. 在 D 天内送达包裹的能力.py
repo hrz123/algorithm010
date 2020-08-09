@@ -54,6 +54,31 @@ class Solution:
         return count
 
 
+class Solution:
+    def shipWithinDays(self, weights: List[int], D: int) -> int:
+        lo, hi = 0, 0
+        for w in weights:
+            lo = max(lo, w)
+            hi += w
+        while lo < hi:
+            mid = lo + ((hi - lo) >> 1)
+            if self._count(weights, mid) > D:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    def _count(self, weights, cap):
+        count = 1
+        _sum = 0
+        for w in weights:
+            _sum += w
+            if _sum > cap:
+                count += 1
+                _sum = w
+        return count
+
+
 def main():
     sol = Solution()
 

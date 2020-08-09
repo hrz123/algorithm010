@@ -3,14 +3,14 @@ from typing import List
 
 
 # 子问题
-# 定义状态数组 f(i, j, k), 表示第i:0..n-1天，卖出过j:0..2次的最大值, k：0..1表示手里有股，'
+# 定义状态数组 f(start, j, k), 表示第i:0..n-1天，卖出过j:0..2次的最大值, k：0..1表示手里有股，'
 # 的最大值
 # max(f(n-1,0..2,0))
 # 递推方程
-# f(i, j, k) = max{
-# 不动 f(i-1, j, k)
-# 买入 f(i-1, j, k-1) - a[i]
-# 卖出 f(i-1, j-1, k+1) + a[i]
+# f(start, j, k) = max{
+# 不动 f(start-1, j, k)
+# 买入 f(start-1, j, k-1) - a[start]
+# 卖出 f(start-1, j-1, k+1) + a[start]
 # }
 # 注意边界条件
 # 起始条件
@@ -84,10 +84,28 @@ class Solution:
         return max(dp10, dp20)
 
 
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        f01 = f11 = float('-inf')
+        f10 = f20 = 0
+        for p in prices:
+            f01, f10, f11, f20 = (
+                max(f01, -p),
+                max(f10, f01 + p),
+                max(f11, f10 - p),
+                max(f20, f11 + p)
+            )
+        return f20
+
+
 def main():
-    nums = [3, 3, 5, 0, 0, 3, 1, 4]
-    nums = [1, 2, 3, 4, 5]
     sol = Solution()
+
+    nums = [3, 3, 5, 0, 0, 3, 1, 4]
+    res = sol.maxProfit(nums)
+    print(res)
+
+    nums = [1, 2, 3, 4, 5]
     res = sol.maxProfit(nums)
     print(res)
 

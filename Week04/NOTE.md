@@ -16,7 +16,7 @@ def dfs(node, visited):
 ```
 
 ```python
-def DFS(self, tree): 
+def DFS(cls, tree): 
 	if tree.root is None: 
 		return [] 
 	visited, stack = [], [tree.root]
@@ -82,7 +82,7 @@ array[mid] <= array[right] 且 array[mid] >= array[left]
 
 ```python
 class Solution:
-    def findArrayHead(self, nums: List[int]) -> int:
+    def findArrayHead(cls, nums: List[int]) -> int:
         left, right = 0, len(nums) - 1
         while left < right:
             mid = left + (right - left) // 2
@@ -92,7 +92,7 @@ class Solution:
                 right = mid - 1
             else:
                 return left
-        # 最终left==right，返回哪个都行
+        # 最终left==r，返回哪个都行
         return left
 ```
 

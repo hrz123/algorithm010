@@ -19,8 +19,8 @@ class Node:
 # data = [root], res = []
 # while data:
 #     output = []
-#     size = len(data)
-#     for _ in range(size):
+#     mask = len(data)
+#     for _ in range(mask):
 #         node = data.popleft()
 #         output.append(node.val)  # 这里访问了node.val，那么要做node为null的处理
 #         for child in node.children:
@@ -46,12 +46,12 @@ class Node:
 # 3.递归。
 # 层序遍历也可以用递归实现。
 # 传入一个level，代表属于第几层。向相应的层添加值。
-# def traverse_node(node, level):
-#     if len(res) == level:
+# def traverse_node(node, row):
+#     if len(res) == row:
 #         res.append([])
-#     res[level].append(node.val)
+#     res[row].append(node.val)
 #     for child in node.children:
-#         traverse_node(child, level + 1)
+#         traverse_node(child, row + 1)
 # res = []
 # if not root: # traverse_node需要访问node.val，所以要判断root是否为null
 #     traverse_node(root, 0)
@@ -138,6 +138,58 @@ class Solution:
 
 
 # 以下为自我练习
+
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        if not root:
+            return []
+        deq = deque([root])
+        result = []
+        while deq:
+            size = len(deq)
+            level = []
+            for _ in range(size):
+                root = deq.popleft()
+                level.append(root.val)
+                if root.children:
+                    deq.extend(root.children)
+            result.append(level)
+        return result
+
+
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        if not root:
+            return []
+        q, nq = [root], []
+        res = []
+
+        while q:
+            level = []
+            for node in q:
+                if node.children:
+                    nq.extend(node.children)
+                level.append(node.val)
+            res.append(level)
+            q, nq = nq, []
+        return res
+
+
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        if not root:
+            return []
+        q, nq = [root], []
+        res = []
+        while q:
+            output = []
+            for node in q:
+                output.append(node.val)
+                if node.children:
+                    nq.extend(node.children)
+            res.append(output)
+            q, nq = nq, []
+        return res
 
 
 def main():

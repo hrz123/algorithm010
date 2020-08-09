@@ -3,10 +3,10 @@ from collections import deque
 from typing import List, Set
 
 
-# 从目标库中，选一个bank[i]，和start diff为1的，尝试一下，
-# 如果发现这种尝试失败了（start 一步变不到bank[i]），
-# 就回溯到上一层（记得清理现场），尝试bank中下一个bank[i]，再去和start比。
-# 否则成功的话，就把这个bank[i]（start一步变成的），
+# 从目标库中，选一个bank[start]，和start diff为1的，尝试一下，
+# 如果发现这种尝试失败了（start 一步变不到bank[start]），
+# 就回溯到上一层（记得清理现场），尝试bank中下一个bank[start]，再去和start比。
+# 否则成功的话，就把这个bank[start]（start一步变成的），
 # dfs到下一层作为下一层的start
 # 一旦发现start和end一样了，在终止条件中记录目前为止count的最小值
 class Solution:
@@ -167,6 +167,28 @@ class Solution:
             res += 1
             for x in bq:
                 for y in [x[:i] + c + x[i + 1:] for i in range(8) for c in
+                          "AGCT"]:
+                    if y in bank:
+                        if y in eq:
+                            return res
+                        nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
+class Solution:
+    def minMutation(self, start: str, end: str, bank: List[str]) -> int:
+        bank = set(bank)
+        if end not in bank:
+            return -1
+        bq, eq, nq, n, res = {start}, {end}, set(), 8, 0
+        while bq:
+            bank -= bq
+            res += 1
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
                           "AGCT"]:
                     if y in bank:
                         if y in eq:

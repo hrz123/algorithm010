@@ -12,13 +12,13 @@
 #      + f(n-1) if last_step != 1
 
 # 所以需要记录两个状态
-# f(i, j) i表示走到第i个台阶，j表示这一步走了j个台阶
+# f(start, j) i表示走到第i个台阶，j表示这一步走了j个台阶
 
-# f(i, 1) = f(i-1, 2) + f(i-1, 3)
-# f(i, 2) = f(i-2, 1) + f(i-2, 3)
-# f(i, 3) = f(i-3, 1) + f(i-3, 2)
+# f(start, 1) = f(start-1, 2) + f(start-1, 3)
+# f(start, 2) = f(start-2, 1) + f(start-2, 3)
+# f(start, 3) = f(start-3, 1) + f(start-3, 2)
 
-# f(i)= sum f(i, j) j = 1, 2, 3
+# f(start)= sum f(start, j) j = 1, 2, 3
 
 # f(1, 1) = 1
 # 1, 2 = 0

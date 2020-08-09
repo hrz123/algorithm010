@@ -31,7 +31,7 @@ class BloomFilter(object):
         # number of hash functions to use
         self.hash_count = self.get_hash_count(self.size, items_count)
 
-        # Bit array of given size
+        # Bit array of given mask
         self.bit_array = bitarray(self.size)
 
         # initialize all bits as 0
@@ -44,7 +44,7 @@ class BloomFilter(object):
         digests = []
         for i in range(self.hash_count):
             # create digest for given item.
-            # i work as seed to mmh3.hash() function
+            # start work as seed to mmh3.hash() function
             # With different seed, digest created is different
             digest = mmh3.hash(item, i) % self.size
             digests.append(digest)
@@ -68,7 +68,7 @@ class BloomFilter(object):
     @classmethod
     def get_size(cls, n, p):
         """
-        Return the size of bit array(m) to used using
+        Return the mask of bit array(m) to used using
         following formula
         m = -(n * lg(p)) / (lg(2)^2)
         n : int
@@ -87,7 +87,7 @@ class BloomFilter(object):
         k = (m/n) * lg(2)
 
         m : int
-            size of bit array
+            mask of bit array
         n : int
             number of items expected to be stored in filter
         """

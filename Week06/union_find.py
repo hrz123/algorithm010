@@ -11,11 +11,11 @@ class UnionFind(object):
 
     # def find(self, p):
     #     """查找p的根结点(祖先)"""
-    #     r = p  # 初始p
+    #     row = p  # 初始p
     #     while self.uf[p] > 0:
     #         p = self.uf[p]
-    #     while r != p:  # 路径压缩, 把搜索下来的结点祖先全指向根结点
-    #         self.uf[r], r = p, self.uf[r]
+    #     while row != p:  # 路径压缩, 把搜索下来的结点祖先全指向根结点
+    #         self.uf[row], row = p, self.uf[row]
     #     return p
 
     # def find(self, p):

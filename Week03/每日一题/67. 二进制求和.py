@@ -74,6 +74,61 @@ class Solution:
         return ''.join(ans[::-1])
 
 
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        if not a or not b:
+            return a or b
+        a, b, res = a[::-1], b[::-1], []
+        i = j = carry = 0
+        while i < len(a) or j < len(b) or carry:
+            n1 = int(a[i]) if i < len(a) else 0
+            n2 = int(b[j]) if j < len(b) else 0
+            _sum = n1 + n2 + carry
+            carry = _sum >> 1
+            res.append(str(_sum & 1))
+            i += 1
+            j += 1
+        return ''.join(reversed(res))
+
+
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        if not a or not b:
+            return a or b
+        a, b, res = a[::-1], b[::-1], []
+        i = j = carry = 0
+        while i < len(a) or j < len(b) or carry:
+            n1 = ord(a[i]) - ord('0') if i < len(a) else 0
+            n2 = ord(b[j]) - ord('0') if j < len(b) else 0
+            _sum = n1 + n2 + carry
+            carry = _sum >> 1
+            res.append(str(_sum & 1))
+            i += 1
+            j += 1
+        return ''.join(res[::-1])
+
+
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        if not a or not b:
+            return a or b
+        a, b, carry = a[::-1], b[::-1], 0
+        i, j = 0, 0
+        m, n = len(a), len(b)
+        res = []
+        while i < m or j < n:
+            n1 = ord(a[i]) - ord('0') if i < m else 0
+            n2 = ord(b[j]) - ord('0') if j < n else 0
+            _sum = n1 + n2 + carry
+            carry = _sum >> 1
+            res.append(str(_sum & 1))
+            i += 1
+            j += 1
+        if carry:
+            res.append('1')
+        return ''.join(reversed(res))
+
+
 def main():
     s = Solution()
     res = s.addBinary("1010", "1011")

@@ -58,8 +58,8 @@ class Solution:
 # 在这两个子问题解决后，气球序列还剩下k和两边的气球没有被戳破
 # 那么我们用两个子问题的解与戳破k与两个边界的最大值即可求出原问题的解
 # 定义状态数组
-# f(i, j) = max(f(i, k) + f(k, j) + nums[i]*nums[k]*nums[j]) k = i + 1..j - 1
-# f(i, i+1) = 0
+# f(start, j) = max(f(start, k) + f(k, j) + arr[start]*arr[k]*arr[j]) k = start + 1..j - 1
+# f(start, start+1) = 0
 # 递推方程
 class Solution:
     def maxCoins(self, nums: List[int]) -> int:
@@ -148,14 +148,14 @@ class Solution:
 
 # 子问题
 # 不戳破两边的气球，所能获得的最大值
-# f(i, j)
-# 预处理nums变为[1] + nums + [1]
+# f(start, j)
+# 预处理nums变为[1] + arr + [1]
 # 定义状态数组
-# f(i, j)
+# f(start, j)
 # 递推方程
-# f(i,j) = max(f(i, k) + f(k, j) + nums[ijk]), k i+1 .. j-1
+# f(start,j) = max(f(start, k) + f(k, j) + arr[ijk]), k start+1 .. j-1
 # 初始化
-# f(i, i+1) = 0
+# f(start, start+1) = 0
 # 从gap为2开始， 最大gap为n-1
 # 返回值
 # f(0, n-1)
@@ -173,6 +173,29 @@ class Solution:
                     dp[i][k] + dp[k][j] + nums[i] * nums[j] * nums[k]
                     for k in range(i + 1, j)
                 )
+        return dp[0][n - 1]
+
+
+# 定义子问题
+# 只戳破i， j中间的气球，最大能得到的硬币数
+# f(start, j)
+# f(start, j) = max(f(start, k) + f(k, j) + a[start] * a[j] * a[k]) k start+1 j-1
+# 初始化
+# f(start, start+1) = 0
+# 返回值
+# f(-1, n)
+# 优化空间复杂度
+# 对角线递推，最好不要优化
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1] + nums + [1]
+        n = len(nums)
+        dp = [[0] * n for _ in range(n)]
+        for gap in range(2, n):
+            for i in range(0, n - gap):
+                j = i + gap
+                dp[i][j] = max(dp[i][k] + dp[k][j] + nums[i] * nums[j] *
+                               nums[k] for k in range(i + 1, j))
         return dp[0][n - 1]
 
 

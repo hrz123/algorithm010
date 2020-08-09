@@ -17,6 +17,34 @@ class Solution:
         return nums[left]
 
 
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        l, r = 0, len(nums) - 1
+        while l < r:
+            mid = l + ((r - l) >> 1)
+            if nums[mid] > nums[r]:
+                l = mid + 1
+            elif nums[mid] < nums[r]:
+                r = mid
+            else:
+                r -= 1
+        return nums[l]
+
+
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        l, r = 0, len(nums) - 1
+        while l < r:
+            mid = l + ((r - l) >> 1)
+            if nums[mid] > nums[r]:
+                l = mid + 1
+            elif nums[mid] < nums[r]:
+                r = mid
+            else:
+                r -= 1
+        return nums[l]
+
+
 def main():
     sol = Solution()
 
@@ -29,6 +57,11 @@ def main():
     res = sol.findMin(nums)
     print(res)
     assert res == 0
+
+    nums = [2, 2, 2, 2, 1]
+    res = sol.findMin(nums)
+    print(res)
+    assert res == 1
 
     nums = [0]
     res = sol.findMin(nums)

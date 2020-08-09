@@ -26,7 +26,7 @@
 
 ```
     # 小的往下下沉
-    def sink(self, array, n, k):
+    def sink(cls, array, n, k):
         left = 2 * k + 1
         right = 2 * k + 2
         if left >= n:
@@ -36,12 +36,12 @@
             max_i = right
         if array[max_i] > array[k]:
             array[max_i], array[k] = array[k], array[max_i]
-            self.sink(array, n, max_i)
+            cls.sink(array, n, max_i)
 
-    def build_heap(self, list_):
+    def build_heap(cls, list_):
         n = len(list_)
         for i in range(n // 2 - 1, -1, -1):
-            self.sink(list_, n, i)
+            cls.sink(list_, n, i)
         return list_
 
 
@@ -50,11 +50,11 @@
 堆排的代码自然能写出
 
 ```
-    def heapSort(self, arr):
-        self.build_heap(arr)
+    def heapSort(cls, arr):
+        cls.build_heap(arr)
         for i in range(len(arr) - 1, 0, -1):
             arr[i], arr[0] = arr[0], arr[i]
-            self.sink(arr, i, 0)
+            cls.sink(arr, i, 0)
 ```
 
 ## 注意点

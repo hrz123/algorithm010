@@ -47,7 +47,7 @@ class Solution:
         # recursion terminator
         if not node:
             return
-        # process current level logic
+        # process current row logic
         if level == len(res):
             res.append(node.val)
         else:
@@ -55,7 +55,7 @@ class Solution:
         # drill down
         self.__dfs(level + 1, node.left, res)
         self.__dfs(level + 1, node.right, res)
-        # reverse current level status if needed
+        # reverse current row status if needed
 
 
 # 以下为自我练习
@@ -79,6 +79,45 @@ class Solution:
             q, nq = nq, []
             res.append(level_max)
 
+        return res
+
+
+class Solution:
+    def largestValues(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        deq = deque([root])
+        res = []
+        while deq:
+            size = len(deq)
+            _max = float('-inf')
+            for _ in range(size):
+                root = deq.popleft()
+                _max = max(_max, root.val)
+                if root.left:
+                    deq.append(root.left)
+                if root.right:
+                    deq.append(root.right)
+            res.append(_max)
+        return res
+
+
+class Solution:
+    def largestValues(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        q, nq = [root], []
+        res = []
+        while q:
+            _max_value = float('-inf')
+            for root in q:
+                _max_value = max(_max_value, root.val)
+                if root.left:
+                    nq.append(root.left)
+                if root.right:
+                    nq.append(root.right)
+            res.append(_max_value)
+            q, nq = nq, []
         return res
 
 

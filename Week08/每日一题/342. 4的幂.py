@@ -58,6 +58,21 @@ class Solution:
         return num > 0 and not num & (num - 1) and bool(num & 0x55555555)
 
 
+class Solution:
+    def isPowerOfFour(self, num: int) -> bool:
+        return num > 0 and not num & (num - 1) and bool(num & 0x55555555)
+
+
+class Solution:
+    def isPowerOfFour(self, num: int) -> bool:
+        return num > 0 and not num & (num - 1) and bool(num & 0x55555555)
+
+
+class Solution:
+    def isPowerOfFour(self, num: int) -> bool:
+        return num > 0 and not num & (num - 1) and bool(num & 0x55555555)
+
+
 def main():
     sol = Solution()
 

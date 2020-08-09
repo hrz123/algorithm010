@@ -17,6 +17,61 @@ class Solution:
         return res
 
 
+class Solution:
+    def singleNumber(self, nums: List[int]) -> List[int]:
+        x1 = 0
+        for num in nums:
+            x1 ^= num
+        a1 = a2 = 0
+        mask = x1 & (-x1)
+        for num in nums:
+            if num & mask:
+                a1 ^= num
+            else:
+                a2 ^= num
+        return [a1, a2]
+
+
+# 以下是自我练习
+class Solution:
+    def singleNumber(self, nums: List[int]) -> List[int]:
+        x1 = 0
+        for num in nums:
+            x1 ^= num
+        a1 = 0
+        mask = x1 & (-x1)
+        for num in nums:
+            if num & mask:
+                a1 ^= num
+        return [a1, x1 ^ a1]
+
+
+class Solution:
+    def singleNumber(self, nums: List[int]) -> List[int]:
+        xor = 0
+        for n in nums:
+            xor ^= n
+        mask = xor & (-xor)
+        x1 = 0
+        for n in nums:
+            if n & mask:
+                x1 ^= n
+        return [x1, xor ^ x1]
+
+
+class Solution:
+    def singleNumber(self, nums: List[int]) -> List[int]:
+        xor = 0
+        for n in nums:
+            xor ^= n
+        mask = xor & (-xor)
+        x1 = 0
+        for n in nums:
+            if mask & n:
+                x1 ^= n
+        return [x1, xor ^ x1]
+
+
 def main():
     sol = Solution()
 

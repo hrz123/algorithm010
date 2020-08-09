@@ -39,9 +39,31 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def generateTrees(self, n: int) -> List[TreeNode]:
+        if not n:
+            return []
+        return self.helper(1, n)
+
+    @lru_cache(None)
+    def helper(self, l, r):
+        if l > r:
+            return [None]
+        res = []
+        for mid in range(l, r + 1):
+            for left in self.helper(l, mid - 1):
+                for right in self.helper(mid + 1, r):
+                    root = TreeNode(mid)
+                    root.left = left
+                    root.right = right
+                    res.append(root)
+        return res
+
+
 def main():
     sol = Solution()
-    res = sol.generateTrees(10)
+    res = sol.generateTrees(3)
     print(res)
     for t in res:
         print(t.val)

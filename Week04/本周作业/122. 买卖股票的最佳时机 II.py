@@ -26,6 +26,19 @@ class Solution:
             max(0, prices[i + 1] - prices[i]) for i in range(len(prices) - 1))
 
 
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        return sum(
+            max(0, prices[i] - prices[i - 1]) for i in range(1, len(prices))
+        )
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        return sum(
+            max(0, prices[i + 1] - prices[i]) for i in range(len(prices) - 1))
+
+
 def main():
     prices = [7, 1, 5, 3, 6, 4]
     sol = Solution()

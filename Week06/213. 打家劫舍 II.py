@@ -4,15 +4,15 @@ from typing import List
 
 # 子问题
 # 定义状态数组
-# f(i, j) 表示第i家， i:0..n-1, j, 0..1, 0表示不偷第一家，1表示偷
+# f(start, j) 表示第i家， start:0..n-1, j, 0..1, 0表示不偷第一家，1表示偷
 # 递推方程:
-# f(i, j) = max(f(i-1, j), f(i-2, j) + nums[i])
+# f(start, j) = max(f(start-1, j), f(start-2, j) + arr[start])
 # f(n-1, 1) = max(f(n-2, 1), f(n-3,j))
 # 初始条件
 # f(0, 0) = 0
-# f(0, 1) = nums[0]
-# f(1, 0) = nums[1]
-# f(1, 1) = nums[0]
+# f(0, 1) = arr[0]
+# f(1, 0) = arr[1]
+# f(1, 1) = arr[0]
 class Solution:
     def rob(self, nums: List[int]) -> int:
         if not nums:
@@ -52,10 +52,10 @@ class Solution:
 # 注意
 # 那么就返回f(n-1,0) f(n-2, 0) f(n-2, 1) f(n-3,1) 的最大值 0表示没使用第0天
 # 定义状态数组
-# f(i, 1)使用了第1天的 f(i,0)没使用第1天
+# f(start, 1)使用了第1天的 f(start,0)没使用第1天
 # 递推方程
-# f(i, 0) = max(f(i-2, 0), f(i-3, 0)) + a[i]
-# f(i, 1) = max(f(i-2, 1), f(i-3, 1)) + a[i]
+# f(start, 0) = max(f(start-2, 0), f(start-3, 0)) + a[start]
+# f(start, 1) = max(f(start-2, 1), f(start-3, 1)) + a[start]
 # 初始化
 # f(0, 0) = float('-inf')
 # f(1, 0) = a[1]
@@ -99,8 +99,24 @@ class Solution:
             nums[1:]))
 
 
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        def helper(nums):
+            pre, cur = 0, 0
+            for num in nums:
+                pre, cur = cur, max(cur, pre + num)
+            return cur
+
+        return nums[0] if len(nums) == 1 else max(helper(nums[:-1]), helper(
+            nums[1:]))
+
+
 def main():
     sol = Solution()
+
+    nums = [2]
+    res = sol.rob(nums)
+    print(res)
 
     nums = [2, 3, 2]
     res = sol.rob(nums)

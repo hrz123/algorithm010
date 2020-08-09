@@ -96,35 +96,81 @@ class Solution:
 #         col = len(matrix[0])
 #         lookup = [[0] * col for _ in range(row)]
 #
-#         def dfs(i, j):
-#             if lookup[i][j] != 0:
-#                 return lookup[i][j]
+#         def dfs(start, j):
+#             if lookup[start][j] != 0:
+#                 return lookup[start][j]
 #             # 方法一
 #             res = 1
 #             for x, y in [[-1, 0], [1, 0], [0, 1], [0, -1]]:
-#                 tmp_i = x + i
+#                 tmp_i = x + start
 #                 tmp_j = y + j
 #                 if 0 <= tmp_i < row and 0 <= tmp_j < col and \
-#                         matrix[tmp_i][tmp_j] > matrix[i][j]:
+#                         matrix[tmp_i][tmp_j] > matrix[start][j]:
 #                     res = max(res, 1 + dfs(tmp_i, tmp_j))
-#             lookup[i][j] = max(res, lookup[i][j])
+#             lookup[start][j] = max(res, lookup[start][j])
 #             # 方法二
-#             # val = matrix[i][j]
-#             # lookup[i][j] = 1 + max(
-#             #     dfs(i + 1, j) if 0 <= i + 1 < row and 0 <= j < pre and matrix[i + 1][j] > val else 0,
-#             #     dfs(i - 1, j) if 0 <= i - 1 < row and 0 <= j < pre and matrix[i - 1][j] > val else 0,
-#             #     dfs(i, j + 1) if 0 <= i < row and 0 <= j + 1 < pre and matrix[i][j + 1] > val else 0,
-#             #     dfs(i, j - 1) if 0 <= i < row and 0 <= j - 1 < pre and matrix[i][j - 1] > val else 0,
+#             # val = matrix[start][j]
+#             # lookup[start][j] = 1 + max(
+#             #     dfs(start + 1, j) if 0 <= start + 1 < row and 0 <= j < pre and matrix[start + 1][j] > val else 0,
+#             #     dfs(start - 1, j) if 0 <= start - 1 < row and 0 <= j < pre and matrix[start - 1][j] > val else 0,
+#             #     dfs(start, j + 1) if 0 <= start < row and 0 <= j + 1 < pre and matrix[start][j + 1] > val else 0,
+#             #     dfs(start, j - 1) if 0 <= start < row and 0 <= j - 1 < pre and matrix[start][j - 1] > val else 0,
 #             # )
 #             # 方法三
-#             # lookup[i][j] = 1 + max(
-#             #     [dfs(i + x, y + j) for x, y in [[-1, 0], [1, 0], [0, 1], [0, -1]] \
-#             #      if 0 <= (i + x) < row and 0 <= (j + y) < pre and matrix[i + x][j + y] > matrix[i][j]] or [0]
+#             # lookup[start][j] = 1 + max(
+#             #     [dfs(start + x, y + j) for x, y in [[-1, 0], [1, 0], [0, 1], [0, -1]] \
+#             #      if 0 <= (start + x) < row and 0 <= (j + y) < pre and matrix[start + x][j + y] > matrix[start][j]] or [0]
 #             # )
 #
-#             return lookup[i][j]
+#             return lookup[start][j]
 #
-#         return max(dfs(i, j) for i in range(row) for j in range(col))
+#         return max(dfs(start, j) for start in range(row) for j in range(col))
+
+
+# 以下为自我练习
+# dfs
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        h, w = len(matrix), len(matrix[0])
+        memo = {}
+
+        def dfs(i, j):
+            if (i, j) in memo:
+                return memo[i, j]
+            memo[i, j] = 1
+            cur = matrix[i][j]
+            for di, dj in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+                _i, _j = i + di, j + dj
+                if -1 < _i < h and -1 < _j < w \
+                        and matrix[_i][_j] > cur:
+                    memo[i, j] = max(memo[i, j], 1 + dfs(_i, _j))
+            return memo[i, j]
+
+        return max(dfs(i, j) for i in range(h) for j in range(w))
+
+
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        h, w = len(matrix), len(matrix[0])
+        memo = [[0] * w for _ in range(h)]
+
+        def dfs(i, j):
+            if memo[i][j]:
+                return memo[i][j]
+            memo[i][j] = 1
+            cur = matrix[i][j]
+            for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+                _i, _j = i + dx, j + dy
+                if -1 < _i < h and -1 < _j < w \
+                        and matrix[_i][_j] > cur:
+                    memo[i][j] = max(memo[i][j], 1 + dfs(_i, _j))
+            return memo[i][j]
+
+        return max(dfs(i, j) for i, j in itertools.product(range(h), range(w)))
 
 
 def main():

@@ -63,6 +63,43 @@ class Solution:
         return l
 
 
+# 1.使用库函数
+# 2.遍历
+# 3.二分查找
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        return bisect.bisect_left(nums, target)
+
+
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        l, r = 0, len(nums)
+        while l < r:
+            mid = l + ((r - l) >> 1)
+            if target > nums[mid]:
+                l = mid + 1
+            else:
+                r = mid
+        return l
+
+
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        return bisect.bisect_left(nums, target)
+
+
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        l, r = 0, len(nums)
+        while l < r:
+            mid = l + ((r - l) >> 1)
+            if nums[mid] >= target:
+                r = mid
+            else:
+                l = mid + 1
+        return l
+
+
 def main():
     sol = Solution()
 

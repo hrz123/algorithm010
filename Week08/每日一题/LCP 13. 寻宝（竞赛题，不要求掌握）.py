@@ -62,7 +62,7 @@ class Solution:
             return startToAnyPos[endX][endY]
 
         # 记录第i个机关到第j个机关的最短距离
-        # dist[i][nb]表示到起点的距离， dist[i][nb+1]表示到终点的距离
+        # dist[start][nb]表示到起点的距离， dist[start][nb+1]表示到终点的距离
         dist = [[-1] * (nb + 2) for _ in range(nb)]
 
         # 遍历所有机关，计算其和其他点的距离

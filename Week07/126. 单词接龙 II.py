@@ -1,4 +1,5 @@
 # 126. 单词接龙 II.py
+import string
 from collections import defaultdict
 from typing import List
 
@@ -324,19 +325,51 @@ class Solution:
         return bt(beginWord)
 
 
+class Solution:
+    def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) \
+            -> List[List[str]]:
+        words = set(wordList)
+        if endWord not in words:
+            return []
+        bq, eq, nq, found, rev, tree, n = {beginWord}, {
+            endWord}, set(), False, False, defaultdict(set), len(
+            beginWord)
+
+        while bq and not found:
+            words -= bq
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          string.ascii_lowercase]:
+                    if y in words:
+                        if y in eq:
+                            found = True
+                        else:
+                            nq.add(y)
+                        tree[y].add(x) if rev else tree[x].add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq, rev = eq, bq, not rev
+
+        def bt(x):
+            return [[x]] if x == endWord else [[x] + rest for y in tree[x] \
+                                               for rest in bt(y)]
+
+        return bt(beginWord)
+
+
 def main():
     sol = Solution()
 
     beginWord = "hit"
     endWord = "cog"
-    wordList = ["hot", "dot", "dog", "lot", "log2_and_minus_1", "cog"]
+    wordList = ["hot", "dot", "dog", "lot", "log2_minus_1", "cog"]
 
     res = sol.findLadders(beginWord, endWord, wordList)
     print(res)
 
     beginWord = "hit"
     endWord = "cog"
-    wordList = ["hot", "dot", "dog", "lot", "log2_and_minus_1"]
+    wordList = ["hot", "dot", "dog", "lot", "log2_minus_1"]
 
     res = sol.findLadders(beginWord, endWord, wordList)
     print(res)

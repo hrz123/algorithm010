@@ -7,7 +7,7 @@
 # 因此，应该可以将n除以b x次，每次都有0的余数，最终结果为1
 # 注意我们需要一个警卫来检查那个n不等于0，否则while循环将永远不会结束。
 # 对于负数，该算法没有意义，因此我们也将包括该保护。
-# 时间复杂度O(log2_and_minus_1(n))
+# 时间复杂度O(log2_minus_1(n))
 # 空间复杂度O(1)
 # 方法二：基准转换
 # 我们要做的就是将数字转换为以3位底的基数，并检查它是否为前导1，后跟所有0
@@ -24,8 +24,8 @@
 # 然而这种方法是有问题的，因为我们使用了double，这意味着我们会遇到精度错误。
 # 在比较双精度数时不应使用 ==
 # 为了解决这个问题，我们需要将结果与epsilon进行比较
-# return (Math.log2_and_minus_1(n) / Math.log2_and_minus_1(3) + epsilon) % 1 <= 2 * epsilon
-# 时间复杂度：unknown，主要消耗时间的运算为Math.log2_and_minus_1，限制了我们算法的时间复杂性
+# return (Math.log2_minus_1(n) / Math.log2_minus_1(3) + epsilon) % 1 <= 2 * epsilon
+# 时间复杂度：unknown，主要消耗时间的运算为Math.log2_minus_1，限制了我们算法的时间复杂性
 # 实现依赖于我们使用的语言和编译器
 # 空间复杂度：O(1)，我们没有使用任何额外的内存。epsilon变量可以是内联的。
 # 方法四：整数限制
@@ -47,8 +47,30 @@ class Solution:
         return n > 0 and 1162261467 % n == 0
 
 
+class Solution:
+    def isPowerOfThree(self, n: int) -> bool:
+        if n < 1:
+            return False
+        while not n % 3:
+            n //= 3
+        return n == 1
+
+
+# 以下为自我练习
+class Solution:
+    def isPowerOfThree(self, n: int) -> bool:
+        if n < 1:
+            return False
+        while not n % 3:
+            n //= 3
+        return n == 1
+
+
 def main():
-    pass
+    sol = Solution()
+    n = 16
+    res = sol.isPowerOfThree(n)
+    print(res)
 
 
 if __name__ == '__main__':

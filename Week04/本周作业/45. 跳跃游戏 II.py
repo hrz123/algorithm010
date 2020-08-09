@@ -11,7 +11,7 @@ class Solution:
         steps = 0
 
         n = len(nums)
-        # 这里注意是len(nums) - 1，因为是索引为0时，steps已经是1了
+        # 这里注意是len(arr) - 1，因为是索引为0时，steps已经是1了
         for i in range(n - 1):
             # 更新这一步能走到的最远距离
             max_position = max(max_position, nums[i] + i)
@@ -71,6 +71,58 @@ class Solution:
                 steps += 1
                 cur_max = next_max
             next_max = max(next_max, i + nums[i])
+        return steps
+
+
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        start = 0
+        n_max = 0
+        steps = 0
+        for i in range(len(nums)):
+            if i > start:
+                steps += 1
+                start = n_max
+            n_max = max(n_max, i + nums[i])
+        return steps
+
+
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        start = 0
+        cur_max = 0
+        steps = 0
+        for i in range(len(nums)):
+            if i > start:
+                steps += 1
+                start = cur_max
+            cur_max = max(cur_max, i + nums[i])
+        return steps
+
+
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        start = 0
+        cur_max = 0
+        steps = 0
+        for i in range(len(nums)):
+            if i > start:
+                steps += 1
+                start = cur_max
+            cur_max = max(cur_max, i + nums[i])
+        return steps
+
+
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        start = 0
+        cur_max = 0
+        steps = 0
+        for i in range(len(nums)):
+            if i > start:
+                steps += 1
+                start = cur_max
+            cur_max = max(cur_max, i + nums[i])
         return steps
 
 

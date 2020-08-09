@@ -2,7 +2,7 @@
 from typing import List
 
 
-# 暴力解法：两层循环，指定前一个元素，看下一个元素是否是nums[i] > 2*arr[j]
+# 暴力解法：两层循环，指定前一个元素，看下一个元素是否是nums[start] > 2*arr[j]
 # 时间复杂度O(n^2)
 # 分治
 # 分为两个数组，假设我们已经解决该问题，左侧的翻转对我们已经求出，右侧的翻转对我们也已经求出
@@ -220,6 +220,35 @@ class Solution:
         i, c, t = l, 0, l
         for j in range(mid + 1, r + 1):
             while t <= mid and (nums[t] + 1) >> 1 <= nums[j]:
+                t += 1
+            while i <= mid and nums[i] <= nums[j]:
+                cache[c] = nums[i]
+                c += 1
+                i += 1
+            cache[c] = nums[j]
+            c += 1
+            cnt += mid - t + 1
+        while i <= mid:
+            cache[c] = nums[i]
+            c += 1
+            i += 1
+        nums[l:r + 1] = cache
+        return cnt
+
+
+class Solution:
+    def reversePairs(self, nums: List[int]) -> int:
+        return self.mergeSort(nums, 0, len(nums) - 1)
+
+    def mergeSort(self, nums, l, r):
+        if l >= r:
+            return 0
+        mid = l + ((r - l) >> 1)
+        cnt = self.mergeSort(nums, l, mid) + self.mergeSort(nums, mid + 1, r)
+        cache = [0] * (r - l + 1)
+        i, c, t = l, 0, l
+        for j in range(mid + 1, r + 1):
+            while t <= mid and (nums[t] + 1 >> 1) <= nums[j]:
                 t += 1
             while i <= mid and nums[i] <= nums[j]:
                 cache[c] = nums[i]

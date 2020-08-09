@@ -10,9 +10,9 @@ from typing import List
 # 排序会有利于我们剪枝，不会占用很多时间复杂度
 # 排好序之后
 # 我们遍历i从0..n-4
-# 相当于在右侧剩余的数列寻找三数之和等于target - nums[i]
-# 再遍历j从 i+1 .. n-3
-# 相当于在右侧剩余的数列寻找两数之和等于target - nums[i] - nums[j]
+# 相当于在右侧剩余的数列寻找三数之和等于target - arr[start]
+# 再遍历j从 start+1 .. n-3
+# 相当于在右侧剩余的数列寻找两数之和等于target - arr[start] - arr[j]
 # 在有序数组上找两数之和可以使用典型的双指针夹逼办法
 # 双指针夹逼方法的时间复杂度为O(n)
 # 这样的时间复杂度一共是O(n^3)
@@ -26,22 +26,22 @@ from typing import List
 
 # 不包含重复的
 # 可以在遍历的时候就排除
-# 如果nums[i] == nums[i-1], i += 1，跳过这个i
-# 如果nums[j] == nums[j-1], j += 1，跳过这个j
-# 双指针的时候l, r, 如果nums[l] == nums[l-1]，跳过这个l
-#                 如果nums[r] == nums[r+1]，跳过这个r
+# 如果nums[start] == arr[start-1], start += 1，跳过这个i
+# 如果nums[j] == arr[j-1], j += 1，跳过这个j
+# 双指针的时候l, row, 如果nums[l] == arr[l-1]，跳过这个l
+#                 如果nums[row] == arr[row+1]，跳过这个r
 
 # 在进一步剪枝
-# nums[i] + 3 * nums[j] > target: break
-# nums[i] + 3 * nums[-1] < target:
-#     while i < n - 4 and nums[i] == nums[i + 1]: i += 1
-#     i += 1
+# arr[start] + 3 * arr[j] > target: break
+# arr[start] + 3 * arr[-1] < target:
+#     while start < n - 4 and arr[start] == arr[start + 1]: start += 1
+#     start += 1
 #     continue
 
 
-# nums[i] + nums[j] + 2 * nums[j + 1] > target: break
-# nums[i] + nums[j] + 2 * nums[-1] < target:
-#     while j < n - 3 and nums[j] == nums[j + 1]: j += 1
+# arr[start] + arr[j] + 2 * arr[j + 1] > target: break
+# arr[start] + arr[j] + 2 * arr[-1] < target:
+#     while j < n - 3 and arr[j] == arr[j + 1]: j += 1
 #     j += 1
 #     continue
 
@@ -185,7 +185,7 @@ class Solution:
                     or target > nums[r] * N:
                 return
 
-            # process current level logic
+            # process current row logic
             if N == 2:
                 while l < r:
                     s = nums[l] + nums[r]
@@ -369,6 +369,134 @@ class Solution:
 
         nums.sort()
         res = []
+        findKSum(0, len(nums) - 1, 4, target, [], res)
+        return res
+
+
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def findNSum(l, r, k, target, result, results):
+            if r - l + 1 < k \
+                    or k < 2 \
+                    or target < nums[l] * k \
+                    or target > nums[r] * k:
+                return
+            if k == 2:
+                while l < r:
+                    _sum = nums[l] + nums[r]
+                    if _sum == target:
+                        results.append(result + [nums[l], nums[r]])
+                        l += 1
+                        while l < r and nums[l] == nums[l - 1]:
+                            l += 1
+                    elif _sum < target:
+                        l += 1
+                    else:
+                        r -= 1
+            else:
+                for i in range(l, r):
+                    if i == l or nums[i] != nums[i - 1]:
+                        findNSum(i + 1, r, k - 1, target - nums[i], result + [
+                            nums[i]], results)
+
+        nums.sort()
+        results = []
+        findNSum(0, len(nums) - 1, 4, target, [], results)
+        return results
+
+
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def findKSum(l, r, k, target, result, results):
+            if r - l + 1 < k \
+                    or k < 2 \
+                    or target < nums[l] * k \
+                    or target > nums[r] * k:
+                return
+            if k == 2:
+                while l < r:
+                    _sum = nums[l] + nums[r]
+                    if _sum == target:
+                        results.append(result + [nums[l], nums[r]])
+                        l += 1
+                        while l < r and nums[l] == nums[l - 1]:
+                            l += 1
+                    elif _sum < target:
+                        l += 1
+                    else:
+                        r -= 1
+            else:
+                for i in range(l, r):
+                    if i == l or nums[i] != nums[i - 1]:
+                        findKSum(i + 1, r, k - 1, target - nums[i], result + [
+                            nums[i]], results)
+
+        nums.sort()
+        res = []
+        findKSum(0, len(nums) - 1, 4, target, [], res)
+        return res
+
+
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def findKSum(l, r, k, target, result, results):
+            if r - l + 1 < k \
+                    or k < 2 \
+                    or target < nums[l] * k \
+                    or target > nums[r] * k:
+                return
+            if k == 2:
+                while l < r:
+                    _sum = nums[l] + nums[r]
+                    if _sum == target:
+                        results.append(result + [nums[l], nums[r]])
+                        l += 1
+                        while l < r and nums[l] == nums[l - 1]:
+                            l += 1
+                    elif target > _sum:
+                        l += 1
+                    else:
+                        r -= 1
+            else:
+                for i in range(l, r):
+                    if i == l or nums[i] != nums[i - 1]:
+                        findKSum(i + 1, r, k - 1, target - nums[i], result + [
+                            nums[i]], results)
+
+        nums.sort()
+        res = []
+        findKSum(0, len(nums) - 1, 4, target, [], res)
+        return res
+
+
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def findKSum(l, r, k, target, result, results):
+            if r - l + 1 < k \
+                    or k < 2 \
+                    or nums[l] * k > target \
+                    or nums[r] * k < target:
+                return
+            if k == 2:
+                while l < r:
+                    total = nums[l] + nums[r]
+                    if total == target:
+                        results.append(result + [nums[l], nums[r]])
+                        l += 1
+                        while l < r and nums[l] == nums[l - 1]:
+                            l += 1
+                    elif total < target:
+                        l += 1
+                    else:
+                        r -= 1
+            else:
+                for i in range(l, r - k + 2):
+                    if i == l or nums[i] != nums[i - 1]:
+                        findKSum(i + 1, r, k - 1, target - nums[i],
+                                 result + [nums[i]], results)
+
+        res = []
+        nums.sort()
         findKSum(0, len(nums) - 1, 4, target, [], res)
         return res
 

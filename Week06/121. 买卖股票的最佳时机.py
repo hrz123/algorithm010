@@ -4,9 +4,9 @@ from typing import List
 
 # 只能完成一笔交易
 # 子问题
-# 定义状态数组: f(i)为第i+1天卖出的最大值, max(f(i))
+# 定义状态数组: f(start)为第i+1天卖出的最大值, max(f(start))
 # 递推方程
-# f(i) = max(f(i-1) + a[i] - a[i-1], 0)
+# f(start) = max(f(start-1) + a[start] - a[start-1], 0)
 # f(0) = 0
 
 class Solution:
@@ -42,6 +42,14 @@ class Solution:
             profit = max(0, prices[i] - prices[i - 1] + profit)
             res = max(res, profit)
         return res
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        x, y = float('-inf'), 0
+        for p in prices:
+            x, y = max(x, -p), max(y, x + p)
+        return y
 
 
 def main():

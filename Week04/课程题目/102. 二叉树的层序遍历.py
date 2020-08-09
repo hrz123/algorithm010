@@ -16,9 +16,9 @@ class TreeNode:
 # dfs解法
 # 递归传入level
 # 终止条件为node == None
-# 如果level层在res中不存在,level == len(res)
+# 如果level层在res中不存在,row == len(res)
 # res.append([])
-# res[level].append(node.val)
+# res[row].append(node.val)
 class Solution:
     def levelOrder(self, root: TreeNode) -> List[List[int]]:
         if not root:
@@ -162,6 +162,25 @@ class Solution:
             self.__dfs(level + 1, root.left, res)
         if root.right:
             self.__dfs(level + 1, root.right, res)
+
+
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+        q, nq = [root], []
+        res = []
+        while q:
+            output = []
+            for root in q:
+                output.append(root.val)
+                if root.left:
+                    nq.append(root.left)
+                if root.right:
+                    nq.append(root.right)
+            res.append(output)
+            q, nq = nq, []
+        return res
 
 
 def main():

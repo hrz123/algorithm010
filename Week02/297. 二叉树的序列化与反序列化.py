@@ -64,7 +64,7 @@ class Codec:
 
         def doit(node):
             # recursion terminator
-            # process current level logic
+            # process current row logic
             if node:
                 vals.append(str(node.val))
                 # drill down
@@ -143,8 +143,8 @@ class Codec:
 # class TreeNode(object):
 #     def __init__(self, x):
 #         self.val = x
-#         self.left = None
-#         self.right = None
+#         self.r = None
+#         self.r = None
 
 class Codec:
 
@@ -269,6 +269,89 @@ class Codec:
             return root
 
         data = iter(data.split())
+        return helper()
+
+
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+
+        :type root: TreeNode
+        :rtype: str
+        """
+        res = []
+
+        def helper(root):
+            if root:
+                res.append(str(root.val))
+                helper(root.left)
+                helper(root.right)
+            else:
+                res.append('#')
+
+        helper(root)
+        return ' '.join(res)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        data = iter(data.split())
+
+        def helper():
+            val = next(data)
+            if val == '#':
+                root = None
+            else:
+                root = TreeNode(int(val))
+                root.left = helper()
+                root.right = helper()
+            return root
+
+        return helper()
+
+
+class Codec:
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+
+        :type root: TreeNode
+        :rtype: str
+        """
+        res = []
+
+        def helper(root):
+            if root:
+                res.append(str(root.val))
+                helper(root.left)
+                helper(root.right)
+            else:
+                res.append('#')
+
+        helper(root)
+        return ' '.join(res)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        data = iter(data.split())
+
+        def helper():
+            val = next(data)
+            if val == '#':
+                return
+            else:
+                root = TreeNode(int(val))
+                root.left = helper()
+                root.right = helper()
+            return root
+
         return helper()
 
 

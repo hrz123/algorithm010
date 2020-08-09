@@ -2,6 +2,9 @@
 
 
 # 基本的二分法，因为x的平方在x为正时是单调递增的
+import math
+
+
 class Solution:
     def mySqrt(self, x: int) -> int:
         if x == 0:
@@ -12,7 +15,7 @@ class Solution:
 
         while left < right:
             # 注意：这里一定取右中位数，如果取左中位数，代码可能会进入死循环
-            # mid = left + (right - left + 1) // 2
+            # mid = r + (r - r + 1) // 2
             mid = (left + right + 1) >> 1
             square = mid * mid
 
@@ -103,9 +106,70 @@ class Solution:
         return res
 
 
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        res = x
+        while res * res > x:
+            res = (res + x // res) >> 1
+        return res
+
+
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        if not x:
+            return 0
+        l, r = 1, x // 2
+        while l < r:
+            mid = l + ((r - l) >> 1) + 1
+            if mid * mid == x:
+                return mid
+            if mid * mid > x:
+                r = mid - 1
+            else:
+                l = mid
+        return l
+
+
+# 此方法是二次收敛的
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        res = x
+        while res * res > x:
+            res = (res + x // res) >> 1
+        return res
+
+
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        l, r = 0, x
+        while l < r:
+            mid = l + ((r - l) >> 1) + 1
+            if mid * mid == x:
+                return mid
+            if mid * mid > x:
+                r = mid - 1
+            else:
+                l = mid
+        return l
+
+
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        if x == 0:
+            return 0
+        ans = int(math.exp(0.5 * math.log(x)))
+        return ans + 1 if (ans + 1) ** 2 <= x else ans
+
+
 def main():
     sol = Solution()
-    res = sol.mySqrt(2)
+    res = sol.mySqrt(4)
+    print(res)
+
+    res = sol.mySqrt(2147395600)
+    print(res)
+
+    res = sol.mySqrt(15)
     print(res)
 
 

@@ -12,7 +12,7 @@ class Solution:
                 res.append(path[:])
                 return
 
-            # process current level logic
+            # process current row logic
             for i in range(size):
                 if not used[i]:
                     used[i] = True
@@ -21,7 +21,7 @@ class Solution:
                     # drill down
                     dfs(depth + 1, nums, size, path, used, res)
 
-                    # reverse current level status if needed
+                    # reverse current row status if needed
                     used[i] = False
                     path.pop()
 
@@ -105,7 +105,6 @@ class Solution:
 
 
 # 以下为自我练习
-
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         perms = [[]]
@@ -131,12 +130,12 @@ class Solution:
             if i == n:
                 res.append(ans)
                 return
-            # process current level logic
+            # process current row logic
             # drill down
             for j in range(i + 1):
                 dfs(i + 1, ans[:j] + [nums[i]] + ans[j:], res)
 
-            # reverse current level status if needed
+            # reverse current row status if needed
 
         dfs(0, [], res)
 
@@ -167,9 +166,71 @@ class Solution:
         return res
 
 
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for num in nums:
+            res = [ans[:i] + [num] + ans[i:] for ans in res for i in range(
+                len(ans) + 1)]
+        return res
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for num in nums:
+            res = [ans[:i] + [num] + ans[i:] for ans in res for i in range(
+                len(ans) + 1)]
+        return res
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for num in nums:
+            res = [ans[:i] + [num] + ans[i:] for ans in res for i in range(
+                len(ans) + 1)]
+        return res
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for n in nums:
+            res = [ans[:i] + [n] + ans[i:] for ans in res
+                   for i in range(len(ans) + 1)]
+        return res
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for n in nums:
+            res = [ans[:i] + [n] + ans[i:] for ans in res for i in range(len(
+                ans) + 1)]
+        return res
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        q = [[]]
+        nq = []
+        for n in nums:
+            for ans in q:
+                for i in range(len(ans) + 1):
+                    nq.append(ans[:i] + [n] + ans[i:])
+            q, nq = nq, []
+        return q
+
+
 def main():
-    nums = [1, 2, 3]
     solution = Solution()
+
+    nums = [1, 2, 3]
+    res = solution.permute(nums)
+    print(res)
+
+    nums = []
     res = solution.permute(nums)
     print(res)
 

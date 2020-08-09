@@ -238,6 +238,104 @@ class Solution:
                     ans.append(l)
 
 
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words or not words[0]:
+            return []
+        m, n = len(s), len(words[0])
+        t = n * len(words)
+        req = defaultdict(int)
+        for w in words:
+            req[w] += 1
+        res = []
+        for start in range(min(n, m - n + 1)):
+            self.find(start, s, req, n, m, t, res)
+        return res
+
+    def find(self, start, s, req, n, m, t, res):
+        l = r = start
+        counter = defaultdict(int)
+        while r < m:
+            word = s[r:r + n]
+            r += n
+            if word in req:
+                counter[word] += 1
+                while counter[word] > req[word]:
+                    counter[s[l:l + n]] -= 1
+                    l += n
+                if r - l == t:
+                    res.append(l)
+            else:
+                l = r
+                counter.clear()
+
+
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words or not words[0]:
+            return []
+        res = []
+        n = len(words[0])
+        t = n * len(words)
+        m = len(s)
+        req = defaultdict(int)
+        for w in words:
+            req[w] += 1
+        for start in range(min(n, m - n + 1)):
+            self.find(s, start, req, n, t, m, res)
+        return res
+
+    def find(self, s, start, req, n, t, m, res):
+        counter = defaultdict(int)
+        l = r = start
+        while r < m:
+            tmp = s[r:r + n]
+            r += n
+            if tmp in req:
+                counter[tmp] += 1
+                while counter[tmp] > req[tmp]:
+                    counter[s[l:l + n]] -= 1
+                    l += n
+                if r - l == t:
+                    res.append(l)
+            else:
+                l = r
+                counter.clear()
+
+
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words or not words[0]:
+            return []
+        n = len(words[0])
+        t = n * len(words)
+        m = len(s)
+        res = []
+        req = defaultdict(int)
+        for w in words:
+            req[w] += 1
+        for i in range(min(n, m - n + 1)):
+            self._find(i, s, req, n, t, m, res)
+        return res
+
+    def _find(self, i, s, req, n, t, m, res):
+        counter = defaultdict(int)
+        l, r = i, i
+        while r < m:
+            tmp = s[r:r + n]
+            r += n
+            if tmp in req:
+                counter[tmp] += 1
+                while counter[tmp] > req[tmp]:
+                    counter[s[l:l + n]] -= 1
+                    l += n
+                if r - l == t:
+                    res.append(l)
+            else:
+                l = r
+                counter.clear()
+
+
 def main():
     sol = Solution()
 

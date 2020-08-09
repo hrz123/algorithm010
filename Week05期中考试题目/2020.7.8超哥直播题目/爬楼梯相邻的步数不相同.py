@@ -19,8 +19,8 @@ class Solution:
 
 
 # 循环
-# dp[i][j]表示走到i步，且到这步走了steps[j]步
-# 那么dp[i][j] = sum(dp[i - steps[j]][k]) k != j
+# dp[start][j]表示走到i步，且到这步走了steps[j]步
+# 那么dp[start][j] = sum(dp[start - steps[j]][k]) k != j
 # 起始条件是
 # dp[steps[j]][j] = 1, j从0到ns - 1
 # dp[负数][j] = 0
@@ -40,8 +40,8 @@ class Solution:
 
 # 这里用dp一维就不够了
 # 需要用两维
-# f(i, j) i表示当前走到i，j表示当前走到i的步数
-# f(i, j) = sum(f(i-j, k)) k != j
+# f(start, j) i表示当前走到i，j表示当前走到i的步数
+# f(start, j) = sum(f(start-j, k)) k != j
 # 初始化
 # f(k, k) = 1
 class Solution:

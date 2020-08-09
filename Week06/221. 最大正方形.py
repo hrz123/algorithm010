@@ -5,10 +5,10 @@ from typing import List
 # 定义子问题
 # 到i, j位置的最大正方形面积的边长，返回m-1, n-1,必须包含i，j
 # 定义状态数组
-# dp[i][j] i 0..m-1 j 0..n-1
+# dp[start][j] start 0..m-1 j 0..n-1
 # 递推方程
-# f(i, j) = min{f(i-1, j), f(i, j-1)} if f(i-1, j) != f(i, j-1)
-# f(i, j) = f(i, j-1) + 1 if a[i-f(i, j-1)][j-f(i, j-1)] else 0
+# f(start, j) = min{f(start-1, j), f(start, j-1)} if f(start-1, j) != f(start, j-1)
+# f(start, j) = f(start, j-1) + 1 if a[start-f(start, j-1)][j-f(start, j-1)] else 0
 # 可以只要一层
 class Solution:
     def maximalSquare(self, matrix: List[List[str]]) -> int:
@@ -62,9 +62,9 @@ class Solution:
 # 以下为自我练习
 # 定义子问题，以i， j为右下角的正方形的最大边长
 # 定义状态数组
-# dp(i, j)
+# dp(start, j)
 # 递推方程
-# f(i, j) = min(f(i-1, j), f(i, j-1), f(i-1, j-1)) + 1 if (i, j)位置为1
+# f(start, j) = min(f(start-1, j), f(start, j-1), f(start-1, j-1)) + 1 if (start, j)位置为1
 #         = 0   else
 # 返回值
 # 取每一步中的最大值，再平方
@@ -90,6 +90,39 @@ class Solution:
                     dp_[j] = 0
             dp, dp_ = dp_, dp
         return max_side * max_side
+
+
+# 定义子问题
+# 从左上角到i， j位置的最大正方形的边长是多少，包含i， j位置
+# 定义状态数组
+# f(start, j)
+# 递推方程
+# if a[start, j] == 0  f(start， j) = 0
+# else             f(start, j) = min(f(start-1, j-1), f(start-1, j), f(start, j-1)) + 1
+# 初始化
+# f(0, 0) = 1 if a[0,0]=1 else 0
+# 加入哨兵
+# f(0, 0) = 0
+# 返回值，这些边长中的最大值
+# 优化空间复杂度
+# 可以使用两个数组来回滚动
+class Solution:
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        m, n = len(matrix), len(matrix[0])
+        side = 0
+        dp = [0] * (n + 1)
+        ndp = [0] * (n + 1)
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == '1':
+                    ndp[j] = min(dp[j - 1], dp[j], ndp[j - 1]) + 1
+                    side = max(side, ndp[j])
+                else:
+                    ndp[j] = 0
+            dp, ndp = ndp, dp
+        return side * side
 
 
 def main():

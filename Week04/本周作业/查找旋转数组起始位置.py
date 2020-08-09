@@ -13,7 +13,7 @@ class Solution:
                 right = mid - 1
             else:
                 return nums[left]
-        # 最终left==right，返回哪个都行
+        # 最终left==r，返回哪个都行
         return nums[left]
 
 
@@ -28,7 +28,7 @@ class Solution:
                 left = mid + 1
             else:
                 right = mid
-        # 最终left==right，返回哪个都行
+        # 最终left==r，返回哪个都行
         return nums[left]
 
 

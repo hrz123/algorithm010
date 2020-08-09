@@ -149,7 +149,7 @@ class Solution:
 # 对于每一个人，如果没被访问过，将它的所有好友（包括自己）都记录为访问过
 # 记录他好友的好友，只要没被访问，也记为访问过
 # dfs直到他好友以及好友的好友，只要有关联，都被记为访问过
-# log2_and_minus_1 + 1
+# log2_minus_1 + 1
 # 如果已经被访问，继续下一个
 # 这边遍历完的结果就得到了
 class Solution:
@@ -168,6 +168,69 @@ class Solution:
             if M[i][j] and not visited[j]:
                 visited[j] = True
                 self._dfs(j, M, visited, n)
+
+
+class UnionFind:
+    def __init__(self, n):
+        self.uf = [-1] * (n + 1)
+        self.sets_count = n
+
+    def find(self, p):
+        if self.uf[p] < 0:
+            return p
+        self.uf[p] = self.find(self.uf[p])
+        return self.uf[p]
+
+    def union(self, p, q):
+        p_root = self.find(p)
+        q_root = self.find(q)
+
+        if p_root == q_root:
+            return
+
+        if self.uf[p_root] > self.uf[q_root]:
+            # 说明p_root的规模小
+            self.uf[q_root] += self.uf[p_root]
+            self.uf[p_root] = q_root
+        else:
+            self.uf[p_root] += self.uf[q_root]
+            self.uf[q_root] = p_root
+        self.sets_count -= 1
+
+    def is_connected(self, p, q):
+        return self.find(p) == self.find(q)
+
+
+class Solution:
+    def findCircleNum(self, M: List[List[int]]) -> int:
+        n = len(M)
+        uf = UnionFind(n)
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                if M[i][j]:
+                    uf.union(i, j)
+        return uf.sets_count
+
+
+# 以下为自我练习
+class Solution:
+    def findCircleNum(self, M: List[List[int]]) -> int:
+        n = len(M)
+        res = 0
+        visited = set()
+        for i in range(n):
+            if i not in visited:
+                res += 1
+                visited.add(i)
+                self.dfs(i, n, M, visited)
+        return res
+
+    def dfs(self, i, n, M, visited):
+        for j in range(n):
+            if M[i][j] and j not in visited:
+                visited.add(j)
+                self.dfs(j, n, M, visited)
 
 
 def main():
@@ -191,6 +254,7 @@ def main():
          [1, 0, 1, 1]]
     res = sol.findCircleNum(M)
     print(res)
+    # 1
 
 
 if __name__ == '__main__':

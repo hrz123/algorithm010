@@ -20,7 +20,7 @@ class Solution:
 
 
 # 动态规划
-# 对于正整数n，当n大于等于2时，可以晒分成至少两个正整数的和。令k是拆分出的第一个正整数，
+# 对于正整数n，当n大于等于2时，可以拆分成至少两个正整数的和。令k是拆分出的第一个正整数，
 # 则剩下部分是n-k，n-k可以不继续拆分，或者继续拆分成至少两个正整数的和。
 # 由于每个正整数对应的最大乘积取决于比它小的正整数对应的最大乘积，因此可以使用动态规划求解。
 # 时间复杂度：O(n^2)
@@ -48,6 +48,30 @@ class Solution:
             return n - 1
         div, mod = divmod(n, 3)
         if mod == 0:
+            return 3 ** div
+        if mod == 1:
+            return 3 ** (div - 1) * 4
+        return 3 ** div * 2
+
+
+class Solution:
+    def integerBreak(self, n: int) -> int:
+        if n <= 3:
+            return n - 1
+        div, mod = divmod(n, 3)
+        if not mod:
+            return 3 ** div
+        if mod == 1:
+            return 3 ** (div - 1) * 4
+        return 3 ** div * 2
+
+
+class Solution:
+    def integerBreak(self, n: int) -> int:
+        if n <= 3:
+            return n - 1
+        div, mod = divmod(n, 3)
+        if not mod:
             return 3 ** div
         if mod == 1:
             return 3 ** (div - 1) * 4

@@ -6,13 +6,13 @@ from typing import List
 # O(n^2)的解决办法
 
 # 左右指针
-# l, r = 0, len(height) - 1
-# s = min(height[l], height[r]) * (r - l)
+# l, row = 0, len(height) - 1
+# s = min(height[l], height[row]) * (row - l)
 # res = max(res, s)
-# if l <= r:
+# if l <= row:
 # l += 1
 # else:
-# r -= 1
+# row -= 1
 class Solution:
     def maxArea(self, height: List[int]) -> int:
         l, r = 0, len(height) - 1
@@ -48,10 +48,45 @@ class Solution:
         return max_area
 
 
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        l, r = 0, len(height) - 1
+        res = 0
+        while l < r:
+            w = r - l
+            if height[l] > height[r]:
+                res = max(res, height[r] * w)
+                r -= 1
+            else:
+                res = max(res, height[l] * w)
+                l += 1
+        return res
+
+
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        l, r = 0, len(height) - 1
+        res = 0
+        while l < r:
+            left = height[l]
+            right = height[r]
+            if left < right:
+                res = max(res, left * (r - l))
+                l += 1
+            else:
+                res = max(res, right * (r - l))
+                r -= 1
+        return res
+
+
 def main():
-    nums = [1, 8, 6, 2, 5, 4, 8, 3, 7]
-    nums = [3, 1, 2]
     sol = Solution()
+
+    nums = [3, 1, 2]
+    res = sol.maxArea(nums)
+    print(res)
+
+    nums = [1, 8, 6, 2, 5, 4, 8, 3, 7]
     res = sol.maxArea(nums)
     print(res)
 

@@ -100,7 +100,7 @@ class Solution(object):
                     return steps
                 for i in range(len(word)):
                     s = word[:i] + "_" + word[i + 1:]
-                    neigh_words = dict_words.get(s, [])
+                    neigh_words = dict_words.build(s, [])
                     # 遍历相差为1的字符串
                     for neigh in neigh_words:
                         if neigh not in visited:
@@ -150,7 +150,7 @@ class Solution(object):
                 # which share the same intermediate state.
                 for word in all_combo_dict[intermediate_word]:
                     # If at any point if we findCompetitors what we are looking for
-                    # i.e. the end word - we can return with the answer.
+                    # start.e. the end word - we can return with the answer.
                     if word == endWord:
                         return level + 1
                     # Otherwise, add it to the BFS Queue. Also, mark it visited
@@ -473,6 +473,29 @@ class Solution:
         return 0
 
 
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+        words = set(wordList)
+        if endWord not in words:
+            return 0
+        bq, eq, nq, res, n = {beginWord}, {endWord}, set(), 0, len(beginWord)
+        while bq:
+            words -= bq
+            res += 1
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          string.ascii_lowercase]:
+                    if y in words:
+                        if y in eq:
+                            return res + 1
+                        nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return 0
+
+
 def main():
     beginWord = "qa"
     endWord = "sq"
@@ -495,7 +518,7 @@ def main():
 
     beginWord = "hit"
     endWord = "cog"
-    wordList = ["hot", "dot", "dog", "lot", "log2_and_minus_1", "cog"]
+    wordList = ["hot", "dot", "dog", "lot", "log2_minus_1", "cog"]
 
     sol = Solution()
     res = sol.ladderLength(beginWord, endWord, wordList)

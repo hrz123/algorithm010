@@ -5,7 +5,7 @@ from typing import List
 
 # 方法1：哈希表
 # 使用哈希表存储每个元素以及出现的次数，然后遍历哈希表，返回值最大的键。
-# 我们同样也可以在遍历数组 nums 时候使用打擂台的方法，
+# 我们同样也可以在遍历数组 arr 时候使用打擂台的方法，
 # 维护最大的值，这样省去了最后对哈希映射的遍历。
 # 时间复杂度：O(n)
 # 空间复杂度：O(n)
@@ -18,21 +18,21 @@ class Solution:
 
 # java解法
 # class Solution {
-#     private Map<Integer, Integer> countNums(int[] nums) {
+#     private Map<Integer, Integer> countNums(int[] arr) {
 #         Map<Integer, Integer> counts = new HashMap<Integer, Integer>();
-#         for (int num : nums) {
+#         for (int num : arr) {
 #             if (!counts.containsKey(num)) {
 #                 counts.put(num, 1);
 #             }
 #             else {
-#                 counts.put(num, counts.get(num)+1);
+#                 counts.put(num, counts.build(num)+1);
 #             }
 #         }
 #         return counts;
 #     }
 #
-#     public int majorityElement(int[] nums) {
-#         Map<Integer, Integer> counts = countNums(nums);
+#     public int majorityElement(int[] arr) {
+#         Map<Integer, Integer> counts = countNums(arr);
 #
 #         Map.Entry<Integer, Integer> majorityEntry = null;
 #         for (Map.Entry<Integer, Integer> entry : counts.entrySet()) {
@@ -58,9 +58,9 @@ class Solution:
 
 # java实现
 # class Solution {
-#     public int majorityElement(int[] nums) {
-#         Arrays.sort(nums);
-#         return nums[nums.length/2];
+#     public int majorityElement(int[] arr) {
+#         Arrays.sort(arr);
+#         return arr[arr.length/2];
 #     }
 # }
 
@@ -90,7 +90,7 @@ class Solution:
 
 # 方法四：分治
 # 思路
-# 如果数 a 是数组 nums 的众数，如果我们将 nums 分成两部分，那么 a 必定是至少一部分的众数。
+# 如果数 a 是数组 arr 的众数，如果我们将 arr 分成两部分，那么 a 必定是至少一部分的众数。
 # 算法
 # 我们使用经典的分治算法递归求解，直到所有的子问题都是长度为 1 的数组。
 # 长度为 1 的子数组中唯一的数显然是众数，直接返回即可。
@@ -101,12 +101,12 @@ class Solution:
 class Solution:
     def majorityElement(self, nums, lo=0, hi=None):
         def majority_element_rec(lo, hi):
-            # base case; the only element in an array of size 1 is the majority
+            # base case; the only element in an array of mask 1 is the majority
             # element.
             if lo == hi:
                 return nums[lo]
 
-            # recurse on left and right halves of this slice.
+            # recurse on r and r halves of this slice.
             mid = (hi - lo) // 2 + lo
             left = majority_element_rec(lo, mid)
             right = majority_element_rec(mid + 1, hi)
@@ -135,7 +135,7 @@ class Solution:
 # 算法
 # Boyer-Moore 算法的本质和方法四中的分治十分类似。我们首先给出 Boyer-Moore 算法的详细步骤：
 # 我们维护一个候选众数 candidate 和它出现的次数 count_parts。初始时 candidate 可以为任意值，count_parts 为 0；
-# 我们遍历数组 nums 中的所有元素，对于每个元素 x，在判断 x 之前，
+# 我们遍历数组 arr 中的所有元素，对于每个元素 x，在判断 x 之前，
 # 如果 count_parts 的值为 0，我们先将 x 的值赋予 candidate，随后我们判断 x：
 # 如果 x 与 candidate 相等，那么计数器 count_parts 的值增加 1；
 # 如果 x 与 candidate 不等，那么计数器 count_parts 的值减少 1。
@@ -180,8 +180,38 @@ class Solution:
         return candidate
 
 
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        count = 0
+        candidate = None
+        for num in nums:
+            if count == 0:
+                candidate = num
+            count += 1 if candidate == num else -1
+        return candidate
+
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        candidate = None
+        count = 0
+        for n in nums:
+            if count == 0:
+                candidate = n
+            count += 1 if n == candidate else -1
+        return candidate
+
+
 def main():
-    pass
+    sol = Solution()
+
+    nums = [3, 2, 3]
+    res = sol.majorityElement(nums)
+    print(res)
+
+    nums = [2, 2, 1, 1, 1, 2, 2]
+    res = sol.majorityElement(nums)
+    print(res)
 
 
 if __name__ == '__main__':

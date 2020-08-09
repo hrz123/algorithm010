@@ -25,11 +25,49 @@ class Solution:
         return ans
 
 
+# 给工资的钱取决于两点，与最大的工资质量比成正比，这些人的质量总和成正比
+# 我们要同时减小这两个元素
+# 我们沿着工资质量比，和这些人总体的质量这条曲线的边界，找最小值
+class Solution:
+    def mincostToHireWorkers(self, quality: List[int], wage: List[int],
+                             K: int) -> float:
+        v = list(zip(quality, wage))
+        v.sort(key=lambda e: e[1] / e[0])
+        heap = []
+        res = float('inf')
+        _sum_q = 0
+        for q, w in v:
+            _sum_q += q
+            heapq.heappush(heap, -q)
+            if len(heap) == K:
+                res = min(res, _sum_q * w / q)
+                _sum_q += heapq.heappop(heap)
+        return res
+
+
+class Solution:
+    def mincostToHireWorkers(self, quality: List[int], wage: List[int],
+                             K: int) -> float:
+        zv = list(zip(quality, wage))
+        zv.sort(key=lambda x: x[1] / x[0])
+        heap = []
+        res = float('inf')
+        q_sum = 0
+        for q, w in zv:
+            q_sum += q
+            heapq.heappush(heap, -q)
+            if len(heap) == K:
+                res = min(res, q_sum * w / q)
+                q_sum += heapq.heappop(heap)
+        return res
+
+
 def main():
+    sol = Solution()
+
     quality = [10, 20, 5]
     wage = [70, 50, 30]
     K = 2
-    sol = Solution()
     res = sol.mincostToHireWorkers(quality, wage, K)
     print(res)
 

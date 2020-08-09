@@ -45,8 +45,52 @@ class Solution:
         return timer
 
 
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        h, w = len(grid), len(grid[0])
+        fresh = {(i, j) for i in range(h) for j in range(w) if grid[i][j] == 1}
+        rotten = {(i, j) for i in range(h) for j in range(w) if grid[i][j] == 2}
+        count = 0
+        while fresh:
+            if not rotten:
+                return -1
+            rotten = {(i, j) for i, j in fresh
+                      for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0))
+                      if (i + dx, j + dy) in rotten}
+            fresh -= rotten
+            count += 1
+        return count
+
+
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        fresh = {(i, j) for i in range(m) for j in range(n) if grid[i][j] == 1}
+        rotten = {(i, j) for i in range(m) for j in range(n) if grid[i][j] == 2}
+        timer = 0
+        while fresh:
+            if not rotten:
+                return -1
+            rotten = {(i, j) for i, j in fresh
+                      for (di, dj) in ((0, 1), (1, 0), (0, -1), (-1, 0))
+                      if (i + di, j + dj) in rotten}
+            fresh -= rotten
+            timer += 1
+        return timer
+
+
 def main():
-    pass
+    sol = Solution()
+
+    nums = [[2, 1, 1], [1, 1, 0], [0, 1, 1]]
+    res = sol.orangesRotting(nums)
+    print(res)
+    assert res == 4
+
+    nums = [[2, 1, 1], [0, 1, 1], [1, 0, 1]]
+    res = sol.orangesRotting(nums)
+    print(res)
+    assert res == -1
 
 
 if __name__ == '__main__':

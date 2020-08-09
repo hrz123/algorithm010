@@ -117,13 +117,73 @@ class Solution:
         return dp[N]
 
 
+# 定义子问题
+# f(i, j)还剩i个鸡蛋还剩j层楼测试，我们最少用多少次
+# f(i, j)  随便找一层 k
+#          碎了           没碎
+#          max(f(i-1, k-1),f(i, j-k)) + 1
+# 我们要取这些里面的最小值
+#
+# f(i, j) = min(max(f(i-1, k-1)   f(i, j-k)) + 1) k 1..j
+# 初始化和边界条件
+# f(1, j) = j
+# f(i, 1) = 1
+# k能选择的层数在1到j之间
+# 返回值
+# f(K,N)
+# 优化空间复杂度
+# 只和i-1和比j小的有关
+# 我们可以只用两个j规模的数组
+# 时间复杂度：O(K*N^2)
+# 特殊优化
+# 注意到最佳的k值随着j的增加而增加
+# 我们可以记住k的值，在这一鸡蛋个数中重用
+# 这样K最多从0到j，我们整体的时间复杂度下降到了
+# O(K*N)
+# 开始的时候f(i-1,k-1)都是小于f(i, n-k)的
+# 到它们开始相等的时候，两者之间求max是最小的
+class Solution:
+    def superEggDrop(self, K: int, N: int) -> int:
+        dp = list(range(N + 1))
+        ndp = [0, 1] + [0] * (N - 1)
+        for i in range(2, K + 1):
+            k = 1
+            for j in range(2, N + 1):
+                while k <= j and dp[k - 1] < ndp[j - k]:
+                    k += 1
+                ndp[j] = dp[k - 1] + 1
+            dp, ndp = ndp, dp
+        return dp[N]
+
+
+class Solution:
+    def superEggDrop(self, K: int, N: int) -> int:
+        dp = list(range(N + 1))
+        ndp = [0, 1] + [0] * (N - 1)
+        for i in range(2, K + 1):
+            k = 1
+            for j in range(2, N + 1):
+                while k <= j and dp[k - 1] < ndp[j - k]:
+                    k += 1
+                ndp[j] = dp[k - 1] + 1
+            dp, ndp = ndp, dp
+        return dp[N]
+
+
 def main():
     sol = Solution()
 
-    K = 4
-    N = 5000
+    K = 2
+    N = 10000
     res = sol.superEggDrop(K, N)
     print(res)
+    # 141
+
+    K = 2
+    N = 1
+    res = sol.superEggDrop(K, N)
+    print(res)
+    # 1
 
 
 if __name__ == '__main__':

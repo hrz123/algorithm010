@@ -1,0 +1,151 @@
+# 818. 赛车.py
+import heapq
+
+
+# 最短路径算法
+class Solution:
+    def racecar(self, target):
+        K = target.bit_length() + 1
+        barrier = 1 << K
+        pq = [(0, target)]
+        dist = [float('inf')] * ((barrier << 1) + 1)
+        dist[target] = 0
+
+        while pq:
+            steps, targ = heapq.heappop(pq)
+            if dist[targ] > steps:
+                continue
+            for k in range(K + 1):
+                walk = (1 << k) - 1
+                steps2, targ2 = steps + k + 1, walk - targ
+                if walk == targ:
+                    steps2 -= 1  # No "R" command if already exact
+                if abs(targ2) <= barrier and steps2 < dist[targ2]:
+                    heapq.heappush(pq, (steps2, targ2))
+                    dist[targ2] = steps2
+        return dist[0]
+
+
+# 动态规划
+# 我们可以使用动态规划来找到最短的指令长度
+# 假设我们需要到达位置x，且2^k-1<=x<2^k。
+# 我们用dp[x]表示到达位置x的最短指令长度。
+# 如果t=2^k-1，那么我们只需要用A^k即可。否则我们需要考虑两种情况：
+#  我们首先用A^k-1到达位置2^(k-1)-1，随后折返并使用A^j，这样我们到达了位置 2^(k-1)-2^j,
+#  j < k-1
+#  使用的指令为A^(k-1)RA^jR，长度为k-1+j+2，剩余的距离为x-(2^(k-1)-2^j)<x;
+#  我们首先使用A^k到达位置2^k-1，随后仅使用折返指令，
+#  此时我们已经超过了终点并且速度方向朝向终点，使用的指令为A^kR，长度为k+1
+#  剩余的距离为(2^k)-1-x<x。
+class Solution(object):
+    def racecar(self, target):
+        dp = [0] + [float('inf')] * target
+        for t in range(1, target + 1):
+            k = t.bit_length()
+            if t == 2 ** k - 1:
+                dp[t] = k
+                continue
+            for j in range(k - 1):
+                dp[t] = min(dp[t],
+                            dp[t - 2 ** (k - 1) + 2 ** j] + k - 1 + j + 2)
+            if 2 ** k - 1 - t < t:
+                dp[t] = min(dp[t], dp[2 ** k - 1 - t] + k + 1)
+        return dp[target]
+
+
+class Solution:
+    dp = {0: 0}
+
+    def racecar(self, t):
+        if t in self.dp:
+            return self.dp[t]
+        n = t.bit_length()
+        if 2 ** n - 1 == t:
+            self.dp[t] = n
+        else:
+            self.dp[t] = self.racecar(2 ** n - 1 - t) + n + 1
+            for m in range(n - 1):
+                self.dp[t] = min(self.dp[t], self.racecar(
+                    t - 2 ** (n - 1) + 2 ** m) + n + m + 1)
+        return self.dp[t]
+
+
+class Solution:
+    def racecar(self, target):
+        dp = [0] + [float('inf')] * target
+        for t in range(1, target + 1):
+            n = t.bit_length()
+            if t == (1 << n) - 1:
+                dp[t] = n
+            else:
+                dp[t] = dp[2 ** n - 1 - t] + n + 1
+                for k in range(n - 1):
+                    dp[t] = min(dp[t],
+                                dp[t - 2 ** (n - 1) + 2 ** k] + n + k + 1)
+        return dp[target]
+
+
+# 定义子问题
+# 距离为i时的最小指令长度
+# 第一次可以超过去
+# n = t.bit_length()
+# 2 ** n - 1
+# A^nR
+# 这时指令长度是 n + 1
+# 现在我们的位置超过终点并且方向向着终点
+# 还剩长度是 2**n-1 - t < t
+# 或者不超过去
+# 2 ** (n-1) - 1
+# 1个R
+# 然后向回走了2^j
+# 指令是A^(n-1)RA^jR
+# 走过的长度是2**(n-1)-2^j
+# j < n
+# 长度是n+j+1
+# 还剩下的长度是t-2**(n-1)+2^j < t
+# 所以递推方程
+# f(i) = min(f(2**n-1-t) + n+ 1, f(t - (2**(n-1)-2^j)) + n+j+1), 0<=j < n
+# 初始化
+# f(0) = 0
+# f(1) = 1
+# 因为我们要求最小值，所以其他值设为一个大值
+# 且f(2**n-1) == n
+# 返回值f(target)
+# 优化空间复杂度：不需要
+class Solution:
+    def racecar(self, target: int) -> int:
+        dp = [0] + [float('inf')] * target
+        n = target.bit_length()
+        if target == 2 ** n - 1:
+            return n
+        for i in range(1, target + 1):
+            n = i.bit_length()
+            right = 2 ** n - 1
+            if i == right:
+                dp[i] = n
+            else:
+                dp[i] = dp[right - i] + n + 1
+                for j in range(n):
+                    dp[i] = min(dp[i], dp[i - 2 ** (n - 1) + 2 ** j] +
+                                n + j + 1)
+        return dp[target]
+
+
+def main():
+    sol = Solution()
+
+    n = 3
+    res = sol.racecar(n)
+    print(res)
+
+    n = 6
+    res = sol.racecar(n)
+    print(res)
+
+    n = 4
+    res = sol.racecar(n)
+    print(res)
+
+
+if __name__ == '__main__':
+    main()

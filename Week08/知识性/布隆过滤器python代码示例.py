@@ -25,7 +25,7 @@ class BloomFilter:
 
 # 以下为自我练习
 class BloomFilter:
-    def __init__(self, size, hash_num):
+    def __init__(self, size: int, hash_num: int):
         self.size = size
         self.hash_num = hash_num
         self.bit_array = bitarray(size)
@@ -42,6 +42,28 @@ class BloomFilter:
             if not self.bit_array[result]:
                 return "Nope"
         return "Probably"
+
+
+class BloomFilter:
+    def __init__(self, size: int, hash_num: int):
+        self.size = size
+        self.hash_num = hash_num
+        self.bit_array = bitarray(size)
+        self.bit_array.setall(0)
+
+    def add(self, s: str) -> None:
+        for seed in range(self.hash_num):
+            result = mmh3.hash(s, seed) % self.size
+            self.bit_array[result] = 1
+
+    def search(self, s: str) -> bool:
+        for seed in range(self.hash_num):
+            result = mmh3.hash(s, seed) % self.size
+            if not self.bit_array[result]:
+                return False
+                # Nope
+        return True
+        # Probably
 
 
 def main():

@@ -1,5 +1,6 @@
 # 22. 括号生成(bfs写法).py
 from collections import deque
+from functools import lru_cache
 from typing import List
 
 
@@ -12,7 +13,7 @@ class Solution:
             if right == n:
                 res.append(ans)
                 return
-            # process logic in current level
+            # process logic in current row
 
             # drill down
             if left < n:
@@ -20,7 +21,7 @@ class Solution:
             if right < left:
                 helper(ans + ')', left, right + 1)
 
-            # reverse the current level status if needed
+            # reverse the current row status if needed
 
         res = []
         helper("", 0, 0)
@@ -85,7 +86,7 @@ class Solution:
             if right == n:
                 res.append(ans)
 
-            # process current level logic
+            # process current row logic
             # drill down
             if left < n:
                 helper(ans + '(', left + 1, right)
@@ -93,7 +94,7 @@ class Solution:
             if right < left:
                 helper(ans + ')', left, right + 1)
 
-            # reverse current level status if needed
+            # reverse current row status if needed
 
         helper("", 0, 0)
         return res
@@ -118,9 +119,127 @@ class Solution:
         return res
 
 
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+
+        def dfs(left, right, pre):
+            if right == n:
+                res.append(pre)
+                return
+            if left < n:
+                dfs(left + 1, right, pre + '(')
+            if right < left:
+                dfs(left, right + 1, pre + ')')
+
+        dfs(0, 0, '')
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+        deq = deque([("", 0, 0)])
+        while deq:
+            pre, l, r = deq.popleft()
+            if r == n:
+                res.append(pre)
+            if l < n:
+                deq.append((pre + '(', l + 1, r))
+            if r < l:
+                deq.append((pre + ')', l, r + 1))
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+
+        stack = [('', 0, 0)]
+        while stack:
+            pre, l, r = stack.pop()
+            if r == n:
+                res.append(pre)
+            if l < n:
+                stack.append((pre + '(', l + 1, r))
+            if r < l:
+                stack.append((pre + ')', l, r + 1))
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+
+        def dfs(l, r, pre):
+            if r == n:
+                res.append(pre)
+                return
+            if l < n:
+                dfs(l + 1, r, pre + '(')
+            if r < l:
+                dfs(l, r + 1, pre + ')')
+
+        dfs(0, 0, '')
+        return res
+
+
+class Solution:
+    @lru_cache(None)
+    def generateParenthesis(self, n: int) -> int:
+        if n <= 1:
+            return 1
+        res = 0
+        for i in range(n):
+            res += self.generateParenthesis(i) * self.generateParenthesis(
+                n - i - 1)
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+
+        def dfs(l, r, pre):
+            if r == n:
+                res.append(pre)
+                return
+            if l < n:
+                dfs(l + 1, r, pre + '(')
+            if r < l:
+                dfs(l, r + 1, pre + ')')
+
+        dfs(0, 0, '')
+        return res
+
+
+class Solution:
+    @lru_cache(None)
+    def generateParenthesis(self, n: int) -> List[str]:
+        if n == 0:
+            return ['']
+        ans = []
+        for c in range(n):
+            for left in self.generateParenthesis(c):
+                for right in self.generateParenthesis(n - 1 - c):
+                    ans.append('({}){}'.format(left, right))
+        return ans
+
+
+class Solution:
+    @lru_cache(None)
+    def countParen(self, n: int) -> int:
+        if n <= 1:
+            return 1
+        res = 0
+        for i in range(n):
+            res += self.countParen(i) * self.countParen(n - i - 1)
+        return res
+
+
 def main():
     s = Solution()
-    res = s.generateParenthesis(3)
+    res = s.countParen(3)
     print(res)
 
 

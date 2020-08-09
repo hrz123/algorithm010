@@ -14,8 +14,42 @@ class Solution:
         return True
 
 
+# 计数排序
+class Solution:
+    def uniqueOccurrences(self, arr: List[int]) -> bool:
+        counter = [0] * 2001
+        for num in arr:
+            counter[num + 1000] += 1
+        occur = [0] * len(arr)
+        for i in range(2001):
+            if counter[i]:
+                if occur[counter[i]] == 1:
+                    return False
+                occur[counter[i]] += 1
+        return True
+
+
+# 以下为自我练习
+class Solution:
+    def uniqueOccurrences(self, arr: List[int]) -> bool:
+        count = [0] * 2001
+        for i in arr:
+            count[1000 + i] += 1
+        occur = [0] * len(arr)
+        for i in range(2001):
+            if count[i]:
+                if occur[count[i]] == 1:
+                    return False
+                occur[count[i]] += 1
+        return True
+
+
 def main():
-    pass
+    sol = Solution()
+
+    nums = [1, 2, 2, 1, 1, 3]
+    res = sol.uniqueOccurrences(nums)
+    print(res)
 
 
 if __name__ == '__main__':

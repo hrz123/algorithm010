@@ -39,9 +39,33 @@ class Solution:
         return y
 
 
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n < 3:
+            return n
+        f0, f1 = 1, 2
+        for i in range(n - 2):
+            f0, f1 = f1, f0 + f1
+        return f1
+
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n < 3:
+            return n
+        a, b = 1, 2
+        for _ in range(n - 2):
+            a, b = b, a + b
+        return b
+
+
 def main():
     sol = Solution()
+
     res = sol.climbStairs(3)
+    print(res)
+
+    res = sol.climbStairs(4)
     print(res)
 
 

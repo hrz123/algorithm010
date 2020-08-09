@@ -23,6 +23,12 @@ class Solution:
         return not N & 1
 
 
+# 以下为自我练习
+class Solution:
+    def divisorGame(self, N: int) -> bool:
+        return not N & 1
+
+
 def main():
     pass
 

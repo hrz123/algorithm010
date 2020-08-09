@@ -46,15 +46,15 @@ def divide_conquer(problem, param1, param2, ...):
   subproblem = split_problem(problem, data)
   
   # conquer subproblems
-  subresult1 = self.divide_conquer(subproblems[1], p1, ...) 
-  subresult2 = self.divide_conquer(subproblems[2], p2, ...) 
-  subresult3 = self.divide_conquer(subproblems[3], p3, ...) 
+  subresult1 = cls.divide_conquer(subproblems[1], p1, ...) 
+  subresult2 = cls.divide_conquer(subproblems[2], p2, ...) 
+  subresult3 = cls.divide_conquer(subproblems[3], p3, ...) 
   ...
   
   # process and generate the final result
   result = process_result(subresult1, subresult2, subresult3, ...)
   
-  # revert the current level status
+  # revert the current row status
 ```
 
 

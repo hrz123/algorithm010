@@ -28,10 +28,43 @@ class Solution:
         return dfs(0, 1)
 
 
+# 以下为自我练习
+
+# 定义一个dfs
+# 参数为起始石子索引，当前M
+# 返回玩家拿走前X 1<=x<=2M 后可以拿到的最大值
+# dfs(start, m) = sub(start..n-1) - dfs(start+x, max(m, x)) for x in 1 ..  2m
+# 终止条件
+# 2*m >= n-i时，可以全拿走
+# 可以记忆化
+# sub(start..n-1)可以使用前缀和
+# 最终返回dfs(0, 1)，索引为0，当前M为1的结果
+class Solution:
+    def stoneGameII(self, piles: List[int]) -> int:
+        n = len(piles)
+        sub = [0] * (n + 1)
+        for i in range(n):
+            sub[i + 1] = sub[i] + piles[i]
+        memo = {}
+
+        def dfs(i, m):
+            if (i, m) in memo:
+                return memo[i, m]
+            remain = sub[n] - sub[i]
+            if m * 2 >= n - i:
+                return remain
+            memo[i, m] = 0
+            for x in range(1, 2 * m + 1):
+                memo[i, m] = max(memo[i, m], remain - dfs(i + x, max(x, m)))
+            return memo[i, m]
+
+        return dfs(0, 1)
+
+
 def main():
     sol = Solution()
 
-    piles = [2, 33, 9, 4, 4]
+    piles = [2, 7, 9, 4, 4]
     res = sol.stoneGameII(piles)
     print(res)
 

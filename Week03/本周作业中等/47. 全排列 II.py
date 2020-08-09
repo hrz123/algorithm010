@@ -8,7 +8,7 @@ from typing import List
 # 因为回溯时间复杂度远大于排序的时间复杂度，而剪枝带来的时间上的优化很大
 
 # 如果当前的数值和前一个索引的数值相等，并且前一个索引的数值还没用
-# if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
+# if (start > 0 && arr[start] == arr[start - 1] && !used[start - 1]) {
 #     continue;
 # }
 # 这样能保证重复的数值按原顺序输出
@@ -104,7 +104,7 @@ class Solution:
             if level == n:
                 res.append(ans)
                 return
-            # process current level logic
+            # process current row logic
             for j in range(level + 1):
                 if j != level and nums[level] == ans[j]:
                     continue
@@ -152,6 +152,72 @@ class Solution:
                         break
             res = new_res
         return res
+
+
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for num in nums:
+            new_res = []
+            for ans in res:
+                for i in range(len(ans) + 1):
+                    new_res.append(ans[:i] + [num] + ans[i:])
+                    if i < len(ans) and num == ans[i]:
+                        break
+            res = new_res
+        return res
+
+
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for num in nums:
+            res = [ans[:i] + [num] + ans[i:]
+                   for ans in res
+                   for i in range((ans + [num]).index(num) + 1)]
+        return res
+
+
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for num in nums:
+            new_res = []
+            for ans in res:
+                for i in range(len(ans) + 1):
+                    new_res.append(ans[:i] + [num] + ans[i:])
+                    if i < len(ans) and num == ans[i]:
+                        break
+            res = new_res
+        return res
+
+
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        p = [[]]
+        for n in nums:
+            np = []
+            for ans in p:
+                for i in range(len(ans) + 1):
+                    np.append(ans[:i] + [n] + ans[i:])
+                    if i != len(ans) and n == ans[i]:
+                        break
+            p = np
+        return p
+
+
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        p = [[]]
+        for n in nums:
+            np = []
+            for ans in p:
+                for i in range(len(ans) + 1):
+                    np.append(ans[:i] + [n] + ans[i:])
+                    if i != len(ans) and n == ans[i]:
+                        break
+            p, np = np, []
+        return p
 
 
 def main():

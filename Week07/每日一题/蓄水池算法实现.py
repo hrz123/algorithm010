@@ -3,7 +3,6 @@ import random
 
 
 class ReservoirSampling(object):
-
     def sample(self, node, k):
         data = []
         # 计数器
@@ -37,7 +36,7 @@ def main():
 
     head = ListNode(0)
     cur = head
-    for i in range(1, 11):
+    for i in range(1, 100):
         cur.next = ListNode(i)
         cur = cur.next
     rs = ReservoirSampling()

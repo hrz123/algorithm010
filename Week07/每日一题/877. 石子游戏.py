@@ -19,7 +19,7 @@ class Solution:
 class Solution:
     def stoneGame(self, piles: List[int]) -> bool:
         if not piles:
-            return 0
+            return True
         n = len(piles)
         dp = [[[0] * 2 for _ in range(n)] for _ in range(n)]
         for i in range(n):

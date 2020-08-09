@@ -86,16 +86,16 @@ class Solution:
 # dp的方法
 # 回文子串的dp一般是矩形对角线
 # 定义子问题
-# dp(i, j)是不是回文子串，包括i和j的位置
+# dp(start, j)是不是回文子串，包括i和j的位置
 # 定义状态数组
-# dp(i, j)是不是回文子串，取决于dp(i+1, j-1)是不是回文子串，且s[i] = s[j]
+# dp(start, j)是不是回文子串，取决于dp(start+1, j-1)是不是回文子串，且s[start] = s[j]
 # 递推方程
-# dp(i, j) = dp(i+1, j-1) if s[i] == s[j]
-# dp(i, j) = False        else
+# dp(start, j) = dp(start+1, j-1) if s[start] == s[j]
+# dp(start, j) = False        else
 # 初始化
-# dp(i, i) = True
-# dp(i，i+1) = s[i] == s[i+1]
-# 返回值 sum(f(i, j)) if j >= i
+# dp(start, start) = True
+# dp(start，start+1) = s[start] == s[start+1]
+# 返回值 sum(f(start, j)) if j >= start
 # 空间优化
 # 可以只使用对角线元素，然后结果数组累加
 # 但是至少需要两层对角线元素
@@ -130,6 +130,47 @@ class Solution:
                 if s[i] == s[j] and (gap <= 1 or dp[i + 1][j - 1]):
                     dp[i][j] = True
                     res += 1
+        return res
+
+
+# 第一个想法，从中间向两边扩散
+# O(n^2) 但是可以提前停止
+# 第二个想法，动态规划
+# O(n^2)
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        res = n
+        for i in range((n << 1) - 1):
+            idx = i >> 1
+            if i & 1:
+                l, r = idx, idx + 1
+                while l >= 0 and r < n and s[l] == s[r]:
+                    res += 1
+                    l -= 1
+                    r += 1
+            else:
+                l, r = idx - 1, idx + 1
+                while l >= 0 and r < n and s[l] == s[r]:
+                    res += 1
+                    l -= 1
+                    r += 1
+        return res
+
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        res = n
+        dp = [[True] * n for _ in range(n)]
+        for gap in range(1, n):
+            for i in range(n - gap):
+                j = i + gap
+                if s[i] == s[j] and dp[i + 1][j - 1]:
+                    dp[i][j] = True
+                    res += 1
+                else:
+                    dp[i][j] = False
         return res
 
 

@@ -1,7 +1,6 @@
 # 894. 所有可能的满二叉树.py
 # Definition for a binary tree node.
-
-
+from functools import lru_cache
 from typing import List
 
 
@@ -13,6 +12,7 @@ class TreeNode:
 
 
 class Solution:
+    @lru_cache(None)
     def allPossibleFBT(self, N: int) -> List[TreeNode]:
         if N == 1:
             return [TreeNode(0)]
@@ -30,9 +30,84 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    @lru_cache(None)
+    def allPossibleFBT(self, N: int) -> List[TreeNode]:
+        if N == 1:
+            return [TreeNode(0)]
+        res = []
+        for i in range(1, N, 2):
+            for left in self.allPossibleFBT(i):
+                for right in self.allPossibleFBT(N - i - 1):
+                    root = TreeNode(0)
+                    root.left = left
+                    root.right = right
+                    res.append(root)
+        return res
+
+
+class Solution:
+    memo = {1: [TreeNode(0)]}
+
+    def allPossibleFBT(self, N: int) -> List[TreeNode]:
+        if N in self.memo:
+            return self.memo[N]
+        res = []
+        for i in range(1, N, 2):
+            for left in self.allPossibleFBT(i):
+                for right in self.allPossibleFBT(N - i - 1):
+                    root = TreeNode(0)
+                    root.left = left
+                    root.right = right
+                    res.append(root)
+        self.memo[N] = res
+        return self.memo[N]
+
+
+class Solution:
+    memo = {1: [TreeNode(0)]}
+
+    def allPossibleFBT(self, N: int) -> List[TreeNode]:
+        if N in self.memo:
+            return self.memo[N]
+        res = []
+        for i in range(1, N, 2):
+            for left in self.allPossibleFBT(i):
+                for right in self.allPossibleFBT(N - i - 1):
+                    root = TreeNode(0)
+                    root.left = left
+                    root.right = right
+                    res.append(root)
+        self.memo[N] = res
+        return self.memo[N]
+
+
+class Solution:
+    memo = {1: [TreeNode(0)]}
+
+    def allPossibleFBT(self, N: int) -> List[TreeNode]:
+        if N in self.memo:
+            return self.memo[N]
+        res = []
+        for i in range(1, N, 2):
+            for left in self.allPossibleFBT(i):
+                for right in self.allPossibleFBT(N - i - 1):
+                    root = TreeNode(0)
+                    root.left = left
+                    root.right = right
+                    res.append(root)
+        self.memo[N] = res
+        return res
+
+
 def main():
     s = Solution()
-    res = s.allPossibleFBT(5)
+
+    res = s.allPossibleFBT(7)
+    print(res)
+
+    res = s.allPossibleFBT(6)
     print(res)
 
 

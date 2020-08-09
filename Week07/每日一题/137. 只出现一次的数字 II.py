@@ -17,6 +17,32 @@ class Solution:
         return x1  # 因为p是1
 
 
+# 以下为自我练习
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        x1 = x2 = 0
+        for n in nums:
+            x2 ^= (x1 & n)
+            x1 ^= n
+            mask = ~(x1 & x2)
+            print(mask)
+            x2 &= mask
+            x1 &= mask
+        return x1
+
+
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        x1 = x2 = 0
+        for n in nums:
+            x2 ^= x1 & n
+            x1 ^= n
+            mask = ~(x2 & x1)
+            x2 &= mask
+            x1 &= mask
+        return x1
+
+
 def main():
     sol = Solution()
 

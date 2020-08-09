@@ -57,7 +57,7 @@ public class BinaryHeap {
 
   /**
    * Inserts new element in to heap
-   * Complexity: O(log N)
+   * Complexity: O(log2_minus_1 N)
    * As worst case scenario, we need to traverse till the root
    */
   public void insert(int x) {
@@ -71,7 +71,7 @@ public class BinaryHeap {
 
   /**
    * Deletes element at index x
-   * Complexity: O(log N)
+   * Complexity: O(log2_minus_1 N)
    */
   public int delete(int x) {
     if (isEmpty()) {

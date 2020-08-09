@@ -68,6 +68,38 @@ class Solution:
 # 时间O(n)
 # 空间O(n)
 
+class Solution:
+    def rotateString(self, A: str, B: str) -> bool:
+        N = len(A)
+        if N != len(B):
+            return False
+        if N == 0:
+            return True
+
+        lps = self.get_lps(B, N)
+        j = 0
+        A += A
+        for i in range(N * 2):
+            while j != 0 and A[i] != B[j]:
+                j = lps[j - 1] + 1
+            if A[i] == B[j]:
+                j += 1
+            if j == N:
+                return True
+        return False
+
+    def get_lps(self, p, m):
+        lps = [-1] * m
+        k = -1
+        for i in range(1, m):
+            while k != -1 and p[i] != p[k + 1]:
+                k = lps[k]
+            if p[i] == p[k + 1]:
+                k += 1
+            lps[i] = k
+        return lps
+
+
 def main():
     sol = Solution()
     A = 'abcde'

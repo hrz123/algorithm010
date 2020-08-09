@@ -80,6 +80,30 @@ class Solution:
         return False
 
 
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        h, w = len(board), len(board[0])
+        for i in range(h):
+            for j in range(w):
+                if board[i][j] == word[0]:
+                    if self.dfs(0, word, i, j, {(i, j)}, h, w, board):
+                        return True
+        return False
+
+    def dfs(self, level, word, i, j, visited, h, w, board):
+        if level == len(word) - 1:
+            return True
+        for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+            _i, _j = i + dx, j + dy
+            if -1 < _i < h and -1 < _j < w \
+                    and (_i, _j) not in visited \
+                    and board[_i][_j] == word[level + 1]:
+                if self.dfs(level + 1, word, _i, _j, visited | {(_i, _j)}, h, w,
+                            board):
+                    return True
+        return False
+
+
 def main():
     sol = Solution()
 

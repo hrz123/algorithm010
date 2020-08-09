@@ -315,6 +315,86 @@ class Solution:
         return res
 
 
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        m, n = len(s), len(t)
+        _min_len = m + 1
+        res = ""
+        l = r = 0
+        lookup = defaultdict(int)
+        for c in t:
+            lookup[c] += 1
+        while r < m:
+            if lookup[s[r]] > 0:
+                n -= 1
+            lookup[s[r]] -= 1
+            r += 1
+            while n == 0:
+                if r - l < _min_len:
+                    _min_len = r - l
+                    res = s[l:r]
+                if lookup[s[l]] == 0:
+                    n += 1
+                lookup[s[l]] += 1
+                l += 1
+        return res
+
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        lookup = defaultdict(int)
+        for c in t:
+            lookup[c] += 1
+        m, n = len(t), len(s)
+        l = r = 0
+        target = m
+        res = ""
+        _min_len = n + 1
+        while r < n:
+            tmp = s[r]
+            r += 1
+            if lookup[tmp] > 0:
+                target -= 1
+            lookup[tmp] -= 1
+            while target == 0:
+                if r - l < _min_len:
+                    _min_len = r - l
+                    res = s[l:r]
+                if lookup[s[l]] == 0:
+                    target += 1
+                lookup[s[l]] += 1
+                l += 1
+        return res
+
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        m, n = len(s), len(t)
+        l, r = 0, 0
+        req = defaultdict(int)
+        for c in t:
+            req[c] += 1
+        target = n
+        _min_length = float('inf')
+        res_left = None
+        while r < m:
+            tmp = s[r]
+            r += 1
+            if req[tmp] > 0:
+                target -= 1
+            req[tmp] -= 1
+            while target == 0:
+                if r - l < _min_length:
+                    _min_length = r - l
+                    res_left = l
+                if req[s[l]] == 0:
+                    target += 1
+                req[s[l]] += 1
+                l += 1
+        return "" if _min_length == float('inf') else s[res_left:res_left +
+                                                                 _min_length]
+
+
 def main():
     sol = Solution()
 

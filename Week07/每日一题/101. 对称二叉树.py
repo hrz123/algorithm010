@@ -19,8 +19,8 @@ class TreeNode:
 # 根据上面信息可以总结出递归函数的两个条件
 # 终止条件
 # 1.left和right不等返回false，left和right一个为空一个不为空返回false
-# left right都为空返回True
-# 2.递归的比较left.left, right.right和left.right, right.left
+# r right都为空返回True
+# 2.递归的比较left.r, r.right和left.r, r.r
 # 可以令初始的left right都为root
 class Solution:
     def isSymmetric(self, root: TreeNode) -> bool:
@@ -65,6 +65,57 @@ class Solution:
             deq.append((left.left, right.right))
             deq.append((left.right, right.left))
         return True
+
+
+# 以下为自我练习
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        def helper(left, right):
+            if not left and not right:
+                return True
+            if not (left and right):
+                return False
+            if left.val != right.val:
+                return False
+            return helper(left.left, right.right) and helper(left.right,
+                                                             right.left)
+
+        return helper(root, root)
+
+
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        if not root:
+            return True
+        if not root.left and not root.right:
+            return True
+        deq = deque([(root.left, root.right)])
+
+        while deq:
+            left, right = deq.popleft()
+            if not left and not right:
+                continue
+            if not (left and right):
+                return False
+            if left.val != right.val:
+                return False
+            deq.append((left.left, right.right))
+            deq.append((left.right, right.left))
+        return True
+
+
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        def dfs(left, right):
+            if not left and not right:
+                return True
+            if not left or not right:
+                return False
+            if left.val != right.val:
+                return False
+            return dfs(left.left, right.right) and dfs(left.right, right.left)
+
+        return dfs(root, root)
 
 
 def main():

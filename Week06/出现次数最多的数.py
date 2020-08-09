@@ -50,9 +50,29 @@ class Solution:
         return res + 1
 
 
+class Solution:
+    def maxCount(self, nums):
+        mask = (1 << 16) - 1
+        for n in nums:
+            nums[n - 1 & mask] += 1 << 16
+        _max_count = 0
+        res = 0
+        for i in range(len(nums) - 1, -1, -1):
+            count = nums[i] >> 16
+            if count > _max_count:
+                _max_count = count
+                res = i + 1
+        return res
+
+
 def main():
-    nums = [2, 5, 5, 2, 6, 6]
     sol = Solution()
+
+    nums = [2, 5, 5, 2, 6, 6]
+    res = sol.maxCount(nums)
+    print(res)
+
+    nums = [1, 1, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9]
     res = sol.maxCount(nums)
     print(res)
 

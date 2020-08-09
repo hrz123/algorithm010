@@ -20,7 +20,7 @@ class Solution:
             x, y = lb[i], ub[i]
             if y < 0:
                 continue
-            # print(chr(i+ord('a')),x,y)
+            # print(chr(start+ord('a')),x,y)
 
             while True:
                 nx, ny = x, y

@@ -5,9 +5,9 @@ from typing import List
 # 定义子问题
 # 到第i,j位置的最小数字总和
 # 返回m-1,n-1位置
-# 定义状态数组dp(i, j)
+# 定义状态数组dp(start, j)
 # 可以一层一层的推
-# f(i, j) = min(f(i+1, j), f(i, j+1)) + a[i][j]
+# f(start, j) = min(f(start+1, j), f(start, j+1)) + a[start][j]
 # 递推方程
 # 初始状态
 class Solution:
@@ -32,12 +32,12 @@ class Solution:
 
 # 以下为自我练习
 # 子问题
-# i， j走到m-1,n-1位置的最小值
+# start， j走到m-1,n-1位置的最小值
 # 最后返回0，0的最小值
 # 定义状态数组
-# f(i, j) = min(f(i+1, j), f(i, j+1)) + grid[i][j]
+# f(start, j) = min(f(start+1, j), f(start, j+1)) + grid[start][j]
 # 递推方程
-# f(i, j) = min(f(i+1, j), f(i, j+1)) + grid[i][j]
+# f(start, j) = min(f(start+1, j), f(start, j+1)) + grid[start][j]
 # 初始化：
 # f(m-1, n-1) = grid[m-1, n-1]
 class Solution:
@@ -58,11 +58,11 @@ class Solution:
 
 
 # 定义子问题
-# i， j到终点的最小值
+# start， j到终点的最小值
 # 状态数组
-# f(i, j) = min(f(i+1, j), f(i, j+1)) + a[i][j]
+# f(start, j) = min(f(start+1, j), f(start, j+1)) + a[start][j]
 # 递推方程
-# f(i, j) = min(f(i+1, j), f(i, j+1)) + a[i][j]
+# f(start, j) = min(f(start+1, j), f(start, j+1)) + a[start][j]
 # 初始化
 # f(m-1, n-1) = a[m-1][n-1]
 # 返回值
@@ -85,6 +85,42 @@ class Solution:
             for j in range(w - 2, -1, -1):
                 dp[j] = min(dp[j], dp[j + 1]) + grid[i][j]
 
+        return dp[0]
+
+
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        m, n = len(grid), len(grid[0])
+        dp = grid[m - 1][:]
+        for j in range(n - 2, -1, -1):
+            dp[j] += dp[j + 1]
+        for i in range(m - 2, -1, -1):
+            dp[n - 1] += grid[i][n - 1]
+            for j in range(n - 2, -1, -1):
+                dp[j] = min(dp[j], dp[j + 1]) + grid[i][j]
+        return dp[0]
+
+
+# f(i, j) = min(f(i+1, j), f(i, j+1)) + m[i][j]
+# 初始化
+# 我们尽量使用哨兵初始化
+# 我们初始化为 [float('inf')] * (n-1) + [0, float('inf')]
+# 这样最后一层经过递推方程
+# 没问题
+# 返回值
+# 优化复杂度
+# 一维数组原地
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0]:
+            return -1
+        m, n = len(grid), len(grid[0])
+        dp = [float('inf')] * (n - 1) + [0, float('inf')]
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                dp[j] = min(dp[j], dp[j + 1]) + grid[i][j]
         return dp[0]
 
 

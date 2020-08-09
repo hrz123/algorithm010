@@ -1,11 +1,12 @@
 # 911. 在线选举.py
 import bisect
 from collections import defaultdict
+from typing import List
 
 
 class TopVotedCandidate:
 
-    def __init__(self, persons, times):
+    def __init__(self, persons: List[int], times: List[int]):
         self.leads, self.times, count = [], times, defaultdict(int)
         lead = -1
         for p in persons:
@@ -14,7 +15,23 @@ class TopVotedCandidate:
                 lead = p
             self.leads.append(lead)
 
-    def q(self, t):
+    def q(self, t: int) -> int:
+        return self.leads[bisect.bisect(self.times, t) - 1]
+
+
+# 以下为自我练习
+class TopVotedCandidate:
+
+    def __init__(self, persons: List[int], times: List[int]):
+        self.leads, self.times, count = [], times, defaultdict(int)
+        lead = -1
+        for p in persons:
+            count[p] += 1
+            if count[p] >= count[lead]:
+                lead = p
+            self.leads.append(lead)
+
+    def q(self, t: int) -> int:
         return self.leads[bisect.bisect(self.times, t) - 1]
 
 

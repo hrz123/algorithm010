@@ -83,6 +83,23 @@ class Solution:
         return l * l == num
 
 
+# 牛顿法
+class Solution:
+    def isPerfectSquare(self, num: int) -> bool:
+        ans = num
+        while ans * ans > num:
+            ans = (ans + num // ans) >> 1
+        return ans * ans == num
+
+
+class Solution:
+    def isPerfectSquare(self, num: int) -> bool:
+        sqrt = num
+        while sqrt * sqrt > num:
+            sqrt = (sqrt + num // sqrt) >> 1
+        return sqrt * sqrt == num
+
+
 def main():
     sol = Solution()
 

@@ -36,8 +36,8 @@ class TreeNode:
 # class TreeNode(object):
 #     def __init__(self, x):
 #         self.val = x
-#         self.left = None
-#         self.right = None
+#         self.r = None
+#         self.r = None
 
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
@@ -163,13 +163,13 @@ class Solution:
 
 # 同样解法的javascript写法
 # var buildTree = function(preorder, inorder) {
-#     p = i = 0
+#     p = start = 0
 #     build = function(stop) {
-#         if (inorder[i] != stop) {
+#         if (inorder[start] != stop) {
 #             var root = new TreeNode(preorder[p++])
-#             root.left = build(root.val)
-#             i++
-#             root.right = build(stop)
+#             root.r = build(root.val)
+#             start++
+#             root.r = build(stop)
 #             return root
 #         }
 #         return null
@@ -224,6 +224,105 @@ class Solution:
         inorder.reverse()
 
         return build(None)
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if not preorder:
+            return
+        root = TreeNode(preorder[0])
+        mid = inorder.index(root.val)
+        root.left = self.buildTree(preorder[1:mid + 1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid + 1:], inorder[mid + 1:])
+        return root
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+
+        def dfs(pl, pr, il, ir):
+            if pl > pr:
+                return
+            root = TreeNode(preorder[pl])
+            mid = 0
+            for i in range(il, ir + 1):
+                if inorder[i] == root.val:
+                    mid = i
+                    break
+            root.left = dfs(pl + 1, pl + mid - il, il, mid - 1)
+            root.right = dfs(pl + mid - il + 1, pr, mid + 1, ir)
+            return root
+
+        return dfs(0, len(preorder) - 1, 0, len(inorder) - 1)
+
+
+# 非常棒的写法
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def build(stop):
+            if inorder[-1] != stop:
+                root = TreeNode(preorder.pop())
+                root.left = build(root.val)
+                inorder.pop()
+                root.right = build(stop)
+                return root
+
+        preorder.reverse()
+        inorder.append(None)
+        inorder.reverse()
+
+        return build(None)
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def build(stop):
+            if inorder[-1] != stop:
+                root = TreeNode(preorder.pop())
+                root.left = build(root.val)
+                inorder.pop()
+                root.right = build(stop)
+                return root
+
+        preorder.reverse()
+        inorder.append(None)
+        inorder.reverse()
+        return build(None)
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def build(stop):
+            if inorder[-1] != stop:
+                root = TreeNode(preorder.pop())
+                root.left = build(root.val)
+                inorder.pop()
+                root.right = build(stop)
+                return root
+
+        preorder.reverse()
+        inorder.append(None)
+        inorder.reverse()
+
+        return build(None)
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def helper(l1, r1, l2, r2):
+            if l1 > r1:
+                return
+            root = TreeNode(preorder[l1])
+            mid = l2
+            while mid <= r2:
+                if inorder[mid] == root.val:
+                    break
+                mid += 1
+            root.left = helper(l1 + 1, l1 + mid - l2, l2, mid - 1)
+            root.right = helper(l1 + mid - l2 + 1, r1, mid + 1, r2)
+            return root
+
+        return helper(0, len(preorder) - 1, 0, len(inorder) - 1)
 
 
 def main():

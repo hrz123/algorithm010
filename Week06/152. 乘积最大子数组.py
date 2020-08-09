@@ -3,11 +3,11 @@ from typing import List
 
 
 # 重复性
-# 状态数组定义 dp(i)为包括i位置的最大乘积
-# 递推方程：dp(i) = max(dp(i-1) * a[i], a[i]) 如果a[i]大于等于0
-#         dp(i) = max(dp(i-1)[最小的值] * a[i], a[i]) 如果a[i]小于0
-#         dp(i)[最小的值] = min(dp(i-1)[最小的值] * a[i], a[i]) 如果a[i]大于等于0
-#         dp(i)[最小的值] = min(dp(i-1) * a[i], a[i]) 如果a[i]小于0
+# 状态数组定义 dp(start)为包括i位置的最大乘积
+# 递推方程：dp(start) = max(dp(start-1) * a[start], a[start]) 如果a[start]大于等于0
+#         dp(start) = max(dp(start-1)[最小的值] * a[start], a[start]) 如果a[start]小于0
+#         dp(start)[最小的值] = min(dp(start-1)[最小的值] * a[start], a[start]) 如果a[start]大于等于0
+#         dp(start)[最小的值] = min(dp(start-1) * a[start], a[start]) 如果a[start]小于0
 # 最大值是max(dp[0])
 
 class Solution:
@@ -30,17 +30,17 @@ class Solution:
 
 # 以下为自我练习
 # 子问题
-# 到i位置，且子数组一定包含nums[i]的数组，乘积最大的值
+# 到i位置，且子数组一定包含nums[start]的数组，乘积最大的值
 # res为这些最大值的最大数
 # 定义状态数组
-# f(i, j),我们还要记录最小，j=0记录最大，j=1时记录最小
+# f(start, j),我们还要记录最小，j=0记录最大，j=1时记录最小
 # 递推方程
-# f(i, 0) = f(i-1, 0) * nums[i] if nums[i] > 0
-# f(i, 1) = f(i-1, 1) * nums[i]
-# f(i, 0) = f(i-1, 1) * nums[i] if nums[i] < 0
-# f(i, 1) = f(i-1, 0) * nums[i]
+# f(start, 0) = f(start-1, 0) * arr[start] if arr[start] > 0
+# f(start, 1) = f(start-1, 1) * arr[start]
+# f(start, 0) = f(start-1, 1) * arr[start] if arr[start] < 0
+# f(start, 1) = f(start-1, 0) * arr[start]
 # 初始化
-# f(0,0) = f(0, 1) = nums[0]
+# f(0,0) = f(0, 1) = arr[0]
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
         if not nums:
@@ -60,9 +60,45 @@ class Solution:
         return res
 
 
+# 定义子问题
+# 数组[0..start]的成绩连续最大子数组是多少，连续最小子数组是多少，且一定包含a[start]
+# 定义状态数组
+# f(start, 0) f(start, 1)
+# 递推方程
+# 如果a[start]是正的
+# f(start, 0) = max(f(start-1, 0)*a[start] , a[start])
+# f(start, 1) = min(f(start-1, 1)*a[start], a[start])
+# 如果a[start]是负的
+# f(start, 0) = max(f(start-1, 1)*a[start] , a[start])
+# f(start, 1) = min(f(start-1, 0)*a[start],  a[start])
+# 初始化
+# f(0, 0) = f(0, 1) = a[0]
+# 利用哨兵初始化可以为f(0, 0) = f(0, 1) = 1
+# 返回值
+# 返回这些最大连续子数组乘积的最大值
+# 优化状态空间
+# 只需要这次和上一次，可以优化只用两个值
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        f0 = f1 = 1
+        res = float('-inf')
+        for n in nums:
+            if n > 0:
+                f0, f1 = max(f0 * n, n), min(f1 * n, n)
+            else:
+                f0, f1 = max(f1 * n, n), min(f0 * n, n)
+            res = max(res, f0)
+        return res
+
+
 def main():
-    nums = [2, 3, -2, 4]
     sol = Solution()
+
+    nums = [2, 3, -2, 4]
+    res = sol.maxProduct(nums)
+    print(res)
+
+    nums = [-2, 0, -1]
     res = sol.maxProduct(nums)
     print(res)
 

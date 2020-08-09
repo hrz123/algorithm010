@@ -23,7 +23,7 @@ class Solution:
         return res
 
 
-# 时间复杂度: O(N^2*M^2) N是列数，M是行数
+# 时间复杂度: O(N^2*m^2) N是列数，M是行数
 # 空间复杂度: O(1)常数空间
 
 # 固定左右边界，前缀和+二分
@@ -54,8 +54,8 @@ class Solution:
         return res
 
 
-# 时间复杂度没变: O(N^2*M^2) N是列数，M是行数，但是系数小了
-# 空间复杂度: O(M)常数空间, M是行数
+# 时间复杂度没变: O(N^2*m^2) N是列数，M是行数，但是系数小了
+# 空间复杂度: O(m)常数空间, M是行数
 
 # 以下为自我练习
 class Solution:
@@ -69,6 +69,27 @@ class Solution:
                 for i in range(row):
                     _sum[i] += matrix[i][right]
                 # 初始化前缀和数组和前缀和
+                arr = [0]
+                cur = 0
+                for r in _sum:
+                    cur += r
+                    loc = bisect.bisect_left(arr, cur - k)
+                    if loc < len(arr):
+                        res = max(res, cur - arr[loc])
+                    bisect.insort(arr, cur)
+        return res
+
+
+class Solution:
+    def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:
+        row, col = len(matrix), len(matrix[0])
+        _sum = [0] * row
+        res = float('-inf')
+        for left in range(col):
+            _sum[:] = [0] * row
+            for right in range(left, col):
+                for i in range(row):
+                    _sum[i] += matrix[i][right]
                 arr = [0]
                 cur = 0
                 for r in _sum:

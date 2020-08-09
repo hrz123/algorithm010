@@ -49,7 +49,7 @@ class Solution:
 #         if n == 2:
 #             return b
 #
-#         for i in range(n - 2):
+#         for start in range(n - 2):
 #             a, b = b, [e + [2] for e in a] + [e + [1] for e in b]
 #         return b
 

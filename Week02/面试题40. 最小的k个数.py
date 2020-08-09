@@ -6,7 +6,7 @@ from typing import List
 
 # 1.sort: O(NlogN)
 # 2.heap：O(NlogK)
-# 3.quick-sort: O(
+# 3.quick-sort: O(n)
 
 # sort排序的方法
 class Solution:
@@ -33,7 +33,7 @@ class Solution:
 
 
 # 使用快排partition方法
-# 时间复杂度：期望为 O(n)O(n) ，由于证明过程很繁琐，所以不再这里展开讲。
+# 时间复杂度：期望为 O(n) ，由于证明过程很繁琐，所以不再这里展开讲。
 # 具体证明可以参考《算法导论》第 9 章第 2 小节。
 class Solution:
     def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
@@ -119,9 +119,71 @@ class Solution:
         return [-num for num in heap]
 
 
+class Solution:
+    def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
+        l, r = 0, len(arr) - 1
+        while l < r:
+            pivot = self.partition(arr, l, r)
+            if pivot > k - 1:
+                r = pivot - 1
+            else:
+                l = pivot + 1
+        return arr[:k]
+
+    def partition(self, nums, l, r):
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] < nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[pivot], nums[right] = nums[right], nums[pivot]
+        return right
+
+
+class Solution:
+    def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
+        heap = []
+        for num in arr:
+            if len(heap) == k:
+                heapq.heappushpop(heap, -num)
+            else:
+                heapq.heappush(heap, -num)
+        return [-num for num in heap]
+
+
+class Solution:
+    def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
+        heap = [-a for a in arr[:k]]
+        heapq.heapify(heap)
+        for i in range(k, len(arr)):
+            heapq.heappushpop(heap, -arr[i])
+        return [-a for a in heap]
+
+
+class Solution:
+    def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
+        return heapq.nsmallest(k, arr)
+
+
+class Solution:
+    def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
+        heap = []
+        for num in arr:
+            if len(heap) < k:
+                heapq.heappush(heap, -num)
+            else:
+                heapq.heappushpop(heap, -num)
+        return [-num for num in heap]
+
+
 def main():
     s = Solution()
     arr = [3, 2, 1]
+    res = s.getLeastNumbers(arr, 2)
+    print(res)
+
+    arr = [0, 1, 2, 1]
     res = s.getLeastNumbers(arr, 2)
     print(res)
 

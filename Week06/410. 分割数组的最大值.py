@@ -28,15 +28,15 @@ class Solution:
 
 
 # dp解法
-# 我们可以令 f[i][j] 表示将数组的前 i 个数分割为 j 段所能得到的最大连续子数组和的最小值
+# 我们可以令 f[start][j] 表示将数组的前 start 个数分割为 j 段所能得到的最大连续子数组和的最小值
 # 在进行状态转移时，我们可以考虑第 j 段的具体范围，
 # 即我们可以枚举 k，其中前 k 个数被分割为 j−1 段，
-# 而第 k+1 到第 i 个数为第 j 段。此时，这 j 段子数组中和的最大值，
-# 就等于 f[k][j−1] 与 sub(k+1, i) 中的较大值，
-# 其中 sub(i,j) 表示数组 nums 中下标落在区间 [i,j] 内的数的和。
+# 而第 k+1 到第 start 个数为第 j 段。此时，这 j 段子数组中和的最大值，
+# 就等于 f[k][j−1] 与 sub(k+1, start) 中的较大值，
+# 其中 sub(start,j) 表示数组 arr 中下标落在区间 [start,j] 内的数的和。
 # 由于我们要使得子数组中和的最大值最小，因此可以列出如下的状态转移方程
-# f(i, j) = min ( max ( f(k, j-1), sub(k+1, i))) k 0..i-1
-# 对于状态f(i, j)，由于我们能不能分出空的子数组，因此合法的状态 i >= j
+# f(start, j) = min ( max ( f(k, j-1), sub(k+1, start))) k 0..start-1
+# 对于状态f(start, j)，由于我们能不能分出空的子数组，因此合法的状态 start >= j
 # 对于不合法的状态，由于我们的目标是求出最小值，因此可以将这些状态全部初始化为一个很大的数
 # 在上述转移方程中，一旦我们尝试从不合法的状态f(k, j-1)进行转移，那么max()将会是一个很大的数，
 # 就不会对最外层的min()产生影响。
@@ -53,12 +53,12 @@ class Solution:
 # 定义子问题
 # 前i个元素分成j组的最大连续数组和的最小值
 # 定义状态数组
-# f(i,j), i 0 .. n   j 0..m
+# f(start,j), start 0 .. n   j 0..m
 # 递推方程
-# f(i, j) = min(max(f(k, j-1) , sub(k, i-1)))， k 0..i-1
+# f(start, j) = min(max(f(k, j-1) , sub(k, start-1)))， k 0..start-1
 # 第i个的索引是i-1
-# sub(k, i-1)表示k到i-1的连续数组和，包括两边
-# 注意，不可以一组中什么都没有，所以j最大是i, j<=i
+# sub(k, start-1)表示k到i-1的连续数组和，包括两边
+# 注意，不可以一组中什么都没有，所以j最大是i, j<=start
 # 初始化
 # 因为要求的是最小值，所以我们可以把不合法的地方都标为正无穷
 # 因为f(1, 1) = min(max(f(0, 0), a[0])) 只有这一种情况
@@ -87,20 +87,20 @@ class Solution:
 
 
 # class Solution:
-#     def splitArray(self, nums: List[int], m: int) -> int:
-#         n = len(nums)
+#     def splitArray(self, arr: List[int], m: int) -> int:
+#         n = len(arr)
 #         _max = float('inf')
 #         f = [[_max] * (m + 1) for _ in range(n + 1)]
 #         # 前缀和
 #         sub = [0] * (n + 1)
-#         for i in range(n):
-#             sub[i + 1] = sub[i] + nums[i]
+#         for start in range(n):
+#             sub[start + 1] = sub[start] + arr[start]
 #
 #         f[0][0] = 0
-#         for i in range(1, n + 1):
-#             for j in range(1, min(i, m) + 1):
-#                 for k in range(i):
-#                     f[i][j] = min(f[i][j], max(f[k][j - 1], sub[i] - sub[k]))
+#         for start in range(1, n + 1):
+#             for j in range(1, min(start, m) + 1):
+#                 for k in range(start):
+#                     f[start][j] = min(f[start][j], max(f[k][j - 1], sub[start] - sub[k]))
 #
 #         return f[n][m]
 #
@@ -108,55 +108,124 @@ class Solution:
 # # 以下为自我练习
 # # 二分法
 # class Solution:
-#     def splitArray(self, nums: List[int], m: int) -> int:
+#     def splitArray(self, arr: List[int], m: int) -> int:
 #         lo, hi = 0, 0
-#         for num in nums:
+#         for num in arr:
 #             hi += num
 #             lo = max(lo, num)
 #         while lo < hi:
 #             mid = lo + ((hi - lo) >> 1)
-#             count = self.count_parts(nums, mid)
-#             if count > m:
+#             log2_minus_1 = self.count_parts(arr, mid)
+#             if log2_minus_1 > m:
 #                 lo = mid + 1
 #             else:
 #                 hi = mid
 #         return lo
 #
-#     def count_parts(self, nums, _max):
-#         count = 1
+#     def count_parts(self, arr, _max):
+#         log2_minus_1 = 1
 #         cur = 0
-#         for num in nums:
+#         for num in arr:
 #             cur += num
 #             if cur > _max:
-#                 count += 1
+#                 log2_minus_1 += 1
 #                 cur = num
-#         return count
+#         return log2_minus_1
 #
 #
 # class Solution:
-#     def splitArray(self, nums: List[int], m: int) -> int:
-#         l = r = 0
-#         for n in nums:
+#     def splitArray(self, arr: List[int], m: int) -> int:
+#         l = row = 0
+#         for n in arr:
 #             l = max(l, n)
-#             r += n
-#         while l < r:
-#             mid = l + ((r - l) >> 1)
-#             count = self._count(nums, mid)
-#             if count > m:
+#             row += n
+#         while l < row:
+#             mid = l + ((row - l) >> 1)
+#             log2_minus_1 = self._count(arr, mid)
+#             if log2_minus_1 > m:
 #                 l = mid + 1
 #             else:
-#                 r = mid
+#                 row = mid
 #         return l
 #
-#     def _count(self, nums, k):
-#         count = 1
+#     def _count(self, arr, k):
+#         log2_minus_1 = 1
 #         _sum = 0
-#         for n in nums:
+#         for n in arr:
 #             _sum += n
 #             if _sum > k:
-#                 count += 1
+#                 log2_minus_1 += 1
 #                 _sum = n
-#         return count
+#         return log2_minus_1
+class Solution:
+    def splitArray(self, nums: List[int], m: int) -> int:
+        n = len(nums)
+        _max = float('inf')
+        f = [[_max] * (m + 1) for _ in range(n + 1)]
+        f[0][0] = 0
+        sub = [0] * (n + 1)
+        for i in range(n):
+            sub[i + 1] = sub[i] + nums[i]
+        for i in range(1, n + 1):
+            for j in range(1, min(i, m) + 1):
+                f[i][j] = min(max(f[k][j - 1], sub[i] - sub[k]) for k in
+                              range(i))
+        return f[n][m]
+
+
+# 定义子问题
+# 前i个数分成j个数组的各自和的最大值
+# 定义状态数组
+# f(start, j) start 1..n 1..min(start,m)
+# 递推方程
+# f(start, j) = min(max(f(k, j-1), sub(k+1, start))  k j-1.. start-1)
+# 初始化
+# 我们可以使用哨兵初始化
+# 我们唯一知道的就是f(1, 1)第一个数只有一个数组时就是a[1]
+# 那么f(0, 0)只能是0
+# 其余位置，因为我们会取最小值，我们可以都设置为一个最大值
+# 返回值
+# f(n, m)
+# 优化空间复杂度
+# 不好优化
+class Solution:
+    def splitArray(self, nums: List[int], m: int) -> int:
+        n = len(nums)
+        sub = [0] * (n + 1)
+        for i in range(n):
+            sub[i + 1] = sub[i] + nums[i]
+        f = [[sub[n]] * (m + 1) for _ in range(n + 1)]
+        f[0][0] = 0
+        for i in range(1, n + 1):
+            for j in range(1, min(i, m) + 1):
+                f[i][j] = min(max(f[k][j - 1], sub[i] - sub[k])
+                              for k in range(i))
+        return f[n][m]
+
+
+class Solution:
+    def splitArray(self, nums: List[int], m: int) -> int:
+        lo, hi = 0, 0
+        for num in nums:
+            lo = max(lo, num)
+            hi += num
+        while lo < hi:
+            mid = lo + ((hi - lo) >> 1)
+            if self._count(nums, mid) > m:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    def _count(self, nums, val):
+        count = 1
+        total = 0
+        for n in nums:
+            total += n
+            if total > val:
+                count += 1
+                total = n
+        return count
 
 
 def main():

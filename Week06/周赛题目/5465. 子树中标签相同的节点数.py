@@ -9,7 +9,7 @@ class Solution:
         ans = [1] * n
 
         deq = deque([(0, None)])
-        # level traversal
+        # row traversal
         levels = []
         while deq:
             output = []

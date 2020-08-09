@@ -36,16 +36,16 @@ class Solution:
 #             auto top = q.front();
 #             q.pop();
 #             string str = top.first;
-#             int left = top.second.first;
-#             int right = top.second.second;
-#             if (left == 0 && right == 0) {
+#             int r = top.second.first;
+#             int r = top.second.second;
+#             if (r == 0 && r == 0) {
 #                 rs.push_back(str);
 #             }
-#             if (left > 0) {
-#                 q.push({str + '(',{left-1,right}});
+#             if (r > 0) {
+#                 q.push({str + '(',{r-1,r}});
 #             }
-#             if (right > 0 && right > left) {
-#                 q.push({str + ')',{left,right-1}});
+#             if (r > 0 && r > r) {
+#                 q.push({str + ')',{r,r-1}});
 #             }
 #         }
 #         return rs;
@@ -65,6 +65,39 @@ class Solution:
                 deq.append((pre + '(', left + 1, right))
             if right < left:
                 deq.append((pre + ')', left, right + 1))
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+        deq = deque([('', 0, 0)])
+
+        while deq:
+            pre, l, r = deq.popleft()
+            if r == n:
+                res.append(pre)
+            if l < n:
+                deq.append((pre + '(', l + 1, r))
+            if r < l:
+                deq.append((pre + ')', l, r + 1))
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        q, nq = [(0, 0, '')], []
+        res = []
+        while q:
+            for l, r, pre in q:
+                if r == n:
+                    res.append(pre)
+                else:
+                    if l < n:
+                        nq.append((l + 1, r, pre + '('))
+                    if r < l:
+                        nq.append((l, r + 1, pre + ')'))
+            q, nq = nq, []
         return res
 
 

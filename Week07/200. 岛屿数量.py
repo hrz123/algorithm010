@@ -140,6 +140,28 @@ class Solution:
         return uf.sets_count - 1
 
 
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        h, w = len(grid), len(grid[0])
+        res = 0
+        for i in range(h):
+            for j in range(w):
+                if grid[i][j] == '1':
+                    res += 1
+                    self.dfs_marking(i, j, grid, h, w)
+        return res
+
+    def dfs_marking(self, i, j, grid, h, w):
+        grid[i][j] = '#'
+        for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+            _i, _j = i + dx, j + dy
+            if -1 < _i < h and -1 < _j < w \
+                    and grid[_i][_j] == '1':
+                self.dfs_marking(_i, _j, grid, h, w)
+
+
 def main():
     sol = Solution()
     grid = [["1", "1", "0", "0", "0"],

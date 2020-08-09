@@ -29,6 +29,51 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def sortedSquares(self, A: List[int]) -> List[int]:
+        n = len(A)
+        zero_index = bisect.bisect_left(A, 0)
+        l, r = zero_index - 1, zero_index
+        res = [0] * n
+        i = 0
+        while r < n:
+            while l >= 0 and -A[l] <= A[r]:
+                res[i] = A[l] * A[l]
+                l -= 1
+                i += 1
+            res[i] = A[r] * A[r]
+            r += 1
+            i += 1
+        while l >= 0:
+            res[i] = A[l] * A[l]
+            l -= 1
+            i += 1
+        return res
+
+
+class Solution:
+    def sortedSquares(self, A: List[int]) -> List[int]:
+        index0 = bisect.bisect_left(A, 0)
+        l, r = index0 - 1, index0
+        n = len(A)
+        res = [0] * n
+        i = 0
+        while r < n:
+            while l >= 0 and -A[l] < A[r]:
+                res[i] = A[l] * A[l]
+                i += 1
+                l -= 1
+            res[i] = A[r] * A[r]
+            i += 1
+            r += 1
+        while l >= 0:
+            res[i] = A[l] * A[l]
+            i += 1
+            l -= 1
+        return res
+
+
 def main():
     sol = Solution()
 

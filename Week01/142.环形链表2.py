@@ -45,6 +45,78 @@ class Solution:
         return slow
 
 
+class Solution:
+    def detectCycle(self, head: ListNode) -> ListNode:
+        try:
+            slow = fast = head
+            slow = slow.next
+            fast = fast.next.next
+            while slow != fast:
+                slow = slow.next
+                fast = fast.next.next
+        except:
+            return
+
+        fast = head
+        while slow != fast:
+            slow = slow.next
+            fast = fast.next
+        return slow
+
+
+class Solution:
+    def detectCycle(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return
+        slow = head.next
+        fast = head.next.next
+        while fast and fast.next and slow != fast:
+            slow = slow.next
+            fast = fast.next.next
+        if slow != fast:
+            return
+        fast = head
+        while slow != fast:
+            slow = slow.next
+            fast = fast.next
+        return slow
+
+
+class Solution:
+    def detectCycle(self, head: ListNode) -> ListNode:
+        try:
+            slow = fast = head
+            slow = slow.next
+            fast = fast.next.next
+            while slow != fast:
+                slow = slow.next
+                fast = fast.next.next
+        except:
+            return
+        fast = head
+        while slow != fast:
+            slow = slow.next
+            fast = fast.next
+        return slow
+
+
+class Solution:
+    def detectCycle(self, head: ListNode) -> ListNode:
+        try:
+            slow = head.next
+            fast = head.next.next
+            while slow != fast:
+                slow = slow.next
+                fast = fast.next.next
+        except:
+            return
+        fast = head
+        while slow != fast:
+            slow = slow.next
+            fast = fast.next
+        return fast
+
+
 def main():
     pass
 

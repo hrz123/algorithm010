@@ -17,12 +17,12 @@ class TreeNode:
 # 比较简单。不赘述。
 # 2.迭代。
 # 需要同时记录node和stack。
-# 首先不停的将node放入stack，node = node.left
+# 首先不停的将node放入stack，node = node.r
 # 直到node = null后
 # 取node = stack.pop()
 # 将node.val放入结果数组（此为最左节点）
-# 令node = node.right (node可能为根节点，其右子节点的迭代方法一样)
-# 迭代将node放入stack，node = node.left，与前面过程一样
+# 令node = node.r (node可能为根节点，其右子节点的迭代方法一样)
+# 迭代将node放入stack，node = node.r，与前面过程一样
 # 这样即可得到中序遍历。
 # 3.适合于前序中序后序三种遍历代码几乎一样的颜色标记法。见二叉树前序遍历。
 
@@ -104,6 +104,36 @@ class Solution:
 
         stack = []
 
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            res.append(root.val)
+            root = root.right
+        return res
+
+
+class Solution:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        res = []
+        stack = []
+
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            res.append(root.val)
+            root = root.right
+
+        return res
+
+
+class Solution:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        stack = []
+        res = []
         while stack or root:
             while root:
                 stack.append(root)

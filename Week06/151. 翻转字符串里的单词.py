@@ -44,8 +44,45 @@ class Solution:
         return ' '.join(reversed(word_list))
 
 
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        return ' '.join(reversed(s.split()))
+
+
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        words = []
+        cur = ""
+        for c in s:
+            if c == " ":
+                if cur:
+                    words.append(cur)
+                    cur = ""
+            else:
+                cur += c
+        if cur:
+            words.append(cur)
+        return ' '.join(words[::-1])
+
+
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        word = []
+        cur = ""
+        for c in s:
+            if c == ' ':
+                if cur:
+                    word.append(cur)
+                    cur = ""
+            else:
+                cur += c
+        if cur:
+            word.append(cur)
+        return ' '.join(reversed(word))
+
+
 def main():
-    s = "the sky is blue"
+    s = " the sky is blue "
     sol = Solution()
     res = sol.reverseWords(s)
     print(res)

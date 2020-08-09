@@ -110,6 +110,65 @@ class Solution:
         return ans
 
 
+# 定义一个子函数
+# 这个函数计算每一个节点为根的子树，所有标记的计数
+# 因为用邻接表表示的边，我们为了防止边的重复访问，需要记录访问节点
+# 因为没有环，所以我们只要记住前一个节点，在访问下一个节点的相邻节点的时候
+# 不访问这个节点就可以了
+# 参数为dfs(start, pre)， i就是这个节点的编号，pre就是前一个节点的编号
+# 终止条件就是这个点的相邻节点都访问过了
+# 这样我们在全局的一个数组变量中，更新相应的i的值即可
+# 最后我们返回这个数组变量就是所求
+# 利用了python中Counter有加法的api
+# 我们可以简化代码
+# 否则我们如果用字典，我们要遍历字典，把存在于本层的加上，不存在于本层的添加进来即可
+# 稍微麻烦点
+class Solution:
+    def countSubTrees(self, n: int, edges: List[List[int]], labels: str) -> \
+            List[int]:
+        edge_map = defaultdict(list)
+        for e in edges:
+            edge_map[e[0]].append(e[1])
+            edge_map[e[1]].append(e[0])
+        ans = [1] * n
+
+        def dfs(i, pre):
+            data = {labels[i]: 1}
+            for nxt in edge_map[i]:
+                if nxt != pre:
+                    for k, v in dfs(nxt, i).items():
+                        if k == labels[i]:
+                            data[k] += v
+                        else:
+                            data[k] = v
+            ans[i] = data[labels[i]]
+            return data
+
+        dfs(0, None)
+        return ans
+
+
+class Solution:
+    def countSubTrees(self, n: int, edges: List[List[int]], labels: str) -> \
+            List[int]:
+        edge_map = defaultdict(list)
+        for e in edges:
+            edge_map[e[0]].append(e[1])
+            edge_map[e[1]].append(e[0])
+        ans = [1] * n
+
+        def dfs(i, pre):
+            data = Counter({labels[i]: 1})
+            for nxt in edge_map[i]:
+                if nxt != pre:
+                    data += dfs(nxt, i)
+            ans[i] = data[labels[i]]
+            return data
+
+        dfs(0, None)
+        return ans
+
+
 def main():
     sol = Solution()
 

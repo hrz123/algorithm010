@@ -46,12 +46,12 @@ class Solution:
 #         while bq:
 #             res += 1
 #             visited |= bq
-#             for x, (i, j) in bq:
+#             for x, (start, j) in bq:
 #                 for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0)):
-#                     _i, _j = i + dx, j + dy
+#                     _i, _j = start + dx, j + dy
 #                     if -1 < _i < 2 and -1 < _j < 3:
 #                         new_x = list(map(list, x))
-#                         new_x[i][j], new_x[_i][_j] = new_x[_i][_j], 0
+#                         new_x[start][j], new_x[_i][_j] = new_x[_i][_j], 0
 #                         new_x = tuple(map(tuple, new_x))
 #                         elem = (new_x, (_i, _j))
 #                         if elem not in visited:
@@ -64,10 +64,10 @@ class Solution:
 #         return -1
 #
 #     def __find_zero_index(self, board):
-#         for i in range(2):
+#         for start in range(2):
 #             for j in range(3):
-#                 if board[i][j] == 0:
-#                     return i, j
+#                 if board[start][j] == 0:
+#                     return start, j
 
 
 # 以下为自我练习
@@ -109,6 +109,42 @@ class Solution:
             if len(bq) > len(eq):
                 bq, eq = eq, bq
         return -1
+
+
+class Solution:
+    def slidingPuzzle(self, board: List[List[int]]) -> int:
+        moves = {
+            0: (1, 3),
+            1: (0, 2, 4),
+            2: (1, 5),
+            3: (0, 4),
+            4: (1, 3, 5),
+            5: (2, 4)
+        }
+        s = ''.join(str(e) for row in board for e in row)
+        if s == '123450':
+            return 0
+        bq, eq, nq, visited, res = {(s, s.index('0'))}, {('123450', 5)}, \
+                                   set(), {(s, s.index('0')), ('123450', 5)}, 0
+        while bq:
+            res += 1
+            for x, idx in bq:
+                for y in moves[idx]:
+                    _x, _idx = self.get_new_x(x, idx, y)
+                    if (_x, _idx) in eq:
+                        return res
+                    if (_x, _idx) not in visited:
+                        visited.add((_x, _idx))
+                        nq.add((_x, _idx))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+    def get_new_x(self, x, idx, y):
+        x = list(x)
+        x[idx], x[y] = x[y], x[idx]
+        return ''.join(x), y
 
 
 def main():

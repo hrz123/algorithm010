@@ -8,7 +8,7 @@ from typing import List
 # 首先建立一个元素值对应出现频率的哈希表。在JAVA中使用HashMap，但需要手工填值。
 # 在Python中提供一个字典结构用作哈希表和在collections库中的Counter方法去构建我们需要的哈希表。
 # 这一步需要O(N)时间，其中N是数组中元素的个数。
-# 第二步建立堆，堆中添加一个元素的复杂度是O(log(k))，要进行N次复杂度是O(N)
+# 第二步建立堆，堆中添加一个元素的复杂度是O(log2_minus_1(k))，要进行N次复杂度是O(N)
 # 最后一步是输出结果，复杂度为O(klogk)
 # 在python中可以使用heapq库中的nlargest方法，可以在想用时间内完成，但只需要一行代码解决。
 class Solution:
@@ -58,7 +58,7 @@ class Solution:
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         # counter = collections.defaultdict(int)
-        # for num in nums:
+        # for num in arr:
         #     counter[num] += 1
 
         counter = collections.Counter(nums)
@@ -82,6 +82,64 @@ class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         counter = collections.Counter(nums)
         return heapq.nlargest(k, counter, counter.get)
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = collections.defaultdict(int)
+        for n in nums:
+            counter[n] += 1
+
+        heap = []
+
+        for num, count in counter.items():
+            if len(heap) == k:
+                if count > heap[0][0]:
+                    heapq.heappushpop(heap, (count, num))
+            else:
+                heapq.heappush(heap, (count, num))
+        return [elem[1] for elem in heap]
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        n = len(nums)
+        # 桶排序
+        buckets = [[] for _ in range(n)]
+
+        counter = collections.defaultdict(int)
+        for num in nums:
+            counter[num] += 1
+        for num, count in counter.items():
+            buckets[count - 1].append(num)
+        res = [0] * k
+        start = 0
+        for i in range(n - 1, -1, -1):
+            if buckets[i]:
+                res[start:start + len(buckets[i])] = buckets[i]
+                start += len(buckets[i])
+                if start == k:
+                    return res
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = collections.Counter(nums)
+        return heapq.nlargest(k, counter, counter.get)
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        c1 = collections.Counter(nums)
+        c2 = [[] for _ in range(len(nums) + 1)]
+        for num, count in c1.items():
+            c2[count].append(num)
+        res = []
+        for i in range(len(nums), -1, -1):
+            if c2[i]:
+                res.extend(c2[i])
+            if len(res) == k:
+                return res
 
 
 def main():

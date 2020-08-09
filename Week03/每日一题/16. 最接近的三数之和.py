@@ -24,6 +24,47 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
+        n = len(nums)
+        res = float('inf')
+        for i in range(n - 2):
+            l, r = i + 1, n - 1
+            while l < r:
+                _sum = nums[i] + nums[l] + nums[r]
+                if _sum == target:
+                    return target
+                if abs(_sum - target) < abs(res - target):
+                    res = _sum
+                if _sum > target:
+                    r -= 1
+                else:
+                    l += 1
+        return res
+
+
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
+        n = len(nums)
+        res = float('inf')
+        for i in range(n - 2):
+            l, r = i + 1, n - 1
+            while l < r:
+                _sum = nums[i] + nums[l] + nums[r]
+                if _sum == target:
+                    return target
+                if abs(_sum - target) < abs(res - target):
+                    res = _sum
+                if _sum < target:
+                    l += 1
+                else:
+                    r -= 1
+        return res
+
+
 def main():
     s = Solution()
     res = s.threeSumClosest([-1, 2, 1, -4], 1)
