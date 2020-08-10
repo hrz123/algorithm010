@@ -147,6 +147,26 @@ class Solution:
         return [range_left, range_right]
 
 
+class Solution:
+    def smallestRange(self, nums: List[List[int]]) -> List[int]:
+        range_left, range_right = float('-inf'), float('inf')
+        _max_value = max(n[0] for n in nums)
+        heap = [(n[0], i, 0) for i, n in enumerate(nums)]
+        heapq.heapify(heap)
+
+        while True:
+            val, row, idx = heapq.heappop(heap)
+            if _max_value - val < range_right - range_left:
+                range_left = val
+                range_right = _max_value
+            if idx == len(nums[row]) - 1:
+                break
+            idx += 1
+            _max_value = max(_max_value, nums[row][idx])
+            heapq.heappush(heap, (nums[row][idx], row, idx))
+        return [range_left, range_right]
+
+
 def main():
     sol = Solution()
 

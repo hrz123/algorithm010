@@ -131,6 +131,38 @@ class Solution:
         return dp[target]
 
 
+# 我们来分析这个问题
+# 我们定义f(i)为距离终点为i时所需的指令大小
+# 如果i == 2 ** n - 1，指令的长度就为n
+# 如果i != 2 ** n - 1，我们有两种走法
+# 假设 2**(n-1) -1 < i < 2 **n - 1
+# 这样n就等于i的bit_length
+# 一种是走到 j = 2 ** n - 1
+# 我们的指令是A^nR，指令长度为n+1，我们到终点的距离是 j-i，一定小于i
+# 一种是走到 j = 2 ** (n-1) - 1, j < i
+# 然后我们又往回走了 p = 2 ** k - 1, 现在我们的位置是 2 ** (n-1) - 2 ** k
+# 指令长度是 A^(n-1)RA^kR n+k+1，我们现在距离终点 i - 2 **(n-1) + 2 ** k ,是小于i的
+# 这样我们就得出了我们的递推公式
+# f(i) = n if i == 2 ** n - 1
+# f(i) = min(f(2**n -1 - i)+n+1, f(i-2**(n-1)+2**k)+n+k+1 k < n-1)
+# 初始化和边界条件f(0) = 0，注意向会回走的k不会大于等于n-1，因为等于n-1时就走到0了
+# 返回值f(target)
+# 优化复杂度
+class Solution:
+    def racecar(self, target: int) -> int:
+        dp = [0] + [float('inf')] * target
+        for i in range(1, target + 1):
+            n = i.bit_length()
+            if i == (1 << n) - 1:
+                dp[i] = n
+            else:
+                dp[i] = dp[(1 << n) - 1 - i] + n + 1
+                for k in range(n - 1):
+                    dp[i] = min(dp[i],
+                                dp[i - (1 << (n - 1)) + (1 << k)] + n + k + 1)
+        return dp[target]
+
+
 def main():
     sol = Solution()
 

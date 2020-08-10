@@ -32,6 +32,38 @@ class Solution:
         return min(f0, f1)
 
 
+# f(i) = 为到达第i层的花费
+# f(i) = min(f(i-1), f(i-2)) + a[i]
+# 初始化
+# f(0) = 0
+# f(1) = a[0]
+# 我们递推一下
+# f(2) = min(f(1), f(0)) + a[1] = min(a[0], 0) + a[1] = a[1]
+# 没问题
+# 我们有没有可能再用一层哨兵
+# f(1) = min(f(0), f(-1)) + a[0]，我们完全可以再用一层哨兵，令f(-1) = 0
+# 这样所有的递推都符合我们的条件
+# 我们的代码可以更简洁
+# 返回值
+# 我们返回 n-1层和n-2层中的较小值
+# 优化复杂度
+# 我们只需要两个数存储结果
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        f0, f1 = 0, 0
+        for c in cost:
+            f0, f1 = f1, min(f0, f1) + c
+        return min(f0, f1)
+
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        f0, f1 = 0, 0
+        for c in cost:
+            f0, f1 = f1, min(f0, f1) + c
+        return min(f0, f1)
+
+
 def main():
     sol = Solution()
 

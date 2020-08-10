@@ -21,6 +21,14 @@ class Solution:
             nums[i] = heapq.heappop(heap)
 
 
+class Solution:
+    def heapSort(self, nums: List[int]):
+        heap = nums[:]
+        heapq.heapify(heap)
+        for i in range(len(nums)):
+            nums[i] = heapq.heappop(heap)
+
+
 def main():
     sol = Solution()
 

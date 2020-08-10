@@ -21,7 +21,7 @@ class ReservoirSampling(object):
                     data[removed_idx] = node
                 # 如果不留下，就继续
             # 访问下一个node
-            node = next(node)
+            node = node.next
         return data
 
 
@@ -30,9 +30,6 @@ def main():
         def __init__(self, val):
             self.val = val
             self.next = None
-
-        def __next__(self):
-            return self.next
 
     head = ListNode(0)
     cur = head

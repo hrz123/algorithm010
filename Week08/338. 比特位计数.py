@@ -42,6 +42,14 @@ class Solution:
         return f
 
 
+class Solution:
+    def countBits(self, num: int) -> List[int]:
+        dp = [0] * (num + 1)
+        for i in range(1, num + 1):
+            dp[i] = dp[i & (i - 1)] + 1
+        return dp
+
+
 def main():
     sol = Solution()
     n = 2

@@ -17,6 +17,22 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def sortArrayByParityII(self, A: List[int]) -> List[int]:
+        n = len(A)
+        res = [0] * n
+        o, e = 1, 0
+        for a in A:
+            if a & 1:
+                res[o] = a
+                o += 2
+            else:
+                res[e] = a
+                e += 2
+        return res
+
+
 def main():
     pass
 

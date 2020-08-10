@@ -39,6 +39,26 @@ class Solution:
         return ''.join(reversed(res))
 
 
+class Solution:
+    def addStrings(self, num1: str, num2: str) -> str:
+        num1 = list(reversed(num1))
+        num2 = list(reversed(num2))
+        m, n = len(num1), len(num2)
+        i, j = 0, 0
+        res = []
+        carry = 0
+        while i < m or j < n:
+            n1 = ord(num1[i]) - ord('0') if i < m else 0
+            n2 = ord(num2[j]) - ord('0') if j < n else 0
+            carry, mod = divmod(n1 + n2 + carry, 10)
+            res.append(str(mod))
+            i += 1
+            j += 1
+        if carry:
+            res.append('1')
+        return ''.join(reversed(res))
+
+
 def main():
     sol = Solution()
 

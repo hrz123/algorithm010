@@ -86,11 +86,22 @@ class Solution:
         return shortest
 
 
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if not strs:
+            return ""
+        shortest = min(strs, key=len)
+        for i, c in enumerate(shortest):
+            for o in strs:
+                if o[i] != c:
+                    return shortest[:i]
+        return shortest
+
+
 def main():
     s = Solution()
 
-    strs = ["c", "casdasdÒ"
-                 ""]
+    strs = ["cas", "casdasd"]
     res = s.longestCommonPrefix(strs)
     print(res)
 

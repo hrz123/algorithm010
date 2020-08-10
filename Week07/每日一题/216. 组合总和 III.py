@@ -61,6 +61,33 @@ class Solution:
         return res
 
 
+class Solution:
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        def findKSum(l, r, k, target, result, results):
+            if r - l + 1 < k \
+                    or k < 2 \
+                    or (2 * l + k - 1) * k // 2 > target \
+                    or (2 * r - k + 1) * k // 2 < target:
+                return
+            if k == 2:
+                while l < r:
+                    total = l + r
+                    if total == target:
+                        results.append(result + [l, r])
+                        l += 1
+                    elif total < target:
+                        l += 1
+                    else:
+                        r -= 1
+            else:
+                for i in range(l, r - k + 2):
+                    findKSum(i + 1, r, k - 1, target - i, result + [i], results)
+
+        res = []
+        findKSum(1, 9, k, n, [], res)
+        return res
+
+
 def main():
     sol = Solution()
     k = 3

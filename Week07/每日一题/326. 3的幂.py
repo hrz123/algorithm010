@@ -66,6 +66,15 @@ class Solution:
         return n == 1
 
 
+class Solution:
+    def isPowerOfThree(self, n: int) -> bool:
+        if n < 1:
+            return False
+        while not n % 3:
+            n //= 3
+        return n == 1
+
+
 def main():
     sol = Solution()
     n = 16

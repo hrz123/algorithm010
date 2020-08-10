@@ -304,6 +304,26 @@ class Solution:
         return s[res_left:res_left + _max_len]
 
 
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        if not s:
+            return s
+        n = len(s)
+        _max_len = 1
+        left = 0
+        for i in range(n * 2 - 1):
+            idx = i >> 1
+            l = idx if i & 1 else idx - 1
+            r = idx + 1
+            while l >= 0 and r < n and s[l] == s[r]:
+                l -= 1
+                r += 1
+            if r - l - 1 > _max_len:
+                _max_len = r - l - 1
+                left = l + 1
+        return s[left:left + _max_len]
+
+
 def main():
     sol = Solution()
 

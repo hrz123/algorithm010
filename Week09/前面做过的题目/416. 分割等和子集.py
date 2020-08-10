@@ -114,6 +114,32 @@ class Solution:
         return dp[target]
 
 
+# 定义子问题
+# f(i, j)s[:i]中j这个值能不能取到
+# f(i, j) = f(i-1, j) or f(i-1, j-p)
+# 初始化和边界条件
+# f(0, 0) = True, 其他的值都为False
+# f(1, )是满足的
+# j要大于等于p
+# 只包含正整数，所以所有的负数都拿不到
+# 返回值f(n, target)
+# 优化复杂度，空间上只需要i-1和i天，其中只依赖j和j-p，都小于等于j，可以从后往前原地递推
+# 我们只看target能不能拿到，所以大于target的值我们都可以忽略
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if total & 1:
+            return False
+        target = total >> 1
+        dp = [True] + [False] * target
+        for n in nums:
+            for j in range(target, n - 1, -1):
+                dp[j] = dp[j] or dp[j - n]
+            if dp[target]:
+                return True
+        return False
+
+
 def main():
     sol = Solution()
 

@@ -26,8 +26,24 @@ class Solution:
         return res
 
 
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+        n = len(s)
+        res = 0
+        i = n - 1
+        while i >= 0 and s[i] == ' ':
+            i -= 1
+        while i >= 0 and s[i].isalpha():
+            i -= 1
+            res += 1
+        return res
+
+
 def main():
-    pass
+    sol = Solution()
+    s = "Hello World"
+    res = sol.lengthOfLastWord(s)
+    print(res)
 
 
 if __name__ == '__main__':

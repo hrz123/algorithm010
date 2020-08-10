@@ -34,6 +34,33 @@ class Solution:
         return s
 
 
+class Solution:
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if not head:
+            return head
+        size = self.get_size(head)
+        dummy = ListNode(0)
+        dummy.next = head
+        k %= size
+        pre = dummy
+        for _ in range(size - k):
+            pre = pre.next
+        tail = pre
+        while tail.next:
+            tail = tail.next
+        tail.next = dummy.next
+        dummy.next = pre.next
+        pre.next = None
+        return dummy.next
+
+    def get_size(self, head):
+        c = 0
+        while head:
+            c += 1
+            head = head.next
+        return c
+
+
 def main():
     sol = Solution()
     a = ListNode(1)

@@ -79,6 +79,27 @@ class Solution:
         return dp[n]
 
 
+# 定义子问题
+# f(i, j)表示s[:i]中t[:j]出现的个数
+# f(i, j) if s[i] == t[j] = f(i-1, j-1) + f(i-1, j)
+# f(i, j) = f(i-1, j)
+# 初始化和边界条件
+# f(1, 1) = f(0, 0) + f(0, 1) = 1,所以f(0, 0) = 1
+# f(i, j) i>=j
+# 返回值f(m, n)
+# 优化复杂度
+# 从后往前可以原地更新
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        m, n = len(s), len(t)
+        dp = [1] + [0] * n
+        for i in range(m):
+            for j in range(min(i, n - 1), -1, -1):
+                if s[i] == t[j]:
+                    dp[j + 1] += dp[j]
+        return dp[n]
+
+
 def main():
     sol = Solution()
 

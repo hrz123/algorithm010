@@ -32,6 +32,26 @@ class Solution:
         return r
 
 
+class Solution:
+    def getRow(self, rowIndex: int) -> List[int]:
+        r = [1]
+        for i in range(rowIndex):
+            nr = r + [1]
+            for j in range(1, i + 1):
+                nr[j] += r[j - 1]
+            r = nr
+        return r
+
+
+class Solution:
+    def getRow(self, rowIndex: int) -> List[int]:
+        r = [1] * (rowIndex + 1)
+        for i in range(rowIndex):
+            for j in range(i, 0, -1):
+                r[j] += r[j - 1]
+        return r
+
+
 def main():
     sol = Solution()
 

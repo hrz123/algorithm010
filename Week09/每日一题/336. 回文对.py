@@ -222,6 +222,53 @@ class Solution:
         return ret
 
 
+class Solution:
+    def palindromePairs(self, words: List[str]) -> List[List[int]]:
+        def is_palindrome(s):
+            return s == s[::-1]
+
+        res = []
+        words = {w: i for i, w in enumerate(words)}
+        for w in words:
+            n = len(w)
+            for j in range(n + 1):
+                pre = w[:j]
+                suf = w[j:]
+                if is_palindrome(pre):
+                    back = suf[::-1]
+                    if back != w and back in words:
+                        res.append([words[back], words[w]])
+                if j != n and is_palindrome(suf):
+                    back = pre[::-1]
+                    if back != words and back in words:
+                        res.append([words[w], words[back]])
+        return res
+
+
+class Solution:
+    def palindromePairs(self, words: List[str]) -> List[List[int]]:
+        words = {w: i for i, w in enumerate(words)}
+
+        def is_palindrome(s):
+            return s == s[::-1]
+
+        res = []
+        for w in words:
+            n = len(w)
+            for j in range(n + 1):
+                pre = w[:j]
+                suf = w[j:]
+                if is_palindrome(pre):
+                    back = suf[::-1]
+                    if back != w and back in words:
+                        res.append([words[back], words[w]])
+                if j != n and is_palindrome(suf):
+                    back = pre[::-1]
+                    if back != w and back in words:
+                        res.append([words[w], words[back]])
+        return res
+
+
 def main():
     sol = Solution()
     words = ["abcd", "dcba", "lls", "s", "sssll"]

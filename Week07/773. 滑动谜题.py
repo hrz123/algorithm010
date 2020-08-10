@@ -147,6 +147,94 @@ class Solution:
         return ''.join(x), y
 
 
+class Solution:
+    def slidingPuzzle(self, board: List[List[int]]) -> int:
+        start = ''.join([str(i) for row in board for i in row])
+        end = '123450'
+        if start == end:
+            return 0
+        bq, eq, nq, res = {(start, start.index('0'))}, {(end, 5)}, set(), 0
+        visited = set()
+        moves = {
+            0: (1, 3),
+            1: (0, 2, 4),
+            2: (1, 5),
+            3: (0, 4),
+            4: (1, 3, 5),
+            5: (2, 4)
+        }
+        while bq:
+            visited |= bq
+            res += 1
+            for x, ind in bq:
+                for nid in moves[ind]:
+                    to_list = list(x)
+                    to_list[ind], to_list[nid] = to_list[nid], to_list[ind]
+                    nx = ''.join(to_list)
+                    if (nx, nid) not in visited:
+                        if (nx, nid) in eq:
+                            return res
+                        nq.add((nx, nid))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
+class Solution:
+    def slidingPuzzle(self, board: List[List[int]]) -> int:
+        start = ''.join([str(i) for row in board for i in row])
+        end = '123450'
+        if start == end:
+            return 0
+        bq, eq, nq, res, visited = {(start, start.index('0'))}, {(end, 5)}, \
+                                   set(), 0, set()
+        moves = [(1, 3), (0, 2, 4), (1, 5), (0, 4), (1, 3, 5), (2, 4)]
+        while bq:
+            visited |= bq
+            res += 1
+            for x, ind in bq:
+                for nid in moves[ind]:
+                    to_li = list(x)
+                    to_li[ind], to_li[nid] = to_li[nid], to_li[ind]
+                    nx = ''.join(to_li)
+                    if (nx, nid) not in visited:
+                        if (nx, nid) in eq:
+                            return res
+                        nq.add((nx, nid))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
+class Solution:
+    def slidingPuzzle(self, board: List[List[int]]) -> int:
+        start = ''.join([str(i) for row in board for i in row])
+        end = '123450'
+        if start == end:
+            return 0
+        bq, eq, nq, res = {(start, start.index('0'))}, {(end, 5)}, set(), 0
+        visited = set()
+        moves = ((1, 3), (0, 2, 4), (1, 5), (0, 4), (1, 3, 5), (2, 4))
+        while bq:
+            visited |= bq
+            res += 1
+            for x, ind in bq:
+                for y in moves[ind]:
+                    li = list(x)
+                    li[ind], li[y] = li[y], li[ind]
+                    nx = ''.join(li)
+                    if (nx, y) not in visited:
+                        if (nx, y) in eq:
+                            return res
+                        nq.add((nx, y))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
 def main():
     sol = Solution()
 

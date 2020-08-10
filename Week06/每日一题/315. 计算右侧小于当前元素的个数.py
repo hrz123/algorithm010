@@ -283,6 +283,31 @@ class Solution:
         return res[::-1]
 
 
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        rank = {val: i + 1 for i, val in enumerate(sorted(nums))}
+        size = len(nums)
+        BITree = [0] * (size + 1)
+
+        def update(i, k=1):
+            while i <= size:
+                BITree[i] += k
+                i += i & -i
+
+        def getSum(i):
+            s = 0
+            while i:
+                s += BITree[i]
+                i -= i & -i
+            return s
+
+        res = []
+        for n in reversed(nums):
+            update(rank[n])
+            res.append(getSum(rank[n] - 1))
+        return res[::-1]
+
+
 def main():
     solution = Solution()
 

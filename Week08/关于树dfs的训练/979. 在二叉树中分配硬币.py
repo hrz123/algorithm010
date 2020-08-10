@@ -31,6 +31,41 @@ class Solution:
         return self.res
 
 
+# 以下为自我练习
+class Solution:
+    def distributeCoins(self, root: TreeNode) -> int:
+        res = 0
+
+        def dfs(node):
+            if not node:
+                return 0
+            left = dfs(node.left)
+            right = dfs(node.right)
+            nonlocal res
+            res += abs(left) + abs(right)
+            return node.val - 1 + left + right
+
+        dfs(root)
+        return res
+
+
+class Solution:
+    def distributeCoins(self, root: TreeNode) -> int:
+        res = 0
+
+        def dfs(node):
+            if not node:
+                return 0
+            left = dfs(node.left)
+            right = dfs(node.right)
+            nonlocal res
+            res += abs(left) + abs(right)
+            return node.val - 1 + left + right
+
+        dfs(root)
+        return res
+
+
 def main():
     pass
 

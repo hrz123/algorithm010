@@ -20,6 +20,45 @@ def buildheap(a, size):
         maxheap(a, i, size)
 
 
+def insert(a, val, size):
+    a.append(val)
+    assert a[size - 1] == val
+    i = size - 1
+    p = i >> 1
+    while p >= 0 and a[p] < a[i]:
+        a[p], a[i] = a[i], a[p]
+        i = p
+        p = i >> 1
+
+
+def max_heap(a, i, size):
+    l = i * 2 + 1
+    r = i * 2 + 2
+    large = i
+    if l < size and a[l] > a[large]:
+        large = l
+    if r < size and a[r] > a[large]:
+        large = r
+    if large != i:
+        a[large], a[i] = a[i], a[large]
+        max_heap(a, large, size)
+
+
+def build_heap(a, size):
+    for i in range(size >> 1, -1, -1):
+        max_heap(a, i, size)
+
+
+def insert(a, val, size):
+    i = size
+    size += 1
+    p = i >> 1
+    while p >= 0 and a[p] < a[i]:
+        a[p], a[i] = a[i], a[p]
+        i = p
+        p = i >> 1
+
+
 # 小顶堆
 # def minheap(a, i, size):
 #     l = 2 * i + 1
@@ -58,13 +97,6 @@ def buildheap(a, size):
         maxheap(a, i, size)
 
 
-def insert(a, data):
-    a.append(data)
-    i = len(a) - 1
-    while i >> 1 >= 0 and a[i >> 1] < a[i]:
-        a[i], a[i >> 1] = a[i >> 1], a[i]
-
-
 def main():
     # 示例
     nums = [3, 2, 5, 1, 4]
@@ -77,12 +109,15 @@ def main():
     # [5, 4, 3, 1, 2]
 
     # 插入
-    nums.append(6)
+    # nums.append(6)
+    # heapsize += 1
+    # i = heapsize - 1
+    # while i >> 1 >= 0 and nums[i] > nums[i >> 1]:
+    #     nums[i], nums[i >> 1] = nums[i >> 1], nums[i]
+    #     i >>= 1
+    # print(nums)
     heapsize += 1
-    i = heapsize - 1
-    while i >> 1 >= 0 and nums[i] > nums[i >> 1]:
-        nums[i], nums[i >> 1] = nums[i >> 1], nums[i]
-        i >>= 1
+    insert(nums, 6, heapsize)
     print(nums)
     # output:
     # [6, 5, 4, 1, 2, 3]

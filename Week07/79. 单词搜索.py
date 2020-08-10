@@ -104,6 +104,32 @@ class Solution:
         return False
 
 
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        m, n = len(board), len(board[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+
+        def dfs(level, i, j, visited):
+            if level == len(word):
+                return True
+            c = word[level]
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n \
+                        and board[_i][_j] == c \
+                        and (_i, _j) not in visited:
+                    if dfs(level + 1, _i, _j, visited | {(_i, _j)}):
+                        return True
+            return False
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == word[0]:
+                    if dfs(1, i, j, {(i, j)}):
+                        return True
+        return False
+
+
 def main():
     sol = Solution()
 
@@ -123,6 +149,11 @@ def main():
 
     board = [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]]
     word = "ABCB"
+    res = sol.exist(board, word)
+    print(res)
+
+    board = [["a"]]
+    word = "a"
     res = sol.exist(board, word)
     print(res)
 

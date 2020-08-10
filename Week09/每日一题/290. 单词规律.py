@@ -22,6 +22,27 @@ class Solution:
         return True
 
 
+class Solution:
+    def wordPattern(self, pattern: str, str: str) -> bool:
+        m1 = {}
+        m2 = {}
+        s = str.split()
+        if len(pattern) != len(s):
+            return False
+        for c, w in zip(pattern, s):
+            if c in m1:
+                if m1[c] != w:
+                    return False
+            else:
+                m1[c] = w
+            if w in m2:
+                if m2[w] != c:
+                    return False
+            else:
+                m2[w] = c
+        return True
+
+
 def main():
     sol = Solution()
 

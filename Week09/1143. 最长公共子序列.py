@@ -151,6 +151,33 @@ class Solution:
         return dp[n]
 
 
+# f(i, j)为s[:i]和t[:j]的最长公共子序列长度
+# f(i, j) = if s[i] == t[j]  f(i-1, j-1）+ 1
+# f(i, j) = else   max(f(i-1,j) f(i, j-1))
+# 初始化
+# f(0, j) = 0
+# f(i, 0) = 0
+# 返回值f(m,n)
+# 优化复杂度
+# 需要两个数组来回滚动
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        m, n = len(text1), len(text2)
+        if m < n:
+            m, n = n, m
+            text1, text2 = text2, text1
+        dp = [0] * (n + 1)
+        ndp = [0] * (n + 1)
+        for i in range(m):
+            for j in range(n):
+                if text1[i] == text2[j]:
+                    ndp[j + 1] = dp[j] + 1
+                else:
+                    ndp[j + 1] = max(dp[j + 1], ndp[j])
+            dp, ndp = ndp, dp
+        return dp[n]
+
+
 def main():
     sol = Solution()
 

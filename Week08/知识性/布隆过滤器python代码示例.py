@@ -66,11 +66,31 @@ class BloomFilter:
         # Probably
 
 
+class BloomFilter:
+    def __init__(self, size: int, hash_num: int):
+        self.size = size
+        self.hash_num = hash_num
+        self.bit_array = bitarray(size)
+        self.bit_array.setall(0)
+
+    def add(self, s: str):
+        for seed in range(self.hash_num):
+            res = mmh3.hash(s, seed) % self.size
+            self.bit_array[res] = 1
+
+    def search(self, s: str):
+        for seed in range(self.hash_num):
+            res = mmh3.hash(s, seed) % self.size
+            if not self.bit_array[res]:
+                return False
+        return True
+
+
 def main():
     bf = BloomFilter(500000, 7)
     bf.add("dantezhao")
-    print(bf.lookup("dantezhao"))
-    print(bf.lookup("yyj"))
+    print(bf.search("dantezhao"))
+    print(bf.search("yyj"))
 
 
 if __name__ == '__main__':

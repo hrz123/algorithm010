@@ -80,6 +80,23 @@ class Solution:
         return res
 
 
+class Solution:
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        res = 0
+
+        def dfs(node):
+            if not node:
+                return 0
+            nonlocal res
+            left = dfs(node.left)
+            right = dfs(node.right)
+            res = max(res, left + right)
+            return max(left, right) + 1
+
+        dfs(root)
+        return res
+
+
 def main():
     sol = Solution()
 

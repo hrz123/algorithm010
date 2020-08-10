@@ -128,6 +128,26 @@ class Solution:
         return res
 
 
+class Solution:
+    def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
+        res = [0] * len(arr1)
+        counter = [0] * 1001
+        for n in arr1:
+            counter[n] += 1
+        i = 0
+        for n in arr2:
+            while counter[n] > 0:
+                counter[n] -= 1
+                res[i] = n
+                i += 1
+        for k in range(1001):
+            while counter[k] > 0:
+                res[i] = k
+                i += 1
+                counter[k] -= 1
+        return res
+
+
 def main():
     sol = Solution()
 

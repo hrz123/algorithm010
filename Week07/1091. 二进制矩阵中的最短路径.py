@@ -264,6 +264,61 @@ class Solution:
         return -1
 
 
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        if grid[0][0] or grid[-1][-1]:
+            return -1
+        if n == 1:
+            return 1
+        bq, eq, nq, res = {(0, 0)}, {(n - 1, n - 1)}, set(), 1
+        visited = set()
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, 1),
+                (-1, -1))
+        while bq:
+            visited |= bq
+            res += 1
+            for x, y in bq:
+                for dx, dy in dirs:
+                    _x, _y = x + dx, y + dy
+                    if -1 < _x < n and -1 < _y < n and (_x, _y) not in visited \
+                            and not grid[_x][_y]:
+                        if (_x, _y) in eq:
+                            return res
+                        nq.add((_x, _y))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        if grid[0][0] or grid[-1][-1]:
+            return -1
+        if n == 1:
+            return 1
+        bq, eq, nq, res, visited = {(0, 0)}, {(n - 1, n - 1)}, set(), 1, set()
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, 1),
+                (-1, -1))
+        while bq:
+            visited |= bq
+            res += 1
+            for x, y in bq:
+                for dx, dy in dirs:
+                    _x, _y = x + dx, y + dy
+                    if -1 < _x < n and -1 < _y < n and (_x, _y) not in visited \
+                            and not grid[_x][_y]:
+                        if (_x, _y) in eq:
+                            return res
+                        nq.add((_x, _y))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
 def main():
     sol = Solution()
 

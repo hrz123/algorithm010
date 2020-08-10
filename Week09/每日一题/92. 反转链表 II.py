@@ -31,6 +31,23 @@ class Solution:
         return pre, head
 
 
+# 以下为自我练习
+class Solution:
+    def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
+        dummy = ListNode(0)
+        dummy.next = head
+        rear = dummy
+        for _ in range(m - 1):
+            rear = rear.next
+        cur = tail = rear.next
+        pre = rear
+        for _ in range(n - m + 1):
+            cur.next, pre, cur = pre, cur, cur.next
+        rear.next = pre
+        tail.next = cur
+        return dummy.next
+
+
 def main():
     sol = Solution()
     a = ListNode(1)

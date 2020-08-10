@@ -170,6 +170,52 @@ class Solution:
         return dp[N]
 
 
+# f(i, j)还剩i个鸡蛋，k层楼，最少需要的次数
+# 距离f(2, 100) 2个鸡蛋100层楼
+# 选了25层，碎了，没碎
+#        max(f(i-1, k-1) , f(i, j-k))
+# f(i, j) = min(max(f(i-1, k-1), f(i, j-k))) + 1 for k in 1..j
+# 初始化和边界条件
+# f(i,1) = 1,一层只需要一次，只要鸡蛋数大于等于1
+# f(1,j) = j,一个鸡蛋只能从最低层一个一个实验
+# 层数加上一个哨兵0，这样访问索引即是层数，并且当k等于1时，递推到f(i, 0)为0
+# 在一层碎了，f(i, 0) = 0
+# 返回值，f(K,N)
+# 优化复杂度
+# 我们的k不用从1开始，随着j的增加，最合适的k层也是在增加的，对于每一个i，我们都重新开始计k
+# 在这一轮中，k从上一次最佳开始，最佳的时候f(i-1, k-1) >= f(i, j-k)
+# 我们取f(i-1, k-1)，更新f(i, j) = f(i-1,k-1)+1
+# 可降低时间复杂度为O(KN)
+# 空间复杂度，我们可以使用两个数组滚动
+# 一个代表i-1个鸡蛋时，一个表示i个鸡蛋时
+class Solution:
+    def superEggDrop(self, K: int, N: int) -> int:
+        dp = list(range(N + 1))
+        ndp = [0] * (N + 1)
+        for i in range(2, K + 1):
+            k = 1
+            for j in range(1, N + 1):
+                while k <= j and dp[k - 1] < ndp[j - k]:
+                    k += 1
+                ndp[j] = dp[k - 1] + 1
+            dp, ndp = ndp, dp
+        return dp[N]
+
+
+class Solution:
+    def superEggDrop(self, K: int, N: int) -> int:
+        dp = list(range(N + 1))
+        ndp = [0] * (N + 1)
+        for i in range(2, K + 1):
+            k = 1
+            for j in range(1, N + 1):
+                while k <= j and dp[k - 1] < ndp[j - k]:
+                    k += 1
+                ndp[j] = dp[k - 1] + 1
+            dp, ndp = ndp, dp
+        return dp[N]
+
+
 def main():
     sol = Solution()
 

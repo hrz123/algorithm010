@@ -12,6 +12,17 @@ class Solution:
         return steps
 
 
+class Solution:
+    def minFlips(self, target: str) -> int:
+        pre = '0'
+        c = 0
+        for p in target:
+            if p != pre:
+                c += 1
+            pre = p
+        return c
+
+
 def main():
     sol = Solution()
 

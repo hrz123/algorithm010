@@ -21,6 +21,16 @@ class Solution:
         return res
 
 
+class Solution:
+    def numJewelsInStones(self, J: str, S: str) -> int:
+        j = set(J)
+        res = 0
+        for c in S:
+            if c in j:
+                res += 1
+        return res
+
+
 def main():
     pass
 

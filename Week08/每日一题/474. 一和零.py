@@ -141,6 +141,29 @@ class Solution:
         return dp[m][n]
 
 
+# 定义子问题
+# f(i, j, k)为s[:i]中有j个0k个1可以最多拼出多少字符串
+# f(i, j, k) = max(f(i-1, j, k), f(i-1, j-c0, k-c1)+1)
+# 初始化
+# f(0, j, k) = 0
+# f(1, j, k)
+# 返回值
+# f(len, m, n)
+# 优化复杂度
+# 不需要第一维，二维矩阵，增加0这个索引
+# 因为c0,c1都是非负数，我们从右下角往左上角可以原地更新
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+        for s in strs:
+            c0 = s.count('0')
+            c1 = len(s) - c0
+            for i in range(m, c0 - 1, -1):
+                for j in range(n, c1 - 1, -1):
+                    dp[i][j] = max(dp[i][j], dp[i - c0][j - c1] + 1)
+        return dp[m][n]
+
+
 def main():
     sol = Solution()
 

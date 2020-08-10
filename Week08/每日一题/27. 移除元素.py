@@ -42,6 +42,31 @@ class Solution:
         return i
 
 
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        i, j = 0, 0
+        n = len(nums)
+        while j < n:
+            if nums[j] != val:
+                nums[i] = nums[j]
+                i += 1
+            j += 1
+        return i
+
+
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        i = 0
+        l = len(nums) - 1
+        while i <= l:
+            if nums[i] == val:
+                nums[i], nums[l] = nums[l], nums[i]
+                l -= 1
+            else:
+                i += 1
+        return i
+
+
 def main():
     sol = Solution()
 

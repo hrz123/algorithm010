@@ -136,6 +136,42 @@ class Solution:
         return False
 
 
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        if not s:
+            return True
+        i, j = 0, 0
+        m, n = len(s), len(t)
+        while j < n:
+            tmp = t[j]
+            j += 1
+            if tmp == s[i]:
+                i += 1
+            if i == m:
+                return True
+        return False
+
+
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        t = " " + t
+        n = len(t)
+        mem = [[0 for _ in range(26)] for _ in range(n)]
+        for i in range(26):
+            p = -1
+            for j in range(n - 1, -1, -1):
+                mem[j][i] = p
+                if ord(t[j]) - ord('a') == i:
+                    p = j
+        start = 0
+        for c in s:
+            idx = ord(c) - ord('a')
+            if mem[start][idx] == -1:
+                return False
+            start = mem[start][idx]
+        return True
+
+
 def main():
     sol = Solution()
 

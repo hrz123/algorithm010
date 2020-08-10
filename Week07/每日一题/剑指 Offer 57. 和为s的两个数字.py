@@ -30,6 +30,20 @@ class Solution:
         return []
 
 
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        l, r = 0, len(nums) - 1
+        while l < r:
+            total = nums[l] + nums[r]
+            if total == target:
+                return [nums[l], nums[r]]
+            if total > target:
+                r -= 1
+            else:
+                l += 1
+        return []
+
+
 def main():
     pass
 

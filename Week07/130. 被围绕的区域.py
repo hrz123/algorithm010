@@ -207,12 +207,64 @@ class Solution:
                     board[i][j] = 'X'
 
 
+class UnionFind:
+    def __init__(self, k):
+        self.uf = [-1] * (k + 1)
+        self.sets_count = k
+
+    def find(self, p):
+        if self.uf[p] < 0:
+            return p
+        self.uf[p] = self.find(self.uf[p])
+        return self.uf[p]
+
+    def union(self, p, q):
+        p_root = self.find(p)
+        q_root = self.find(q)
+        if p_root == q_root:
+            return
+        if self.uf[p_root] > self.uf[q_root]:
+            self.uf[q_root] += self.uf[p_root]
+            self.uf[p_root] = q_root
+        else:
+            self.uf[p_root] += self.uf[q_root]
+            self.uf[q_root] = p_root
+        self.sets_count -= 1
+
+    def is_connected(self, p, q):
+        return self.find(p) == self.find(q)
+
+
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        if not board or not board[0]:
+            return
+        m, n = len(board), len(board[0])
+        uf = UnionFind(m * n)
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'O':
+                    if i in {0, m - 1} or j in {0, n - 1}:
+                        uf.union(i * n + j, m * n)
+                    if i + 1 < m and board[i + 1][j] == 'O':
+                        uf.union(i * n + j, (i + 1) * n + j)
+                    if j + 1 < n and board[i][j + 1] == 'O':
+                        uf.union(i * n + j, i * n + j + 1)
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'O' and not uf.is_connected(i * n + j, m * n):
+                    board[i][j] = 'X'
+
+
 def main():
     sol = Solution()
 
-    # board = [['X', 'X', 'O'], ['X', 'O', 'X'], ['O', 'X', 'X']]
-    # sol.solve(board)
-    # print(board)
+    board = [['X', 'X', 'O'], ['X', 'O', 'X'], ['O', 'X', 'X']]
+    sol.solve(board)
+    print(board)
 
     board = [['O']]
     sol.solve(board)

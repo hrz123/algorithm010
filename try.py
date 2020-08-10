@@ -1,13 +1,14 @@
 n = int(input())
-hashmap = {}
-for ind in range(n):
+arr = []
+for _ in range(n):
     a, b, g, k = map(int, input().split())
-    for i in range(a, a + g):
-        for j in range(b, b + k):
-            hashmap[(i, j)] = ind + 1
+    arr.append((a, b, g, k))
 x, y = map(int, input().split())
-if (x, y) in hashmap:
-    print(hashmap[x, y])
+for i in range(n - 1, -1, -1):
+    if arr[i][0] <= x < arr[i][2] + arr[i][0] and arr[i][1] <= y < arr[i][1] + \
+            arr[i][3]:
+        print(i + 1)
+        break
 else:
     print(-1)
 

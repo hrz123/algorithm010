@@ -173,6 +173,34 @@ class Solution:
         return max(dfs(i, j) for i, j in itertools.product(range(h), range(w)))
 
 
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        memo = {}
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        m, n = len(matrix), len(matrix[0])
+
+        # 这个函数寻找i， j为起始的最长路径
+        def dfs(i, j):
+            if (i, j) in memo:
+                return memo[i, j]
+            res = 1
+            cur = matrix[i][j]
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and matrix[_i][_j] > cur:
+                    res = max(res, 1 + dfs(_i, _j))
+            memo[i, j] = res
+            return res
+
+        res = 1
+        for i in range(m):
+            for j in range(n):
+                res = max(res, dfs(i, j))
+        return res
+
+
 def main():
     sol = Solution()
     nums = [[9, 9, 4], [6, 6, 8], [2, 1, 1]]

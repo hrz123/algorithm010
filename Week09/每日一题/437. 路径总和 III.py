@@ -29,6 +29,27 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+
+    def pathSum(self, root: TreeNode, sum: int) -> int:
+        pre_sum_count = {0: 1}
+        return self.findPathSum(root, pre_sum_count, 0, sum)
+
+    def findPathSum(self, node, pre_sum_count, pre, target):
+        if not node:
+            return 0
+        res = 0
+        pre += node.val
+        if pre - target in pre_sum_count:
+            res += pre_sum_count[pre - target]
+        pre_sum_count[pre] = pre_sum_count.get(pre, 0) + 1
+        res += self.findPathSum(node.left, pre_sum_count, pre, target)
+        res += self.findPathSum(node.right, pre_sum_count, pre, target)
+        pre_sum_count[pre] -= 1
+        return res
+
+
 def main():
     pass
 

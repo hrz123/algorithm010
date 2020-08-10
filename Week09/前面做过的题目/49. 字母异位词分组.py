@@ -144,6 +144,24 @@ class Solution:
         return tuple(counter)
 
 
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        counter = {}
+        for s in strs:
+            ana = self.count(s)
+            if ana in counter:
+                counter[ana].append(s)
+            else:
+                counter[ana] = [s]
+        return list(counter.values())
+
+    def count(self, s):
+        count = [0] * 26
+        for c in s:
+            count[ord(c) - ord('a')] += 1
+        return tuple(count)
+
+
 def main():
     strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
     sol = Solution()

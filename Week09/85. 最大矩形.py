@@ -266,6 +266,26 @@ class Solution:
         return res
 
 
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        m, n = len(matrix), len(matrix[0])
+        heights = [0] * (n + 1)
+        res = 0
+        for row in matrix:
+            for j in range(n):
+                heights[j] = heights[j] + 1 if row[j] == '1' else 0
+            stack = [-1]
+            for j in range(len(heights)):
+                while heights[stack[-1]] > heights[j]:
+                    h = heights[stack.pop()]
+                    w = j - stack[-1] - 1
+                    res = max(res, h * w)
+                stack.append(j)
+        return res
+
+
 def main():
     sol = Solution()
 

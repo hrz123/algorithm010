@@ -26,6 +26,45 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def diffWaysToCompute(self, input: str) -> List[int]:
+        if input.isdigit():
+            return [int(input)]
+        res = []
+        for i, ch in enumerate(input):
+            if ch in {'+', '-', '*'}:
+                left = self.diffWaysToCompute(input[:i])
+                right = self.diffWaysToCompute(input[i + 1:])
+                for l in left:
+                    for r in right:
+                        if ch == '+':
+                            res.append(l + r)
+                        elif ch == '-':
+                            res.append(l - r)
+                        else:
+                            res.append(l * r)
+        return res
+
+
+class Solution:
+    def diffWaysToCompute(self, input: str) -> List[int]:
+        if input.isdigit():
+            return [int(input)]
+        res = []
+        for i, ch in enumerate(input):
+            if ch in {'+', '-', '*'}:
+                for l in self.diffWaysToCompute(input[:i]):
+                    for r in self.diffWaysToCompute(input[i + 1:]):
+                        if ch == '+':
+                            res.append(l + r)
+                        elif ch == '-':
+                            res.append(l - r)
+                        else:
+                            res.append(l * r)
+        return res
+
+
 def main():
     pass
 

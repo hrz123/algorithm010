@@ -40,6 +40,11 @@ class Solution:
         return chr(reduce(lambda acc, x: acc ^ ord(x), t, res))
 
 
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        return chr(sum(map(ord, t)) - sum(map(ord, s)))
+
+
 def main():
     sol = Solution()
 

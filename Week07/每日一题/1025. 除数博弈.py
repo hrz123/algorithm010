@@ -29,6 +29,11 @@ class Solution:
         return not N & 1
 
 
+class Solution:
+    def divisorGame(self, N: int) -> bool:
+        return not N & 1
+
+
 def main():
     pass
 

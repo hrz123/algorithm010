@@ -34,6 +34,18 @@ class Solution:
             self.searchBST(root.right, val)
 
 
+class Solution:
+    def searchBST(self, root: TreeNode, val: int) -> TreeNode:
+        while root:
+            if val > root.val:
+                root = root.right
+            elif val < root.val:
+                root = root.left
+            else:
+                return root
+        return root
+
+
 def main():
     pass
 

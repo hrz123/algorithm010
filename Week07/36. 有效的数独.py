@@ -1,4 +1,5 @@
 # 36. 有效的数独.py
+from collections import defaultdict
 from typing import List
 
 
@@ -56,6 +57,26 @@ class Solution:
                     # check if this value has been already seen before
                     if row[i][val] > 1 or col[j][val] > 1 or box[b][val] > 1:
                         return False
+        return True
+
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        row = [defaultdict(int) for _ in range(9)]
+        col = [defaultdict(int) for _ in range(9)]
+        box = [defaultdict(int) for _ in range(9)]
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == '.':
+                    continue
+                b = i // 3 * 3 + j // 3
+                val = int(board[i][j])
+                row[i][val] += 1
+                col[j][val] += 1
+                box[b][val] += 1
+
+                if row[i][val] > 1 or col[j][val] > 1 or box[b][val] > 1:
+                    return False
         return True
 
 

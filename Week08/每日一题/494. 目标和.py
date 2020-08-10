@@ -88,6 +88,36 @@ class Solution:
         return dp[S + total]
 
 
+# 定义子问题
+# f(i, j)为s[:i]中能凑出j的方法数
+# f(i, j) = f(i-1, j-p) + f(i-1, j+p)
+# 初始化和边界条件
+# f(0, 0) = 1
+# 其他都为0
+# 最大target为sum，最小为-sum
+# 注意递推过程不要越界
+# 返回值
+# f(n, target)
+# 优化复杂度
+# 需要两个数组滚动
+class Solution:
+    def findTargetSumWays(self, nums: List[int], S: int) -> int:
+        limit = sum(nums)
+        if S > limit or S < -limit:
+            return 0
+        size = limit * 2 + 1
+        dp = [0] * size
+        dp[limit] = 1
+        ndp = [0] * size
+        for n in nums:
+            for j in range(size):
+                plus = dp[j - n] if j - n >= 0 else 0
+                minus = dp[j + n] if j + n < size else 0
+                ndp[j] = plus + minus
+            dp, ndp = ndp, dp
+        return dp[S + limit]
+
+
 def main():
     sol = Solution()
 

@@ -34,6 +34,16 @@ class Solution:
         return slow
 
 
+class Solution:
+    def getKthFromEnd(self, head: ListNode, k: int) -> ListNode:
+        fast = slow = head
+        for _ in range(k):
+            fast = fast.next
+        while fast:
+            slow, fast = slow.next, fast.next
+        return slow
+
+
 def main():
     pass
 
