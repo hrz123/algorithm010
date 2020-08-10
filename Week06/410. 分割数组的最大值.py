@@ -228,6 +228,56 @@ class Solution:
         return count
 
 
+class Solution:
+    def splitArray(self, nums: List[int], m: int) -> int:
+        lo, hi = 0, 0
+        for n in nums:
+            lo = max(lo, n)
+            hi += n
+        while lo < hi:
+            mid = lo + ((hi - lo) >> 1)
+            if self._count(nums, mid) > m:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    def _count(self, nums, mid):
+        c = 1
+        p = 0
+        for n in nums:
+            p += n
+            if p > mid:
+                c += 1
+                p = n
+        return c
+
+
+class Solution:
+    def splitArray(self, nums: List[int], m: int) -> int:
+        lo, hi = 0, 0
+        for n in nums:
+            lo = max(lo, n)
+            hi += n
+        while lo < hi:
+            mid = lo + ((hi - lo) >> 1)
+            if self._count(nums, mid) > m:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    def _count(self, nums, mid):
+        c = 1
+        p = 0
+        for n in nums:
+            p += n
+            if p > mid:
+                c += 1
+                p = n
+        return c
+
+
 def main():
     sol = Solution()
 

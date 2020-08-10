@@ -118,6 +118,61 @@ class Solution:
         return dfs(root, root)
 
 
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        def helper(left, right):
+            if not left and not right:
+                return True
+            if not (left and right):
+                return False
+            if left.val != right.val:
+                return False
+            return helper(left.left, right.right) and helper(left.right,
+                                                             right.left)
+
+        return helper(root, root)
+
+
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        if not root:
+            return True
+        if not root.left and not root.right:
+            return True
+        deq = deque([(root.left, root.right)])
+        while deq:
+            left, right = deq.popleft()
+            if not left and not right:
+                continue
+            if not (left and right):
+                return False
+            if left.val != right.val:
+                return False
+            deq.append((left.left, right.right))
+            deq.append((left.right, right.left))
+        return True
+
+
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        if not root:
+            return True
+        if not root.left and not root.right:
+            return True
+        stack = [(root.left, root.right)]
+        while stack:
+            left, right = stack.pop()
+            if not left and not right:
+                continue
+            if not (left and right):
+                return False
+            if left.val != right.val:
+                return False
+            stack.append((left.left, right.right))
+            stack.append((left.right, right.left))
+        return True
+
+
 def main():
     sol = Solution()
 

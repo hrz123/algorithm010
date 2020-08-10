@@ -59,10 +59,6 @@ class Solution:
         return max(f00, f10)
 
 
-# 309. 最佳买卖股票时机含冷冻期.py
-from typing import List
-
-
 # 注意卖出后不能买入，买入后可以卖出，只用记录卖出状态
 
 # dp问题
@@ -225,6 +221,29 @@ class Solution:
                 f01 + p
             )
         return f10
+
+
+# f(i, 0/1, 0/1)表示第i天，是否卖出，手里有几张股票
+# f(i, 0, 0) = f(i-1, 0, 0), f(i-1, 1, 0)
+# f(i, 0, 1) = f(i-1, 0, 1), f(i-1, 0, 0) - p
+# f(i, 1, 0) = f(i-1, 0, 1) + p
+# 初始化
+# f00, f10 = 0, f01 = float('-inf')
+# 返回值
+# max(f00, f10)
+# 优化复杂度
+# 只需要三个变量
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        f00 = f10 = 0
+        f01 = float('-inf')
+        for p in prices:
+            f00, f01, f10 = (
+                max(f00, f10),
+                max(f01, f00 - p),
+                f01 + p
+            )
+        return max(f00, f10)
 
 
 def main():

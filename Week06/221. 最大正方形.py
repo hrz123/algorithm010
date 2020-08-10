@@ -98,7 +98,7 @@ class Solution:
 # f(start, j)
 # 递推方程
 # if a[start, j] == 0  f(start， j) = 0
-# else             f(start, j) = min(f(start-1, j-1), f(start-1, j), f(start, j-1)) + 1
+# else  f(start, j) = min(f(start-1, j-1), f(start-1, j), f(start, j-1)) + 1
 # 初始化
 # f(0, 0) = 1 if a[0,0]=1 else 0
 # 加入哨兵
@@ -123,6 +123,34 @@ class Solution:
                     ndp[j] = 0
             dp, ndp = ndp, dp
         return side * side
+
+
+# f(i, j)定义为matrix[i][j]的最大正方形边长，且以i，j为右下角
+# f(i,j) = min(f(i-1, j), f(i, j-1), f(i-1, j-1)) + 1 if m[i][j] == '1'
+# f(i,j) = 0 else
+# 初始化f(0, 0)
+# 加入哨兵初始化
+# 可以初始化一个全部为0的一维数组
+# 返回值，随时记录最大边长
+# 优化复杂度
+# 只用两个数组滚动
+class Solution:
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        _max_side = 0
+        m, n = len(matrix), len(matrix[0])
+        dp = [0] * (n + 1)
+        ndp = [0] * (n + 1)
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == '1':
+                    ndp[j] = min(dp[j], dp[j - 1], ndp[j - 1]) + 1
+                    _max_side = max(_max_side, ndp[j])
+                else:
+                    ndp[j] = 0
+            dp, ndp = ndp, dp
+        return _max_side * _max_side
 
 
 def main():

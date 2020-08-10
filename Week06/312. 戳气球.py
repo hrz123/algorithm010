@@ -199,6 +199,28 @@ class Solution:
         return dp[0][n - 1]
 
 
+# 定义子问题
+# 戳破i，j之间的气球不戳破ij能获得的最大金币数是多少
+# f(i, j) = max(f(i, k) + f(k, j) + nums[i] * nums[j] * nums[k]) k i+1..j-1
+# 初始化
+# f(i, i+1) = 0
+# 返回值f(-1, n)，我们最好给数组前后加上一个元素，加上的元素应该是1，题目中已经给了提示
+# 优化复杂度
+# 对角线递推，最好不要优化
+# 时间复杂度没法优化
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1] + nums + [1]
+        n = len(nums)
+        dp = [[0 for _ in range(n)] for _ in range(n)]
+        for gap in range(2, n):
+            for i in range(n - gap):
+                j = i + gap
+                dp[i][j] = max(dp[i][k] + dp[k][j] + nums[i] * nums[j] * nums[k]
+                               for k in range(i + 1, j))
+        return dp[0][n - 1]
+
+
 def main():
     sol = Solution()
 

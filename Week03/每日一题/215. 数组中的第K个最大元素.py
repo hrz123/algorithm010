@@ -319,6 +319,59 @@ class Solution:
         return nums[0]
 
 
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        l, r = 0, n - 1
+        while l < r:
+            pivot = self.partition(nums, l, r)
+            if pivot == n - k:
+                return nums[pivot]
+            if pivot < n - k:
+                l = pivot + 1
+            else:
+                r = pivot - 1
+
+    def partition(self, nums, l, r):
+        ran = random.randint(l, r)
+        nums[r], nums[ran] = nums[ran], nums[r]
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] <= nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        def max_heap(a, i, size):
+            l = i * 2 + 1
+            r = i * 2 + 2
+            large = i
+            if l < size and a[l] > a[large]:
+                large = l
+            if r < size and a[r] > a[large]:
+                large = r
+            if large != i:
+                a[i], a[large] = a[large], a[i]
+                max_heap(a, large, size)
+
+        def build_heap(a, size):
+            for i in range(size >> 1, -1, -1):
+                max_heap(a, i, size)
+
+        heap_size = len(nums)
+        build_heap(nums, heap_size)
+        for i in range(heap_size - 1, heap_size - k, -1):
+            nums[0], nums[i] = nums[i], nums[0]
+            heap_size -= 1
+            max_heap(nums, 0, heap_size)
+        return nums[0]
+
+
 def main():
     sol = Solution()
     nums = [3, 2, 3, 1, 2, 4, 5, 5, 6, 7, 7, 8, 2, 3, 1, 1, 1, 10, 11, 5, 6, 2,

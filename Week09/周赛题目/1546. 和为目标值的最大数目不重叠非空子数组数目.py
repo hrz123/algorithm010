@@ -1,4 +1,4 @@
-# 5471. 和为目标值的最大数目不重叠非空子数组数目.py
+# 1546. 和为目标值的最大数目不重叠非空子数组数目.py
 from typing import List
 
 
@@ -48,6 +48,22 @@ class Solution:
                 res += 1
                 p = 0
                 pre = {0}
+            else:
+                pre.add(p)
+        return res
+
+
+class Solution:
+    def maxNonOverlapping(self, nums: List[int], target: int) -> int:
+        pre = {0}
+        p = 0
+        res = 0
+        for n in nums:
+            p += n
+            if p - target in pre:
+                res += 1
+                pre = {0}
+                p = 0
             else:
                 pre.add(p)
         return res

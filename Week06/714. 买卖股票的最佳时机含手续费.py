@@ -65,6 +65,14 @@ class Solution:
         return f0
 
 
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        f0, f1 = 0, float('-inf')
+        for p in prices:
+            f0, f1 = max(f0, f1 + p - fee), max(f1, f0 - p)
+        return f0
+
+
 def main():
     sol = Solution()
 

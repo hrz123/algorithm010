@@ -102,6 +102,19 @@ class Solution:
         return dfs(root, 0)
 
 
+class Solution:
+    def sumNumbers(self, root: TreeNode) -> int:
+        def dfs(node, pre):
+            if not node:
+                return 0
+            res = pre * 10 + node.val
+            if not node.left and not node.right:
+                return res
+            return dfs(node.left, res) + dfs(node.right, res)
+
+        return dfs(root, 0)
+
+
 def main():
     sol = Solution()
     a = TreeNode(1)

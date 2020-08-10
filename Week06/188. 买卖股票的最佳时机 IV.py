@@ -140,6 +140,33 @@ class Solution:
         return dp[k][0]
 
 
+# f(i, k, 0/1)
+# 递推方程
+# f(i, k, 0) = f(i-1, k, 0), f(i-1, k-1, 1) + p
+# f(i, k, 1) = f(i-1, k, 1), f(i-1, k, 0) - p
+# 初始化
+# 1可以初始化为一个最小值，0可以初始化为0
+# 返回值
+# f(i, k, 0)
+# 优化复杂度
+# 只要从后往前更新，我们可以实现原地更新
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        n = len(prices)
+        if k == 0:
+            return 0
+        if k > n >> 1:
+            return sum(max(0, prices[i + 1] - prices[i]) for i in range(n - 1))
+        dp = [[0, float('-inf')] for _ in range(k + 1)]
+        for p in prices:
+            dp[0][1] = max(dp[0][1], -p)
+            dp[k][0] = max(dp[k][0], dp[k - 1][1] + p)
+            for j in range(k - 1, 0, -1):
+                dp[j][1] = max(dp[j][1], dp[j][0] - p)
+                dp[j][0] = max(dp[j][0], dp[j - 1][1] + p)
+        return dp[k][0]
+
+
 def main():
     sol = Solution()
 

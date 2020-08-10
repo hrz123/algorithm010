@@ -111,6 +111,16 @@ class Solution:
             nums[1:]))
 
 
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        def helper(nums):
+            p0 = p1 = 0
+            for num in nums:
+                p1, p1 = p1, max(p1, p0 + num)
+            return p1
+        return max(helper(nums[:-1]), helper(nums[1:]))
+
+
 def main():
     sol = Solution()
 

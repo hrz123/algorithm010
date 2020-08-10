@@ -232,6 +232,15 @@ class Solution:
         return f1
 
 
+# f(i) = f(i-1), a+f(i-2)
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        f0, f1 = 0, 0
+        for num in nums:
+            f0, f1 = f1, max(f1, f0 + num)
+        return f1
+
+
 def main():
     sol = Solution()
 

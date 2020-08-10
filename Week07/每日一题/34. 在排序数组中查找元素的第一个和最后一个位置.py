@@ -106,6 +106,43 @@ class Solution:
         return l
 
 
+# 定义n为数组长度，可以找到第一个满足右侧集合条件的位置
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        def binary_search(l, r, left):
+            while l < r:
+                mid = l + ((r - l) >> 1)
+                if nums[mid] > target or (left and nums[mid] == target):
+                    r = mid
+                else:
+                    l = mid + 1
+            return l
+
+        n = len(nums)
+        left = binary_search(0, n, True)
+        if left == n or nums[left] != target:
+            return [-1, -1]
+        return [left, binary_search(0, n, False) - 1]
+
+
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        def binary_search(nums, target, left):
+            l, r = 0, len(nums)
+            while l < r:
+                mid = l + ((r - l) >> 1)
+                if nums[mid] > target or (left and nums[mid] == target):
+                    r = mid
+                else:
+                    l = mid + 1
+            return l
+
+        left = binary_search(nums, target, True)
+        if left == len(nums) or nums[left] != target:
+            return [-1, -1]
+        return [left, binary_search(nums, target, False) - 1]
+
+
 def main():
     sol = Solution()
 
@@ -125,6 +162,11 @@ def main():
     print(res)
 
     nums = [1, 1]
+    target = 1
+    res = sol.searchRange(nums, target)
+    print(res)
+
+    nums = [1]
     target = 1
     res = sol.searchRange(nums, target)
     print(res)

@@ -52,6 +52,15 @@ class Solution:
         return y
 
 
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        pre, cur = float('-inf'), 0
+        for p in prices:
+            cur = max(cur, p + pre)
+            pre = max(pre, -p)
+        return cur
+
+
 def main():
     sol = Solution()
 

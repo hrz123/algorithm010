@@ -83,21 +83,63 @@ class Solution:
 class Solution:
     def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:
         row, col = len(matrix), len(matrix[0])
-        _sum = [0] * row
+        total = [0] * row
         res = float('-inf')
         for left in range(col):
-            _sum[:] = [0] * row
+            total[:] = [0] * row
             for right in range(left, col):
                 for i in range(row):
-                    _sum[i] += matrix[i][right]
+                    total[i] += matrix[i][right]
                 arr = [0]
                 cur = 0
-                for r in _sum:
+                for r in total:
                     cur += r
                     loc = bisect.bisect_left(arr, cur - k)
                     if loc < len(arr):
                         res = max(res, cur - arr[loc])
                     bisect.insort(arr, cur)
+        return res
+
+
+class Solution:
+    def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:
+        h, w = len(matrix), len(matrix[0])
+        total = [0] * h
+        res = float('-inf')
+        for left in range(w):
+            total[:] = [0] * h
+            for right in range(left, w):
+                for i in range(h):
+                    total[i] += matrix[i][right]
+                pre = [0]
+                p = 0
+                for r in total:
+                    p += r
+                    loc = bisect.bisect_left(pre, p - k)
+                    if loc != len(pre):
+                        res = max(res, p - pre[loc])
+                    bisect.insort(pre, p)
+        return res
+
+
+class Solution:
+    def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:
+        m, n = len(matrix), len(matrix[0])
+        total = [0] * m
+        res = float('-inf')
+        for left in range(n):
+            total[:] = [0] * m
+            for right in range(left, n):
+                for i in range(m):
+                    total[i] += matrix[i][right]
+                pre = [0]
+                p = 0
+                for r in total:
+                    p += r
+                    loc = bisect.bisect_left(pre, p - k)
+                    if loc != len(pre):
+                        res = max(res, p - pre[loc])
+                    bisect.insort(pre, p)
         return res
 
 
@@ -109,7 +151,7 @@ def main():
     print(res)
 
     matrix = [[2, 2, -1]]
-    k = 3
+    k = 2
     res = sol.maxSumSubmatrix(matrix, k)
     print(res)
 

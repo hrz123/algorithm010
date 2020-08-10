@@ -91,6 +91,23 @@ class Solution:
         return res
 
 
+# f(i)为s[：i]数组的连续乘积最大值，且一定包含i
+# 因为有负数，我们还要记录f(i)中连续数组的最小值
+# f(i) a[i]为正数时，f(i)[0] = f(i-1)[0] * a[i]
+#            否则   f(i)[1] = f(i-1)[1] * a[i]
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        res = float('-inf')
+        dp0, dp1 = 1, 1
+        for n in nums:
+            if n > 0:
+                dp0, dp1 = max(dp0 * n, n), min(dp1 * n, n)
+            else:
+                dp0, dp1 = max(dp1 * n, n), min(dp0 * n, n)
+            res = max(res, dp0)
+        return res
+
+
 def main():
     sol = Solution()
 

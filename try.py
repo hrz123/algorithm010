@@ -1,15 +1,15 @@
-m, n, x, y = map(int, input().split())
-obs = {(x + dx, y + dy) for dx, dy in ((1, 2), (1, -2), (-1, 2), (-1, -2),
-                                       (2, 1), (2, -1), (-2, 1), (-2, -1),
-                                       (0, 0))}
-m += 1
-n += 1
-
-dp = [0, 1] + [0] * (n - 1)
-for i in range(m):
-    for j in range(n):
-        dp[j + 1] = dp[j] + dp[j + 1] if (i, j) not in obs else 0
-print(dp[n])
+n = int(input())
+hashmap = {}
+for ind in range(n):
+    a, b, g, k = map(int, input().split())
+    for i in range(a, a + g):
+        for j in range(b, b + k):
+            hashmap[(i, j)] = ind + 1
+x, y = map(int, input().split())
+if (x, y) in hashmap:
+    print(hashmap[x, y])
+else:
+    print(-1)
 
 
 def main():

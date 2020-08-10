@@ -98,6 +98,29 @@ class Solution:
         return f20
 
 
+# 定义状态
+# f(i, 0/1/2, 0/1) 表示第i天，交易了几笔，手里有几张股票的最大收益
+# f(i, 0, 0) = 不动f(i-1, 0, 0) 买入 卖出
+# f(i, 0, 1) = f(i-1, 0, 1), f(i-1, 0, 0) - a[i]
+# f(i, 1, 0) = f(i-1, 1, 0), f(i-1, 0, 1) + a[i]
+# f(i, 1, 1) = f(i-1, 1, 1), f(i-1,1, 0)- a[i]
+# f(i, 2, 0) = f(i, 2, 0), f(i-1, 1, 1) + a[i]
+# 初始化 f01 = f11 = float('-inf')， f10 = f20 = 0
+#
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        f01 = f11 = float('-inf')
+        f10 = f20 = 0
+        for p in prices:
+            f01, f10, f11, f20 = (
+                max(f01, -p),
+                max(f10, f01 + p),
+                max(f11, f10 - p),
+                max(f20, f11 + p)
+            )
+        return f20
+
+
 def main():
     sol = Solution()
 
