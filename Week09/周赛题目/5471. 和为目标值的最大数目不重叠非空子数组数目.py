@@ -36,6 +36,23 @@ class Solution:
         return res
 
 
+# 以下为自我练习
+class Solution:
+    def maxNonOverlapping(self, nums: List[int], target: int) -> int:
+        pre = {0}
+        res = 0
+        p = 0
+        for n in nums:
+            p += n
+            if p - target in pre:
+                res += 1
+                p = 0
+                pre = {0}
+            else:
+                pre.add(p)
+        return res
+
+
 def main():
     sol = Solution()
     nums = [-1, 3, 5, 1, 4, 2, -9]

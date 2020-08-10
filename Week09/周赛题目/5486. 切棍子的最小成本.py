@@ -40,6 +40,26 @@ class Solution:
         return dp(0, n)
 
 
+# 以下为自我练习
+class Solution:
+    def minCost(self, n: int, cuts: List[int]) -> int:
+        import sys
+        sys.setrecursionlimit(10000000)
+
+        import functools
+        @functools.lru_cache(None)
+        def dp(i, j):
+            res = float('inf')
+            for c in cuts:
+                if i < c < j:
+                    res = min(res, dp(i, c) + dp(c, j) + j - i)
+            if res == float('inf'):
+                return 0
+            return res
+
+        return dp(0, n)
+
+
 def main():
     sol = Solution()
     n = 7
