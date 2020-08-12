@@ -62,6 +62,65 @@ class Solution:
         return dummy.next
 
 
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        dummy = ListNode(0)
+        dummy.next = head
+        while head and head.next:
+            p = head.next
+            pre, cur = dummy, dummy.next
+            while cur.val < p.val:
+                pre, cur = cur, cur.next
+            if cur == p:
+                head = head.next
+            else:
+                head.next = p.next
+                p.next = cur
+                pre.next = p
+        return dummy.next
+
+
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        dummy = ListNode(0)
+        dummy.next = head
+        while head and head.next:
+            p = head.next
+            # 测试样例中，很多都是排序好的，增加这一步判断，可用于提速
+            if p.val >= head.val:
+                head = head.next
+                continue
+            pre, cur = dummy, dummy.next
+            while cur.val < p.val:
+                pre, cur = cur, cur.next
+            if cur == p:
+                head = head.next
+            else:
+                head.next = p.next
+                p.next = cur
+                pre.next = p
+        return dummy.next
+
+
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        dummy = ListNode(0)
+        dummy.next = head
+        while head and head.next:
+            p = head.next
+            # 防止测试样例中，很多都是排好序的，增加这一步判断，可用于提速
+            if p.val >= head.val:
+                head = head.next
+                continue
+            pre, cur = dummy, dummy.next
+            while cur.val < p.val:
+                pre, cur = cur, cur.next
+            head.next = p.next
+            p.next = cur
+            pre.next = p
+        return dummy.next
+
+
 def main():
     sol = Solution()
     head = ListNode(4)

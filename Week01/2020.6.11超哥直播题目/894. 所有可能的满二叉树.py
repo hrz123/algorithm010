@@ -101,6 +101,24 @@ class Solution:
         return res
 
 
+class Solution:
+    memo = {1: [TreeNode(0)]}
+
+    def allPossibleFBT(self, N: int) -> List[TreeNode]:
+        if N in self.memo:
+            return self.memo[N]
+        res = []
+        for i in range(1, N, 2):
+            for l in self.allPossibleFBT(i):
+                for r in self.allPossibleFBT(N - i - 1):
+                    root = TreeNode(0)
+                    root.left = l
+                    root.right = r
+                    res.append(root)
+        self.memo[N] = res
+        return res
+
+
 def main():
     s = Solution()
 

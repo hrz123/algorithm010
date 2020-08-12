@@ -50,6 +50,25 @@ class Solution:
         return res
 
 
+class Solution:
+    def pathSum(self, root: TreeNode, sum: int) -> int:
+        pathSum = {0: 1}
+        return self.findPathSum(root, 0, sum, pathSum)
+
+    def findPathSum(self, root, pre, target, pathSum):
+        if not root:
+            return 0
+        pre += root.val
+        res = 0
+        if pre - target in pathSum:
+            res += pathSum[pre - target]
+        pathSum[pre] = pathSum.get(pre, 0) + 1
+        res += self.findPathSum(root.left, pre, target, pathSum)
+        res += self.findPathSum(root.right, pre, target, pathSum)
+        pathSum[pre] -= 1
+        return res
+
+
 def main():
     pass
 

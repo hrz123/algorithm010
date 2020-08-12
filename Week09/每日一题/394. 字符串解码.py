@@ -141,6 +141,26 @@ class Solution:
         return res
 
 
+class Solution:
+    def decodeString(self, s: str) -> str:
+        stack = []
+        multi = 0
+        res = ""
+        for c in s:
+            if c.isdigit():
+                multi = multi * 10 + int(c)
+            elif c == '[':
+                stack.append((multi, res))
+                multi = 0
+                res = ""
+            elif c == ']':
+                pre_multi, pre_res = stack.pop()
+                res = pre_res + pre_multi * res
+            else:
+                res += c
+        return res
+
+
 def main():
     sol = Solution()
 

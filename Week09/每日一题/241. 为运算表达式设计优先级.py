@@ -65,6 +65,24 @@ class Solution:
         return res
 
 
+class Solution:
+    def diffWaysToCompute(self, input: str) -> List[int]:
+        if input.isdigit():
+            return [int(input)]
+        res = []
+        for i, c in enumerate(input):
+            if c in {'+', '-', '*'}:
+                for left in self.diffWaysToCompute(input[:i]):
+                    for right in self.diffWaysToCompute(input[i + 1:]):
+                        if c == '+':
+                            res.append(left + right)
+                        elif c == '-':
+                            res.append(left - right)
+                        else:
+                            res.append(left * right)
+        return res
+
+
 def main():
     pass
 
