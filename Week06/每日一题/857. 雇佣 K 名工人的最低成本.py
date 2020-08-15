@@ -62,6 +62,40 @@ class Solution:
         return res
 
 
+class Solution:
+    def mincostToHireWorkers(self, quality: List[int], wage: List[int],
+                             K: int) -> float:
+        zv = list(zip(quality, wage))
+        zv.sort(key=lambda x: x[1] / x[0])
+        heap = []
+        q_sum = 0
+        res = float('inf')
+        for q, w in zv:
+            q_sum += q
+            heapq.heappush(heap, -q)
+            if len(heap) == K:
+                res = min(res, q_sum * w / q)
+                q_sum += heapq.heappop(heap)
+        return res
+
+
+class Solution:
+    def mincostToHireWorkers(self, quality: List[int], wage: List[int],
+                             K: int) -> float:
+        zv = list(zip(quality, wage))
+        zv.sort(key=lambda x: x[1] / x[0])
+        heap = []
+        res = float('inf')
+        q_sum = 0
+        for q, w in zv:
+            q_sum += q
+            heapq.heappush(heap, -q)
+            if len(heap) == K:
+                res = min(res, q_sum * w / q)
+                q_sum += heapq.heappop(heap)
+        return res
+
+
 def main():
     sol = Solution()
 

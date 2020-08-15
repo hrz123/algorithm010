@@ -40,6 +40,11 @@ class Solution:
         return bool(dp[0][n - 1][0] - dp[0][n - 1][1])
 
 
+class Solution:
+    def stoneGame(self, piles: List[int]) -> bool:
+        return True
+
+
 def main():
     sol = Solution()
 

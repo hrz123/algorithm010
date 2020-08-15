@@ -202,6 +202,17 @@ class Solution:
         return candidate
 
 
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        count = 0
+        res = 0
+        for n in nums:
+            if not count:
+                res = n
+            count += 1 if n == res else -1
+        return res
+
+
 def main():
     sol = Solution()
 

@@ -148,12 +148,28 @@ class Solution:
         return res
 
 
+class Solution:
+    def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
+        counter = [0] * 1001
+        for n in arr1:
+            counter[n] += 1
+        res = []
+        for n in arr2:
+            res.extend([n] * counter[n])
+            counter[n] = 0
+        for i in range(1001):
+            if counter[i]:
+                res.extend([i] * counter[i])
+        return res
+
+
 def main():
     sol = Solution()
 
     arr1 = [2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19]
     arr2 = [2, 1, 4, 3, 9, 6]
     res = sol.relativeSortArray(arr1, arr2)
+    assert res == [2, 2, 2, 1, 4, 3, 3, 9, 6, 7, 19]
     print(res)
 
 

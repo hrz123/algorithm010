@@ -192,6 +192,34 @@ class Solution:
         return n + 1
 
 
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        n = len(nums)
+        for i in range(n):
+            if nums[i] <= 0:
+                nums[i] = n + 1
+        for i in range(n):
+            x = abs(nums[i])
+            if 1 <= x <= n:
+                nums[x - 1] = nums[x - 1] if nums[x - 1] < 0 else -nums[x - 1]
+        for i in range(n):
+            if nums[i] > 0:
+                return i + 1
+        return n + 1
+
+
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        n = len(nums)
+        for i in range(n):
+            while 1 <= nums[i] <= n and nums[i] != nums[nums[i] - 1]:
+                nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
+        for i in range(n):
+            if nums[i] != i + 1:
+                return i + 1
+        return n + 1
+
+
 def main():
     sol = Solution()
 

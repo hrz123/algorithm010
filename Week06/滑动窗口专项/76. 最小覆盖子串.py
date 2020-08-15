@@ -395,6 +395,30 @@ class Solution:
                                                                  _min_length]
 
 
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        m, n = len(s), len(t)
+        counter = Counter(t)
+        res_left = 0
+        res = m + 1
+        l, r = 0, 0
+        while r < m:
+            tmp = s[r]
+            r += 1
+            if counter[tmp] > 0:
+                n -= 1
+            counter[tmp] -= 1
+            while n == 0:
+                if r - l < res:
+                    res = r - l
+                    res_left = l
+                if counter[s[l]] == 0:
+                    n += 1
+                counter[s[l]] += 1
+                l += 1
+        return '' if res == m + 1 else s[res_left:res_left + res]
+
+
 def main():
     sol = Solution()
 

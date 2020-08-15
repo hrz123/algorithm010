@@ -184,6 +184,36 @@ class Solution:
         return dp[n]
 
 
+# 定义子问题
+# f(i, j)为s[:i]到t[:j]的编辑距离
+# f(i, j) = if s[i] == t[j]  f(i-1, j-1)
+# f(i, j) = else min(f(i-1, j-1), f(i-1, j), f(i,j-1)) + 1
+# 初始化和边界条件
+# f(0, j) = j
+# f(i, 0) = i
+# 返回值f(m, n)
+# 优化复杂度
+# 我们只需要i-1的j-1和j索引，还需要i的j-1索引
+# 我们可以使用两个数组滚动，数组的大小可以是两个字符串长度的较小值
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        m, n = len(word1), len(word2)
+        if m < n:
+            m, n = n, m
+            word1, word2 = word2, word1
+        dp = list(range(n + 1))
+        ndp = [0 for _ in range(n + 1)]
+        for i in range(m):
+            ndp[0] = i + 1
+            for j in range(n):
+                if word1[i] == word2[j]:
+                    ndp[j + 1] = dp[j]
+                else:
+                    ndp[j + 1] = min(dp[j + 1], dp[j], ndp[j]) + 1
+            dp, ndp = ndp, dp
+        return dp[n]
+
+
 def main():
     word1 = "intention"
     word2 = "execution"

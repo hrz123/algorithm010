@@ -163,6 +163,22 @@ class Solution:
         return max((_max_count - 1) * (n + 1) + _num_max_count, len(tasks))
 
 
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        counter = Counter(tasks).values()
+        max_count = max(counter)
+        num_max_count = tuple(counter).count(max_count)
+        return max((max_count - 1) * (n + 1) + num_max_count, len(tasks))
+
+
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        counter = Counter(tasks).values()
+        mc = max(counter)
+        nmc = tuple(counter).count(mc)
+        return max((mc - 1) * (n + 1) + nmc, len(tasks))
+
+
 def main():
     sol = Solution()
 

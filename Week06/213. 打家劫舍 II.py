@@ -101,24 +101,14 @@ class Solution:
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        def helper(nums):
-            pre, cur = 0, 0
-            for num in nums:
-                pre, cur = cur, max(cur, pre + num)
-            return cur
+        def helper(l, r):
+            f0, f1 = 0, 0
+            for i in range(l, r):
+                f0, f1 = f1, max(f1, f0 + nums[i])
+            return f1
 
-        return nums[0] if len(nums) == 1 else max(helper(nums[:-1]), helper(
-            nums[1:]))
-
-
-class Solution:
-    def rob(self, nums: List[int]) -> int:
-        def helper(nums):
-            p0 = p1 = 0
-            for num in nums:
-                p1, p1 = p1, max(p1, p0 + num)
-            return p1
-        return max(helper(nums[:-1]), helper(nums[1:]))
+        n = len(nums)
+        return nums[0] if n == 1 else max(helper(0, n - 1), helper(1, n))
 
 
 def main():

@@ -153,6 +153,61 @@ class Solution:
         return [[em_to_name[v[0]]] + sorted(v) for v in ans.values()]
 
 
+class UnionFind:
+    def __init__(self, k):
+        self.uf = [-1] * (k + 1)
+        self.sets_count = k
+
+    def find(self, p):
+        if self.uf[p] < 0:
+            return p
+        self.uf[p] = self.find(self.uf[p])
+        return self.uf[p]
+
+    def union(self, p, q):
+        p_root = self.find(p)
+        q_root = self.find(q)
+        if p_root == q_root:
+            return
+        if self.uf[p_root] > self.uf[q_root]:
+            self.uf[q_root] += self.uf[p_root]
+            self.uf[p_root] = q_root
+        else:
+            self.uf[p_root] += self.uf[q_root]
+            self.uf[q_root] = p_root
+        self.sets_count -= 1
+
+    def is_connected(self, p, q):
+        return self.find(p) == self.find(q)
+
+
+class Solution:
+    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+        em_to_id = {}
+        em_to_name = {}
+        i = 0
+        uf = UnionFind(10000)
+        for acc in accounts:
+            name = acc[0]
+            em = acc[1]
+            if em not in em_to_id:
+                em_to_id[em] = i
+                i += 1
+            if em not in em_to_name:
+                em_to_name[em] = name
+            for oem in acc[2:]:
+                if oem not in em_to_id:
+                    em_to_id[oem] = i
+                    i += 1
+                if oem not in em_to_name:
+                    em_to_name[oem] = name
+                uf.union(em_to_id[oem], em_to_id[em])
+        ans = defaultdict(list)
+        for em in em_to_id:
+            ans[uf.find(em_to_id[em])].append(em)
+        return [[em_to_name[v[0]]] + sorted(v) for v in ans.values()]
+
+
 def main():
     sol = Solution()
 

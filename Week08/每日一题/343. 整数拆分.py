@@ -90,6 +90,18 @@ class Solution:
         return 3 ** div * 2
 
 
+class Solution:
+    def integerBreak(self, n: int) -> int:
+        if n <= 3:
+            return n - 1
+        div, mod = divmod(n, 3)
+        if mod == 0:
+            return 3 ** div
+        if mod == 1:
+            return 3 ** (div - 1) * 4
+        return 3 ** div * 2
+
+
 def main():
     sol = Solution()
 

@@ -121,6 +121,25 @@ class Solution:
         return res
 
 
+class Solution:
+    def largestValues(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        deq = deque([root])
+        res = []
+        while deq:
+            t = float('-inf')
+            for _ in range(len(deq)):
+                node = deq.popleft()
+                t = max(t, node.val)
+                if node.left:
+                    deq.append(node.left)
+                if node.right:
+                    deq.append(node.right)
+            res.append(t)
+        return res
+
+
 def main():
     root = TreeNode(1)
     root.left = TreeNode(3)

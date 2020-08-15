@@ -319,6 +319,34 @@ class Solution:
         return -1
 
 
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        if grid[0][0] or grid[n - 1][n - 1]:
+            return -1
+        if n == 1:
+            return 1
+        bq, eq, nq, res = {(0, 0)}, {(n - 1, n - 1)}, set(), 1
+        visited = set()
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, 1),
+                (-1, -1))
+        while bq:
+            visited |= bq
+            res += 1
+            for i, j in bq:
+                for di, dj in dirs:
+                    _i, _j = i + di, j + dj
+                    if -1 < _i < n and -1 < _j < n and (_i, _j) not in \
+                            visited and not grid[_i][_j]:
+                        if (_i, _j) in eq:
+                            return res
+                        nq.add((_i, _j))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
 def main():
     sol = Solution()
 

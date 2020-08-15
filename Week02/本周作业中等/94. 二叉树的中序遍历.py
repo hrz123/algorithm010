@@ -144,6 +144,20 @@ class Solution:
         return res
 
 
+class Solution:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        stack = []
+        res = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            res.append(root.val)
+            root = root.right
+        return res
+
+
 def main():
     root = TreeNode(1)
     root.right = TreeNode(2)

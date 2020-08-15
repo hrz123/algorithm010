@@ -95,6 +95,27 @@ class Solution:
         return res
 
 
+class Solution:
+    def robotSim(self, commands: List[int], obstacles: List[List[int]]) -> int:
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        res = 0
+        k = 0
+        x, y = 0, 0
+        obs = set(map(tuple, obstacles))
+        for c in commands:
+            if c == -2:
+                k = (k - 1) % 4
+            elif c == -1:
+                k = (k + 1) % 4
+            elif 1 <= c <= 9:
+                for i in range(c):
+                    if (x + dirs[k][0], y + dirs[k][1]) in obs:
+                        break
+                    x, y = x + dirs[k][0], y + dirs[k][1]
+                    res = max(x * x + y * y, res)
+        return res
+
+
 def main():
     sol = Solution()
 

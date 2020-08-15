@@ -142,6 +142,19 @@ class Solution:
                 return res
 
 
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        c1 = collections.Counter(nums)
+        c2 = [[] for _ in range(len(nums) + 1)]
+        for key, val in c1.items():
+            c2[val].append(key)
+        res = []
+        for i in range(len(nums), -1, -1):
+            res.extend(c2[i])
+            if len(res) == k:
+                return res
+
+
 def main():
     nums = [1, 1, 1, 2, 2, 3]
     k = 2

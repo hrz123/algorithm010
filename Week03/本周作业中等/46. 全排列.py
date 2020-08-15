@@ -223,6 +223,26 @@ class Solution:
         return q
 
 
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        q, nq = [[]], []
+        for n in nums:
+            for ans in q:
+                for i in range(len(ans) + 1):
+                    nq.append(ans[:i] + [n] + ans[i:])
+            q, nq = nq, []
+        return q
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for n in nums:
+            res = [ans[:i] + [n] + ans[i:] for ans in res for i in range(
+                len(ans) + 1)]
+        return res
+
+
 def main():
     solution = Solution()
 

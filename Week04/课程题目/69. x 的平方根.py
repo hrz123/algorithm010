@@ -161,6 +161,14 @@ class Solution:
         return ans + 1 if (ans + 1) ** 2 <= x else ans
 
 
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        res = x
+        while res * res > x:
+            res = (res + x // res) >> 1
+        return res
+
+
 def main():
     sol = Solution()
     res = sol.mySqrt(4)

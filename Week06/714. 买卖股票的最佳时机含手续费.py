@@ -73,6 +73,24 @@ class Solution:
         return f0
 
 
+# 定义子问题
+# f(i, j)第i天，手里有j个股票
+# f(i, 0) = f(i-1, 0) ,f(i-1, 1) + p - fee
+# f(i, 1) = f(i-1, 1) ,f(i-1, 0) - p
+# 初始化和边界条件
+# f(0) = 0
+# f(1) = float('-inf')
+# 返回值f(n, 0)
+# 优化复杂度
+# 我们只需要两个变量
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        f0, f1 = 0, float('-inf')
+        for p in prices:
+            f0, f1 = max(f0, f1 + p - fee), max(f1, f0 - p)
+        return f0
+
+
 def main():
     sol = Solution()
 

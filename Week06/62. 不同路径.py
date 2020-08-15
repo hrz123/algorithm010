@@ -81,6 +81,43 @@ class Solution:
         return dp[n]
 
 
+# 定义子问题
+# f(i, j) = f(i-1, j) + f(i, j-1)
+# 初始化和边界条件
+# f(0, j) = 1
+# 返回值f(m, n)
+# 优化复杂度
+# 我们可以只用一维数组，从前往后原地更新
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        if m < n:
+            m, n = n, m
+        dp = [1] * n
+        for i in range(m - 1):
+            for j in range(n - 1):
+                dp[j + 1] += dp[j]
+        return dp[n - 1]
+
+
+# 定义子问题
+# f(i,j)到i， j有多少种走法
+# f(i, j) = f(i-1, j) + f(i, j-1)
+# 初始化和边界条件
+# 第一行只有一种走法
+# f(0, j) = 1
+# 返回值f(m, n)
+# 优化复杂度，我们只需要较少的那一维数组，从左到右原地更新
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        if m < n:
+            m, n = n, m
+        dp = [1] * n
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[j] += dp[j - 1]
+        return dp[n - 1]
+
+
 def main():
     m = 7
     n = 3

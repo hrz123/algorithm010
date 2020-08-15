@@ -115,6 +115,24 @@ class Solution:
         return dp[0]
 
 
+# f(i, j)定义为i, j的最小路径和
+# f(i,j) = min(f(i+1, j), f(i+1, j+1)) +a[i][j]
+# 初始化
+# 最后一层就是自己，可以用自身初始化
+# 返回值f(0, 0)
+# 优化复杂度
+# 可以用一维数组，从左到右原地更新
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        if not triangle or not triangle[0]:
+            return 0
+        dp = triangle[-1][:]
+        for i in range(len(triangle) - 2, -1, -1):
+            for j in range(i + 1):
+                dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j]
+        return dp[0]
+
+
 def main():
     sol = Solution()
     triangle = [

@@ -91,6 +91,30 @@ class Solution:
         p1.val, p2.val = p2.val, p1.val
 
 
+class Solution:
+    def recoverTree(self, root: TreeNode) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        stack = []
+        begin, end = None, None
+        pre = float('-inf')
+        pred = None
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            if pre > root.val:
+                if not begin:
+                    begin = pred
+                end = root
+            pre = root.val
+            pred = root
+            root = root.right
+        begin.val, end.val = end.val, begin.val
+
+
 def main():
     pass
 

@@ -82,6 +82,21 @@ class Solution:
         return ''.join(s)
 
 
+class Solution:
+    def reverseStr(self, s: str, k: int) -> str:
+        s = list(s)
+        n = len(s)
+        i = 0
+        while i < n:
+            l, r = i, min(i + k, n) - 1
+            while l < r:
+                s[l], s[r] = s[r], s[l]
+                l += 1
+                r -= 1
+            i += k << 1
+        return ''.join(s)
+
+
 def main():
     sol = Solution()
 

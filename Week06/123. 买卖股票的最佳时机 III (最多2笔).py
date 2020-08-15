@@ -121,6 +121,33 @@ class Solution:
         return f20
 
 
+# 定义子问题
+# f(i, 012, 01)表示第i天，已经卖出了012笔，手里还有01股票的收益
+# f(i, 0, 0) = f(i-1, 0, 0)
+# f(i, 0, 1) = f(i-1, 0, 1) f(i-1, 0, 0) - p
+# f(i, 1, 0) = f(i-1, 1, 0) f(i-1, 0, 1) + p
+# f(i, 1, 1) = f(i-1, 1, 1) f(i-1, 1, 0) - p
+# f(i, 2, 0) = f(i-1, 2, 0) f(i-1, 1, 1) + p
+# f(i, 2, 1)这个状态没有意义
+# 初始化
+# f01 = f11 = float('-inf')
+# f10 = f20 = 0
+# 返回值，f20是一直的最大值
+# 优化复杂度
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        f01 = f11 = float('-inf')
+        f10 = f20 = 0
+        for p in prices:
+            f01, f10, f11, f20 = (
+                max(f01, -p),
+                max(f10, f01 + p),
+                max(f11, f10 - p),
+                max(f20, f11 + p)
+            )
+        return f20
+
+
 def main():
     sol = Solution()
 

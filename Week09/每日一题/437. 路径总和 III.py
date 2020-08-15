@@ -69,6 +69,25 @@ class Solution:
         return res
 
 
+class Solution:
+    def pathSum(self, root: TreeNode, sum: int) -> int:
+        pre_sum = {0: 1}
+        return self.dfs(root, 0, sum, pre_sum)
+
+    def dfs(self, root, pre, target, pre_sum):
+        if not root:
+            return 0
+        res = 0
+        pre += root.val
+        if pre - target in pre_sum:
+            res += pre_sum[pre - target]
+        pre_sum[pre] = pre_sum.get(pre, 0) + 1
+        res += self.dfs(root.left, pre, target, pre_sum)
+        res += self.dfs(root.right, pre, target, pre_sum)
+        pre_sum[pre] -= 1
+        return res
+
+
 def main():
     pass
 

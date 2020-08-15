@@ -253,6 +253,46 @@ class Solution:
         return res
 
 
+class Solution:
+    def findCircleNum(self, M: List[List[int]]) -> int:
+        visited = set()
+        n = len(M)
+        res = 0
+
+        def dfs_marking(i):
+            for j in range(n):
+                if M[i][j] and j not in visited:
+                    visited.add(j)
+                    dfs_marking(j)
+
+        for i in range(n):
+            if i not in visited:
+                res += 1
+                visited.add(i)
+                dfs_marking(i)
+        return res
+
+
+class Solution:
+    def findCircleNum(self, M: List[List[int]]) -> int:
+        visited = set()
+        n = len(M)
+        res = 0
+
+        def dfs_marking(i):
+            for j in range(n):
+                if M[i][j] and j not in visited:
+                    visited.add(j)
+                    dfs_marking(j)
+
+        for i in range(n):
+            if i not in visited:
+                res += 1
+                visited.add(i)
+                dfs_marking(i)
+        return res
+
+
 def main():
     sol = Solution()
 

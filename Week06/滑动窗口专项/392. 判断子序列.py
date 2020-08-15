@@ -172,6 +172,66 @@ class Solution:
         return True
 
 
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        i, j = 0, 0
+        m, n = len(s), len(t)
+        while i < m and j < n:
+            if s[i] == t[j]:
+                i += 1
+            j += 1
+        return i == m
+
+
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        t = " " + t
+        n = len(t)
+        matrix = [[0 for _ in range(n)] for _ in range(256)]
+        for i in range(256):
+            p = -1
+            for j in range(n - 1, -1, -1):
+                matrix[i][j] = p
+                if ord(t[j]) == i:
+                    p = j
+        start = 0
+        for c in s:
+            start = matrix[ord(c)][start]
+            if start == -1:
+                return False
+        return True
+
+
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        i, j = 0, 0
+        m, n = len(s), len(t)
+        while i < m and j < n:
+            if s[i] == t[j]:
+                i += 1
+            j += 1
+        return i == m
+
+
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        t = " " + t
+        n = len(t)
+        matrix = [[0 for _ in range(n)] for _ in range(256)]
+        for i in range(256):
+            p = -1
+            for j in range(n - 1, -1, -1):
+                matrix[i][j] = p
+                if ord(t[j]) == i:
+                    p = j
+        start = 0
+        for c in s:
+            start = matrix[ord(c)][start]
+            if start == -1:
+                return False
+        return True
+
+
 def main():
     sol = Solution()
 

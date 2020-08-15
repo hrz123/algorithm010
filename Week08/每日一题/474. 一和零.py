@@ -164,6 +164,28 @@ class Solution:
         return dp[m][n]
 
 
+# f(i, m, n) s[:i]可以用m个0n个1最多凑出几个
+# f(i, m, n) = max(f(i-1, m, n), f(i-1, m-0s, n-1s) + 1)
+# 初始化和边界条件
+# f(0, 0, 0) = 0
+# f(1, m, n)
+# 注意m, n不能越界
+# 返回值f(len, m, n)
+# 注意给0这个边界条件
+# 优化复杂度，我们只需要两维
+# 从右下到左上原地更新
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+        for s in strs:
+            c0 = s.count('0')
+            c1 = len(s) - c0
+            for i in range(m, c0 - 1, -1):
+                for j in range(n, c1 - 1, -1):
+                    dp[i][j] = max(dp[i][j], dp[i - c0][j - c1] + 1)
+        return dp[m][n]
+
+
 def main():
     sol = Solution()
 

@@ -57,6 +57,24 @@ class Solution:
         return True
 
 
+class Solution:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        m1 = {}
+        m2 = {}
+        for c1, c2 in zip(s, t):
+            if c1 in m1:
+                if m1[c1] != c2:
+                    return False
+            else:
+                m1[c1] = c2
+            if c2 in m2:
+                if m2[c2] != c1:
+                    return False
+            else:
+                m2[c2] = c1
+        return True
+
+
 def main():
     sol = Solution()
 

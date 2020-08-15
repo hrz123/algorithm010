@@ -1,6 +1,7 @@
 # 面试题40. 最小的k个数.py
 
 import heapq
+import random
 from typing import List
 
 
@@ -175,6 +176,35 @@ class Solution:
             else:
                 heapq.heappushpop(heap, -num)
         return [-num for num in heap]
+
+
+class Solution:
+    def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
+        if not arr or len(arr) == 1:
+            return arr
+        if k == 0:
+            return []
+        l, r = 0, len(arr) - 1
+        while l <= r:
+            pivot = self.partition(arr, l, r)
+            if pivot == k - 1:
+                return arr[:k]
+            if pivot > k - 1:
+                r = pivot - 1
+            else:
+                l = pivot + 1
+
+    def partition(self, arr, l, r):
+        ran = random.randint(l, r)
+        arr[r], arr[ran] = arr[ran], arr[r]
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if arr[i] <= arr[pivot]:
+                arr[i], arr[right] = arr[right], arr[i]
+                right += 1
+        arr[right], arr[pivot] = arr[pivot], arr[right]
+        return right
 
 
 def main():

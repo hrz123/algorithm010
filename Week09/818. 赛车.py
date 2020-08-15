@@ -163,20 +163,52 @@ class Solution:
         return dp[target]
 
 
+# f(i)为指令长度
+# f(i) = n if  == 2 ** n -1
+# 1 i < 2**n-1
+# A^nR指令长度n+1，距离终点f(2**n-1-i)
+# 2 i > 2**(n-1)+1
+# A^(n-1)RA^kR 指令长度n + k + 1
+# 距离终点i - (2**(n-1)-1 - 2**k + 1)= i - 2**(n-1) + 2**k
+# 两者之间求最小值
+# 初始化f(0)= 0，其他求最小按说可以用正无穷初始化，但是因为我们会先赋值f(2**n-1-i) + n-1
+# 所以初始化成什么无所谓
+# 返回值
+# f(target)
+# 优化复杂度
+# 无法优化
+class Solution:
+    def racecar(self, target: int) -> int:
+        dp = [0] * (target + 1)
+        for i in range(1, target + 1):
+            n = i.bit_length()
+            if i == (1 << n) - 1:
+                dp[i] = n
+            else:
+                dp[i] = dp[(1 << n) - 1 - i] + n + 1
+                for k in range(n - 1):
+                    dp[i] = min(dp[i],
+                                dp[i - (1 << (n - 1)) + (1 << k)] + n + k + 1)
+        return dp[target]
+
+
 def main():
     sol = Solution()
 
     n = 3
     res = sol.racecar(n)
     print(res)
+    assert res == 2
 
     n = 6
     res = sol.racecar(n)
     print(res)
+    assert res == 5
 
     n = 4
     res = sol.racecar(n)
     print(res)
+    assert res == 5
 
 
 if __name__ == '__main__':

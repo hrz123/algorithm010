@@ -43,8 +43,36 @@ class Solution:
         return res
 
 
+class Solution:
+    def sortArrayByParity(self, A: List[int]) -> List[int]:
+        right = 0
+        n = len(A)
+        for i in range(n):
+            if not A[i] & 1:
+                A[i], A[right] = A[right], A[i]
+                right += 1
+        return A
+
+
+class Solution:
+    def sortArrayByParity(self, A: List[int]) -> List[int]:
+        n = len(A)
+        l = n - 1
+        i = 0
+        while i <= l:
+            if A[i] & 1:
+                A[i], A[l] = A[l], A[i]
+                l -= 1
+            else:
+                i += 1
+        return A
+
+
 def main():
-    pass
+    sol = Solution()
+    a = [3, 1, 2, 4]
+    res = sol.sortArrayByParity(a)
+    print(res)
 
 
 if __name__ == '__main__':

@@ -241,6 +241,26 @@ class Solution:
         return f1
 
 
+# f(i)
+# f(i) = f(i-1), a +f(i-2)
+# 初始化和边界条件
+# f(0) = 0
+# f(1) = a[0]
+# 我们可以加一层哨兵吗
+# f(-1) = 0
+# f(1) = f(0), a + f(-1)
+# 可以
+# 返回值
+# f(n)
+# 优化复杂度，两个值就可以
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        f0, f1 = 0, 0
+        for n in nums:
+            f0, f1 = f1, max(f1, f0 + n)
+        return f1
+
+
 def main():
     sol = Solution()
 

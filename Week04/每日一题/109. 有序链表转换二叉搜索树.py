@@ -224,6 +224,27 @@ class Solution:
         return c
 
 
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        h, size = head, 0
+        while h:
+            h, size = h.next, size + 1
+
+        def conertBST(l, r):
+            if l > r:
+                return
+            mid = l + ((r - l) >> 1)
+            left = conertBST(l, mid - 1)
+            nonlocal head
+            root = TreeNode(head.val)
+            head = head.next
+            root.left = left
+            root.right = conertBST(mid + 1, r)
+            return root
+
+        return conertBST(0, size - 1)
+
+
 def main():
     pass
 

@@ -167,6 +167,37 @@ class Solution:
         return dp[k][0]
 
 
+# f(i, j, 0)
+# f(i, j, 0) = f(i-1, j, 0) f(i-1, j-1, 1) + p
+# f(i, j, 1) = f(i-1, j, 1) f(i-1, j, 0) - p
+# 初始化和边界条件
+# f(j0) = 0 f(j1) =float('-inf')
+# 注意j等于0的时候不能卖出
+# 注意k1的状态没有意义
+# 注意k等于0的时候直接返回0
+# 注意k大于等于整个次数的一半的时候，就是自由交易
+# 返回值
+# f(k,0)
+# 优化复杂度
+# 只需要两天的数据
+# 我们可以从后往前原地更新，先更新1的状态，再更新0的状态
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        if k == 0:
+            return 0
+        n = len(prices)
+        if k >= n >> 1:
+            return sum(max(0, prices[i + 1] - prices[i]) for i in range(n - 1))
+        dp = [[0, float('-inf')] for _ in range(k + 1)]
+        for p in prices:
+            dp[k][0] = max(dp[k][0], dp[k - 1][1] + p)
+            dp[0][1] = max(dp[0][1], -p)
+            for j in range(k - 1, 0, -1):
+                dp[j][1] = max(dp[j][1], dp[j][0] - p)
+                dp[j][0] = max(dp[j][0], dp[j - 1][1] + p)
+        return dp[k][0]
+
+
 def main():
     sol = Solution()
 

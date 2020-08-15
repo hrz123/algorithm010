@@ -39,6 +39,16 @@ class Solution:
         return cur
 
 
+#
+class Solution:
+    def maxScoreSightseeingPair(self, A: List[int]) -> int:
+        pre, res = 0, 0
+        for i, a in enumerate(A):
+            res = max(res, a - i + pre)
+            pre = max(pre, a + i)
+        return res
+
+
 def main():
     sol = Solution()
     nums = [8, 1, 5, 2, 6]

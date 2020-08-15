@@ -231,6 +231,78 @@ class Solution:
         return len(stack)
 
 
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for n in nums:
+            if not stack or stack[-1] < n:
+                stack.append(n)
+            else:
+                loc = bisect.bisect_left(stack, n)
+                stack[loc] = n
+        return len(stack)
+
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for n in nums:
+            if not stack or stack[-1] < n:
+                stack.append(n)
+            else:
+                loc = bisect.bisect_left(stack, n)
+                stack[loc] = n
+        return len(stack)
+
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for n in nums:
+            if not stack or stack[-1] < n:
+                stack.append(n)
+            else:
+                l, r = 0, len(stack) - 1
+                while l < r:
+                    mid = l + ((r - l) >> 1)
+                    if stack[mid] >= n:
+                        r = mid
+                    else:
+                        l = mid + 1
+                stack[l] = n
+        return len(stack)
+
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for n in nums:
+            if not stack or stack[-1] < n:
+                stack.append(n)
+            else:
+                l, r = 0, len(stack) - 1
+                while l < r:
+                    mid = l + ((r - l) >> 1)
+                    if stack[mid] >= n:
+                        r = mid
+                    else:
+                        l = mid + 1
+                stack[l] = n
+        return len(stack)
+
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for n in nums:
+            if not stack or stack[-1] < n:
+                stack.append(n)
+            else:
+                loc = bisect.bisect_left(stack, n)
+                stack[loc] = n
+        return len(stack)
+
+
 def main():
     sol = Solution()
 

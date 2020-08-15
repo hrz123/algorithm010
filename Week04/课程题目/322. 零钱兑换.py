@@ -100,6 +100,23 @@ class Solution:
         return -1 if dp[amount] == float('inf') else dp[amount]
 
 
+# 定义f(i)为凑成i所需的最少硬币个数
+# f(i) = min(f(i-c)) +  1
+# 初始化和边界条件
+# f(0) = 0
+# i >= c
+# 返回值f(amount)
+# 优化复杂度
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [0] + [amount + 1] * amount
+        for i in range(1, amount + 1):
+            for c in coins:
+                if i >= c:
+                    dp[i] = min(dp[i], dp[i - c] + 1)
+        return -1 if dp[amount] == amount + 1 else dp[amount]
+
+
 def main():
     sol = Solution()
 

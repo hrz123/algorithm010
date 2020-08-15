@@ -140,6 +140,32 @@ class Solution:
         return False
 
 
+# f(i, j) s[:i]能不能凑出j
+# f(i, j) = f(i-1, j) or f(i - 1, j-p) j>= p
+# 初始化和边界条件
+# f(0, 0) = True
+# f(0, j) = False
+# 因为只包含正整数，所以有最大值
+# 另外因为我们只关心是否能到target
+# 所以数组长度可以只到target
+# 返回值f(i, target)
+# 优化复杂度
+# 我么从后往前可以原地更新
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if total & 1:
+            return False
+        target = total >> 1
+        dp = [True] + [False] * target
+        for n in nums:
+            for j in range(target, n - 1, -1):
+                dp[j] = dp[j] or dp[j - n]
+            if dp[target]:
+                return True
+        return False
+
+
 def main():
     sol = Solution()
 

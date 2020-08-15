@@ -26,6 +26,15 @@ class Solution:
         return stack[::-1]
 
 
+class Solution:
+    def reversePrint(self, head: ListNode) -> List[int]:
+        res = []
+        while head:
+            res.append(head.val)
+            head = head.next
+        return res[::-1]
+
+
 def main():
     pass
 

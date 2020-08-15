@@ -24,4 +24,6 @@ dp[i] [j] = dp[i+1] [j] + dp[i] [j + 1] if board[i] [j] = 0
 
 dp[i] [j] = 0                                       elif board[i] [j] = 1
 
-##### 背包问题解决办法
+##### 1143最长公共子序列
+f(i, j) = f(i-1, j-1) + 1            if s[i] == t[j]
+f(i, j) = max(f(i-1, j), f(i, j-1))  else 

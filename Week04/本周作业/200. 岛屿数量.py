@@ -283,6 +283,29 @@ class Solution:
                 self._dfs_marking(grid, _i, _j, m, n)
 
 
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        m, n = len(grid), len(grid[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+
+        def dfs(i, j):
+            grid[i][j] = '#'
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and grid[_i][_j] == '1':
+                    dfs(_i, _j)
+
+        res = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    res += 1
+                    dfs(i, j)
+        return res
+
+
 def main():
     grid = [["1", "1", "0", "0", "0"],
             ["1", "1", "0", "0", "0"],

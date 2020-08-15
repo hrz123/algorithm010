@@ -132,6 +132,31 @@ class Solution:
         return (f00 + f01 + f02 + f10 + f11 + f12) % mod
 
 
+# 定义子问题
+# f(i, 01, 012) A的数量为01，结尾有多少个
+# f00 = f00 + f01 + f02
+# f01= f00
+# f02=f01
+# f10 = f00,f01,f02,f10,f11,f12
+# f11= f10
+# f12 = f11
+class Solution:
+    def checkRecord(self, n: int) -> int:
+        f00 = 1
+        f01 = f02 = f10 = f11 = f12 = 0
+        mod = 10 ** 9 + 7
+        for _ in range(n):
+            f00, f01, f02, f10, f11, f12 = (
+                (f00 + f01 + f02) % mod,
+                f00,
+                f01,
+                (f00 + f01 + f02 + f10 + f11 + f12) % mod,
+                f10,
+                f11
+            )
+        return (f00 + f01 + f02 + f10 + f11 + f12) % mod
+
+
 def main():
     sol = Solution()
     n = 4

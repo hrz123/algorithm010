@@ -131,6 +131,35 @@ class Solution:
         return dp[amount]
 
 
+# f(i, j) i种硬币凑成j有多少种方法
+# f(i, j) = f(i - 1, j) + f(i, j - c) 如果j大于等于c
+# f(i, j) = f(i - 1, j) 如果j小于c
+# 初始化和边界条件
+# f(0, 0) = 1
+# f(0, j) = 0  其他为0种方法
+# 返回值f(n, amount)
+# 优化复杂度
+# 我们只需要j-1种和j种硬币的时候，可以使用一维数组从前往后原地更新
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [1] + [0] * amount
+        for c in coins:
+            for i in range(1, amount + 1):
+                if i >= c:
+                    dp[i] += dp[i - c]
+        return dp[amount]
+
+
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [1] + [0] * amount
+        for c in coins:
+            for i in range(1, amount + 1):
+                if i >= c:
+                    dp[i] += dp[i - c]
+        return dp[amount]
+
+
 def main():
     sol = Solution()
 

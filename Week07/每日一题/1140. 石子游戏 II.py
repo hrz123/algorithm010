@@ -83,6 +83,50 @@ class Solution:
         return dfs(0, 1)
 
 
+class Solution:
+    def stoneGameII(self, piles: List[int]) -> int:
+        n = len(piles)
+        pre = [0]
+        p = 0
+        for pi in piles:
+            p += pi
+            pre.append(p)
+        import functools
+        @functools.lru_cache(None)
+        def dfs(i, m):
+            rest = pre[n] - pre[i]
+            if i + (m << 1) >= n:
+                return rest
+            res = 0
+            for x in range(1, (m << 1) + 1):
+                res = max(res, rest - dfs(i + x, max(m, x)))
+            return res
+
+        return dfs(0, 1)
+
+
+class Solution:
+    def stoneGameII(self, piles: List[int]) -> int:
+        n = len(piles)
+        pre = [0]
+        p = 0
+        for pi in piles:
+            p += pi
+            pre.append(p)
+        import functools
+        @functools.lru_cache(None)
+        def dfs(i, m):
+            rest = pre[n] - pre[i]
+            if i + (m << 1) >= n:
+                return rest
+            res = 0
+            for x in range(1, (m << 1) + 1):
+                res = max(res, rest - dfs(i + x, max(x, m)))
+            return res
+
+        return dfs(0, 1)
+
+
 def main():
     sol = Solution()
 

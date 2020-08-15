@@ -130,6 +130,88 @@ class Solution:
         return False
 
 
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        m, n = len(board), len(board[0])
+
+        def backtrace(l, i, j, visited):
+            if l == len(word):
+                return True
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and (_i, _j) not in visited \
+                        and board[_i][_j] == word[l]:
+                    if backtrace(l + 1, _i, _j, visited | {(_i, _j)}):
+                        return True
+            return False
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == word[0]:
+                    if backtrace(1, i, j, {(i, j)}):
+                        return True
+        return False
+
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        m, n = len(board), len(board[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        visited = set()
+
+        def dfs(l, i, j):
+            if l == len(word):
+                return True
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and (_i, _j) not in visited \
+                        and board[_i][_j] == word[l]:
+                    visited.add((_i, _j))
+                    if dfs(l + 1, _i, _j):
+                        return True
+                    visited.remove((_i, _j))
+            return False
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == word[0]:
+                    visited.add((i, j))
+                    if dfs(1, i, j):
+                        return True
+                    visited.remove((i, j))
+        return False
+
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        m, n = len(board), len(board[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        visited = set()
+
+        def dfs(l, i, j):
+            if l == len(word):
+                return True
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and (_i, _j) not in visited \
+                        and board[_i][_j] == word[l]:
+                    visited.add((_i, _j))
+                    if dfs(l + 1, _i, _j):
+                        return True
+                    visited.remove((_i, _j))
+            return False
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == word[0]:
+                    visited.add((i, j))
+                    if dfs(1, i, j):
+                        return True
+                    visited.remove((i, j))
+        return False
+
+
 def main():
     sol = Solution()
 

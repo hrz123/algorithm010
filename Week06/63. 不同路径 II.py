@@ -266,6 +266,32 @@ class Solution:
         return dp[n]
 
 
+# 定义子问题
+# 到达i， j f(i,j)有多少种走法
+# f(i, j) = f(i-1, j) +f(i, j-1) if a[i][j] == 0  else 0
+# 初始化和边界条件
+# f(0, j) = 1 if 前面都是0 0 如果前面有一个1
+# 有点麻烦
+# 我们加一层哨兵试试
+# 加一层[1, 0...0]的哨兵可以
+# 返回值
+# f(m, n)
+# 优化复杂度
+# 可以使用一维数组，从左到右原地更新
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        if not obstacleGrid or not obstacleGrid[0]:
+            return 0
+        m, n = len(obstacleGrid), len(obstacleGrid[0])
+        if obstacleGrid[0][0] or obstacleGrid[m - 1][n - 1]:
+            return 0
+        dp = [1] + [0] * n
+        for i in range(m):
+            for j in range(n):
+                dp[j] = 0 if obstacleGrid[i][j] else dp[j] + dp[j - 1]
+        return dp[n - 1]
+
+
 # 滚动数组思想
 def main():
     sol = Solution()

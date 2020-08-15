@@ -36,6 +36,20 @@ class BITree:
         return s
 
 
+def update(i, n, k=1):
+    while i <= n:
+        BITree[i] += k
+        i += i & -i
+
+
+def getSum(i):
+    s = 0
+    while i:
+        s += BITree[i]
+        i -= i & -i
+    return s
+
+
 def main():
     nums = [1, 2, 3, 4]
     tree = BITree(nums)

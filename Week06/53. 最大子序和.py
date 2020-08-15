@@ -73,7 +73,7 @@ class Solution:
 # 我们定义一个操作get(a, l, r)表示查询a序列[l, r]区间内的最大子段和，
 # 那么最终我们要求的答案就是get(arr, 0, n-1)。如何分治实现这个操作呢？
 # 对于一个区间l, r，我们取m = (l + r)/2， 对区间[l,m] 和 [m+1, r]分治求解。
-# 当递归逐层深入指导区间长度缩小为1的时候，递归「开始回升」。
+# 当递归逐层深入直到区间长度缩小为1的时候，递归「开始回升」。
 # 这个时候我们考虑如何通过[l, m]区间的信息和[m+1, r]区间的信息合并成区间[l, r]的信息。
 # 最关键的两个问题是：
 # 我们要维护区间的哪些信息呢？
@@ -115,6 +115,24 @@ class Solution:
         rSum = max(rSum2, iSum2 + rSum1)
         mSum = max(mSum1, mSum2, rSum1 + lSum2)
         return lSum, rSum, mSum, iSum
+
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        l, r = 0, len(nums) - 1
+        return self.get(nums, l, r)[2]
+
+    def get(self, nums, l, r):
+        if l == r:
+            return [nums[l]] * 4
+        mid = l + ((r - l) >> 1)
+        lSum1, rSum1, mSum1, iSum1 = self.get(nums, l, mid)
+        lSum2, rSum2, mSum2, iSum2 = self.get(nums, mid + 1, r)
+        iSum = iSum1 + iSum2
+        lSum = max(lSum1, iSum1 + lSum2)
+        rSum = max(rSum2, rSum1 + iSum2)
+        mSum = max(mSum1, mSum2, rSum1 + lSum2)
+        return [lSum, rSum, mSum, iSum]
 
 
 # 存储一颗线段树
@@ -165,6 +183,40 @@ class Solution:
 # 之后仍然可以在 O(logn) 的时间内求到任意区间内的答案，
 # 对于大规模查询的情况下，这种方法的优势便体现了出来。
 # 这棵树就是上文提及的一种神奇的数据结构——线段树。
+
+# f(i)定义为s[:i]的最大子序和，且一定包含i这个位置
+# f(i) = max(f(i-1) + s[i] , s[i])
+# 初始化和边界条件
+# f(0) = 0
+# f(1) = max(f(0)+s[i], s[i])
+# 返回值，这些值中的最大值
+# 优化空间复杂度，我们只需要一个数值，存f(i-1)即可
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        f0 = 0
+        res = float('-inf')
+        for n in nums:
+            f0 = max(f0 + n, n)
+            res = max(res, f0)
+        return res
+
+
+# f(i) = max(f(i-1) + n, n)
+# 初始化
+# f(0) = 0
+# f(1)
+# 返回值
+# res = max(fi)
+# 初始化成一个最小值
+# 优化复杂度
+# 只需要前一个值，并且我们记录一个最大值
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        pre, res = 0, float('inf')
+        for n in nums:
+            pre = max(pre + n, n)
+            res = max(res, pre)
+        return res
 
 
 def main():

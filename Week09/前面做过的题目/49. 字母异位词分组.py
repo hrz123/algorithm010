@@ -162,6 +162,24 @@ class Solution:
         return tuple(count)
 
 
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hashmap = {}
+        for s in strs:
+            ana = self.count(s)
+            if ana in hashmap:
+                hashmap[ana].append(s)
+            else:
+                hashmap[ana] = [s]
+        return list(hashmap.values())
+
+    def count(self, s):
+        count = [0] * 256
+        for c in s:
+            count[ord(c)] += 1
+        return tuple(count)
+
+
 def main():
     strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
     sol = Solution()

@@ -76,6 +76,17 @@ class Solution:
         return []
 
 
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        memo = {}
+        for i, n in enumerate(nums):
+            if n in memo:
+                return [memo[n], i]
+            else:
+                memo[target - n] = i
+        return []
+
+
 def main():
     s = Solution()
     res = s.twoSum([3, 2, 4], 6)

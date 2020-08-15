@@ -64,6 +64,24 @@ class Solution:
         return min(f0, f1)
 
 
+# 到达f(i)的最小花费
+# f(i) = min(f(i-1), f(i-2)) + p
+# 初始化
+# f(0) = 0
+# f(1) = a[0]
+# f(2) = a[1]
+# 再加一层哨兵f(-1)=0也可以
+# 返回值f(n)和f(N-1)中的较小值
+# 优化复杂度
+# 只需要两个值
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        f0, f1 = 0, 0
+        for c in cost:
+            f0, f1 = f1, min(f0, f1) + c
+        return min(f0, f1)
+
+
 def main():
     sol = Solution()
 

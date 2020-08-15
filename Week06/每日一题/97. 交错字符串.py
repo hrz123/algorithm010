@@ -116,6 +116,27 @@ class Solution:
         return dfs(0, 0)
 
 
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        m, n = len(s1), len(s2)
+        if len(s3) != m + n:
+            return False
+        import functools
+        @functools.lru_cache(None)
+        def dfs(i, j):
+            if i == m and j == n:
+                return True
+            if i < m and s3[i + j] == s1[i]:
+                if dfs(i + 1, j):
+                    return True
+            if j < n and s3[i + j] == s2[j]:
+                if dfs(i, j + 1):
+                    return True
+            return False
+
+        return dfs(0, 0)
+
+
 def main():
     sol = Solution()
 

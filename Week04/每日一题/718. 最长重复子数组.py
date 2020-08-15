@@ -131,6 +131,32 @@ class Solution:
         return res
 
 
+# 定义子问题
+# f(i, j)为s[:i] t[:j]的最长子数组长度，且该子数组一定包含最后一个索引的元素
+# f(i, j) =  if s[i] == t[j] f(i, j) = f(i-1, j-1) + 1
+# f(i, j) =   else 0
+# 初始化和 边界条件
+# f(i, 0) = 0
+# f(0, j) = 0
+# 边界条件是i，j大于等于1
+# 返回值，f(i,j)中的最大值
+# 优化复杂度
+# i， j至于i-1,j-1有关，我们从后往前可以原地更新数组
+class Solution:
+    def findLength(self, A: List[int], B: List[int]) -> int:
+        m, n = len(A), len(B)
+        if m < n:
+            m, n = n, m
+            A, B = B, A
+        dp = [0] * (n + 1)
+        res = 0
+        for i in range(m):
+            for j in range(n - 1, -1, -1):
+                dp[j + 1] = dp[j] + 1 if A[i] == B[j] else 0
+                res = max(res, dp[j + 1])
+        return res
+
+
 def main():
     A = [1, 2, 3, 2, 1]
     B = [3, 2, 1, 4, 7]

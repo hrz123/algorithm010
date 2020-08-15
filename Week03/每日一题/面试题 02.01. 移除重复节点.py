@@ -194,6 +194,36 @@ class Solution:
         return head
 
 
+class Solution:
+    def removeDuplicateNodes(self, head: ListNode) -> ListNode:
+        dummy = ListNode(0)
+        dummy.next = head
+        pre = dummy
+        mem = set()
+        while pre and pre.next:
+            if pre.next.val in mem:
+                pre.next = pre.next.next
+            else:
+                mem.add(pre.next.val)
+                pre = pre.next
+        return dummy.next
+
+
+class Solution:
+    def removeDuplicateNodes(self, head: ListNode) -> ListNode:
+        dummy = ListNode(0)
+        dummy.next = head
+        mem = set()
+        pre = dummy
+        while pre and pre.next:
+            if pre.next.val in mem:
+                pre.next = pre.next.next
+            else:
+                mem.add(pre.next.val)
+                pre = pre.next
+        return dummy.next
+
+
 def main():
     sol = Solution()
 

@@ -108,6 +108,33 @@ class Solution:
         return res
 
 
+# 定义子问题
+# f(i, 01)为s[:i]的最大乘积和最小乘积，必须包括i
+# if p = a[i] > 0
+# f(i, 0) = max(f(i-1, 0) * p, p)
+# f(i, 1) = min(f(i-1, 1) * p, p)
+# else
+# f(i, 0) = max(f(i-1, 1) * p, p)
+# f(i, 0) = min(f(i-1, 0) * p, p)
+# 初始化和边界条件
+# f(0, 01) = 1
+# 返回值
+# 这些最大乘积中的最大值
+# 优化复杂度
+# 只与i-1有关，可以只有两个值
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        f0, f1 = 1, 1
+        res = float('-inf')
+        for num in nums:
+            if num > 0:
+                f0, f1 = max(f0 * num, num), min(f1 * num, num)
+            else:
+                f0, f1 = max(f1 * num, num), min(f0 * num, num)
+            res = max(res, f0)
+        return res
+
+
 def main():
     sol = Solution()
 

@@ -190,6 +190,35 @@ class Solution:
         return dp[0]
 
 
+# 定义子问题
+# 从i， j到最底部需要的最低血量
+# f(i, j) = max(min(f(i+1, j), f(i, j+1)) - a[i][j], 1)
+# 初始化和边界条件
+# f(m-1, n-1) = max(1, 1-a[m-1][n-1])
+# 可否加一层哨兵呢
+# 我们试一下都加1
+# f(m, n) = 1
+# f(m-1, n-1) = max(1-a[m-1][n-1], 1)
+# 其他的位置我们只想让它往右边走，不想让它往下边走
+# 我们让下边
+# 没问题
+# 那么我们加一层哨兵简化代码
+# 哨兵为[float('inf')] * n-1 +[1, float('inf')]
+# 返回值f(0, 0)
+# 优化复杂度
+# 我们每次只需要右侧的元素和下方的元素，我们从后往前可以原地更新
+class Solution:
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        if not dungeon or not dungeon[0]:
+            return 1
+        m, n = len(dungeon), len(dungeon[0])
+        dp = [float('inf') for _ in range(n - 1)] + [1, float('inf')]
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                dp[j] = max(1, min(dp[j], dp[j + 1]) - dungeon[i][j])
+        return dp[0]
+
+
 def main():
     dungeon = [
         [-2, -3, 3],

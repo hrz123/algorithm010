@@ -325,6 +325,76 @@ class Solution:
         return helper(0, len(preorder) - 1, 0, len(inorder) - 1)
 
 
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if not preorder:
+            return
+        root = TreeNode(preorder[0])
+        ind = inorder.index(root.val)
+        root.left = self.buildTree(preorder[1:ind + 1], inorder[:ind])
+        root.right = self.buildTree(preorder[ind + 1:], inorder[ind + 1:])
+        return root
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def build(stop):
+            if inorder[-1] != stop:
+                root = TreeNode(preorder.pop())
+                root.left = build(root.val)
+                inorder.pop()
+                root.right = build(stop)
+                return root
+
+        preorder.reverse()
+        inorder.append(None)
+        inorder.reverse()
+        return build(None)
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def build(stop):
+            if inorder[-1] != stop:
+                root = TreeNode(preorder.pop())
+                root.left = build(root.val)
+                inorder.pop()
+                root.right = build(stop)
+                return root
+
+        preorder.reverse()
+        inorder.append(None)
+        inorder.reverse()
+        return build(None)
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if not preorder:
+            return
+        root = TreeNode(preorder[0])
+        ind = inorder.index(root.val)
+        root.left = self.buildTree(preorder[1:ind + 1], inorder[:ind])
+        root.right = self.buildTree(preorder[ind + 1:], inorder[ind + 1:])
+        return root
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def build(stop):
+            if inorder[-1] != stop:
+                root = TreeNode(preorder.pop())
+                root.left = build(root.val)
+                inorder.pop()
+                root.right = build(stop)
+                return root
+
+        preorder.reverse()
+        inorder.append(None)
+        inorder.reverse()
+        return build(None)
+
+
 def main():
     preorder = [3, 9, 20, 15, 7]
     inorder = [9, 3, 15, 20, 7]

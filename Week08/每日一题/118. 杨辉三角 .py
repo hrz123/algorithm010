@@ -68,6 +68,32 @@ class Solution:
         return res
 
 
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        r = []
+        res = []
+        for i in range(numRows):
+            nr = r + [1]
+            for j in range(1, i):
+                nr[j] += r[j - 1]
+            res.append(nr)
+            r = nr
+        return res
+
+
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        r = []
+        res = []
+        for i in range(numRows):
+            nr = r + [1]
+            for j in range(1, i):
+                nr[j] += r[j - 1]
+            res.append(nr)
+            r = nr
+        return res
+
+
 def main():
     sol = Solution()
     res = sol.generate(5)

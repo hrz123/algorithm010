@@ -118,6 +118,54 @@ class Solution:
         return dp[S + limit]
 
 
+# f(i, j)为s[:i]凑成j的所有方法数
+# f(i, j) = f(i-1, j-p) + f(i-1, j+p)
+# 初始化
+# f(0, 0) = 1 其他都是0
+# 返回值
+# f(n, S)
+# 优化复杂度
+class Solution:
+    def findTargetSumWays(self, nums: List[int], S: int) -> int:
+        total = sum(nums)
+        size = (total << 1) + 1
+        dp = [0] * total + [1] + [0] * total
+        ndp = [0] * size
+        if S > total or S < -total:
+            return 0
+        for n in nums:
+            for i in range(size):
+                ndp[i] = (dp[i - n] if i - n >= 0 else 0) + \
+                         (dp[i + n] if i + n < size else 0)
+            dp, ndp = ndp, dp
+        return dp[S + total]
+
+
+# 定义f(i, j)为s[:i]凑出j的最多方法数
+# f(i,j) = f(i-1, j-p) +f(i-1, j+p)
+# 初始化
+# f(0, 0) = 1
+# 返回值
+# f(n, m)
+# 优化复杂度
+# 我们只需要i-1时候的
+# 两个数组来回滚动
+class Solution:
+    def findTargetSumWays(self, nums: List[int], S: int) -> int:
+        total = sum(nums)
+        if S > total or S < -total:
+            return 0
+        size = (total << 1) + 1
+        dp = [0] * total + [1] + [0] * total
+        ndp = [0] * size
+        for n in nums:
+            for j in range(size):
+                ndp[j] = (dp[j - n] if j - n >= 0 else 0) + \
+                         (dp[j + n] if j + n < size else 0)
+            dp, ndp = ndp, dp
+        return dp[S + total]
+
+
 def main():
     sol = Solution()
 

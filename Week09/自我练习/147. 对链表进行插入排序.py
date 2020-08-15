@@ -121,6 +121,48 @@ class Solution:
         return dummy.next
 
 
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        p = head
+        while p and p.next:
+            c = p.next
+            if c.val >= p.val:
+                p = p.next
+            else:
+                pre, cur = dummy, dummy.next
+                while cur.val < c.val:
+                    pre, cur = cur, cur.next
+                p.next = c.next
+                c.next = cur
+                pre.next = c
+        return dummy.next
+
+
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        p = head
+        while p and p.next:
+            c = p.next
+            if c.val >= p.val:
+                p = c
+            else:
+                pre, cur = dummy, dummy.next
+                while cur.val < c.val:
+                    pre, cur = cur, cur.next
+                p.next = c.next
+                c.next = cur
+                pre.next = c
+        return dummy.next
+
+
 def main():
     sol = Solution()
     head = ListNode(4)

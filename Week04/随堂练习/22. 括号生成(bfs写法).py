@@ -101,6 +101,19 @@ class Solution:
         return res
 
 
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        q, nq = [(0, 0, '')], []
+        for _ in range(n << 1):
+            for l, r, s in q:
+                if l < n:
+                    nq.append((l + 1, r, s + '('))
+                if r < l:
+                    nq.append((l, r + 1, s + ')'))
+            q, nq = nq, []
+        return [e[2] for e in q]
+
+
 def main():
     n = 3
     sol = Solution()

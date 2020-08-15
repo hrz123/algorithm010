@@ -55,6 +55,17 @@ class Solution:
         return True
 
 
+class Solution:
+    def uniqueOccurrences(self, arr: List[int]) -> bool:
+        counter = Counter(arr)
+        seen = [False] * (len(arr) + 1)
+        for c in counter.values():
+            if seen[c]:
+                return False
+            seen[c] = True
+        return True
+
+
 def main():
     sol = Solution()
 

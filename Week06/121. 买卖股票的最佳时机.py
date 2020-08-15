@@ -61,6 +61,37 @@ class Solution:
         return cur
 
 
+# 定义子问题
+# f(i, 01, 01)表示第i天，能不能买入(是否卖出），手里有没有股票的最大收入
+#               不动          买入               卖出
+# f(i, 0, 0) = f(i-1, 0, 0)  一直都为0
+# f(i, 0, 1) = f(i-1, 0, 1)  f(i-1, 0, 0)-a[i]
+# f(i, 1, 0) = f(i-1, 1, 0)                    f(i-1, 0, 1) + a[i]
+# f(i, 1, 1) = 不能卖出还买入，没有意义
+# 初始化和边界条件
+# f01 = float('-inf')
+# f10 = 0
+# 返回值
+# f10
+# 优化复杂度
+# 可以只用两个值
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        f01, f10 = float('-inf'), 0
+        for p in prices:
+            f01, f10 = max(f01, -p), max(f10, f01 + p)
+        return f10
+
+
+# 相当于公式是a[j]-a[i]，a[i]在j变化的时候是不变的，和观光问题是一样的
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        plus, minus = 0, float('-inf')
+        for p in prices:
+            plus, minus = max(plus, minus + p), max(minus, -p)
+        return plus
+
+
 def main():
     sol = Solution()
 

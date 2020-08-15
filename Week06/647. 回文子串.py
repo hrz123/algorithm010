@@ -196,6 +196,23 @@ class Solution:
         return res
 
 
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        res = n
+        for i in range((n << 1) - 1):
+            ind = i >> 1
+            if i & 1:
+                l, r = ind, ind + 1
+            else:
+                l, r = ind - 1, ind + 1
+            while l >= 0 and r < n and s[l] == s[r]:
+                l -= 1
+                r += 1
+                res += 1
+        return res
+
+
 def main():
     sol = Solution()
 

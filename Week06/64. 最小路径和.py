@@ -124,6 +124,26 @@ class Solution:
         return dp[0]
 
 
+# f(i, j)为到达i， j的最小路径和
+# f(i, j) = min(f(i-1, j), f(i, j-1)) + a[i][j]
+# 初始化和边界条件
+# f(0, 0) = a[0][0]
+# 我们可以加一层全正无穷的哨兵，但是第一个位置是0，因为取的是最小值，也符合递推公式
+# 返回值f(m, n)
+# 优化复杂度
+# 我们可以用一维数组，从左到右原地更新
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        m, n = len(grid), len(grid[0])
+        dp = [0] + [float('inf')] * n
+        for i in range(m):
+            for j in range(n):
+                dp[j] = min(dp[j], dp[j - 1]) + grid[i][j]
+        return dp[n - 1]
+
+
 def main():
     sol = Solution()
 

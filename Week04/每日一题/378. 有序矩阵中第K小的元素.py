@@ -242,6 +242,30 @@ class Solution:
         return c
 
 
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        n = len(matrix)
+        lo, hi = matrix[0][0], matrix[n - 1][n - 1]
+        while lo < hi:
+            mid = lo + ((hi - lo) >> 1)
+            if self.count(matrix, n, mid) < k:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    def count(self, matrix, n, mid):
+        c = 0
+        i, j = n - 1, 0
+        while i >= 0 and j < n:
+            if matrix[i][j] <= mid:
+                c += i + 1
+                j += 1
+            else:
+                i -= 1
+        return c
+
+
 def main():
     sol = Solution()
 

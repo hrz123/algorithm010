@@ -278,6 +278,31 @@ class Solution:
         return c
 
 
+class Solution:
+    def splitArray(self, nums: List[int], m: int) -> int:
+        lo, hi = 0, 0
+        for n in nums:
+            lo = max(lo, n)
+            hi += n
+        while lo < hi:
+            mid = lo + ((hi - lo) >> 1)
+            if self.count(nums, mid) > m:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    def count(self, nums, mid):
+        c = 1
+        p = 0
+        for n in nums:
+            p += n
+            if p > mid:
+                c += 1
+                p = n
+        return c
+
+
 def main():
     sol = Solution()
 
@@ -286,10 +311,10 @@ def main():
     res = sol.splitArray(nums, m)
     print(res)
 
-    nums = [1, 3, 5]
-    m = 2
-    res = sol.splitArray(nums, m)
-    print(res)
+    # nums = [1, 3, 5]
+    # m = 2
+    # res = sol.splitArray(nums, m)
+    # print(res)
 
 
 if __name__ == '__main__':

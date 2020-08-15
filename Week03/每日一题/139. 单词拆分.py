@@ -83,6 +83,26 @@ class Solution:
         return dfs(0)
 
 
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        words = {w for w in wordDict if s.find(w) != -1}
+        lens = {len(w) for w in words}
+        n = len(s)
+
+        import functools
+        @functools.lru_cache(None)
+        def backtrace(i):
+            if i == n:
+                return True
+            for l in lens:
+                if s[i:i + l] in words:
+                    if backtrace(i + l):
+                        return True
+            return False
+
+        return backtrace(0)
+
+
 def main():
     sol = Solution()
     s = "applepenapple"

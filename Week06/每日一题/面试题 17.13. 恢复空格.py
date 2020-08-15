@@ -265,6 +265,25 @@ class Solution:
         return dfs(n)
 
 
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        n = len(sentence)
+        dictionary = {d for d in dictionary if sentence.find(d) != -1}
+        lens = {len(d) for d in dictionary}
+        import functools
+        @functools.lru_cache(None)
+        def dp(i):
+            if i == n:
+                return 0
+            res = dp(i + 1) + 1
+            for l in lens:
+                if i + l <= n and sentence[i:i + l] in dictionary:
+                    res = min(res, dp(i + l))
+            return res
+
+        return dp(0)
+
+
 def main():
     dictionary = ["looked", "just", "like", "her", "brother"]
     sentence = "jesslookedjustliketimherbrother"

@@ -108,6 +108,34 @@ class Solution:
         return res + min(cur, pre)
 
 
+class Solution:
+    def countBinarySubstrings(self, s: str) -> int:
+        pre, cur = 0, 1
+        res = 0
+        for i in range(1, len(s) - 1):
+            if s[i] == s[i - 1]:
+                cur += 1
+            else:
+                res += min(pre, cur)
+                pre = cur
+                cur = 1
+        return res + min(cur, pre)
+
+
+class Solution:
+    def countBinarySubstrings(self, s: str) -> int:
+        pre, cur = 0, 1
+        res = 0
+        for i in range(1, len(s)):
+            if s[i] == s[i - 1]:
+                cur += 1
+            else:
+                res += min(pre, cur)
+                pre = cur
+                cur = 1
+        return res + min(pre, cur)
+
+
 def main():
     sol = Solution()
 

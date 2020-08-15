@@ -165,6 +165,21 @@ class Solution:
         return helper(0, 0)
 
 
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        m, n = len(s), len(p)
+        import functools
+        @functools.lru_cache(None)
+        def helper(i, j):
+            if j == n:
+                return i == m
+            if p[j] == '*':
+                return helper(i, j + 1) or (i < m and helper(i + 1, j))
+            return i < m and p[j] in {'?', s[i]} and helper(i + 1, j + 1)
+
+        return helper(0, 0)
+
+
 def main():
     sol = Solution()
 

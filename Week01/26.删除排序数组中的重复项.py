@@ -90,6 +90,34 @@ class Solution:
         return i + 1
 
 
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        n = len(nums)
+        i, j = 0, 0
+        while j < n:
+            if nums[j] != nums[i]:
+                i += 1
+                nums[i] = nums[j]
+            j += 1
+        return i + 1
+
+
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        i, j = 0, 0
+        n = len(nums)
+        while j < n:
+            if nums[j] != nums[i]:
+                i += 1
+                nums[i] = nums[j]
+            j += 1
+        return i + 1
+
+
 def main():
     s = Solution()
     nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]

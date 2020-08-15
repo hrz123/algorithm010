@@ -95,6 +95,18 @@ class Solution:
         return res
 
 
+class Solution:
+    import functools
+    @functools.lru_cache(None)
+    def numTrees(self, n: int) -> int:
+        if n == 0:
+            return 1
+        res = 0
+        for i in range(n):
+            res += self.numTrees(i) * self.numTrees(n - i - 1)
+        return res
+
+
 def main():
     n = 3
     sol = Solution()

@@ -224,6 +224,53 @@ class Solution:
         return True
 
 
+class Solution:
+    def isBipartite(self, graph: List[List[int]]) -> bool:
+        n = len(graph)
+        color = {}
+
+        def dfs(i):
+            for j in graph[i]:
+                if j in color:
+                    if color[j] == color[i]:
+                        return False
+                else:
+                    color[j] = not color[i]
+                    if not dfs(j):
+                        return False
+            return True
+
+        for i in range(n):
+            if i not in color:
+                color[i] = True
+                if not dfs(i):
+                    return False
+        return True
+
+
+class Solution:
+    def isBipartite(self, graph: List[List[int]]) -> bool:
+        color = {}
+
+        def dfs(i):
+            for j in graph[i]:
+                if j in color:
+                    if color[j] == color[i]:
+                        return False
+                else:
+                    color[j] = not color[i]
+                    if not dfs(j):
+                        return False
+            return True
+
+        for i in range(len(graph)):
+            if i not in color:
+                color[i] = True
+                if not dfs(i):
+                    return False
+        return True
+
+
 def main():
     graph = [[1, 3], [0, 2], [1, 3], [0, 2]]
     sol = Solution()

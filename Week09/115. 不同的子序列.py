@@ -100,6 +100,35 @@ class Solution:
         return dp[n]
 
 
+# 定义子问题
+# f(i, j) 为s[:i]的子序列中t[:j]出现的个数
+# f(i, j) = if s[i] == t[j] = f(i-1, j-1) + f(i-1, j)
+#           else f(i-1, j)
+# 初始化和边界条件
+# f(i, j) i一定大于等于j
+# f(0, 0) = 1
+# f(0, j) = 0, j != 0
+# 递推一下
+# f(1, 1) = f(0, 0) + f(0, 1)
+# f(3, 1) = f(2, 0) + f(2, 1)
+# f(i, 0) = 1
+# 没问题
+# 返回值f(m, n)
+# 优化复杂度
+# 我们只需要一维数组，从后往前递推，大小为t的长度
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        m, n = len(s), len(t)
+        if m < n:
+            return 0
+        dp = [1] + [0] * n
+        for i in range(m):
+            for j in range(n - 1, -1, -1):
+                if s[i] == t[j]:
+                    dp[j + 1] += dp[j]
+        return dp[n]
+
+
 def main():
     sol = Solution()
 

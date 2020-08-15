@@ -97,6 +97,34 @@ def buildheap(a, size):
         maxheap(a, i, size)
 
 
+def max_heap(a, i, size):
+    l = i * 2 + 1
+    r = i * 2 + 2
+    large = i
+    if l < size and a[l] > a[large]:
+        large = l
+    if r < size and a[r] > a[large]:
+        large = r
+    if large != i:
+        a[large], a[i] = a[i], a[large]
+        max_heap(a, large, size)
+
+
+def build_heap(a, size):
+    for i in range(size >> 1, -1, -1):
+        max_heap(a, i, size)
+
+
+def insert(a, val):
+    a.append(val)
+    i = len(a) - 1
+    p = i >> 1
+    while a[p] < a[i]:
+        a[p], a[i] = a[i], a[p]
+        i = p
+        p = i >> 1
+
+
 def main():
     # 示例
     nums = [3, 2, 5, 1, 4]

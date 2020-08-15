@@ -229,6 +229,23 @@ class Solution:
 
 
 class Solution:
+    def combine(self, n, k):
+        combs = [[]]
+        for _ in range(k):
+            combs = [[i] + c for c in combs for i in
+                     range(1, c[0] if c else n + 1)]
+        return combs
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        if k == 0:
+            return [[]]
+        return [ans + [i] for i in range(k, n + 1)
+                for ans in self.combine(i - 1, k - 1)]
+
+
+class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
         res = []
 
@@ -236,7 +253,7 @@ class Solution:
             if level == k:
                 res.append(pre)
                 return
-            for i in range(start, n + 1):
+            for i in range(start, n - k + len(pre) + 2):
                 dfs(level + 1, i + 1, pre + [i])
 
         dfs(0, 1, [])
@@ -244,12 +261,41 @@ class Solution:
 
 
 class Solution:
-    def combine(self, n, k):
-        combs = [[]]
-        for _ in range(k):
-            combs = [[i] + c for c in combs for i in
-                     range(1, c[0] if c else n + 1)]
-        return combs
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+
+        def dfs(level, start, pre):
+            if level == k:
+                res.append(pre)
+                return
+            for i in range(start, n - k + level + 2):
+                dfs(level + 1, i + 1, pre + [i])
+
+        dfs(0, 1, [])
+        return res
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        if k == 0:
+            return [[]]
+        return [ans + [i] for i in range(k, n + 1) for ans in
+                self.combine(i - 1, k - 1)]
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+
+        def dfs(level, start, pre):
+            if level == k:
+                res.append(pre)
+                return
+            for i in range(start + 1, n - k + level + 2):
+                dfs(level + 1, i, pre + [i])
+
+        dfs(0, 0, [])
+        return res
 
 
 def main():

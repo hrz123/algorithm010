@@ -100,6 +100,14 @@ class Solution:
         return sqrt * sqrt == num
 
 
+class Solution:
+    def isPerfectSquare(self, num: int) -> bool:
+        res = num
+        while res * res > num:
+            res = (res + num // res) >> 1
+        return res * res == num
+
+
 def main():
     sol = Solution()
 

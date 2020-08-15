@@ -222,6 +222,28 @@ class Solution:
         return -1
 
 
+class Solution:
+    def minMutation(self, start: str, end: str, bank: List[str]) -> int:
+        bank = set(bank)
+        if end not in bank:
+            return -1
+        bq, eq, nq, res = {start}, {end}, set(), 0
+        while bq:
+            bank -= bq
+            res += 1
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(8) for c in
+                          "AGCT"]:
+                    if y in bank:
+                        if y in eq:
+                            return res
+                        nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
 def main():
     sol = Solution()
     start = "AAAAACCC"

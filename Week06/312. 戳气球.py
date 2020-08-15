@@ -221,6 +221,27 @@ class Solution:
         return dp[0][n - 1]
 
 
+# 定义f(i, j)为不戳破两边的最大值
+# f(i,j) = max(f(i, k) +f(k, j) + nums[ijk]) k i+1, j-1
+# 初始化和边界条件
+# f(i, i+1) = 0
+# 其他的值，因为我们求的是max，并且所有的金币都是正数，所以不可能小于0，所以我们可以都用0初始化
+# 返回值f(0,n)
+# 优化复杂度
+# 对角线递推
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1] + nums + [1]
+        n = len(nums)
+        dp = [[0 for _ in range(n)] for _ in range(n)]
+        for gap in range(2, n):
+            for i in range(n - gap):
+                j = i + gap
+                dp[i][j] = max(dp[i][k] + dp[k][j] + nums[i] * nums[j] * nums[k]
+                               for k in range(i + 1, j))
+        return dp[0][n - 1]
+
+
 def main():
     sol = Solution()
 

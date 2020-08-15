@@ -29,6 +29,15 @@ class Solution:
         return ''.join(s)
 
 
+class Solution:
+    def toLowerCase(self, str: str) -> str:
+        s = list(str)
+        for i, c in enumerate(s):
+            if 65 <= ord(c) <= 90:
+                s[i] = chr(ord(c) + 32)
+        return ''.join(s)
+
+
 def main():
     pass
 

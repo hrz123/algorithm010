@@ -68,6 +68,20 @@ class Solution:
         return convertBST(0, len(nums) - 1)
 
 
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
+        def helper(l, r):
+            if l > r:
+                return
+            mid = l + ((r - l) >> 1)
+            root = TreeNode(nums[mid])
+            root.left = helper(l, mid - 1)
+            root.right = helper(mid + 1, r)
+            return root
+
+        return helper(0, len(nums) - 1)
+
+
 def main():
     pass
 

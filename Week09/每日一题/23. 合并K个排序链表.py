@@ -105,6 +105,218 @@ class Solution:
         return dummy.next
 
 
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return
+        return self.merge(lists, 0, len(lists) - 1)
+
+    def merge(self, lists, l, r):
+        if l == r:
+            return lists[l]
+        mid = l + ((r - l) >> 1)
+        l1 = self.merge(lists, l, mid)
+        l2 = self.merge(lists, mid + 1, r)
+        return self.mergeTwoLists(l1, l2)
+
+    def mergeTwoLists(self, l1, l2):
+        dummy = ListNode(0)
+        cur = dummy
+        while l1 and l2:
+            if l1.val < l2.val:
+                cur.next, l1 = l1, l1.next
+            else:
+                cur.next, l2 = l2, l2.next
+            cur = cur.next
+        cur.next = l1 if l1 else l2
+        return dummy.next
+
+
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        heap = [(l.val, i) for i, l in enumerate(lists) if l]
+        heapq.heapify(heap)
+        dummy = ListNode(0)
+        cur = dummy
+        while heap:
+            _, i = heapq.heappop(heap)
+            cur.next = lists[i]
+            lists[i] = lists[i].next
+            if lists[i]:
+                heapq.heappush(heap, (lists[i].val, i))
+            cur = cur.next
+        return dummy.next
+
+
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return
+        return self.merge(lists, 0, len(lists) - 1)
+
+    def merge(self, lists, l, r):
+        if l == r:
+            return lists[l]
+        mid = l + ((r - l) >> 1)
+        l1 = self.merge(lists, l, mid)
+        l2 = self.merge(lists, mid + 1, r)
+        return self.mergeTwoLists(l1, l2)
+
+    def mergeTwoLists(self, l1, l2):
+        dummy = ListNode(0)
+        cur = dummy
+        while l1 and l2:
+            if l1.val < l2.val:
+                cur.next, l1 = l1, l1.next
+            else:
+                cur.next, l2 = l2, l2.next
+            cur = cur.next
+        cur.next = l1 if l1 else l2
+        return dummy.next
+
+
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        heap = [(l.val, i) for i, l in enumerate(lists) if l]
+        heapq.heapify(heap)
+        dummy = ListNode(0)
+        cur = dummy
+        while heap:
+            _, i = heapq.heappop(heap)
+            cur.next = lists[i]
+            lists[i] = lists[i].next
+            if lists[i]:
+                heapq.heappush(heap, (lists[i].val, i))
+            cur = cur.next
+        return dummy.next
+
+
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return
+        return self.merge(lists, 0, len(lists) - 1)
+
+    def merge(self, lists, l, r):
+        if l == r:
+            return lists[l]
+        mid = l + ((r - l) >> 1)
+        l1 = self.merge(lists, l, mid)
+        l2 = self.merge(lists, mid + 1, r)
+        return self.mergeTwoLists(l1, l2)
+
+    def mergeTwoLists(self, l1, l2):
+        dummy = ListNode(0)
+        cur = dummy
+        while l1 and l2:
+            if l1.val < l2.val:
+                cur.next, l1 = l1, l1.next
+            else:
+                cur.next, l2 = l2, l2.next
+            cur = cur.next
+        cur.next = l1 if l1 else l2
+        return dummy.next
+
+
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return
+        return self.merge(lists, 0, len(lists) - 1)
+
+    def merge(self, lists, l, r):
+        if l == r:
+            return lists[l]
+        mid = l + ((r - l) >> 1)
+        l1 = self.merge(lists, l, mid)
+        l2 = self.merge(lists, mid + 1, r)
+        return self.mergeTwoLists(l1, l2)
+
+    def mergeTwoLists(self, l1, l2):
+        dummy = ListNode(0)
+        cur = dummy
+        while l1 and l2:
+            if l1.val < l2.val:
+                cur.next = l1
+                l1 = l1.next
+            else:
+                cur.next = l2
+                l2 = l2.next
+            cur = cur.next
+        cur.next = l1 if l1 else l2
+        return dummy.next
+
+
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return
+        return self.merge(lists, 0, len(lists) - 1)
+
+    def merge(self, lists, l, r):
+        if l == r:
+            return lists[l]
+        mid = l + ((r - l) >> 1)
+        l1 = self.merge(lists, l, mid)
+        l2 = self.merge(lists, mid + 1, r)
+        return self.mergeTwoLists(l1, l2)
+
+    def mergeTwoLists(self, l1, l2):
+        dummy = ListNode(0)
+        cur = dummy
+        while l1 and l2:
+            if l1.val < l2.val:
+                cur.next, l1 = l1, l1.next
+            else:
+                cur.next, l2 = l2, l2.next
+            cur = cur.next
+        cur.next = l1 if l1 else l2
+        return dummy.next
+
+
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        heap = [(l.val, i) for i, l in enumerate(lists) if l]
+        heapq.heapify(heap)
+        dummy = ListNode(0)
+        cur = dummy
+        while heap:
+            _, i = heapq.heappop(heap)
+            cur.next = lists[i]
+            lists[i] = lists[i].next
+            if lists[i]:
+                heapq.heappush(heap, (lists[i].val, i))
+            cur = cur.next
+        return dummy.next
+
+
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return
+        return self.merge(lists, 0, len(lists) - 1)
+
+    def merge(self, lists, l, r):
+        if l == r:
+            return lists[l]
+        mid = l + ((r - l) >> 1)
+        l1 = self.merge(lists, l, mid)
+        l2 = self.merge(lists, mid + 1, r)
+        return self.mergeTwoLists(l1, l2)
+
+    def mergeTwoLists(self, l1, l2):
+        dummy = ListNode(0)
+        cur = dummy
+        while l1 and l2:
+            if l1.val < l2.val:
+                cur.next, l1 = l1, l1.next
+            else:
+                cur.next, l2 = l2, l2.next
+            cur = cur.next
+        cur.next = l1 if l1 else l2
+        return dummy.next
+
+
 def main():
     pass
 

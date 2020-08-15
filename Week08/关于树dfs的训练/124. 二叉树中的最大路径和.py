@@ -213,6 +213,23 @@ class Solution:
         return res
 
 
+class Solution:
+    def maxPathSum(self, root: TreeNode) -> int:
+        res = float('-inf')
+
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            nonlocal res
+            res = max(res, left + right + root.val)
+            return max(max(left, right) + root.val, 0)
+
+        dfs(root)
+        return res
+
+
 def main():
     sol = Solution()
 

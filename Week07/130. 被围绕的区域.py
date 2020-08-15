@@ -259,6 +259,94 @@ class Solution:
                     board[i][j] = 'X'
 
 
+class UnionFind:
+    def __init__(self, k):
+        self.uf = [-1] * (k + 1)
+        self.sets_count = k
+
+    def find(self, p):
+        if self.uf[p] < 0:
+            return p
+        self.uf[p] = self.find(self.uf[p])
+        return self.uf[p]
+
+    def union(self, p, q):
+        p_root = self.find(p)
+        q_root = self.find(q)
+        if p_root == q_root:
+            return
+        if self.uf[p_root] > self.uf[q_root]:
+            self.uf[q_root] += self.uf[p_root]
+            self.uf[p_root] = q_root
+        else:
+            self.uf[p_root] += self.uf[q_root]
+            self.uf[q_root] = p_root
+        self.sets_count -= 1
+
+    def is_connected(self, p, q):
+        return self.find(p) == self.find(q)
+
+
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        if not board or not board[0]:
+            return
+        m, n = len(board), len(board[0])
+        uf = UnionFind(m * n)
+        dummy = m * n
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'O':
+                    ind = i * n + j
+                    if i == 0 or i == m - 1 or j == 0 or j == n - 1:
+                        uf.union(ind, dummy)
+                    if i != m - 1 and j != n - 1:
+                        if board[i][j + 1] == 'O':
+                            uf.union(ind, ind + 1)
+                        if board[i + 1][j] == 'O':
+                            uf.union(ind, ind + n)
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'O' and not uf.is_connected(i * n + j, dummy):
+                    board[i][j] = 'X'
+
+
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        if not board or not board[0]:
+            return
+        m, n = len(board), len(board[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+
+        def dfs(i, j):
+            board[i][j] = 'B'
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and board[_i][_j] == 'O':
+                    dfs(_i, _j)
+
+        for i in (0, m - 1):
+            for j in range(n):
+                if board[i][j] == 'O':
+                    dfs(i, j)
+        for j in (0, n - 1):
+            for i in range(m):
+                if board[i][j] == 'O':
+                    dfs(i, j)
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'O':
+                    board[i][j] = 'X'
+                elif board[i][j] == 'B':
+                    board[i][j] = 'O'
+
+
 def main():
     sol = Solution()
 

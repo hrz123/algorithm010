@@ -208,9 +208,8 @@ class Solution:
 
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        p = [[]]
+        p, np = [[]], []
         for n in nums:
-            np = []
             for ans in p:
                 for i in range(len(ans) + 1):
                     np.append(ans[:i] + [n] + ans[i:])
@@ -218,6 +217,19 @@ class Solution:
                         break
             p, np = np, []
         return p
+
+
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        q, nq = [[]], []
+        for n in nums:
+            for ans in q:
+                for i in range(len(ans) + 1):
+                    nq.append(ans[:i] + [n] + ans[i:])
+                    if i < len(ans) and n == ans[i]:
+                        break
+            q, nq = nq, []
+        return q
 
 
 def main():

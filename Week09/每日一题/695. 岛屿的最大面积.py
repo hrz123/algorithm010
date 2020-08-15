@@ -112,6 +112,57 @@ class Solution:
         return ans
 
 
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        m, n = len(grid), len(grid[0])
+        res = 0
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+
+        def dfs(i, j):
+            res = 1
+            grid[i][j] = 2
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and grid[_i][_j] == 1:
+                    res += dfs(_i, _j)
+            return res
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    res = max(res, dfs(i, j))
+        return res
+
+
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        m, n = len(grid), len(grid[0])
+        res = 0
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        visited = set()
+
+        def dfs(i, j):
+            res = 1
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and (_i, _j) not in visited \
+                        and grid[_i][_j]:
+                    visited.add((_i, _j))
+                    res += dfs(_i, _j)
+            return res
+
+        for i in range(m):
+            for j in range(n):
+                if (i, j) not in visited and grid[i][j]:
+                    visited.add((i, j))
+                    res = max(res, dfs(i, j))
+        return res
+
+
 def main():
     sol = Solution()
 

@@ -23,16 +23,30 @@ class Solution:
         return c
 
 
+# 以下为自我练习
+class Solution:
+    def minFlips(self, target: str) -> int:
+        p = '0'
+        s = 0
+        for c in target:
+            if c != p:
+                s += 1
+                p = c
+        return s
+
+
 def main():
     sol = Solution()
 
     target = "10111"
     res = sol.minFlips(target)
     print(res)
+    assert res == 3
 
     target = "001011101"
     res = sol.minFlips(target)
     print(res)
+    assert res == 5
 
 
 if __name__ == '__main__':

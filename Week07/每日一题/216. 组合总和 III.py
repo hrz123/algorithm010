@@ -88,6 +88,23 @@ class Solution:
         return res
 
 
+class Solution:
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        res = []
+
+        def dfs(start, s, pre):
+            if s == n and len(pre) == k:
+                res.append(pre)
+                return
+
+            for i in range(start + 1, 9 - k + len(pre) + 2):
+                if s + i <= n and len(pre) < k:
+                    dfs(i, s + i, pre + [i])
+
+        dfs(0, 0, [])
+        return res
+
+
 def main():
     sol = Solution()
     k = 3

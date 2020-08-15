@@ -168,6 +168,28 @@ class Solution:
         return False
 
 
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        req = Counter(s1)
+        l, r = 0, 0
+        m, n = len(s1), len(s2)
+        counter = defaultdict(int)
+        while r < n:
+            tmp = s2[r]
+            r += 1
+            if tmp in req:
+                counter[tmp] += 1
+                while counter[tmp] > req[tmp]:
+                    counter[s2[l]] -= 1
+                    l += 1
+                if r - l == m:
+                    return True
+            else:
+                l = r
+                counter.clear()
+        return False
+
+
 def main():
     sol = Solution()
 

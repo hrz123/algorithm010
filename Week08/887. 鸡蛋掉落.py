@@ -216,6 +216,59 @@ class Solution:
         return dp[N]
 
 
+# 定义子问题
+# 还剩i个鸡蛋，j层楼要检测，一定找到，最少需要多少次
+# f(i,j)
+# 示例， 100层 25楼 碎了       没碎
+# f(i, j) = max(f(i-1, k-1), f(i, j-k)) + 1, 取这些的最小值
+# 初始化
+# f(1, j) = j,一个鸡蛋只能一个一个试
+# f(i, 0) = 0, 0层楼不用试
+# 返回值
+# f(i, j)
+# 优化复杂度
+# 我们需要i-1和i两个数组来回滚动
+# 时间上，我们不需要每次从1开始求k
+# 随着j的递增，k也是在递增的，我们对于i这个鸡蛋数的这一轮，只需要记住k就好
+class Solution:
+    def superEggDrop(self, K: int, N: int) -> int:
+        dp = list(range(N + 1))
+        ndp = [0 for _ in range(N + 1)]
+        for i in range(2, K + 1):
+            k = 1
+            for j in range(1, N + 1):
+                while k <= j and dp[k - 1] < ndp[j - k]:
+                    k += 1
+                ndp[j] = dp[k - 1] + 1
+            dp, ndp = ndp, dp
+        return dp[N]
+
+
+# 定义子问题
+# f(i,j)为i个鸡蛋，j层楼我们最少需要试多少次
+# 100层 25层
+# f(i, j) = max(f(i-1, k-1), f(i, j-k)) + 1
+# 初始化
+# f(1, j) = j
+# f(i, 0) = 0
+# 返回值f(K,N)
+# 优化复杂度
+# 我们需要两个数组来回滚动
+# 我们不需要每次从1开始找k
+class Solution:
+    def superEggDrop(self, K: int, N: int) -> int:
+        dp = list(range(N + 1))
+        ndp = [0] * (N + 1)
+        for i in range(2, K + 1):
+            k = 1
+            for j in range(1, N + 1):
+                while k <= j and dp[k - 1] < ndp[j - k]:
+                    k += 1
+                ndp[j] = dp[k - 1] + 1
+            dp, ndp = ndp, dp
+        return dp[N]
+
+
 def main():
     sol = Solution()
 
