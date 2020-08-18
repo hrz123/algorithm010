@@ -33,6 +33,17 @@ class Solution:
                        self.minDays(n // 3) + n % 3)
 
 
+class Solution:
+    @lru_cache(None)
+    def minDays(self, n: int) -> int:
+        if n == 0:
+            return 0
+        if n == 1:
+            return 1
+        return 1 + min(self.minDays(n // 2) + n % 2,
+                       self.minDays(n // 3) + n % 3)
+
+
 def main():
     sol = Solution()
 
