@@ -100,15 +100,15 @@ class Solution:
 
 
 # class Solution:
-#     def checkInclusion(self, s1: str, s2: str) -> bool:
+#     def checkInclusion(self, stack1: str, stack2: str) -> bool:
 #         req = defaultdict(int)
-#         for c in s1:
+#         for c in stack1:
 #             req[c] += 1
 #         l = row = 0
-#         m, n = len(s1), len(s2)
+#         m, n = len(stack1), len(stack2)
 #
 #         while row < n:
-#             char = s2[row]
+#             char = stack2[row]
 #             row += 1
 #             if char not in req:
 #                 l = row
@@ -116,7 +116,7 @@ class Solution:
 #             else:
 #                 req[char] -= 1
 #                 while req[char] < 0:
-#                     req[s2[l]] += 1
+#                     req[stack2[l]] += 1
 #                     l += 1
 #                 if row - l == m:
 #                     return True

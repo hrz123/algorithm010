@@ -26,7 +26,6 @@ class Solution:
                     root.left = left
                     root.right = right
                     res.append(root)
-
         return res
 
 
@@ -114,6 +113,41 @@ class Solution:
                     root = TreeNode(0)
                     root.left = l
                     root.right = r
+                    res.append(root)
+        self.memo[N] = res
+        return res
+
+
+class Solution:
+    import functools
+    @functools.lru_cache(None)
+    def allPossibleFBT(self, N: int) -> List[TreeNode]:
+        if N == 1:
+            return [TreeNode(0)]
+        res = []
+        for i in range(1, N, 2):
+            for left in self.allPossibleFBT(i):
+                for right in self.allPossibleFBT(N - i - 1):
+                    root = TreeNode(0)
+                    root.left = left
+                    root.right = right
+                    res.append(root)
+        return res
+
+
+class Solution:
+    memo = {1: [TreeNode(0)]}
+
+    def allPossibleFBT(self, N: int) -> List[TreeNode]:
+        if N in self.memo:
+            return self.memo[N]
+        res = []
+        for i in range(1, N, 2):
+            for left in self.allPossibleFBT(i):
+                for right in self.allPossibleFBT(N - i - 1):
+                    root = TreeNode(0)
+                    root.left = left
+                    root.right = right
                     res.append(root)
         self.memo[N] = res
         return res

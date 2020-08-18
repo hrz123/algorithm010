@@ -243,6 +243,15 @@ class Solution:
         return res
 
 
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for n in nums:
+            res = [ans[:i] + [n] + ans[i:] for
+                   ans in res for i in range(len(ans) + 1)]
+        return res
+
+
 def main():
     solution = Solution()
 

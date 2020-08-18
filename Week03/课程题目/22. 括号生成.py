@@ -263,12 +263,29 @@ class Solution:
         return res
 
 
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+
+        def dfs(l, r, pre):
+            if r == n:
+                res.append(pre)
+                return
+            if l < n:
+                dfs(l + 1, r, pre + '(')
+            if r < l:
+                dfs(l, r + 1, pre + ')')
+
+        dfs(0, 0, "")
+        return res
+
+
 def main():
     s = Solution()
     res = s.generateParenthesis(3)
     print(res)
-    res = s.countParen(3)
-    print(res)
+    # res = s.countParen(3)
+    # print(res)
 
 
 if __name__ == '__main__':

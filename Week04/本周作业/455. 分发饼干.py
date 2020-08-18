@@ -93,6 +93,19 @@ class Solution:
         return i
 
 
+class Solution:
+    def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        g.sort()
+        s.sort()
+        m, n = len(g), len(s)
+        i, j = 0, 0
+        while i < m and j < n:
+            if g[i] <= s[j]:
+                i += 1
+            j += 1
+        return i
+
+
 def main():
     sol = Solution()
 

@@ -388,6 +388,65 @@ class MyCircularQueue:
         return (self.rear + 1) % self.size == self.front
 
 
+class MyCircularQueue:
+
+    def __init__(self, k: int):
+        """
+        Initialize your data structure here. Set the size of the queue to be k.
+        """
+        self.cap = k + 1
+        self.data = [0] * self.cap
+        self.front = 0
+        self.rear = 0
+
+    def enQueue(self, value: int) -> bool:
+        """
+        Insert an element into the circular queue. Return true if the operation is successful.
+        """
+        if self.isFull():
+            return False
+        self.data[self.rear] = value
+        self.rear = (self.rear + 1) % self.cap
+        return True
+
+    def deQueue(self) -> bool:
+        """
+        Delete an element from the circular queue. Return true if the operation is successful.
+        """
+        if self.isEmpty():
+            return False
+        self.front = (self.front + 1) % self.cap
+        return True
+
+    def Front(self) -> int:
+        """
+        Get the front item from the queue.
+        """
+        if self.isEmpty():
+            return -1
+        return self.data[self.front]
+
+    def Rear(self) -> int:
+        """
+        Get the last item from the queue.
+        """
+        if self.isEmpty():
+            return -1
+        return self.data[(self.rear - 1) % self.cap]
+
+    def isEmpty(self) -> bool:
+        """
+        Checks whether the circular queue is empty or not.
+        """
+        return self.front == self.rear
+
+    def isFull(self) -> bool:
+        """
+        Checks whether the circular queue is full or not.
+        """
+        return (self.rear + 1) % self.cap == self.front
+
+
 def main():
     obj = MyCircularQueue(3)
     param_1 = obj.enQueue(1)

@@ -63,9 +63,9 @@ class Solution:
 # 使用dfs
 # 递归要找到重复性和终止条件
 # dfs(start, j)
-# 如果i < l1 and s1[start] == s3[start+j] dfs(start+1,j)
-# 如果j < l2 and s2[j] == s3[start+j] dfs(start,j+1)
-# 如果i == len(s1)并且 j == len(s2)时返回true
+# 如果i < l1 and stack1[start] == s3[start+j] dfs(start+1,j)
+# 如果j < l2 and stack2[j] == s3[start+j] dfs(start,j+1)
+# 如果i == len(stack1)并且 j == len(stack2)时返回true
 class Solution:
     def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
         memo = {}
@@ -132,6 +132,30 @@ class Solution:
             if j < n and s3[i + j] == s2[j]:
                 if dfs(i, j + 1):
                     return True
+            return False
+
+        return dfs(0, 0)
+
+
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        m, n = len(s1), len(s2)
+        if m + n != len(s3):
+            return False
+        memo = {}
+
+        def dfs(i, j):
+            if i == m and j == n:
+                return True
+            if (i, j) in memo:
+                return memo[i, j]
+            if i < m and s1[i] == s3[i + j]:
+                if dfs(i + 1, j):
+                    return True
+            if j < n and s2[j] == s3[i + j]:
+                if dfs(i, j + 1):
+                    return True
+            memo[i, j] = False
             return False
 
         return dfs(0, 0)

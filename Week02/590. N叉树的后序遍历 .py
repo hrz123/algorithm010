@@ -122,5 +122,19 @@ class Solution:
         return res[::-1]
 
 
+class Solution:
+    def postorder(self, root: 'Node') -> List[int]:
+        if not root:
+            return []
+        stack = [root]
+        res = []
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.children:
+                stack.extend(root.children)
+        return res[::-1]
+
+
 if __name__ == '__main__':
     pass

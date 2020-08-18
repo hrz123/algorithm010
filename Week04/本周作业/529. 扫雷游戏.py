@@ -392,6 +392,40 @@ class Solution:
         return c
 
 
+class Solution:
+    dirs = ((0, 1), (1, 0), (0, -1), (-1, 0),
+            (1, 1), (1, -1), (-1, 1), (-1, -1))
+
+    def updateBoard(self, board: List[List[str]], click: List[int]) -> List[
+        List[str]]:
+        x, y = click
+        m, n = len(board), len(board[0])
+        self.dfs(board, m, n, x, y)
+        return board
+
+    def dfs(self, board, m, n, x, y):
+        if board[x][y] == 'E':
+            count = self.getMines(board, m, n, x, y)
+            if count == 0:
+                board[x][y] = 'B'
+                for dx, dy in self.dirs:
+                    _x, _y = x + dx, y + dy
+                    if -1 < _x < m and -1 < _y < n and board[_x][_y] == 'E':
+                        self.dfs(board, m, n, _x, _y)
+            else:
+                board[x][y] = str(count)
+        elif board[x][y] == 'M':
+            board[x][y] = 'X'
+
+    def getMines(self, board, m, n, x, y):
+        c = 0
+        for dx, dy in self.dirs:
+            _x, _y = x + dx, y + dy
+            if -1 < _x < m and -1 < _y < n and board[_x][_y] == 'M':
+                c += 1
+        return c
+
+
 def main():
     sol = Solution()
 

@@ -1,4 +1,5 @@
 # 139. 单词拆分.py
+from collections import deque
 from functools import lru_cache
 from typing import List
 
@@ -101,6 +102,71 @@ class Solution:
             return False
 
         return backtrace(0)
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        words = set(wordDict)
+        lens = {len(w) for w in words}
+        lens = sorted(list(lens), reverse=True)
+        n = len(s)
+        d = set()
+        deq = deque([0])
+        while deq:
+            i = deq.popleft()
+            if i >= n:
+                return True
+            if i in d:
+                continue
+            d.add(i)
+            for l in lens:
+                if s[i:i + l] in words:
+                    deq.append(i + l)
+        return False
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        words = set(wordDict)
+        n = len(s)
+        lens = {len(w) for w in words}
+        lens = sorted(list(lens), reverse=True)
+        deq = deque([0])
+        d = set()
+        while deq:
+            i = deq.pop()
+            if i >= n:
+                return True
+            if i in d:
+                continue
+            d.add(i)
+            for l in lens:
+                if s[i:i + l] in words:
+                    deq.append(i + l)
+        return False
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        words = set(wordDict)
+        lens = {len(w) for w in words}
+        lens = sorted(list(lens), reverse=True)
+        n = len(s)
+        d = [False] * n
+
+        def dfs(i):
+            if i >= n:
+                return True
+            if d[i]:
+                return False
+            d[i] = True
+            for l in lens:
+                if s[i:i + l] in words:
+                    if dfs(i + l):
+                        return True
+            return False
+
+        return dfs(0)
 
 
 def main():

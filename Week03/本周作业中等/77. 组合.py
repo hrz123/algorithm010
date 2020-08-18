@@ -298,6 +298,29 @@ class Solution:
         return res
 
 
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        if k > n or k == 0 or n == 0:
+            return [[]]
+        return [ans + [i] for i in range(k, n + 1) for ans in self.combine(
+            i - 1, k - 1)]
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        res = []
+
+        def dfs(i, pre):
+            if len(pre) == k:
+                res.append(pre)
+                return
+            for j in range(i + 1, n + 1):
+                dfs(j, pre + [j])
+
+        dfs(0, [])
+        return res
+
+
 def main():
     n = 4
     k = 2

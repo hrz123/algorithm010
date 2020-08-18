@@ -398,6 +398,32 @@ class Solution:
         return right
 
 
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        l, r = 0, n - 1
+        while l <= r:
+            pivot = self.partition(nums, l, r)
+            if pivot == n - k:
+                return nums[pivot]
+            if pivot > n - k:
+                r = pivot - 1
+            else:
+                l = pivot + 1
+
+    def partition(self, nums, l, r):
+        ran = random.randint(l, r)
+        nums[r], nums[ran] = nums[ran], nums[r]
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] <= nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+
 def main():
     sol = Solution()
     nums = [3, 2, 3, 1, 2, 4, 5, 5, 6, 7, 7, 8, 2, 3, 1, 1, 1, 10, 11, 5, 6, 2,

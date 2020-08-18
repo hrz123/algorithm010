@@ -153,6 +153,31 @@ class Solution:
         return self.u.data[n - 1]
 
 
+class Ugly:
+    def __init__(self, n=1690):
+        self.data = [1]
+        i2 = i3 = i5 = 0
+        for _ in range(n - 1):
+            p2 = self.data[i2] * 2
+            p3 = self.data[i3] * 3
+            p5 = self.data[i5] * 5
+            small = min(p2, p3, p5)
+            self.data.append(small)
+            if p2 == small:
+                i2 += 1
+            if p3 == small:
+                i3 += 1
+            if p5 == small:
+                i5 += 1
+
+
+class Solution:
+    u = Ugly()
+
+    def nthUglyNumber(self, n: int) -> int:
+        return self.u.data[n - 1]
+
+
 def main():
     s = Solution()
     res = s.nthUglyNumber(10)

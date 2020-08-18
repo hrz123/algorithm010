@@ -71,6 +71,19 @@ class Solution:
         return not stack
 
 
+class Solution:
+    def isValid(self, s: str) -> bool:
+        hashmap = {')': '(', ']': '[', '}': '{'}
+        stack = []
+        for c in s:
+            if c in hashmap:
+                if not stack or stack.pop() != hashmap[c]:
+                    return False
+            else:
+                stack.append(c)
+        return not stack
+
+
 def main():
     sol = Solution()
 

@@ -245,6 +245,48 @@ class Solution:
         return conertBST(0, size - 1)
 
 
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        h, length = head, 0
+        while h:
+            h, length = h.next, length + 1
+
+        def convertBST(l, r):
+            if l > r:
+                return
+            mid = l + ((r - l) >> 1)
+            left = convertBST(l, mid - 1)
+            nonlocal head
+            root = TreeNode(head.val)
+            head = head.next
+            root.left = left
+            root.right = convertBST(mid + 1, r)
+            return root
+
+        return convertBST(0, length - 1)
+
+
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        h, length = head, 0
+        while h:
+            h, length = h.next, length + 1
+
+        def convertBST(l, r):
+            if l > r:
+                return
+            mid = l + ((r - l) >> 1)
+            left = convertBST(l, mid - 1)
+            nonlocal head
+            root = TreeNode(head.val)
+            head = head.next
+            root.left = left
+            root.right = convertBST(mid + 1, r)
+            return root
+
+        return convertBST(0, length - 1)
+
+
 def main():
     pass
 

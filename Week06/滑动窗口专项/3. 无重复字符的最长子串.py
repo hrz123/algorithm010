@@ -220,6 +220,40 @@ class Solution:
         return res
 
 
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        l, r = 0, 0
+        n = len(s)
+        counter = defaultdict(int)
+        res = 0
+        while r < n:
+            tmp = s[r]
+            r += 1
+            counter[tmp] += 1
+            while counter[tmp] > 1:
+                counter[s[l]] -= 1
+                l += 1
+            res = max(res, r - l)
+        return res
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        l, r = 0, 0
+        n = len(s)
+        counter = defaultdict(int)
+        res = 0
+        while r < n:
+            tmp = s[r]
+            r += 1
+            counter[tmp] += 1
+            while counter[tmp] > 1:
+                counter[s[l]] -= 1
+                l += 1
+            res = max(res, r - l)
+        return res
+
+
 def main():
     sol = Solution()
 

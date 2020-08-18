@@ -2,8 +2,8 @@
 
 
 # 子问题：二维矩阵
-# 定义状态数组： dp(start, j) s1[:start]到s2[:j]的编辑距离
-# 递推方程：dp(start, j) = dp(start-1, j-1) if s1[start] == s2[j]
+# 定义状态数组： dp(start, j) stack1[:start]到s2[:j]的编辑距离
+# 递推方程：dp(start, j) = dp(start-1, j-1) if stack1[start] == stack2[j]
 #           dp(start, j) = min{dp(start-1, j), dp(start, j-1), dp(start-1, j-1)s} +1
 # 增加一层哨兵，代码更好写
 # dp(0, j) = 0

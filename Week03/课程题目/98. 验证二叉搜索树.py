@@ -271,6 +271,22 @@ class Solution:
         return True
 
 
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        stack = []
+        pre = float('-inf')
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            if root.val <= pre:
+                return False
+            pre = root.val
+            root = root.right
+        return True
+
+
 def main():
     root = TreeNode(2)
     root.left = TreeNode(1)

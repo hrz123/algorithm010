@@ -219,6 +219,44 @@ class Solution:
         return dp[0]
 
 
+# f(i, j)表示到终点需要的最低血量
+# f(i, j) = max(min(f(i+1, j), f(i, j+1)) - m[i][j], 1)
+# 初始化和边界条件
+# f(m, n) = max(1 - matrix[m, n], 1)
+# 我们可以加一层哨兵，在n-1的位置进行1的初始化
+# 其他位置为float('inf')这样取最小的时候能去掉
+# 返回值
+# f(0, 0)
+# 优化复杂度
+# 我们可以用一维数组从后往前更新
+class Solution:
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        if not dungeon or not dungeon[0]:
+            return 1
+        m, n = len(dungeon), len(dungeon[0])
+        dp = [float('inf')] * (n - 1) + [1, float('inf')]
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                dp[j] = max(min(dp[j], dp[j + 1]) - dungeon[i][j], 1)
+        return dp[0]
+
+
+# f(i, j)表示到终点需要的最低血量
+# f(i, j) = max(min(f(i+1,j), f(i,j+1)) - matrix[i][j]), 1)
+# 初始化和边界条件
+# f(m, n) = max(1 - f(m, n), 1)
+class Solution:
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        if not dungeon or not dungeon[0]:
+            return 1
+        m, n = len(dungeon), len(dungeon[0])
+        dp = [float('inf')] * (n - 1) + [1, float('inf')]
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                dp[j] = max(min(dp[j], dp[j + 1]) - dungeon[i][j], 1)
+        return dp[0]
+
+
 def main():
     dungeon = [
         [-2, -3, 3],

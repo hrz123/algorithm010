@@ -80,6 +80,32 @@ class Solution:
         return res
 
 
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        if len(nums1) > len(nums2):
+            nums1, nums2 = nums2, nums1
+        counter = Counter(nums1)
+        res = []
+        for n in nums2:
+            if counter[n] >= 1:
+                res.append(n)
+                counter[n] -= 1
+        return res
+
+
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        if len(nums1) > len(nums2):
+            nums1, nums2 = nums2, nums1
+        c1 = Counter(nums1)
+        res = []
+        for n in nums2:
+            if c1[n] >= 1:
+                res.append(n)
+                c1[n] -= 1
+        return res
+
+
 def main():
     nums1 = [1, 2, 2, 1]
     nums2 = [2, 2]

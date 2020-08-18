@@ -145,6 +145,21 @@ class Solution:
         return res
 
 
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        if not root:
+            return []
+        res = []
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            res.append(node.val)
+            if node.children:
+                for ch in node.children[::-1]:
+                    stack.append(ch)
+        return res
+
+
 def main():
     root = Node(1)
     node = Node(3)

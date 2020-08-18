@@ -157,6 +157,36 @@ class Solution:
         return res
 
 
+# 定义子问题，以s[i] t[j]的公共最长子数组长度，一定以s[i] t[j]结尾
+# f(i, j) = f(i-1, j-1) + 1 if s[i] == t[j]
+# f(i, j) = 0 else
+# 初始化和边界条件
+# f(0, j) = 0
+# f(i, 0) = 0
+# 返回值
+# f(i, j)中最大的
+# 优化复杂度
+# 我们需要两个数组滚动，数组长度为两个数组中较短的那一个
+class Solution:
+    def findLength(self, A: List[int], B: List[int]) -> int:
+        m, n = len(A), len(B)
+        if m < n:
+            m, n = n, m
+            A, B = B, A
+        res = 0
+        dp = [0] * (n + 1)
+        ndp = [0] * (n + 1)
+        for i in range(m):
+            for j in range(n):
+                if A[i] == B[j]:
+                    ndp[j + 1] = dp[j] + 1
+                    res = max(res, ndp[j + 1])
+                else:
+                    ndp[j + 1] = 0
+            dp, ndp = ndp, dp
+        return res
+
+
 def main():
     A = [1, 2, 3, 2, 1]
     B = [3, 2, 1, 4, 7]

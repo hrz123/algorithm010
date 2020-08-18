@@ -389,6 +389,74 @@ class Solution:
         return res
 
 
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        stack = [-1]
+        res = 0
+        for i, c in enumerate(s):
+            if c == '(':
+                stack.append(i)
+            else:
+                stack.pop()
+                if stack:
+                    res = max(res, i - stack[-1])
+                else:
+                    stack.append(i)
+        return res
+
+
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        stack = [-1]
+        res = 0
+        for i, c in enumerate(s):
+            if c == '(':
+                stack.append(i)
+            else:
+                stack.pop()
+                if stack:
+                    res = max(res, i - stack[-1])
+                else:
+                    stack.append(i)
+        return res
+
+
+# 动态规划
+# 定义子问题
+# f(i)表示以下标i字符结尾的最长有效括号额长度。
+# f(i) = 0  if s[i] == '('
+# f(i) = if s[i] == ')' and s[i-1] == '(' f(i-2) + 2
+# f(i) = if s[i] == ')' and s[i-1] == ')' if i - f(i-1) - 1 == '('
+# f(i) = f(i-1) + 2
+# 初始化和边界条件
+# f(0) = 0
+# 注意不要越界
+# 返回值
+# max(f(i))
+# 优化复杂度
+# 无法优化
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        n = len(s)
+        dp = [0] * n
+        res = 0
+        for i in range(1, n):
+            if s[i] == ')':
+                if s[i - 1] == ')':
+                    left = i - dp[i - 1] - 1
+                    if left >= 0 and s[left] == '(':
+                        dp[i] = dp[i - 1] + 2 + (dp[left - 1] if left > 0
+                                                 else 0)
+                        res = max(res, dp[i])
+                else:
+                    if i == 1:
+                        dp[i] = 2
+                    else:
+                        dp[i] = dp[i - 2] + 2
+                    res = max(res, dp[i])
+        return res
+
+
 def main():
     sol = Solution()
     s = "(()"

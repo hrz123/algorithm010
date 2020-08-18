@@ -201,6 +201,25 @@ class Solution:
         return slow
 
 
+class Solution:
+    def detectCycle(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return
+        slow = head.next
+        fast = slow.next
+        while fast and fast.next:
+            if slow == fast:
+                break
+            slow = slow.next
+            fast = fast.next.next
+        if slow != fast:
+            return
+        fast = head
+        while slow != fast:
+            slow, fast = slow.next, fast.next
+        return slow
+
+
 def main():
     pass
 

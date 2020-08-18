@@ -178,7 +178,26 @@ class Solution:
                     break
                 else:
                     cur = cur.left
-        return root
+
+
+class Solution:
+    def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
+        if not root:
+            return TreeNode(val)
+        cur = root
+        while cur:
+            if val > cur.val:
+                if cur.right:
+                    cur = cur.right
+                else:
+                    cur.right = TreeNode(val)
+                    return root
+            else:
+                if cur.left:
+                    cur = cur.left
+                else:
+                    cur.left = TreeNode(val)
+                    return root
 
 
 def main():

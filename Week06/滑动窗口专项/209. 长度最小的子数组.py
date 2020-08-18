@@ -149,6 +149,24 @@ class Solution:
         return 0 if res == n + 1 else res
 
 
+class Solution:
+    def minSubArrayLen(self, s: int, nums: List[int]) -> int:
+        n = len(nums)
+        res = n + 1
+        l, r = 0, 0
+        total = 0
+        while r < n:
+            tmp = nums[r]
+            r += 1
+            total += tmp
+            while total >= s:
+                if r - l < res:
+                    res = r - l
+                total -= nums[l]
+                l += 1
+        return 0 if res == n + 1 else res
+
+
 def main():
     sol = Solution()
 

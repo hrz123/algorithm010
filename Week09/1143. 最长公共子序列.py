@@ -4,7 +4,7 @@
 # 状态定义
 # dp(start, j)是指text1和text2分别在i和j位置的最大子序列长度
 # 递推方程
-# dp(start,j) = max(dp(start-1, j) dp(start, j-1))   if s1[start] != s2[j]
+# dp(start,j) = max(dp(start-1, j) dp(start, j-1))   if stack1[start] != stack2[j]
 #         = dp(start-1, j-1) + 1             else
 # dp(0, j) = 0
 # dp(start, 0) = 0
@@ -36,7 +36,7 @@ class Solution:
 # 定义状态数组
 # f(start, j)
 # 递推方程
-# f(start, j) = max f(start-1, j), f(start, j-1) if s1[start] != s2[j]
+# f(start, j) = max f(start-1, j), f(start, j-1) if stack1[start] != stack2[j]
 # f(start, j) = f(start-1, j-1) + 1          else
 # 初始化
 # f(0, j) = 0  j 0..n
@@ -69,7 +69,7 @@ class Solution:
 # 定义状态数组
 # f(start, j)
 # 递推方程
-# f(start, j) = f(start-1, j-1) + 1 if s1[start] == s2[j]
+# f(start, j) = f(start-1, j-1) + 1 if stack1[start] == stack2[j]
 # f(start, j) = max(f(start-1, j), f(start, j-1))
 # 初始化
 # 可以增加一维哨兵，然后都用0初始化
@@ -96,7 +96,7 @@ class Solution:
 
 
 # 定义子问题
-# s1[:i]和s2[:j]的最长公共子序列
+# stack1[:i]和s2[:j]的最长公共子序列
 # f（i， j)
 # 递推方程
 # f(i, j) = s[i] == s[j]  f(i-1, j-1) + 1

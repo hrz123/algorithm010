@@ -284,6 +284,66 @@ class Solution:
         return dp(0)
 
 
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        d = {w for w in dictionary if sentence.find(w) != -1}
+        lens = {len(w) for w in d}
+        n = len(sentence)
+        import functools
+        @functools.lru_cache(None)
+        def dp(i):
+            if i == n:
+                return 0
+            res = dp(i + 1) + 1
+            for l in lens:
+                if i + l <= n and sentence[i:i + l] in d:
+                    res = min(res, dp(i + l))
+            return res
+
+        return dp(0)
+
+
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        d = {}.fromkeys(dictionary)
+        n = len(sentence)
+        f = [0] * (n + 1)
+        for i in range(1, n + 1):
+            f[i] = f[i - 1] + 1
+            for j in range(i):
+                if sentence[j:i] in d:
+                    f[i] = min(f[i], f[j])
+        return f[-1]
+
+
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        n = len(sentence)
+        dp = [0] * (n + 1)
+        dic = {w for w in dictionary if sentence.find(w) != -1}
+        lens = {len(w) for w in dic}
+        for i in range(1, n + 1):
+            dp[i] = dp[i - 1] + 1
+            for l in lens:
+                if sentence[i - l:i] in dic:
+                    dp[i] = min(dp[i], dp[i - l])
+        return dp[n]
+
+
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        n = len(sentence)
+        dp = [0] * (n + 1)
+        dic = {w for w in dictionary if sentence.find(w) != -1}
+        lens = {len(w) for w in dic}
+        for i in range(1, n + 1):
+            dp[i] = dp[i - 1] + 1
+            for l in lens:
+                if i - l >= 0 and sentence[i - l:i] in dic:
+                    dp[i] = min(dp[i], dp[i - l])
+        return dp[n]
+
+
 def main():
     dictionary = ["looked", "just", "like", "her", "brother"]
     sentence = "jesslookedjustliketimherbrother"

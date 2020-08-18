@@ -118,6 +118,39 @@ class Solution:
         return dp[n - 1]
 
 
+# f(i, j) = f(i-1, j) + f(i, j-1)
+# 初始化
+# f(0, j) = 1
+# f(i, 0) = 1
+# 加入一层哨兵
+# 哨兵应该是[0, 1, 0, 0, 0]
+# 也可以不加
+# 返回值
+# f(n-1)
+# 优化复杂度
+# 我们可以维护一维数组，从左到右原地更新
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        if m < n:
+            m, n = n, m
+        dp = [1] * n
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[j] += dp[j - 1]
+        return dp[n - 1]
+
+
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        if m < n:
+            m, n = n, m
+        dp = [1] + [0] * n
+        for i in range(m):
+            for j in range(n):
+                dp[j] += dp[j - 1]
+        return dp[n - 1]
+
+
 def main():
     m = 7
     n = 3

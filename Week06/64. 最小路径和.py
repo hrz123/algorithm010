@@ -144,6 +144,31 @@ class Solution:
         return dp[n - 1]
 
 
+# f(i, j) = min(f(i-1,j), f(i, j-1)) + a
+# 初始化和边界条件
+# 我们可以初始化第一列
+# 也可以初始化一个哨兵
+# 不初始化哨兵的话，第一行就是一个前缀和
+# 返回值f(m-1, n-1）
+# 优化复杂度
+# 我们从左往右可以原地更新
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        m, n = len(grid), len(grid[0])
+        dp = []
+        p = 0
+        for num in grid[0]:
+            p += num
+            dp.append(p)
+        for i in range(1, m):
+            dp[0] += grid[i][0]
+            for j in range(1, n):
+                dp[j] = min(dp[j], dp[j - 1]) + grid[i][j]
+        return dp[n - 1]
+
+
 def main():
     sol = Solution()
 

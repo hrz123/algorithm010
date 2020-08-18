@@ -369,6 +369,39 @@ class Solution:
                 counter.clear()
 
 
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words or not words[0]:
+            return []
+        n = len(words[0])
+        t = len(words) * n
+        m = len(s)
+        req = defaultdict(int)
+        for w in words:
+            req[w] += 1
+        res = []
+        for i in range(min(n, m - t + 1)):
+            self.find(i, s, req, n, t, m, res)
+        return res
+
+    def find(self, i, s, req, n, t, m, res):
+        l, r = i, i
+        counter = defaultdict(int)
+        while r < m:
+            tmp = s[r:r + n]
+            r += n
+            if tmp in req:
+                counter[tmp] += 1
+                while counter[tmp] > req[tmp]:
+                    counter[s[l:l + n]] -= 1
+                    l += n
+                if r - l == t:
+                    res.append(l)
+            else:
+                l = r
+                counter.clear()
+
+
 def main():
     sol = Solution()
 

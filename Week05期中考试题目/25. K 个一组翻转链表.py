@@ -253,6 +253,31 @@ class Solution:
         return tail, head
 
 
+class Solution:
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        dummy = ListNode(0)
+        dummy.next = head
+        pre = dummy
+        while head:
+            tail = pre
+            for _ in range(k):
+                tail = tail.next
+                if not tail:
+                    return dummy.next
+            head, tail = self._reverse(head, tail)
+            pre.next = head
+            pre = tail
+            head = tail.next
+        return dummy.next
+
+    def _reverse(self, head, tail):
+        pre = tail.next
+        cur = head
+        while pre != tail:
+            cur.next, pre, cur = pre, cur, cur.next
+        return tail, head
+
+
 def main():
     def print_all(head: ListNode):
         if not head:

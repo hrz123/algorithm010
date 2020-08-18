@@ -98,6 +98,23 @@ class Solution:
         return -1
 
 
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        rotten = {(i, j) for i in range(m) for j in range(n) if grid[i][j] == 2}
+        fresh = {(i, j) for i in range(m) for j in range(n) if grid[i][j] == 1}
+        timer = 0
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        while fresh:
+            timer += 1
+            rotten = {(i, j) for i, j in fresh for di, dj in dirs
+                      if (i + di, j + dj) in rotten}
+            if not rotten:
+                return -1
+            fresh -= rotten
+        return timer
+
+
 def main():
     sol = Solution()
 

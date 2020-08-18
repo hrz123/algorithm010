@@ -212,9 +212,36 @@ class Solution:
 # 只需要前一个值，并且我们记录一个最大值
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        pre, res = 0, float('inf')
+        pre, res = 0, float('-inf')
         for n in nums:
             pre = max(pre + n, n)
+            res = max(res, pre)
+        return res
+
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        pre, res = 0, float('-inf')
+        for num in nums:
+            pre = max(pre + num, num)
+            res = max(res, pre)
+        return res
+
+
+# 最大子序和
+# f(i)表示以下标i字符结尾的最长子序和的大小
+# f(i) = max(f(i-1)+a, a)
+# 初始化
+# pre可以用0初始化
+# res 要用一个最小值来初始化
+# 返回 max(f(i))
+# 优化复杂度
+# 只需要一个变量
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        pre, res = 0, float('-inf')
+        for num in nums:
+            pre = max(pre + num, num)
             res = max(res, pre)
         return res
 

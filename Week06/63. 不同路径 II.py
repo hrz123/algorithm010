@@ -292,6 +292,19 @@ class Solution:
         return dp[n - 1]
 
 
+# 定义
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        m, n = len(obstacleGrid), len(obstacleGrid[0])
+        if obstacleGrid[0][0] or obstacleGrid[m - 1][n - 1]:
+            return 0
+        dp = [1] + [0] * n
+        for i in range(m):
+            for j in range(n):
+                dp[j] = 0 if obstacleGrid[i][j] else dp[j] + dp[j - 1]
+        return dp[n - 1]
+
+
 # 滚动数组思想
 def main():
     sol = Solution()

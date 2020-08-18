@@ -140,6 +140,25 @@ class Solution:
         return res
 
 
+class Solution:
+    def largestValues(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        q, nq = [root], []
+        res = []
+        while q:
+            max_value = float('-inf')
+            for node in q:
+                max_value = max(max_value, node.val)
+                if node.left:
+                    nq.append(node.left)
+                if node.right:
+                    nq.append(node.right)
+            res.append(max_value)
+            q, nq = nq, []
+        return res
+
+
 def main():
     root = TreeNode(1)
     root.left = TreeNode(3)

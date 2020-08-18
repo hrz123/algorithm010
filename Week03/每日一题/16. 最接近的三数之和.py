@@ -88,6 +88,26 @@ class Solution:
         return res
 
 
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        n = len(nums)
+        res = float('inf')
+        nums.sort()
+        for i in range(n - 2):
+            l, r = i + 1, n - 1
+            while l < r:
+                total = nums[i] + nums[l] + nums[r]
+                if total == target:
+                    return target
+                if abs(total - target) < abs(res - target):
+                    res = total
+                if total > target:
+                    r -= 1
+                else:
+                    l += 1
+        return res
+
+
 def main():
     s = Solution()
     res = s.threeSumClosest([-1, 2, 1, -4], 1)

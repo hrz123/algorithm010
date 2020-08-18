@@ -108,6 +108,34 @@ class Solution:
         return head
 
 
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        pre = head
+        while pre and pre.next:
+            if pre.next.val == pre.val:
+                pre.next = pre.next.next
+            else:
+                pre = pre.next
+        return head
+
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        pre, cur = head, head.next
+        while pre and cur:
+            if cur.val == pre.val:
+                pre.next = cur.next
+                cur = cur.next
+            else:
+                pre = cur
+                cur = cur.next
+        return head
+
+
 def main():
     sol = Solution()
 

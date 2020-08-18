@@ -104,6 +104,31 @@ class Solution:
         return res
 
 
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        m, n = len(s), len(p)
+        req = defaultdict(int)
+        res = []
+        for c in p:
+            req[c] += 1
+        l, r = 0, 0
+        counter = defaultdict(int)
+        while r < m:
+            tmp = s[r]
+            r += 1
+            if tmp in req:
+                counter[tmp] += 1
+                while counter[tmp] > req[tmp]:
+                    counter[s[l]] -= 1
+                    l += 1
+                if r - l == n:
+                    res.append(l)
+            else:
+                l = r
+                counter.clear()
+        return res
+
+
 def main():
     sol = Solution()
     s = "cbaebabacd"

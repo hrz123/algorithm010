@@ -1,6 +1,7 @@
 # 347. 前 K 个高频元素.py
 import collections
 import heapq
+import random
 from typing import List
 
 
@@ -150,6 +151,47 @@ class Solution:
             c2[val].append(key)
         res = []
         for i in range(len(nums), -1, -1):
+            res.extend(c2[i])
+            if len(res) == k:
+                return res
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = collections.Counter(nums)
+        val = list(counter.keys())
+        l, r = 0, len(val) - 1
+        while l <= r:
+            pivot = self.partition(val, l, r, counter)
+            if pivot == k - 1:
+                return val[:k]
+            if pivot > k - 1:
+                r = pivot - 1
+            else:
+                l = pivot + 1
+
+    def partition(self, val, l, r, counter):
+        ran = random.randint(l, r)
+        val[ran], val[r] = val[r], val[ran]
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if counter.get(val[i]) >= counter.get(val[pivot]):
+                val[i], val[right] = val[right], val[i]
+                right += 1
+        val[right], val[pivot] = val[pivot], val[right]
+        return right
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = collections.Counter(nums)
+        n = len(nums)
+        c2 = [[] for _ in range(n + 1)]
+        for v, c in counter.items():
+            c2[c].append(v)
+        res = []
+        for i in range(n, -1, -1):
             res.extend(c2[i])
             if len(res) == k:
                 return res

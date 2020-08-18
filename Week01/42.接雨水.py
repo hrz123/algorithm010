@@ -511,6 +511,54 @@ class Solution:
         return res
 
 
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        left_max = right_max = 0
+        l, r = 0, len(height) - 1
+        res = 0
+        while l < r:
+            left_max = max(height[l], left_max)
+            right_max = max(height[r], right_max)
+            while l < r and height[l] <= left_max <= right_max:
+                res += left_max - height[l]
+                l += 1
+            while l < r and height[r] <= right_max <= left_max:
+                res += right_max - height[r]
+                r -= 1
+        return res
+
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        stack = []
+        res = 0
+        for i, h in enumerate(height):
+            while stack and height[stack[-1]] < h:
+                c = height[stack.pop()]
+                if stack:
+                    w = i - stack[-1] - 1
+                    res += (min(height[stack[-1]], h) - c) * w
+            stack.append(i)
+        return res
+
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        left_max = right_max = 0
+        l, r = 0, len(height) - 1
+        res = 0
+        while l < r:
+            left_max = max(left_max, height[l])
+            right_max = max(right_max, height[r])
+            while l < r and height[l] <= left_max <= right_max:
+                res += left_max - height[l]
+                l += 1
+            while l < r and height[r] <= right_max <= left_max:
+                res += right_max - height[r]
+                r -= 1
+        return res
+
+
 def main():
     heights = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
     s = Solution()
