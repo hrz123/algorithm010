@@ -1,4 +1,5 @@
 # 31. 下一个排列.py
+from typing import List
 
 
 class Solution:
@@ -33,7 +34,10 @@ class Solution:
 
 
 def main():
-    pass
+    sol = Solution()
+    nums = [1, 2, 3]
+    sol.nextPermutation(nums)
+    print(nums)
 
 
 if __name__ == '__main__':

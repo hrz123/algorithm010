@@ -50,6 +50,44 @@ class Solution:
         return max(c1 * (total - c1), c2 * (total - c2)) % (10 ** 9 + 7)
 
 
+class Solution:
+    def maxProduct(self, root: TreeNode) -> int:
+        totals = []
+
+        def dfs(root):
+            if not root:
+                return 0
+            ans = dfs(root.left) + dfs(root.right) + root.val
+            totals.append(ans)
+            return ans
+
+        total = dfs(root)
+        totals.sort()
+        loc = bisect.bisect_left(totals, total >> 1)
+        c1, c2 = totals[loc - 1], totals[loc]
+        return max(c1 * (total - c1), c2 * (total - c2)) % (10 ** 9 + 7)
+
+
+class Solution:
+    def maxProduct(self, root: TreeNode) -> int:
+        sums_lists = []
+
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            ans = left + right + root.val
+            sums_lists.append(ans)
+            return ans
+
+        total = dfs(root)
+        sums_lists.sort()
+        loc = bisect.bisect_left(total >> 1)
+        l, r = sums_lists[loc - 1], sums_lists[loc]
+        return max(l * (total - l), r * (total - r))
+
+
 def main():
     ...
 
