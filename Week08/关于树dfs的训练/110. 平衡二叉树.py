@@ -46,6 +46,54 @@ class Solution:
         return height(root) != -1
 
 
+class Solution:
+    def isBalanced(self, root: TreeNode) -> bool:
+        def height(root):
+            if not root:
+                return 0
+            left = height(root.left)
+            if left == -1:
+                return -1
+            right = height(root.right)
+            if right == -1:
+                return -1
+            return max(left, right) + 1 if abs(left - right) < 2 else -1
+
+        return height(root) != -1
+
+
+class Solution:
+    def isBalanced(self, root: TreeNode) -> bool:
+        def height(root):
+            if not root:
+                return 0
+            left = height(root.left)
+            if left == -1:
+                return -1
+            right = height(root.right)
+            if right == -1:
+                return -1
+            return max(left, right) + 1 if abs(left - right) < 2 else -1
+
+        return height(root) != -1
+
+
+class Solution:
+    def isBalanced(self, root: TreeNode) -> bool:
+        def height(root):
+            if not root:
+                return 0
+            left = height(root.left)
+            if left == -1:
+                return -1
+            right = height(root.right)
+            if right == -1:
+                return -1
+            return max(left, right) + 1 if abs(left - right) < 2 else -1
+
+        return height(root) != -1
+
+
 def main():
     pass
 
