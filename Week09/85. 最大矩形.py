@@ -329,6 +329,67 @@ class Solution:
         return res
 
 
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        m, n = len(matrix), len(matrix[0])
+        height = [0] * (n + 1)
+        res = 0
+        for row in matrix:
+            for i in range(n):
+                height[i] = height[i] + 1 if row[i] == '1' else 0
+            stack = [-1]
+            for i, h in enumerate(height):
+                while height[stack[-1]] > h:
+                    tmp = height[stack.pop()]
+                    res = max(res, tmp * (i - stack[-1] - 1))
+                stack.append(i)
+        return res
+
+
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        res = 0
+        m, n = len(matrix), len(matrix[0])
+        height = [0] * (n + 1)
+        for row in matrix:
+            for i in range(n):
+                height[i] = height[i] + 1 if row[i] == '1' else 0
+            stack = [-1]
+            for i, h in enumerate(height):
+                while height[stack[-1]] > h:
+                    tmp = height[stack.pop()]
+                    res = max(res, tmp * (i - stack[-1] - 1))
+                stack.append(i)
+        return res
+
+
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        m, n = len(matrix), len(matrix[0])
+        height = [0] * (n + 1)
+        res = 0
+        for row in matrix:
+            stack = [-1]
+            for i in range(n):
+                if row[i] == '1':
+                    height[i] += 1
+                else:
+                    height[i] = 0
+            for i, h in enumerate(height):
+                while stack and height[stack[-1]] > h:
+                    tmp = height[stack.pop()]
+                    w = i - stack[-1] - 1
+                    res = max(res, tmp * w)
+                stack.append(i)
+        return res
+
+
 def main():
     sol = Solution()
 

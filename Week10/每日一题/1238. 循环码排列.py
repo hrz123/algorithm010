@@ -17,6 +17,28 @@ class Solution:
         return res
 
 
+class Solution:
+    def circularPermutation(self, n: int, start: int) -> List[int]:
+        res = [0]
+        for i in range(n):
+            res += [num + (1 << i) for num in reversed(res)]
+        idx = res.index(start)
+        res[:] = res[idx:] + res[:idx]
+        return res
+
+
+class Solution:
+    def circularPermutation(self, n: int, start: int) -> List[int]:
+        res = [0]
+        for i in range(n):
+            res += [num + (1 << i) for num in reversed(res)]
+        idx = res.index(start)
+        res[:idx] = res[:idx][::-1]
+        res[idx:] = res[idx:][::-1]
+        res[:] = res[::-1]
+        return res
+
+
 def main():
     sol = Solution()
     n = 2

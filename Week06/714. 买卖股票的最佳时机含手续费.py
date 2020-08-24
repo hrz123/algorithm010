@@ -91,6 +91,24 @@ class Solution:
         return f0
 
 
+# f(i, 01)  表示s[:i]时，手里有几股股票的最大收益
+# f(i, 0) = 不动 f(i-1, 0) 卖出 f(i-1, 1) + p - fee
+# f(i, 1) = 不动 f(i-1, 1) 买入 f(i-1, 0) - p
+# 初始化和边界条件
+# f(0, 0) = 0
+# f(0, 1) = float('-inf')
+# 返回值
+# f(n, 0)
+# 优化复杂度
+# 只需两个变量
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        f0, f1 = 0, float('-inf')
+        for p in prices:
+            f0, f1 = max(f0, f1 + p - fee), max(f1, f0 - p)
+        return f0
+
+
 def main():
     sol = Solution()
 

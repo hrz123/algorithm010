@@ -85,7 +85,83 @@ class Solution:
         sums_lists.sort()
         loc = bisect.bisect_left(total >> 1)
         l, r = sums_lists[loc - 1], sums_lists[loc]
-        return max(l * (total - l), r * (total - r))
+        return max(l * (total - l), r * (total - r)) % (10 ** 9 + 7)
+
+
+class Solution:
+    def maxProduct(self, root: TreeNode) -> int:
+        sums_list = []
+
+        def dfs(root):
+            if not root:
+                return 0
+            res = dfs(root.left) + dfs(root.right) + root.val
+            sums_list.append(res)
+            return res
+
+        total = dfs(root)
+        sums_list.sort()
+        loc = bisect.bisect_left(sums_list, total >> 1)
+        l, r = sums_list[loc - 1], sums_list[loc]
+        return max(l * (total - l), r * (total - r)) % (10 ** 9 + 7)
+
+
+class Solution:
+    def maxProduct(self, root: TreeNode) -> int:
+        sums_list = []
+
+        def post_order(root):
+            if not root:
+                return 0
+            left = post_order(root.left)
+            right = post_order(root.right)
+            res = left + right + root.val
+            sums_list.append(res)
+            return res
+
+        total = post_order(root)
+        sums_list.sort()
+        loc = bisect.bisect_left(sums_list, total >> 1)
+        l, r = sums_list[loc - 1], sums_list[loc]
+        return max(l * (total - l), r * (total - r)) % (10 ** 9 + 7)
+
+
+class Solution:
+    def maxProduct(self, root: TreeNode) -> int:
+        sums_list = []
+
+        def post_order(root):
+            if not root:
+                return 0
+            res = post_order(root.left) + post_order(root.right) + root.val
+            sums_list.append(res)
+            return res
+
+        total = post_order(root)
+        sums_list.sort()
+        loc = bisect.bisect_left(sums_list, total >> 1)
+        l, r = sums_list[loc - 1], sums_list[loc]
+        return max(l * (total - l), r * (total - r)) % (10 ** 9 + 7)
+
+
+class Solution:
+    def maxProduct(self, root: TreeNode) -> int:
+        sum_lists = []
+
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            res = left + right + root.val
+            sum_lists.append(res)
+            return res
+
+        total = dfs(root)
+        sum_lists.sort()
+        loc = bisect.bisect_left(sum_lists, total >> 1)
+        l, r = sum_lists[loc - 1], sum_lists[loc]
+        return max(l * (total - l), r * (total - r)) % (10 ** 9 + 7)
 
 
 def main():

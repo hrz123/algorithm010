@@ -299,6 +299,49 @@ class Solution:
         backtrace()
 
 
+class Solution:
+    def solveSudoku(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        row = [set() for _ in range(9)]
+        col = [set() for _ in range(9)]
+        box = [set() for _ in range(9)]
+        empty = []
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == '.':
+                    empty.append((i, j))
+                else:
+                    b = i // 3 * 3 + j // 3
+                    val = int(board[i][j])
+                    row[i].add(val)
+                    col[j].add(val)
+                    box[b].add(val)
+        n = len(empty)
+
+        def backtrace(level=0):
+            if level == n:
+                return True
+            i, j = empty[level]
+            b = i // 3 * 3 + j // 3
+            for k in range(1, 10):
+                if k not in row[i] and k not in col[j] and k not in box[b]:
+                    board[i][j] = str(k)
+                    row[i].add(k)
+                    col[j].add(k)
+                    box[b].add(k)
+                    if backtrace(level + 1):
+                        return True
+                    board[i][j] = '.'
+                    row[i].remove(k)
+                    col[j].remove(k)
+                    box[b].remove(k)
+            return False
+
+        backtrace()
+
+
 def main():
     sol = Solution()
 

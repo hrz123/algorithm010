@@ -158,6 +158,20 @@ class Solution:
         return True
 
 
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        counter = [0] * 256
+        for c in s:
+            counter[ord(c)] += 1
+        for c in t:
+            if counter[ord(c)] == 0:
+                return False
+            counter[ord(c)] -= 1
+        return True
+
+
 def main():
     s = Solution()
     print(s.isAnagram("anagram", "anagram"))

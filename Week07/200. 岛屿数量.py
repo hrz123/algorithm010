@@ -208,6 +208,77 @@ class Solution:
         return res
 
 
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        m, n = len(grid), len(grid[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+
+        def dfs_marking(i, j):
+            grid[i][j] = '#'
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and grid[_i][_j] == '1':
+                    dfs_marking(_i, _j)
+
+        res = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    res += 1
+                    dfs_marking(i, j)
+        return res
+
+
+class UnionFind:
+    def __init__(self, k):
+        self.uf = [-1] * (k + 1)
+        self.sets_count = k
+
+    def find(self, p):
+        if self.uf[p] < 0:
+            return p
+        self.uf[p] = self.find(self.uf[p])
+        return self.uf[p]
+
+    def union(self, p, q):
+        p_root = self.find(p)
+        q_root = self.find(q)
+        if p_root == q_root:
+            return
+        if self.uf[p_root] > self.uf[q_root]:
+            self.uf[q_root] += self.uf[p_root]
+            self.uf[p_root] = q_root
+        else:
+            self.uf[p_root] += self.uf[q_root]
+            self.uf[q_root] = p_root
+        self.sets_count -= 1
+
+    def is_connected(self, p, q):
+        return self.find(p) == self.find(q)
+
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        m, n = len(grid), len(grid[0])
+        dummy = m * n
+        uf = UnionFind(dummy)
+        for i in range(m):
+            for j in range(n):
+                idx = i * n + j
+                if grid[i][j] == '1':
+                    if i + 1 < m and grid[i + 1][j] == '1':
+                        uf.union(idx, idx + n)
+                    if j + 1 < n and grid[i][j + 1] == '1':
+                        uf.union(idx, idx + 1)
+                else:
+                    uf.union(idx, dummy)
+        return uf.sets_count
+
+
 def main():
     sol = Solution()
     grid = [["1", "1", "0", "0", "0"],

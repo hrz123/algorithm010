@@ -11,7 +11,6 @@
 # piles = [1, 100, 3]
 # 先手能得4分，后手能得100分，返回-96
 
-
 # 思路
 # 子问题
 # 在第i到第j堆石头，先手能获得最大石头数是多少，后手是多少
@@ -52,6 +51,38 @@ class Solution:
                     dp[i][j][0] = left
                     dp[i][j][1] = dp[i + 1][j][0]
                 # 先手选右边
+                else:
+                    dp[i][j][0] = right
+                    dp[i][j][1] = dp[i][j - 1][0]
+        return dp[0][n - 1][0] - dp[0][n - 1][1]
+
+
+# 定义子问题
+# f(i, j, 01)表示s[i, j]中先后手的最大分数
+# 递推方程
+# f(i, j, 0) = max(f(i+1, j, 1) + a[i], f(i, j-1, 1) + a[j])
+# f(i, j, 1) = f(i+1, j, 0), f(i, j-1, 0),看先手的情况
+# 初始化
+# f(i, i, 0) = a[i]
+# f(i, i, 1) = 0
+# 返回值
+# f(0, n-1, 1) - f(0, n-1, 0)
+# 优化复杂度
+# 对角线递推，不优化
+class Solution:
+    def game(self, piles: List[int]) -> int:
+        n = len(piles)
+        dp = [[[0, 0] for _ in range(n)] for _ in range(n)]
+        for i in range(n):
+            dp[i][i][0] = piles[i]
+        for gap in range(1, n):
+            for i in range(n - gap):
+                j = i + gap
+                left = dp[i + 1][j][1] + piles[i]
+                right = dp[i][j - 1][1] + piles[j]
+                if left >= right:
+                    dp[i][j][0] = left
+                    dp[i][j][1] = dp[i + 1][j][0]
                 else:
                     dp[i][j][0] = right
                     dp[i][j][1] = dp[i][j - 1][0]

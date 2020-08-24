@@ -157,6 +157,37 @@ class Solution:
         return (f00 + f01 + f02 + f10 + f11 + f12) % mod
 
 
+# f(i, 01, 012)n个记录，01个A前面有，012个连续的L结尾
+# f(i, 0, 0) = f(i-1, 0, 0) +f(i-1, 0, 1) + f(i-1, 0, 2)
+# f(i, 0, 1) = f(i-1, 0, 0)
+# f(i, 0, 2) = f(i-1, 0, 1)
+# f(i, 1, 0) = f(i-1, 0, 0) + f01+f11+f10+f11+f12
+# f(i, 1, 1) = f(i-1, 1, 0)
+# f(i, 1, 2) = f(i, 1, 1)
+# 初始化和边界条件
+# f00, f01, f10 == 1在一个索引时
+# 我们添加哨兵
+# 可以让f00 = 1，其余为0
+# 返回值这些的和，mod上
+# 优化复杂度
+# 只需要6个变量
+class Solution:
+    def checkRecord(self, n: int) -> int:
+        f00 = 1
+        f01 = f02 = f10 = f11 = f12 = 0
+        mod = 10 ** 9 + 7
+        for i in range(n):
+            f00, f01, f02, f10, f11, f12 = (
+                (f00 + f01 + f02) % mod,
+                f00,
+                f01,
+                (f00 + f01 + f02 + f10 + f11 + f12) % mod,
+                f10,
+                f11
+            )
+        return (f00 + f01 + f02 + f10 + f11 + f12) % mod
+
+
 def main():
     sol = Solution()
     n = 4

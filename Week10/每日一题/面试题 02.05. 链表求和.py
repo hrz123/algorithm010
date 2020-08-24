@@ -46,6 +46,41 @@ class Solution:
         return cur
 
 
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        dummy = ListNode(0)
+        cur = dummy
+        carry = 0
+        while l1 or l2:
+            n1, l1 = (l1.val, l1.next) if l1 else (0, l1)
+            n2, l2 = (l2.val, l2.next) if l2 else (0, l2)
+            carry, mod = divmod(n1 + n2 + carry, 10)
+            cur.next = ListNode(mod)
+            cur = cur.next
+        if carry:
+            cur.next = ListNode(1)
+        return dummy.next
+
+
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        v1, v2 = 0, 0
+        while l1:
+            v1 = v1 * 10 + l1.val
+            l1 = l1.next
+        while l2:
+            v2 = v2 * 10 + l2.val
+            l2 = l2.next
+        val = v1 + v2
+        pre = cur = None
+        while val:
+            val, mod = divmod(val, 10)
+            cur = ListNode(val)
+            cur.next = pre
+            pre = cur
+        return cur
+
+
 def main():
     sol = Solution()
     l1 = ListNode(1)

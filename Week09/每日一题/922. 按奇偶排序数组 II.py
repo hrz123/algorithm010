@@ -83,6 +83,66 @@ class Solution(object):
         return A
 
 
+class Solution:
+    def sortArrayByParityII(self, A: List[int]) -> List[int]:
+        j = 1
+        for i in range(0, len(A), 2):
+            if A[i] & 1:
+                while A[j] & 1:
+                    j += 2
+                A[i], A[j] = A[j], A[i]
+        return A
+
+
+class Solution:
+    def sortArrayByParityII(self, A: List[int]) -> List[int]:
+        j = 1
+        for i in range(0, len(A), 2):
+            if A[i] & 1:
+                while A[j] & 1:
+                    j += 2
+                A[i], A[j] = A[j], A[i]
+        return A
+
+
+class Solution:
+    def sortArrayByParityII(self, A: List[int]) -> List[int]:
+        i, j = 1, 0
+        n = len(A)
+        while i < n and j < n:
+            while i < n and A[i] & 1:
+                i += 2
+            while j < n and not A[j] & 1:
+                j += 2
+            if i < n and j < n:
+                A[i], A[j] = A[j], A[i]
+            i += 2
+            j += 2
+        return A
+
+
+class Solution:
+    def sortArrayByParityII(self, A: List[int]) -> List[int]:
+        j = 1
+        for i in range(0, len(A), 2):
+            if A[i] & 1:
+                while A[j] & 1:
+                    j += 2
+                A[i], A[j] = A[j], A[i]
+        return A
+
+
+class Solution:
+    def sortArrayByParityII(self, A: List[int]) -> List[int]:
+        j = 1
+        for i in range(0, len(A), 2):
+            if A[i] & 1:
+                while A[j] & 1:
+                    j += 2
+                A[i], A[j] = A[j], A[i]
+        return A
+
+
 def main():
     sol = Solution()
     a = [4, 2, 5, 7]

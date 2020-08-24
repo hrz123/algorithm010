@@ -225,6 +225,36 @@ class Solution:
         return res
 
 
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        m, n = len(matrix), len(matrix[0])
+        memo = {}
+
+        def dfs(i, j):
+            if (i, j) in memo:
+                return memo[i, j]
+            res = 1
+            val = matrix[i][j]
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and matrix[_i][_j] > val:
+                    res = max(res, 1 + dfs(_i, _j))
+            memo[i, j] = res
+            return res
+
+        res = 0
+        for i in range(m):
+            for j in range(n):
+                if (i, j) in memo:
+                    res = max(res, memo[i, j])
+                else:
+                    res = max(res, dfs(i, j))
+        return res
+
+
 def main():
     sol = Solution()
     nums = [[9, 9, 4], [6, 6, 8], [2, 1, 1]]

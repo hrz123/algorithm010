@@ -218,6 +218,21 @@ class Solution:
         return res
 
 
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        if not intervals:
+            return []
+        intervals.sort()
+        res = [intervals[0]]
+        for i in range(1, len(intervals)):
+            x, y = intervals[i]
+            if x <= res[-1][1]:
+                res[-1][1] = max(res[-1][1], y)
+            else:
+                res.append([x, y])
+        return res
+
+
 def main():
     sol = Solution()
 

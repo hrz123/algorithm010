@@ -67,7 +67,123 @@ class Solution:
                 slow.next = fast
                 slow = fast
                 fast = fast.next
-        # slow.next = fast
+        slow.next = fast
+        return dummy.next
+
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        slow, fast = dummy, dummy.next
+        while fast:
+            if fast.next and fast.next.val == fast.val:
+                tmp = fast.val
+                while fast and fast.val == tmp:
+                    fast = fast.next
+            else:
+                slow.next = fast
+                slow = fast
+                fast = fast.next
+        slow.next = fast
+        return dummy.next
+
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        slow, fast = dummy, dummy.next
+        while fast:
+            if fast.next and fast.next.val == fast.val:
+                tmp = fast.val
+                while fast and fast.val == tmp:
+                    fast = fast.next
+            else:
+                slow.next = fast
+                slow = fast
+                fast = fast.next
+        slow.next = fast
+        return dummy.next
+
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        slow, fast = dummy, head
+        while fast:
+            if fast.next and fast.next.val == fast.val:
+                tmp = fast.val
+                while fast and fast.val == tmp:
+                    fast = fast.next
+            else:
+                slow.next = fast
+                slow, fast = fast, fast.next
+        slow.next = fast
+        return dummy.next
+
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        slow, fast = dummy, head
+        while fast:
+            if fast.next and fast.next.val == fast.val:
+                tmp = fast.val
+                while fast and fast.val == tmp:
+                    fast = fast.next
+            else:
+                slow.next = fast
+                slow, fast = fast, fast.next
+        slow.next = fast
+        return dummy.next
+
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        slow, fast = dummy, head
+        while fast:
+            if fast.next and fast.next.val == fast.val:
+                tmp = fast.val
+                while fast and fast.val == tmp:
+                    fast = fast.next
+            else:
+                slow.next = fast
+                slow, fast = fast, fast.next
+        slow.next = fast
+        return dummy.next
+
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        slow, fast = dummy, head
+        while fast:
+            if fast.next and fast.next.val == fast.val:
+                tmp = fast.val
+                while fast and fast.val == tmp:
+                    fast = fast.next
+            else:
+                slow.next = fast
+                slow, fast = fast, fast.next
+        slow.next = fast
         return dummy.next
 
 

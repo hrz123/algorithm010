@@ -132,6 +132,19 @@ class Solution:
         return binary_search(nums, 0, len(nums) - 1)
 
 
+class Solution:
+    def findMagicIndex(self, nums: List[int]) -> int:
+        i = 0
+        while i < len(nums):
+            if i == nums[i]:
+                return i
+            if i < nums[i]:
+                i = nums[i]
+            else:
+                i += 1
+        return -1
+
+
 def main():
     sol = Solution()
 

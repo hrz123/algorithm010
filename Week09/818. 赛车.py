@@ -192,6 +192,55 @@ class Solution:
         return dp[target]
 
 
+# 定义子问题
+# f(i)为到达i所需要的最小指令数
+# 令n为i的bit数
+# i == 2 ** n - 1
+# f(i) = n
+# 先走到 2 ** n - 1 再调转方向
+# 指令为A*nR，距离终点2**n - 1 - i
+# f(i) = n+1 + f(2**n-1-i)
+# 先走到 2**(n-1) - 1
+# 往回走
+# 2 ** k - 1
+# 指令为 A^(n-1)RA^kR，距离终点为f(i - 2 ** (n-1)+2**k)
+# 指令长度为n+k+1
+# f(i) = n+k+1+f(i-2**(n-1)+2**k)
+# k = 0..n-2
+# 初始化和边界条件
+# f(0) = 0
+# 返回值f(target)
+# 优化复杂度
+class Solution:
+    def racecar(self, target: int) -> int:
+        dp = [0] * (target + 1)
+        for i in range(1, target + 1):
+            n = i.bit_length()
+            if i == (1 << n) - 1:
+                dp[i] = n
+            else:
+                dp[i] = dp[(1 << n) - 1 - i] + n + 1
+                for k in range(0, n - 1):
+                    dp[i] = min(dp[i],
+                                dp[i - (1 << n - 1) + (1 << k)] + n + k + 1)
+        return dp[target]
+
+
+class Solution:
+    def racecar(self, target: int) -> int:
+        dp = [0] * (target + 1)
+        for i in range(1, target + 1):
+            n = i.bit_length()
+            if i == (1 << n) - 1:
+                dp[i] = n
+            else:
+                dp[i] = dp[(1 << n) - 1 - i] + n + 1
+                for k in range(n - 1):
+                    dp[i] = min(dp[i],
+                                n + k + 1 + dp[i - (1 << n - 1) + (1 << k)])
+        return dp[target]
+
+
 def main():
     sol = Solution()
 

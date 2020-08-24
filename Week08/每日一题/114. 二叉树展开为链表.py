@@ -237,6 +237,23 @@ class Solution:
         return root
 
 
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        cur = root
+        while cur:
+            if cur.left:
+                p = cur.left
+                while p.right:
+                    p = p.right
+                p.right = cur.right
+                cur.right = cur.left
+                cur.left = None
+            cur = cur.right
+
+
 def main():
     sol = Solution()
 

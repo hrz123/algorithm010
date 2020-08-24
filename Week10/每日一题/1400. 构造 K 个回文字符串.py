@@ -15,6 +15,14 @@ class Solution:
         return left <= k <= right
 
 
+class Solution:
+    def canConstruct(self, s: str, k: int) -> bool:
+        right = len(s)
+        counter = collections.Counter(s)
+        left = sum(1 for c in counter if counter[c] & 1)
+        return left <= k <= right
+
+
 def main():
     pass
 

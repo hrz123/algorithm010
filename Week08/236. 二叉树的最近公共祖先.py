@@ -164,6 +164,16 @@ class Solution:
         return root if left and right else left if left else right
 
 
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode',
+                             q: 'TreeNode') -> 'TreeNode':
+        if not root or root == p or root == q:
+            return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        return root if left and right else left if left else right
+
+
 # 想法：如果p和q可以不在二叉树中呢？
 # 要写一个函数
 

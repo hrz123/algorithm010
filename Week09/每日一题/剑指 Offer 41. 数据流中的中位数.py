@@ -58,6 +58,32 @@ class MedianFinder:
         return (-self.h1[0] + self.h2[0]) / 2
 
 
+class MedianFinder:
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.h1 = []
+        self.h2 = []
+
+    def addNum(self, num: int) -> None:
+        if self.h1 and num > -self.h1[0]:
+            heapq.heappush(self.h2, num)
+        else:
+            heapq.heappush(self.h1, -num)
+        if len(self.h2) - len(self.h1) == 1:
+            heapq.heappush(self.h1, -heapq.heappop(self.h2))
+        elif len(self.h1) - len(self.h2) == 2:
+            heapq.heappush(self.h2, -heapq.heappop(self.h1))
+
+    def findMedian(self) -> float:
+        size = len(self.h1) + len(self.h2)
+        if size & 1:
+            return -self.h1[0]
+        return (self.h2[0] - self.h1[0]) / 2
+
+
 # Your MedianFinder object will be instantiated and called as such:
 # obj = MedianFinder()
 # obj.addNum(num)

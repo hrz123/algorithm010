@@ -26,6 +26,30 @@ class Solution:
         return res
 
 
+class Solution:
+    def pondSizes(self, land: List[List[int]]) -> List[int]:
+        m, n = len(land), len(land[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, -1),
+                (-1, 1))
+        res = []
+
+        def dfs(i, j):
+            land[i][j] = -1
+            ans = 1
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and land[_i][_j] == 0:
+                    ans += dfs(_i, _j)
+            return ans
+
+        for i in range(m):
+            for j in range(n):
+                if land[i][j] == 0:
+                    res.append(dfs(i, j))
+        res.sort()
+        return res
+
+
 def main():
     sol = Solution()
     land = [

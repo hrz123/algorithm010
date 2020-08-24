@@ -29,6 +29,14 @@ class Solution:
             nums[i] = heapq.heappop(heap)
 
 
+class Solution:
+    def heapSort(self, nums: List[int]):
+        heap = nums[:]
+        heapq.heapify(heap)
+        for i in range(len(nums)):
+            nums[i] = heapq.heappop(heap)
+
+
 def max_heap(a, i, size):
     l = i * 2 + 1
     r = i * 2 + 2
@@ -43,8 +51,44 @@ def max_heap(a, i, size):
 
 
 def build_heap(a, size):
-    for i in range(size << 1, -1, -1):
+    for i in range(size >> 1, -1, -1):
         max_heap(a, i, size)
+
+
+def max_heap(a, i, size):
+    l = i * 2 + 1
+    r = i * 2 + 2
+    large = i
+    if l < size and a[l] > a[large]:
+        large = l
+    if r < size and a[r] > a[large]:
+        large = r
+    if large != i:
+        a[large], a[i] = a[i], a[large]
+        max_heap(a, large, size)
+
+
+def build_heap(a, size):
+    for i in range(size >> 1, -1, -1):
+        max_heap(a, i, size)
+
+
+def min_heap(a, i, size):
+    l = i * 2 + 1
+    r = i * 2 + 2
+    small = i
+    if l < size and a[l] < a[small]:
+        small = l
+    if r < size and a[r] < a[small]:
+        small = r
+    if small != i:
+        a[small], a[i] = a[i], a[small]
+        min_heap(a, small, size)
+
+
+def build_heap(a, size):
+    for i in range(size >> 1, -1, -1):
+        min_heap(a, i, size)
 
 
 def main():

@@ -1,4 +1,7 @@
-# 5483. 整理字符串.py
+# 1544. 整理字符串.py
+import string
+
+
 class Solution:
     def makeGood(self, s: str) -> str:
         s = list(s)
@@ -17,8 +20,8 @@ class Solution:
 class Solution:
     def makeGood(self, s: str) -> str:
         res = []
-        lo = 'abcdefghijklmnopqrstuvwxyz'
-        hi = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        lo = string.ascii_lowercase
+        hi = string.ascii_uppercase
 
         for c in s:
             if not res:

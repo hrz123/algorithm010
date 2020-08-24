@@ -198,6 +198,53 @@ class Solution:
         return dp[k][0]
 
 
+# 定义子问题
+# f(i, 0..k, 01)表示到第天，卖出了k笔，手里还有01股股票的最大收益
+# f(0, j, 0) = f(0, j, 0), f(0, j-1, 1) + p
+# f(0, j, 1) = f(0, j, 1), f(0, j, 0) - p
+# 初始化和边界条件
+# j0都可以初始化为0，j1可以初始化为float('-inf')
+# 注意j不要越界
+# 当k大于等于len(nums)//2的时候，相当于没有交易次数限制
+# f(00), f(k1)都没什么意义记录
+# 返回值
+# f(k, 0)
+# 优化复杂度
+# 只需要一个k+1 * 2 的数组
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        if k == 0:
+            return 0
+        n = len(prices)
+        if k >= n >> 1:
+            return sum(max(0, prices[i + 1] - prices[i]) for i in range(n - 1))
+        dp = [[0, float('-inf')] for _ in range(k + 1)]
+        for p in prices:
+            dp[k][0] = max(dp[k][0], dp[k - 1][1] + p)
+            dp[0][1] = max(dp[0][1], -p)
+            for i in range(k - 1, 0, -1):
+                dp[i][1] = max(dp[i][1], dp[i][0] - p)
+                dp[i][0] = max(dp[i][0], dp[i - 1][1] + p)
+        return dp[k][0]
+
+
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        if k == 0:
+            return 0
+        n = len(prices)
+        if k >= n >> 1:
+            return sum(max(0, prices[i + 1] - prices[i]) for i in range(n - 1))
+        dp = [[0, float('-inf')] for _ in range(k + 1)]
+        for p in prices:
+            dp[0][1] = max(dp[0][1], -p)
+            dp[k][0] = max(dp[k][0], dp[k - 1][1] + p)
+            for i in range(k - 1, 0, -1):
+                dp[i][1] = max(dp[i][1], dp[i][0] - p)
+                dp[i][0] = max(dp[i][0], dp[i - 1][1] + p)
+        return dp[k][0]
+
+
 def main():
     sol = Solution()
 

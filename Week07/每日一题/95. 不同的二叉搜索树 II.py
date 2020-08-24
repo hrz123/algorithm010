@@ -146,6 +146,50 @@ class Solution:
         return res
 
 
+class Solution:
+    def generateTrees(self, n: int) -> List[TreeNode]:
+        if not n:
+            return []
+        return self.helper(1, n)
+
+    import functools
+    @functools.lru_cache(None)
+    def helper(self, l, r):
+        if l > r:
+            return [None]
+        res = []
+        for i in range(l, r + 1):
+            for left in self.helper(l, i - 1):
+                for right in self.helper(i + 1, r):
+                    root = TreeNode(i)
+                    root.left = left
+                    root.right = right
+                    res.append(root)
+        return res
+
+
+class Solution:
+    def generateTrees(self, n: int) -> List[TreeNode]:
+        if not n:
+            return []
+        return self.helper(1, n)
+
+    import functools
+    @functools.lru_cache(None)
+    def helper(self, l, r):
+        if l > r:
+            return [None]
+        res = []
+        for i in range(l, r + 1):
+            for left in self.helper(l, i - 1):
+                for right in self.helper(i + 1, r):
+                    root = TreeNode(i)
+                    root.left = left
+                    root.right = right
+                    res.append(root)
+        return res
+
+
 def main():
     sol = Solution()
     res = sol.generateTrees(3)

@@ -303,6 +303,31 @@ class Solution:
         return c
 
 
+class Solution:
+    def splitArray(self, nums: List[int], m: int) -> int:
+        lo, hi = 0, 0
+        for num in nums:
+            lo = max(lo, num)
+            hi += num
+        while lo < hi:
+            mid = lo + ((hi - lo) >> 1)
+            if self._count(nums, mid) > m:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    def _count(self, nums, s):
+        c = 1
+        p = 0
+        for num in nums:
+            p += num
+            if p > s:
+                c += 1
+                p = num
+        return c
+
+
 def main():
     sol = Solution()
 

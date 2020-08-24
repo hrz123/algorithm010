@@ -111,6 +111,18 @@ class Solution:
         return nums[0] if n == 1 else max(helper(0, n - 1), helper(1, n))
 
 
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        def inner_rob(l, r):
+            f0 = f1 = 0
+            for i in range(l, r):
+                f0, f1 = f1, max(f1, f0 + nums[i])
+            return f1
+
+        n = len(nums)
+        return nums[0] if n == 1 else max(inner_rob(0, n - 1), inner_rob(1, n))
+
+
 def main():
     sol = Solution()
 

@@ -303,6 +303,66 @@ class Solution:
         return len(stack)
 
 
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for num in nums:
+            if not stack or stack[-1] < num:
+                stack.append(num)
+            else:
+                l, r = 0, len(stack) - 1
+                while l < r:
+                    mid = l + (r - l >> 1)
+                    if stack[mid] >= num:
+                        r = mid
+                    else:
+                        l = mid + 1
+                stack[l] = num
+        return len(stack)
+
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for num in nums:
+            loc = bisect.bisect_left(stack, num)
+            stack[loc:loc + 1] = [num]
+        return len(stack)
+
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for num in nums:
+            if not stack or num > stack[-1]:
+                stack.append(num)
+            else:
+                loc = bisect.bisect_left(stack, num)
+                stack[loc] = num
+        return len(stack)
+
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for num in nums:
+            if not stack or num > stack[-1]:
+                stack.append(num)
+            else:
+                loc = bisect.bisect_left(stack, num)
+                stack[loc] = num
+        return len(stack)
+
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for num in nums:
+            loc = bisect.bisect_left(stack, num)
+            stack[loc:loc + 1] = [num]
+        return len(stack)
+
+
 def main():
     sol = Solution()
 

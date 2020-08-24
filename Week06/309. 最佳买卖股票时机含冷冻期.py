@@ -270,6 +270,30 @@ class Solution:
         return max(f00, f10)
 
 
+# f(i, 01, 01)表示i天，是否卖出股票，手里有几张股票的最大收益
+# f(i, 0, 0) = f(i-1, 0, 0), f(i-1, 1, 0)
+# f(i, 0, 1) = f(i-1, 0, 1), f(i-1, 0, 0) - p
+# f(i, 1, 0) = f(i-1, 1, 0), 卖出 f(i-1, 0, 1) + p
+# f(i, 1, 1) = 不可能卖出了手里还有一股股票
+# 初始化
+# f00 , f10 = 0, f01 = float('-inf')
+# 返回值
+# f10, f00中的最大值
+# 优化复杂度
+# 只需要三个变量
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        f00, f10 = 0, 0
+        f01 = float('-inf')
+        for p in prices:
+            f00, f01, f10 = (
+                max(f00, f10),
+                max(f01, f00 - p),
+                max(f10, f01 + p)
+            )
+        return max(f00, f10)
+
+
 def main():
     sol = Solution()
 

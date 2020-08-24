@@ -242,6 +242,31 @@ class Solution:
         return dp[0][n - 1]
 
 
+# 定义子问题
+# f(i, j)为不戳破i， j只戳破中间的最大值
+# f(i, j) = max(f(i, k) + f(k, j) + a[i] * a[j] * a[k]) for k in i + 1 .. j-1
+# 初始化和边界条件
+# f(i, i+1) = 0
+# 验证一下 f(i,i+2) = 0 + 0 + a[ijk]
+# 返回值 f(-1, n)
+# 给数组添加一个边界，值为1
+# n += 2
+# 返回f(0, n-1)
+# 优化复杂度
+# 对角线递推，不优化
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1] + nums + [1]
+        n = len(nums)
+        dp = [[0 for _ in range(n)] for _ in range(n)]
+        for gap in range(2, n):
+            for i in range(n - gap):
+                j = i + gap
+                dp[i][j] = max(dp[i][k] + dp[k][j] + nums[i] * nums[j] *
+                               nums[k] for k in range(i + 1, j))
+        return dp[0][n - 1]
+
+
 def main():
     sol = Solution()
 

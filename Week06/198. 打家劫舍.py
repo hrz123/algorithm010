@@ -261,6 +261,23 @@ class Solution:
         return f1
 
 
+# f(i)定义到i索引的最大收益
+# f(i)= max(f(i-1), f(i-2) + p)
+# 初始化
+# f(0) = 0
+# f(1) = p
+# f(-1) = 0
+# 返回值f(n)
+# 优化复杂度
+# 只需要两个变量
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        f0 = f1 = 0
+        for num in nums:
+            f0, f1 = f1, max(f1, f0 + num)
+        return f1
+
+
 def main():
     sol = Solution()
 

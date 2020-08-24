@@ -166,6 +166,32 @@ class Solution:
         return False
 
 
+# 定义子问题
+# f(i, j) s[:i]能否凑出j
+# f(i, j) = f(i-1, j) or f(i-1, j-p)
+# 初始化和边界条件
+# f(0, 0) = True
+# f(0, j) = False j != 0
+# 注意j>=p
+# 返回值
+# f(n , j)
+# 优化复杂度
+# 只与f(i-1)有关，我们从大到小可以原地更新
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if total & 1:
+            return False
+        target = total >> 1
+        dp = [True] + [False] * target
+        for num in nums:
+            for j in range(target, num - 1, -1):
+                dp[j] = dp[j] or dp[j - num]
+            if dp[target]:
+                return True
+        return False
+
+
 def main():
     sol = Solution()
 

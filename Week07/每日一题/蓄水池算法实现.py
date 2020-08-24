@@ -25,6 +25,26 @@ class ReservoirSampling(object):
         return data
 
 
+class ReservoirSampling(object):
+    def sample(self, node, k):
+        # 计数器
+        count = 0
+        data = []
+        while node:
+            count += 1
+            if count <= k:
+                data.append(node)
+            else:
+                # 每一个元素被放进去的概率是k/j
+                if random.randint(1, count) <= k:
+                    # 被移除的索引
+                    removed_index = random.randint(0, k - 1)
+                    # 替换掉
+                    data[removed_index] = node
+            node = node.next
+        return data
+
+
 def main():
     class ListNode(object):
         def __init__(self, val):

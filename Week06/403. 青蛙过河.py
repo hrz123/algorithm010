@@ -452,6 +452,23 @@ class Solution:
         return dfs(0, 0)
 
 
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        target = stones[-1]
+        stones = set(stones)
+        import functools
+        @functools.lru_cache(None)
+        def dfs(pos, speed):
+            if pos == target:
+                return True
+            for c in (speed + 1, speed, speed - 1):
+                if c and pos + c in stones and dfs(pos + c, c):
+                    return True
+            return False
+
+        return dfs(0, 0)
+
+
 def main():
     sol = Solution()
 

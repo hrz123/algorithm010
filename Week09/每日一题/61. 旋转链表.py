@@ -79,6 +79,86 @@ class Solution:
         return cur
 
 
+class Solution:
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if not head or not head.next:
+            return head
+        h, size = head, 1
+        while h.next:
+            h, size = h.next, size + 1
+        h.next = head
+        k %= size
+        pre, cur = h, head
+        for _ in range(size - k):
+            pre, cur = cur, cur.next
+        pre.next = None
+        return cur
+
+
+class Solution:
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if not head or not head.next:
+            return head
+        h, size = head, 1
+        while h.next:
+            h, size = h.next, size + 1
+        h.next = head
+        k %= size
+        pre, cur = h, head
+        for _ in range(size - k):
+            pre, cur = cur, cur.next
+        pre.next = None
+        return cur
+
+
+class Solution:
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if not head or not head.next:
+            return head
+        h, size = head, 1
+        while h.next:
+            h, size = h.next, size + 1
+        h.next = head
+        k %= size
+        pre, cur = h, head
+        for _ in range(size - k):
+            pre, cur = cur, cur.next
+        pre.next = None
+        return cur
+
+
+class Solution:
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if not head or not head.next:
+            return head
+        h, size = head, 1
+        while h.next:
+            h, size = h.next, size + 1
+        h.next = head
+        k %= size
+        pre, cur = h, head
+        for _ in range(size - k):
+            pre, cur = cur, cur.next
+        pre.next = None
+        return cur
+
+
+class Solution:
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if not head or not head.next:
+            return head
+        h, size = head, 1
+        while h.next:
+            h, size = h.next, size + 1
+        h.next = head
+        k %= size
+        pre, cur = h, head
+        for _ in range(size - k):
+            pre, cur = cur, cur.next
+        pre.next = None
+        return cur
+
+
 def main():
     sol = Solution()
     a = ListNode(1)

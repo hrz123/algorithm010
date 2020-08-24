@@ -212,6 +212,36 @@ class Solution:
         return False
 
 
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        n = len(word)
+        visited = set()
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        h, w = len(board), len(board[0])
+
+        def dfs(level, i, j):
+            if level == n:
+                return True
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < h and -1 < _j < w and (_i, _j) not in visited \
+                        and board[_i][_j] == word[level]:
+                    visited.add((_i, _j))
+                    if dfs(level + 1, _i, _j):
+                        return True
+                    visited.remove((_i, _j))
+            return False
+
+        for i in range(h):
+            for j in range(w):
+                if board[i][j] == word[0]:
+                    visited.add((i, j))
+                    if dfs(1, i, j):
+                        return True
+                    visited.remove((i, j))
+        return False
+
+
 def main():
     sol = Solution()
 

@@ -63,6 +63,36 @@ class Solution:
         return dummy.next
 
 
+class Solution:
+    def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
+        dummy = ListNode(0)
+        dummy.next = head
+        pre, cur = dummy, head
+        for _ in range(m - 1):
+            pre, cur = cur, cur.next
+        p, nxt = cur, cur.next
+        for _ in range(n - m):
+            nxt.next, cur, nxt = cur, nxt, nxt.next
+        pre.next = cur
+        p.next = nxt
+        return dummy.next
+
+
+class Solution:
+    def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
+        dummy = ListNode(0)
+        dummy.next = head
+        pre, start = dummy, head
+        for _ in range(m - 1):
+            pre, start = start, start.next
+        cur, nxt = start, start.next
+        for _ in range(n - m):
+            nxt.next, cur, nxt = cur, nxt, nxt.next
+        pre.next = cur
+        start.next = nxt
+        return dummy.next
+
+
 def main():
     sol = Solution()
     a = ListNode(1)

@@ -1,6 +1,6 @@
 - 完成了leetcode 300题以上打卡
-
 - [数据结构与算法导图](https://github.com/hrz123/algorithm010/blob/master/Week10/数据结构与算法.png)
+- 在开营之前，一次忽然晕倒，导致我嘴唇磕裂，缝了五针。在床上躺了五天。
 
 ## 文档没有脑图的树状结构好记忆
 

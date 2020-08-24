@@ -82,6 +82,42 @@ class Solution:
         return dp(0)
 
 
+class Solution:
+    def mincostTickets(self, days: List[int], costs: List[int]) -> int:
+        n = len(days)
+        import functools
+        @functools.lru_cache(None)
+        def dfs(i):
+            if i == n:
+                return 0
+            res = costs[0] + dfs(i + 1)
+            loc = bisect.bisect_left(days, days[i] + 7, i)
+            res = min(res, costs[1] + dfs(loc))
+            loc = bisect.bisect_left(days, days[i] + 30, i)
+            res = min(res, costs[2] + dfs(loc))
+            return res
+
+        return dfs(0)
+
+
+class Solution:
+    def mincostTickets(self, days: List[int], costs: List[int]) -> int:
+        n = len(days)
+        import functools
+        @functools.lru_cache(None)
+        def dfs(i):
+            if i == n:
+                return 0
+            res = costs[0] + dfs(i + 1)
+            loc = bisect.bisect_left(days, days[i] + 7)
+            res = min(res, costs[1] + dfs(loc))
+            loc = bisect.bisect_left(days, days[i] + 30)
+            res = min(res, costs[2] + dfs(loc))
+            return res
+
+        return dfs(0)
+
+
 def main():
     sol = Solution()
 

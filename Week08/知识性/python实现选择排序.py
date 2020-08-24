@@ -150,6 +150,54 @@ class Solution:
         return arr
 
 
+class Solution:
+    def selectionSort(self, arr: List[int]):
+        n = len(arr)
+        for i in range(n - 1):
+            _min_index = i
+            for j in range(i + 1, n):
+                if arr[j] < arr[_min_index]:
+                    _min_index = j
+            arr[i], arr[_min_index] = arr[_min_index], arr[i]
+        return arr
+
+
+class Solution:
+    def selectionSort(self, arr: List[int]):
+        n = len(arr)
+        for i in range(n - 1):
+            _min_index = i
+            for j in range(i + 1, n):
+                if arr[j] < arr[_min_index]:
+                    _min_index = j
+            arr[_min_index], arr[i] = arr[i], arr[_min_index]
+        return arr
+
+
+class Solution:
+    def selectionSort(self, arr: List[int]):
+        n = len(arr)
+        for i in range(n - 1):
+            _min_index = i
+            for j in range(i + 1, n):
+                if arr[j] < arr[_min_index]:
+                    _min_index = j
+            arr[_min_index], arr[i] = arr[i], arr[_min_index]
+        return arr
+
+
+class Solution:
+    def selectionSort(self, arr: List[int]):
+        n = len(arr)
+        for i in range(n - 1):
+            _min_index = i
+            for j in range(i + 1, n):
+                if arr[j] < arr[_min_index]:
+                    _min_index = j
+            arr[i], arr[_min_index] = arr[_min_index], arr[i]
+        return arr
+
+
 def main():
     sol = Solution()
 

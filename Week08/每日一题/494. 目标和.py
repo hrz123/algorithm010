@@ -166,6 +166,35 @@ class Solution:
         return dp[S + total]
 
 
+# 定义子问题
+# f(i, j) nums[:i]中j这个值能不能取到
+# f(i, j) = f(i-1, j-p) + f(i-1, j+p)
+# 初始化和边界条件
+# f(0, 0) = 1
+# 注意越界
+# 有能取到的最大值和最小值
+# 返回值
+# f(n, S)
+# 优化复杂度
+# 两个数组来回滚动
+# 提前剪枝
+class Solution:
+    def findTargetSumWays(self, nums: List[int], S: int) -> int:
+        total = sum(nums)
+        if S > total or S < -total:
+            return 0
+        size = (total << 1) + 1
+        dp = [0] * total + [1] + [0] * total
+        ndp = [0] * size
+        for num in nums:
+            for i in range(size):
+                plus = dp[i - num] if i - num >= 0 else 0
+                minus = dp[i + num] if i + num < size else 0
+                ndp[i] = plus + minus
+            dp, ndp = ndp, dp
+        return dp[S + total]
+
+
 def main():
     sol = Solution()
 

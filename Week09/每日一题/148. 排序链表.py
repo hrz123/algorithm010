@@ -589,6 +589,336 @@ class Solution:
         return dummy.next
 
 
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        h, length, size = head, 0, 1
+        while h:
+            h, length = h.next, length + 1
+        dummy = ListNode(0)
+        dummy.next = head
+        while size < length:
+            pre, h = dummy, dummy.next
+            while h:
+                h1, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                if i:
+                    break
+                h2, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                c1, c2 = size, size - i
+                while c1 and c2:
+                    if h1.val < h2.val:
+                        pre.next, h1, c1 = h1, h1.next, c1 - 1
+                    else:
+                        pre.next, h2, c2 = h2, h2.next, c2 - 1
+                    pre = pre.next
+                pre.next = h1 if c1 else h2
+                while c1 > 0 or c2 > 0:
+                    pre, c1, c2 = pre.next, c1 - 1, c2 - 1
+                pre.next = h
+            size <<= 1
+        return dummy.next
+
+
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        h, length, size = head, 0, 1
+        while h:
+            h, length = h.next, length + 1
+        dummy = ListNode(0)
+        dummy.next = head
+        while size < length:
+            pre, h = dummy, dummy.next
+            while h:
+                h1, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                if i:
+                    break
+                h2, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                c1, c2 = size, size - i
+                while c1 and c2:
+                    if h1.val < h2.val:
+                        pre.next, h1, c1 = h1, h1.next, c1 - 1
+                    else:
+                        pre.next, h2, c2 = h2, h2.next, c2 - 1
+                    pre = pre.next
+                pre.next = h1 if c1 else h2
+                while c1 > 0 or c2 > 0:
+                    pre, c1, c2 = pre.next, c1 - 1, c2 - 1
+                pre.next = h
+            size <<= 1
+        return dummy.next
+
+
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        h, length, size = head, 0, 1
+        while h:
+            h, length = h.next, length + 1
+        dummy = ListNode(0)
+        dummy.next = head
+        while size < length:
+            pre, h = dummy, dummy.next
+            while h:
+                h1, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                if i:
+                    break
+                h2, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                c1, c2 = size, size - i
+                while c1 and c2:
+                    if h1.val < h2.val:
+                        pre.next, h1, c1 = h1, h1.next, c1 - 1
+                    else:
+                        pre.next, h2, c2 = h2, h2.next, c2 - 1
+                    pre = pre.next
+                pre.next = h1 if c1 else h2
+                while c1 > 0 or c2 > 0:
+                    pre, c1, c2 = pre.next, c1 - 1, c2 - 1
+                pre.next = h
+            size <<= 1
+        return dummy.next
+
+
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        h, length, size = head, 0, 1
+        while h:
+            h, length = h.next, length + 1
+        dummy = ListNode(0)
+        dummy.next = head
+        while size < length:
+            pre, h = dummy, dummy.next
+            while h:
+                h1, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                if i:
+                    break
+                h2, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                c1, c2 = size, size - i
+                while c1 and c2:
+                    if h1.val < h2.val:
+                        pre.next, h1, c1 = h1, h1.next, c1 - 1
+                    else:
+                        pre.next, h2, c2 = h2, h2.next, c2 - 1
+                    pre = pre.next
+                pre.next = h1 if c1 else h2
+                while c1 > 0 or c2 > 0:
+                    pre, c1, c2 = pre.next, c1 - 1, c2 - 1
+                pre.next = h
+            size <<= 1
+        return dummy.next
+
+
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        h, length, size = head, 0, 1
+        while h:
+            h, length = h.next, length + 1
+        dummy = ListNode(0)
+        dummy.next = head
+        while size < length:
+            pre, h = dummy, dummy.next
+            while h:
+                h1, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                if i:
+                    break
+                h2, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                c1, c2 = size, size - i
+                while c1 and c2:
+                    if h1.val < h2.val:
+                        pre.next, h1, c1 = h1, h1.next, c1 - 1
+                    else:
+                        pre.next, h2, c2 = h2, h2.next, c2 - 1
+                    pre = pre.next
+                pre.next = h1 if c1 else h2
+                while c1 > 0 or c2 > 0:
+                    pre, c1, c2 = pre.next, c1 - 1, c2 - 1
+                pre.next = h
+            size <<= 1
+        return dummy.next
+
+
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        h, length, size = head, 0, 1
+        while h:
+            h, length = h.next, length + 1
+        dummy = ListNode(0)
+        dummy.next = head
+        while size < length:
+            pre, h = dummy, dummy.next
+            while h:
+                h1, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                if i:
+                    break
+                h2, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                c1, c2 = size, size - i
+                while c1 and c2:
+                    if h1.val < h2.val:
+                        pre.next, h1, c1 = h1, h1.next, c1 - 1
+                    else:
+                        pre.next, h2, c2 = h2, h2.next, c2 - 1
+                    pre = pre.next
+                pre.next = h1 if c1 else h2
+                while c1 > 0 or c2 > 0:
+                    pre, c1, c2 = pre.next, c1 - 1, c2 - 1
+                pre.next = h
+            size <<= 1
+        return dummy.next
+
+
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        h, length, size = head, 0, 1
+        while h:
+            h, length = h.next, length + 1
+        dummy = ListNode(0)
+        dummy.next = head
+        while size < length:
+            pre, h = dummy, dummy.next
+            while h:
+                h1, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                if i:
+                    break
+                h2, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                c1, c2 = size, size - i
+                while c1 and c2:
+                    if h1.val < h2.val:
+                        pre.next, h1, c1 = h1, h1.next, c1 - 1
+                    else:
+                        pre.next, h2, c2 = h2, h2.next, c2 - 1
+                    pre = pre.next
+                pre.next = h1 if c1 else h2
+                while c1 > 0 or c2 > 0:
+                    pre, c1, c2 = pre.next, c1 - 1, c2 - 1
+                pre.next = h
+            size <<= 1
+        return dummy.next
+
+
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        h, length, size = head, 0, 1
+        while h:
+            h, length = h.next, length + 1
+        dummy = ListNode(0)
+        dummy.next = head
+        while size < length:
+            pre, h = dummy, dummy.next
+            while h:
+                h1, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                if i:
+                    break
+                h2, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                c1, c2 = size, size - i
+                while c1 and c2:
+                    if h1.val < h2.val:
+                        pre.next, h1, c1 = h1, h1.next, c1 - 1
+                    else:
+                        pre.next, h2, c2 = h2, h2.next, c2 - 1
+                    pre = pre.next
+                pre.next = h1 if c1 else h2
+                while c1 > 0 or c2 > 0:
+                    pre, c1, c2 = pre.next, c1 - 1, c2 - 1
+                pre.next = h
+            size <<= 1
+        return dummy.next
+
+
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        h, length, size = head, 0, 1
+        while h:
+            h, length = h.next, length + 1
+        dummy = ListNode(0)
+        dummy.next = head
+        while size < length:
+            pre, h = dummy, dummy.next
+            while h:
+                h1, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                if i:
+                    break
+                h2, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                c1, c2 = size, size - i
+                while c1 and c2:
+                    if h1.val < h2.val:
+                        pre.next, h1, c1 = h1, h1.next, c1 - 1
+                    else:
+                        pre.next, h2, c2 = h2, h2.next, c2 - 1
+                    pre = pre.next
+                pre.next = h1 if c1 else h2
+                while c1 > 0 or c2 > 0:
+                    pre, c1, c2 = pre.next, c1 - 1, c2 - 1
+                pre.next = h
+            size <<= 1
+        return dummy.next
+
+
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        h, length, size = head, 0, 1
+        while h:
+            h, length = h.next, length + 1
+        dummy = ListNode(0)
+        dummy.next = head
+        while size < length:
+            pre, h = dummy, dummy.next
+            while h:
+                h1, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                if i:
+                    break
+                h2, i = h, size
+                while h and i:
+                    h, i = h.next, i - 1
+                c1, c2 = size, size - i
+                while c1 and c2:
+                    if h1.val < h2.val:
+                        pre.next, h1, c1 = h1, h1.next, c1 - 1
+                    else:
+                        pre.next, h2, c2 = h2, h2.next, c2 - 1
+                    pre = pre.next
+                pre.next = h1 if c1 else h2
+                while c1 > 0 or c2 > 0:
+                    pre, c1, c2 = pre.next, c1 - 1, c2 - 1
+                pre.next = h
+            size <<= 1
+        return dummy.next
+
+
 def main():
     pass
 

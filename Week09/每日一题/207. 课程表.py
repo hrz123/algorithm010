@@ -306,6 +306,136 @@ class Solution:
         return True
 
 
+class Solution:
+    def canFinish(self, numCourses: int,
+                  prerequisites: List[List[int]]) -> bool:
+        edge_map = defaultdict(list)
+        for e in prerequisites:
+            edge_map[e[1]].append(e[0])
+        flags = [0] * numCourses
+
+        def dfs(i):
+            if flags[i] == 1:
+                return False
+            if flags[i] == -1:
+                return True
+            flags[i] = 1
+            for j in edge_map[i]:
+                if not dfs(j):
+                    return False
+            flags[i] = -1
+            return True
+
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+        return True
+
+
+class Solution:
+    def canFinish(self, numCourses: int,
+                  prerequisites: List[List[int]]) -> bool:
+        edge_map = defaultdict(list)
+        for e in prerequisites:
+            edge_map[e[1]].append(e[0])
+        flags = [0] * numCourses
+
+        def dfs(i):
+            if flags[i] == 1:
+                return False
+            if flags[i] == -1:
+                return True
+            flags[i] = 1
+            for j in edge_map[i]:
+                if not dfs(j):
+                    return False
+            flags[i] = -1
+            return True
+
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+        return True
+
+
+class Solution:
+    def canFinish(self, numCourses: int,
+                  prerequisites: List[List[int]]) -> bool:
+        edge_map = defaultdict(list)
+        for e in prerequisites:
+            edge_map[e[1]].append(e[0])
+        flags = [0] * numCourses
+
+        def dfs(i):
+            if flags[i] == 1:
+                return False
+            if flags[i] == -1:
+                return True
+            flags[i] = 1
+            for j in edge_map[i]:
+                if not dfs(j):
+                    return False
+            flags[i] = -1
+            return True
+
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+        return True
+
+
+class Solution:
+    def canFinish(self, numCourses: int,
+                  prerequisites: List[List[int]]) -> bool:
+        flags = [0] * numCourses
+        neigh = defaultdict(list)
+        for i, j in prerequisites:
+            neigh[j].append(i)
+
+        def dfs(i):
+            if flags[i] == 1:
+                return False
+            if flags[i] == -1:
+                return True
+            flags[i] = 1
+            for j in neigh[i]:
+                if not dfs(j):
+                    return False
+            flags[i] = -1
+            return True
+
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+        return True
+
+
+class Solution:
+    def canFinish(self, numCourses: int,
+                  prerequisites: List[List[int]]) -> bool:
+        flags = [0] * numCourses
+        neigh = defaultdict(list)
+        for i, j in prerequisites:
+            neigh[j].append(i)
+
+        def dfs(i):
+            if flags[i] == -1:
+                return True
+            if flags[i] == 1:
+                return False
+            flags[i] = 1
+            for j in neigh[i]:
+                if not dfs(j):
+                    return False
+            flags[i] = -1
+            return True
+
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+        return True
+
+
 def main():
     sol = Solution()
 

@@ -148,6 +148,34 @@ class Solution:
         return f20
 
 
+# 定义子问题
+# f(i, 012, 01)为第i天卖出了012次，手里有几股股票的最大收益
+# f(i, 0, 0) = f(i-1, 0, 0)
+# f(i, 0, 1) = f(i-1, 0, 1), f(i-1, 0, 0) - p,
+# f(i, 1, 0) = f(i-1, 1, 0), f(i-1, 0, 1) + p
+# f(i, 1, 1) = f(i-1, 1, 1), f(i-1, 1, 0) - p
+# f(i, 2, 0) = f(i-1, 2, 0), f(i-1, 1, 1) + p
+# 初始化
+# 我们可以初始化
+# f(01）， f(11)为float('-inf')
+# f(10)f(20)为0
+# 返回值
+# 返回 f20
+# 优化复杂度，我们只需要4个变量
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        f01 = f11 = float('-inf')
+        f10 = f20 = 0
+        for p in prices:
+            f01, f10, f11, f20 = (
+                max(f01, -p),
+                max(f10, f01 + p),
+                max(f11, f10 - p),
+                max(f20, f11 + p)
+            )
+        return f20
+
+
 def main():
     sol = Solution()
 

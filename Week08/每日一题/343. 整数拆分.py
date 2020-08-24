@@ -102,6 +102,30 @@ class Solution:
         return 3 ** div * 2
 
 
+class Solution:
+    def integerBreak(self, n: int) -> int:
+        if n <= 3:
+            return n - 1
+        div, mod = divmod(n, 3)
+        if mod == 0:
+            return 3 ** div
+        if mod == 1:
+            return 3 ** (div - 1) * 4
+        return 3 ** div * 2
+
+
+# f(i) = max(j * (i-j), j * f(i-j)), for j in range(2, i-2)
+# 初始化
+# f(2) = 1
+class Solution:
+    def integerBreak(self, n: int) -> int:
+        dp = [0] * (n + 1)
+        for i in range(2, n + 1):
+            for j in range(i):
+                dp[i] = max(dp[i], j * (i - j), j * dp[i - j])
+        return dp[n]
+
+
 def main():
     sol = Solution()
 

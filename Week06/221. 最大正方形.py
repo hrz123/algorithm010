@@ -182,6 +182,34 @@ class Solution:
         return side * side
 
 
+# f(i, j)表示以i， j索引为右下角的最打正方形的边长
+# f(i, j) = min(f(i-1, j), f(i, j-1), f(i-1, j-1)) + 1 if a[i, j] == '1'
+# else f(i, j) = 0
+# 初始化和边界条件
+# f(0, j) == 1 if a[0, j] == 1
+# 加入哨兵
+# 我们可以加入一层只有0的哨兵
+# 返回值 max(f(i, j)) ** 2
+# 优化复杂度，只需要两个数组来回滚动
+class Solution:
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        m, n = len(matrix), len(matrix[0])
+        dp = [0] * (n + 1)
+        ndp = [0] * (n + 1)
+        max_side = 0
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == '1':
+                    ndp[j + 1] = min(dp[j + 1], dp[j], ndp[j]) + 1
+                    max_side = max(max_side, ndp[j + 1])
+                else:
+                    ndp[j + 1] = 0
+            dp, ndp = ndp, dp
+        return max_side * max_side
+
+
 def main():
     sol = Solution()
 

@@ -65,6 +65,46 @@ class Solution:
         return res
 
 
+class Solution:
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        res = []
+        n = len(s)
+
+        def dfs(i, k, pre):
+            if i == n and k == 4:
+                res.append(pre)
+                return
+            for j in range(i, min(i + 3, n)):
+                if int(s[i:j + 1]) <= 255 and (j == i or s[i] != '0'):
+                    if k < 3:
+                        dfs(j + 1, k + 1, pre + s[i:j + 1] + '.')
+                    if k == 3:
+                        dfs(j + 1, k + 1, pre + s[i:j + 1])
+
+        dfs(0, 0, '')
+        return res
+
+
+class Solution:
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        n = len(s)
+        res = []
+
+        def dfs(i, k, pre):
+            if i == n and k == 4:
+                res.append(pre)
+                return
+            for j in range(i + 1, min(i + 3, n) + 1):
+                if int(s[i:j]) <= 255 and (j == i + 1 or s[i] != '0'):
+                    if k == 3:
+                        dfs(j, 4, pre + s[i:j])
+                    elif k < 3:
+                        dfs(j, k + 1, pre + s[i:j] + '.')
+
+        dfs(0, 0, '')
+        return res
+
+
 def main():
     sol = Solution()
     s = "25525511135"

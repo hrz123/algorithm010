@@ -35,6 +35,17 @@ class Solution:
         return s
 
 
+class Solution:
+    def minFlips(self, target: str) -> int:
+        p = '0'
+        res = 0
+        for c in target:
+            if c != p:
+                res += 1
+                p = c
+        return res
+
+
 def main():
     sol = Solution()
 

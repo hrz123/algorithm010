@@ -164,6 +164,26 @@ class Solution:
         return res
 
 
+class Solution:
+    def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:
+        m, n = len(matrix), len(matrix[0])
+        res = float('-inf')
+        for left in range(n):
+            total = [0] * m
+            for right in range(left, n):
+                for i in range(m):
+                    total[i] += matrix[i][right]
+                pre = [0]
+                p = 0
+                for row in total:
+                    p += row
+                    loc = bisect.bisect_left(pre, p - k)
+                    if loc != len(pre):
+                        res = max(p - pre[loc], res)
+                    bisect.insort(pre, p)
+        return res
+
+
 def main():
     sol = Solution()
     matrix = [[1, 0, 1], [0, -2, 3]]

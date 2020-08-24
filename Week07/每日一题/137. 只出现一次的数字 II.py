@@ -67,6 +67,18 @@ class Solution:
         return x1
 
 
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        x1 = x2 = 0
+        for num in nums:
+            x2 ^= (x1 & num)
+            x1 ^= num
+            mask = ~(x2 & x1)
+            x2 &= mask
+            x1 &= mask
+        return x1
+
+
 def main():
     sol = Solution()
 

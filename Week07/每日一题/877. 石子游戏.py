@@ -45,6 +45,11 @@ class Solution:
         return True
 
 
+class Solution:
+    def stoneGame(self, piles: List[int]) -> bool:
+        return True
+
+
 def main():
     sol = Solution()
 

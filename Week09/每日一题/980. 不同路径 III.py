@@ -147,8 +147,75 @@ class Solution:
         return res
 
 
+class Solution:
+    def uniquePathsIII(self, grid: List[List[int]]) -> int:
+        res = 0
+        start = end = None
+        empty = set()
+        m, n = len(grid), len(grid[0])
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 0:
+                    empty.add((i, j))
+                elif grid[i][j] == 1:
+                    start = (i, j)
+                elif grid[i][j] == 2:
+                    end = (i, j)
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+
+        def dfs(i, j):
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if not empty:
+                    if (_i, _j) == end:
+                        nonlocal res
+                        res += 1
+                elif (_i, _j) in empty:
+                    empty.remove((_i, _j))
+                    dfs(_i, _j)
+                    empty.add((_i, _j))
+
+        dfs(start[0], start[1])
+        return res
+
+
+class Solution:
+    def uniquePathsIII(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        start = end = None
+        empty = set()
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    start = (i, j)
+                elif grid[i][j] == 2:
+                    end = (i, j)
+                elif grid[i][j] == 0:
+                    empty.add((i, j))
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        res = 0
+
+        def dfs(i, j):
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if not empty:
+                    if (_i, _j) == end:
+                        nonlocal res
+                        res += 1
+                elif (_i, _j) in empty:
+                    empty.remove((_i, _j))
+                    dfs(_i, _j)
+                    empty.add((_i, _j))
+
+        dfs(start[0], start[1])
+        return res
+
+
 def main():
-    pass
+    sol = Solution()
+    grid = [[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, -1]]
+    res = sol.uniquePathsIII(grid)
+    print(res)
 
 
 if __name__ == '__main__':

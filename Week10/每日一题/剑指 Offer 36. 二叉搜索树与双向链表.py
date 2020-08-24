@@ -59,6 +59,54 @@ class Solution:
         return head
 
 
+class Solution:
+    def treeToDoublyList(self, root: 'Node') -> 'Node':
+        if not root:
+            return root
+        stack = []
+        while root:
+            stack.append(root)
+            root = root.left
+        head = pre = root = stack.pop()
+        root = root.right
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            pre.right = root
+            root.left = pre
+            pre = root
+            root = root.right
+        pre.right = head
+        head.left = pre
+        return head
+
+
+class Solution:
+    def treeToDoublyList(self, root: 'Node') -> 'Node':
+        if not root:
+            return root
+        stack = []
+        while root:
+            stack.append(root)
+            root = root.left
+        head = pre = stack.pop()
+        root = pre.right
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            pre.right = root
+            root.left = pre
+            pre = root
+            root = root.right
+        pre.right = head
+        head.left = pre
+        return head
+
+
 def main():
     pass
 

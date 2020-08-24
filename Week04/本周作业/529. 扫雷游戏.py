@@ -426,6 +426,77 @@ class Solution:
         return c
 
 
+class Solution:
+    dirs = ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, -1),
+            (-1, 1))
+
+    def updateBoard(self, board: List[List[str]], click: List[int]) -> List[
+        List[str]]:
+        m, n = len(board), len(board[0])
+
+        x, y = click
+        self.dfs(board, m, n, x, y)
+        return board
+
+    def dfs(self, board, m, n, x, y):
+        if board[x][y] == 'E':
+            count = self.count(board, m, n, x, y)
+            if count:
+                board[x][y] = str(count)
+            else:
+                board[x][y] = 'B'
+                for dx, dy in self.dirs:
+                    _x, _y = x + dx, y + dy
+                    if -1 < _x < m and -1 < _y < n and board[_x][_y] == 'E':
+                        self.dfs(board, m, n, _x, _y)
+        elif board[x][y] == 'M':
+            board[x][y] = 'X'
+
+    def count(self, board, m, n, x, y):
+        c = 0
+        for dx, dy in self.dirs:
+            _x, _y = x + dx, y + dy
+            if -1 < _x < m and -1 < _y < n and board[_x][_y] == 'M':
+                c += 1
+        return c
+
+
+class Solution:
+    def updateBoard(self, board, click):
+        row, col = click[0], click[1]
+        dirs = (
+            (-1, 0), (1, 0), (0, 1), (0, -1), (-1, 1), (-1, -1), (1, 1),
+            (1, -1))
+        if 0 <= row < len(board) and 0 <= col < len(board[0]):
+            if board[row][col] == 'M':
+                board[row][col] = 'X'
+            elif board[row][col] == 'E':
+                n = sum([board[row + r][col + c] == 'M' for r, c in dirs if
+                         0 <= row + r < len(board) and 0 <= col + c < len(
+                             board[0])])
+                board[row][col] = n and str(n) or 'B'
+                for r, c in dirs * (not n):
+                    self.updateBoard(board, [row + r, col + c])
+        return board
+
+
+class Solution:
+    def updateBoard(self, board, click):
+        row, col = click
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, -1),
+                (-1, 1))
+        if 0 <= row < len(board) and 0 <= col < len(board[0]):
+            if board[row][col] == 'M':
+                board[row][col] = 'X'
+            elif board[row][col] == 'E':
+                n = sum(board[row + r][col + c] == 'M' for r, c in dirs if 0 <=
+                        row + r < len(board) and 0 <= col + c < len(board[0]))
+                board[row][col] = n and str(n) or 'B'
+                for r, c in dirs * (not n):
+                    self.updateBoard(board, [row + r, col + c])
+        return board
+
+
 def main():
     sol = Solution()
 

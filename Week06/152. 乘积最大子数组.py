@@ -135,6 +135,33 @@ class Solution:
         return res
 
 
+# 定义子问题
+# f(i,01)为nums[:i]的最大和最小连续子数组乘积，且以索引i为结尾
+# if nums[i] > 0
+# f(i, 0) = max(f(i-1, 0) * n, n)
+# f(i, 1) = min(f(i-1, 1) * n, n)
+# else
+# f(i, 0) = max(f(i-1, 1) * n , n)
+# f(i, 1) = min(f(i-1, 0) * n , n)
+# 初始化和边界条件
+# f(i, 0), f(i, 1)都可以初始化为1
+# 返回值
+# max(f(i, 0))
+# 优化复杂度
+# 只需要两个变量
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        f0, f1 = 1, 1
+        res = float('-inf')
+        for num in nums:
+            if num > 0:
+                f0, f1 = max(f0 * num, num), min(f1 * num, num)
+            else:
+                f0, f1 = max(f1 * num, num), min(f0 * num, num)
+            res = max(res, f0)
+        return res
+
+
 def main():
     sol = Solution()
 

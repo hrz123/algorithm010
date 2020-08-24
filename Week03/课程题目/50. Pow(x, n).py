@@ -279,6 +279,24 @@ class Solution:
         return helper(n)
 
 
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        def helper(n):
+            ans = 1
+            x_contribute = x
+            while n:
+                if n & 1:
+                    ans *= x_contribute
+                x_contribute *= x_contribute
+                n >>= 1
+            return ans
+
+        if n < 0:
+            n = -n
+            x = 1 / x
+        return helper(n)
+
+
 def main():
     x = 2
     n = 10

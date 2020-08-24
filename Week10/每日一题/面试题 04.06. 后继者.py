@@ -19,6 +19,46 @@ class Solution:
         return left if left else root
 
 
+class Solution:
+    def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> TreeNode:
+        if not root:
+            return root
+        if p.val >= root.val:
+            return self.inorderSuccessor(root.right, p)
+        left = self.inorderSuccessor(root.left, p)
+        return left if left else root
+
+
+class Solution:
+    def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> TreeNode:
+        if not root:
+            return root
+        if p.val >= root.val:
+            return self.inorderSuccessor(root.right, p)
+        left = self.inorderSuccessor(root.left, p)
+        return left if left else root
+
+
+class Solution:
+    def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> TreeNode:
+        if not root:
+            return root
+        if p.val >= root.val:
+            return self.inorderSuccessor(root.right, p)
+        left = self.inorderSuccessor(root.left, p)
+        return left if left else root
+
+
+class Solution:
+    def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> TreeNode:
+        if not root:
+            return root
+        if p.val >= root.val:
+            return self.inorderSuccessor(root.right, p)
+        left = self.inorderSuccessor(root.left, p)
+        return left if left else root
+
+
 def main():
     pass
 

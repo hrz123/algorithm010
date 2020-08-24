@@ -184,6 +184,66 @@ class Solution:
         return dummy.next
 
 
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        while head.next:
+            if head.next.val > head.val:
+                head = head.next
+            else:
+                pre, nxt = dummy, dummy.next
+                while nxt.val < head.next.val:
+                    pre, nxt = nxt, nxt.next
+                tmp = head.next
+                head.next = head.next.next
+                pre.next = tmp
+                tmp.next = nxt
+        return dummy.next
+
+
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        while head.next:
+            if head.next.val > head.val:
+                head = head.next
+            else:
+                pre, nxt = dummy, dummy.next
+                while nxt.val < head.next.val:
+                    pre, nxt = nxt, nxt.next
+                tmp = head.next
+                head.next = head.next.next
+                pre.next = tmp
+                tmp.next = nxt
+        return dummy.next
+
+
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        while head.next:
+            if head.next.val > head.val:
+                head = head.next
+            else:
+                pre, cur = dummy, dummy.next
+                while cur.val < head.next.val:
+                    pre, cur = cur, cur.next
+                tmp = head.next
+                head.next = head.next.next
+                tmp.next = cur
+                pre.next = tmp
+        return dummy.next
+
+
 def main():
     sol = Solution()
     head = ListNode(4)

@@ -118,6 +118,26 @@ class Solution:
         return res
 
 
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[
+        List[int]]:
+        res = []
+        n = len(candidates)
+        candidates.sort()
+
+        def dfs(i, val, pre):
+            if val == target:
+                res.append(pre)
+                return
+            for j in range(i, n):
+                if j == i or candidates[j] != candidates[j - 1]:
+                    if val + candidates[j] <= target:
+                        dfs(j + 1, val + candidates[j], pre + [candidates[j]])
+
+        dfs(0, 0, [])
+        return res
+
+
 def main():
     sol = Solution()
 

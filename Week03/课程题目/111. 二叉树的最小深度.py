@@ -279,6 +279,24 @@ class Solution:
                 deq.append((root.right, level + 1))
 
 
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        q, nq = [root], []
+        res = 0
+        while q:
+            res += 1
+            for node in q:
+                if not node.left and not node.right:
+                    return res
+                if node.left:
+                    nq.append(node.left)
+                if node.right:
+                    nq.append(node.right)
+            q, nq = nq, []
+
+
 def main():
     root = TreeNode(3)
     root.left = TreeNode(9)

@@ -35,6 +35,42 @@ class Solution:
         return res
 
 
+class Solution:
+    def commonChars(self, A: List[str]) -> List[str]:
+        if not A:
+            return []
+        counter = defaultdict(int)
+        for c in A[0]:
+            counter[c] += 1
+        for w in A[1:]:
+            for c in counter:
+                if w.count(c) < counter[c]:
+                    counter[c] = w.count(c)
+        res = []
+        for c in counter:
+            for _ in range(counter[c]):
+                res.append(c)
+        return res
+
+
+class Solution:
+    def commonChars(self, A: List[str]) -> List[str]:
+        if not A:
+            return []
+        counter = defaultdict(int)
+        for c in A[0]:
+            counter[c] += 1
+        for w in A[1:]:
+            for c in counter:
+                if w.count(c) < counter[c]:
+                    counter[c] = w.count(c)
+        res = []
+        for c in counter:
+            for _ in range(counter[c]):
+                res.append(c)
+        return res
+
+
 def main():
     sol = Solution()
     A = ["bella", "label", "roller"]

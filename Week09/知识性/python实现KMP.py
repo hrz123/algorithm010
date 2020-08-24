@@ -430,11 +430,76 @@ class Solution:
         return lps
 
 
+class Solution:
+    def KMPSearch(self, p, s):
+        if p == "":
+            return 0
+        m, n = len(p), len(s)
+        lps = self.get_lps(p, m)
+        j = 0
+        for i in range(n):
+            while j != 0 and s[i] != p[j]:
+                j = lps[j - 1] + 1
+            if s[i] == p[j]:
+                j += 1
+            if j == m:
+                print("find at {}".format(i - m + 1))
+                j = lps[j - 1] + 1
+        return -1
+
+    def get_lps(self, p, m):
+        lps = [-1] * m
+        k = -1
+        for i in range(1, m):
+            while k != -1 and p[i] != p[k + 1]:
+                k = lps[k]
+            if p[i] == p[k + 1]:
+                k += 1
+            lps[i] = k
+        return lps
+
+
+class Solution:
+    def KMPSearch(self, p, s):
+        if not p:
+            return 0
+        m, n = len(p), len(s)
+        lps = self.get_lps(p, m)
+        j = 0
+        for i in range(n):
+            while j != 0 and s[i] != p[j]:
+                j = lps[j - 1] + 1
+            if s[i] == p[j]:
+                j += 1
+            if j == m:
+                # return i - m + 1
+                print("find at {}".format(i - m + 1))
+                j = lps[j - 1] + 1
+        return -1
+
+    def get_lps(self, p, m):
+        lps = [-1] * m
+        k = -1
+        for i in range(1, m):
+            while k != -1 and p[i] != p[k + 1]:
+                k = lps[k]
+            if p[i] == p[k + 1]:
+                k += 1
+            lps[i] = k
+        print(lps)
+        return lps
+
+
 def main():
     sol = Solution()
 
     s = "abcruizheuhuruizheaasdasd"
-    p = "ruizhe"
+    p = "banana"
+    res = sol.KMPSearch(p, s)
+    print(res)
+
+    s = "abcruizheuhuruizheaasdasd"
+    p = ""
     res = sol.KMPSearch(p, s)
     print(res)
 

@@ -1,4 +1,4 @@
-# 5484. 找出第 N 个二进制字符串中的第 K 位.py
+# 1545. 找出第 N 个二进制字符串中的第 K 位.py
 class Solution:
     def findKthBit(self, n: int, k: int) -> str:
         if n == 1 and k == 1:

@@ -283,6 +283,42 @@ class Solution:
         return list(res)
 
 
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        if not board or not board[0]:
+            return []
+        trie = {}
+        for w in words:
+            node = trie
+            for c in w:
+                node = node.setdefault(c, {})
+            node['#'] = True
+        res = []
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        m, n = len(board), len(board[0])
+        visited = set()
+
+        def dfs(node, i, j, pre):
+            if '#' in node:
+                res.append(pre)
+                node.pop('#')
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and board[_i][_j] in node and \
+                        (_i, _j) not in visited:
+                    visited.add((_i, _j))
+                    dfs(node[board[_i][_j]], _i, _j, pre + board[_i][_j])
+                    visited.remove((_i, _j))
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] in trie:
+                    visited.add((i, j))
+                    dfs(trie[board[i][j]], i, j, board[i][j])
+                    visited.remove((i, j))
+        return res
+
+
 def main():
     sol = Solution()
 

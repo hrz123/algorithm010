@@ -33,9 +33,28 @@ class Solution:
         return res
 
 
+class Solution:
+    def grayCode(self, n: int) -> List[int]:
+        res = [0]
+        for i in range(n):
+            res += [num + (1 << i) for num in reversed(res)]
+        return res
+
+
+class Solution:
+    def grayCode(self, n: int) -> List[int]:
+        res = [0]
+        for i in range(n):
+            res += [num + (1 << i) for num in reversed(res)]
+        return res
+
+
 def main():
     sol = Solution()
     n = 2
+    res = sol.grayCode(n)
+    print(res)
+    n = 3
     res = sol.grayCode(n)
     print(res)
 

@@ -261,6 +261,33 @@ class Solution:
         return -1
 
 
+class Solution:
+    def slidingPuzzle(self, board: List[List[int]]) -> int:
+        start = ''.join([str(e) for row in board for e in row])
+        end = '123450'
+        if start == end:
+            return 0
+        bq, eq, nq, visited, res = {(start, start.index('0'))}, {(end, 5)}, \
+                                   set(), set(), 0
+        moves = ((1, 3), (0, 2, 4), (1, 5), (0, 4), (1, 3, 5), (2, 4))
+        while bq:
+            visited |= bq
+            res += 1
+            for x, idx in bq:
+                for nid in moves[idx]:
+                    nx = list(x)
+                    nx[idx], nx[nid] = nx[nid], nx[idx]
+                    nx = ''.join(nx)
+                    if (nx, nid) not in visited:
+                        if (nx, nid) in eq:
+                            return res
+                        nq.add((nx, nid))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
 def main():
     sol = Solution()
 

@@ -60,6 +60,22 @@ class Solution:
         return f2
 
 
+# f(i) = f(i-1) +f(i-2) +f(i-3)
+# 初始化和边界条件
+# f(1) = 1
+# f(0) = 1
+# f(2) = 2
+# f(3) = 4
+class Solution:
+    def waysToStep(self, n: int) -> int:
+        if n < 3:
+            return n
+        f0, f1, f2 = 1, 1, 2
+        for _ in range(n - 2):
+            f0, f1, f2 = f1, f2, (f0 + f1 + f2) % 1000000007
+        return f2
+
+
 def main():
     sol = Solution()
     n = 4

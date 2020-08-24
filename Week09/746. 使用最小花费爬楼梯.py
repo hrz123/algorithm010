@@ -82,6 +82,25 @@ class Solution:
         return min(f0, f1)
 
 
+# f(i)定义到第i层的最小花费
+# f(i) = min(f(i-1), f(i-2)) + p
+# 初始化和边界条件
+# f(0) = a[0]
+# f(1) = a[1]
+# f(2) = min(f(0),f(1)) +a[2]
+# 增加哨兵的话我们可以用0初始化
+# 返回值
+# min(f(n-1), f(n-2))
+# 优化复杂度
+# 需要两个变量
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        f0, f1 = 0, 0
+        for c in cost:
+            f0, f1 = f1, min(f0, f1) + c
+        return min(f0, f1)
+
+
 def main():
     sol = Solution()
 

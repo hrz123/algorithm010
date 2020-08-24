@@ -163,6 +163,21 @@ class Solution:
         return res
 
 
+class Solution:
+    def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
+        counter = [0] * 1001
+        for num in arr1:
+            counter[num] += 1
+        res = []
+        for num in arr2:
+            res.extend([num] * counter[num])
+            counter[num] = 0
+        for num in range(1001):
+            if counter[num]:
+                res.extend([num] * counter[num])
+        return res
+
+
 def main():
     sol = Solution()
 

@@ -180,6 +180,20 @@ class Solution:
         return tuple(count)
 
 
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        mem = collections.defaultdict(list)
+        for s in strs:
+            mem[self.count(s)].append(s)
+        return list(mem.values())
+
+    def count(self, s):
+        count = [0] * 26
+        for c in s:
+            count[ord(c) - ord('a')] += 1
+        return tuple(count)
+
+
 def main():
     strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
     sol = Solution()
