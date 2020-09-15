@@ -67,16 +67,16 @@ class Solution:
             return TreeNode(head.val)
         # here we get the middle point,
         # even case, like '1234', slow points to '2',
-        # '3' is root, '12' belongs to l, '4' is r
+        # '3' is root, '12' belongs to m, '4' is r
         # odd case, like '12345', slow points to '2', '12'
-        # belongs to l, '3' is root, '45' belongs to r
+        # belongs to m, '3' is root, '45' belongs to r
         slow, fast = head, head.next.next
         while fast and fast.next:
             fast = fast.next.next
             slow = slow.next
         # tmp points to root
         tmp = slow.next
-        # cut down the l child
+        # cut down the m child
         slow.next = None
         root = TreeNode(tmp.val)
         root.left = self.sortedListToBST(head)
@@ -285,6 +285,146 @@ class Solution:
             return root
 
         return convertBST(0, length - 1)
+
+
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        h, size = head, 0
+        while h:
+            h, size = h.next, size + 1
+
+        def convertBST(l, r):
+            if l > r:
+                return
+            mid = l + (r - l >> 1)
+            left = convertBST(l, mid - 1)
+            nonlocal head
+            root = TreeNode(head.val)
+            head = head.next
+            root.left = left
+            root.right = convertBST(mid + 1, r)
+            return root
+
+        return convertBST(0, size - 1)
+
+
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        def convertBST(l, r):
+            if l > r:
+                return
+            mid = l + (r - l >> 1)
+            left = convertBST(l, mid - 1)
+            nonlocal head
+            root = TreeNode(head.val)
+            head = head.next
+            root.left = left
+            root.right = convertBST(mid + 1, r)
+            return root
+
+        h, size = head, 0
+        while h:
+            h, size = h.next, size + 1
+        return convertBST(0, size - 1)
+
+
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        if not head:
+            return
+        if not head.next:
+            return TreeNode(head.val)
+
+        slow, fast = head, head.next.next
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+
+        mid, slow.next = slow.next, None
+        root = TreeNode(mid.val)
+        root.left, root.right = self.sortedListToBST(
+            head), self.sortedListToBST(mid.next)
+        return root
+
+
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        def convertBST(l, r):
+            if l > r:
+                return
+            mid = l + (r - l >> 1)
+            left = convertBST(l, mid - 1)
+            nonlocal head
+            root = TreeNode(head.val)
+            head = head.next
+            root.left = left
+            root.right = convertBST(mid + 1, r)
+            return root
+
+        h, size = head, 0
+        while h:
+            h, size = h.next, size + 1
+        return convertBST(0, size - 1)
+
+
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        def convertBST(l, r):
+            if l > r:
+                return
+            mid = l + (r - l >> 1)
+            left = convertBST(l, mid - 1)
+            nonlocal head
+            root = TreeNode(head.val)
+            head = head.next
+            root.left = left
+            root.right = convertBST(mid + 1, r)
+            return root
+
+        h, size = head, 0
+        while h:
+            h, size = h.next, size + 1
+        return convertBST(0, size - 1)
+
+
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        def convertBST(l, r):
+            if l > r:
+                return
+            mid = l + (r - l >> 1)
+            left = convertBST(l, mid - 1)
+            nonlocal head
+            root = TreeNode(head.val)
+            head = head.next
+            root.left = left
+            root.right = convertBST(mid + 1, r)
+            return root
+
+        h, size = head, 0
+        while h:
+            h, size = h.next, size + 1
+        return convertBST(0, size - 1)
+
+
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        def convertBST(l, r):
+            if l > r:
+                return
+            mid = l + (r - l >> 1)
+            left = convertBST(l, mid - 1)
+            nonlocal head
+            root = TreeNode(head.val)
+            head = head.next
+            root.left = left
+            root.right = convertBST(mid + 1, r)
+            return root
+
+        h, size = head, 0
+        while h:
+            h, size = h.next, size + 1
+        return convertBST(0, size - 1)
 
 
 def main():

@@ -319,15 +319,51 @@ class Solution:
         return res
 
 
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        if not board or not board[0]:
+            return []
+
+        def dfs(i, j, node, w):
+            if '#' in node:
+                res.append(w)
+                node.pop('#')
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and (_i, _j) not in visited \
+                        and board[_i][_j] in node:
+                    visited.add((_i, _j))
+                    dfs(_i, _j, node[board[_i][_j]], w + board[_i][_j])
+                    visited.remove((_i, _j))
+
+        m, n = len(board), len(board[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        trie = {}
+        for w in words:
+            node = trie
+            for c in w:
+                node = node.setdefault(c, {})
+            node['#'] = ''
+        res = []
+        visited = set()
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] in trie:
+                    visited.add((i, j))
+                    dfs(i, j, trie[board[i][j]], board[i][j])
+                    visited.remove((i, j))
+        return res
+
+
 def main():
     sol = Solution()
 
     words = ["oath", "pea", "eat", "rain"]
     board = [
-        ['o', 'a', 'a', 'n'],
+        ['o', 'a', 'a', 'm'],
         ['e', 't', 'a', 'e'],
         ['start', 'h', 'k', 'row'],
-        ['start', 'f', 'l', 'v']
+        ['start', 'f', 'm', 'v']
     ]
     res = sol.findWords(board, words)
     print(res)

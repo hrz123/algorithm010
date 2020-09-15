@@ -1,5 +1,6 @@
 # 329. 矩阵中的最长递增路径.py
 import itertools
+from functools import lru_cache
 from typing import List
 
 
@@ -241,7 +242,7 @@ class Solution:
             for di, dj in dirs:
                 _i, _j = i + di, j + dj
                 if -1 < _i < m and -1 < _j < n and matrix[_i][_j] > val:
-                    res = max(res, 1 + dfs(_i, _j))
+                    res += max(res, 1 + dfs(_i, _j))
             memo[i, j] = res
             return res
 
@@ -253,6 +254,54 @@ class Solution:
                 else:
                     res = max(res, dfs(i, j))
         return res
+
+
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        m, n = len(matrix), len(matrix[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        import functools
+        @functools.lru_cache(None)
+        def dfs(i, j):
+            val = matrix[i][j]
+            res = 1
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and matrix[_i][_j] > val:
+                    res = max(res, 1 + dfs(_i, _j))
+            return res
+
+        length = 1
+        for i in range(m):
+            for j in range(n):
+                length = max(length, dfs(i, j))
+        return length
+
+
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        m, n = len(matrix), len(matrix[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+
+        @lru_cache(None)
+        def dfs(i, j):
+            val = matrix[i][j]
+            res = 1
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and matrix[_i][_j] > val:
+                    res = max(res, 1 + dfs(_i, _j))
+            return res
+
+        ans = 1
+        for i in range(m):
+            for j in range(n):
+                ans = max(ans, dfs(i, j))
+        return ans
 
 
 def main():

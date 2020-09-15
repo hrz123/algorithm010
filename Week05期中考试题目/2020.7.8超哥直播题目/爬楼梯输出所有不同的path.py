@@ -40,16 +40,16 @@ class Solution:
 
 
 # class Solution:
-#     def climbStairs(self, n: int) -> List[List[int]]:
+#     def climbStairs(self, m: int) -> List[List[int]]:
 #
 #         a = [[1]]
 #         b = [[1, 1], [2]]
-#         if n == 1:
+#         if m == 1:
 #             return a
-#         if n == 2:
+#         if m == 2:
 #             return b
 #
-#         for start in range(n - 2):
+#         for start in range(m - 2):
 #             a, b = b, [e + [2] for e in a] + [e + [1] for e in b]
 #         return b
 
@@ -84,6 +84,23 @@ class Solution:
         for s in steps:
             if n >= s and (not pre or pre[0] != s):
                 self.__dfs(n - s, steps, [s] + pre, res)
+
+
+class Solution:
+    def climbStairs(self, n: int, steps: List[int]) -> List[List[int]]:
+        res = []
+
+        @lru_cache(None)
+        def dfs(n, ans):
+            if n == 0:
+                res.append(ans)
+                return
+            for step in steps:
+                if n >= step:
+                    dfs(n - step, (step,) + ans)
+
+        dfs(n, ())
+        return [list(e) for e in res]
 
 
 def main():

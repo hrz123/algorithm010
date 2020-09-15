@@ -152,6 +152,19 @@ class Solution:
         return steps
 
 
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        start = 0
+        cur_max = 0
+        steps = 0
+        for i, num in enumerate(nums):
+            if i > start:
+                steps += 1
+                start = cur_max
+            cur_max = max(cur_max, i + num)
+        return steps
+
+
 def main():
     sol = Solution()
 

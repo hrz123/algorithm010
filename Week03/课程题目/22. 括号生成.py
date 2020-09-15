@@ -280,6 +280,99 @@ class Solution:
         return res
 
 
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        def dfs(l, r, pre):
+            if r == n:
+                res.append(pre)
+                return
+            if l < n:
+                dfs(l + 1, r, pre + '(')
+            if r < l:
+                dfs(l, r + 1, pre + ')')
+
+        res = []
+        dfs(0, 0, '')
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        stack = [(0, 0, '')]
+        res = []
+        while stack:
+            l, r, s = stack.pop()
+            if r == n:
+                res.append(s)
+            if l < n:
+                stack.append((l + 1, r, s + '('))
+            if r < l:
+                stack.append((l, r + 1, s + ')'))
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        deq = deque([(0, 0, '')])
+        res = []
+        while deq:
+            l, r, s = deq.popleft()
+            if r == n:
+                res.append(s)
+            if l < n:
+                deq.append((l + 1, r, s + '('))
+            if r < l:
+                deq.append((l, r + 1, s + ')'))
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        def dfs(l, r, pre):
+            if r == n:
+                res.append(pre)
+                return
+            if l < n:
+                dfs(l + 1, r, pre + '(')
+            if r < l:
+                dfs(l, r + 1, pre + ')')
+
+        res = []
+        dfs(0, 0, '')
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        stack = [(0, 0, '')]
+        res = []
+        while stack:
+            l, r, s = stack.pop()
+            if r == n:
+                res.append(s)
+            if r < l:
+                stack.append((l, r + 1, s + ')'))
+            if l < n:
+                stack.append((l + 1, r, s + '('))
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        deq = deque([(0, 0, '')])
+        res = []
+        while deq:
+            l, r, s = deq.popleft()
+            if r == n:
+                res.append(s)
+            else:
+                if l < n:
+                    deq.append((l + 1, r, s + '('))
+                if r < l:
+                    deq.append((l, r + 1, s + ')'))
+        return res
+
+
 def main():
     s = Solution()
     res = s.generateParenthesis(3)

@@ -436,6 +436,56 @@ class Solution:
         return True
 
 
+class Solution:
+    def canFinish(self, numCourses: int,
+                  prerequisites: List[List[int]]) -> bool:
+        def dfs(i):
+            if flags[i] == 1:
+                return False
+            if flags[i] == -1:
+                return True
+            flags[i] = 1
+            for j in neigh[i]:
+                if not dfs(j):
+                    return False
+            flags[i] = -1
+            return True
+
+        flags = [0] * numCourses
+        neigh = [[] for _ in range(numCourses)]
+        for i, j in prerequisites:
+            neigh[j].append(i)
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+        return True
+
+
+class Solution:
+    def canFinish(self, n: int,
+                  prerequisites: List[List[int]]) -> bool:
+        def dfs(i):
+            if flags[i] == 1:
+                return False
+            if flags[i] == -1:
+                return True
+            flags[i] = 1
+            for j in neigh[i]:
+                if not dfs(j):
+                    return False
+            flags[i] = -1
+            return True
+
+        neigh = defaultdict(list)
+        for x, y in prerequisites:
+            neigh[y].append(x)
+        flags = [0] * n
+        for i in range(n):
+            if not dfs(i):
+                return False
+        return True
+
+
 def main():
     sol = Solution()
 

@@ -124,6 +124,24 @@ class Solution:
         return c
 
 
+class Solution:
+    def minEatingSpeed(self, piles: List[int], H: int) -> int:
+        lo, hi = 1, max(piles)
+        while lo < hi:
+            mid = lo + (hi - lo >> 1)
+            if self.count(piles, mid) > H:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    def count(self, piles, mid):
+        res = 0
+        for p in piles:
+            res += (p - 1) // mid + 1
+        return res
+
+
 def main():
     sol = Solution()
 

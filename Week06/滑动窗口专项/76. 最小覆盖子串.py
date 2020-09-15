@@ -471,6 +471,31 @@ class Solution:
         return '' if res == m + 1 else s[left:left + res]
 
 
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        l, r = 0, 0
+        m, n = len(s), len(t)
+        req = defaultdict(int)
+        for c in t:
+            req[c] += 1
+        left, size = 0, m + 1
+        while r < m:
+            tmp = s[r]
+            r += 1
+            if req[tmp] > 0:
+                n -= 1
+            req[tmp] -= 1
+            while n == 0:
+                if r - l < size:
+                    size = r - l
+                    left = l
+                if req[s[l]] == 0:
+                    n += 1
+                req[s[l]] += 1
+                l += 1
+        return '' if size == m + 1 else s[left:left + size]
+
+
 def main():
     sol = Solution()
 

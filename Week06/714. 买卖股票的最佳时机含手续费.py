@@ -3,7 +3,7 @@ from typing import List
 
 
 # 子问题
-# 定义状态数组 f(start, j) start 0..n-1表示第i+1天， j表示手里股数
+# 定义状态数组 f(start, j) start 0..m-1表示第i+1天， j表示手里股数
 # 递推方程
 # f(start,0)= max(f(start-1,0), f(start-1, 1) + a[start] - fee)
 # f(start,1)= max(f(start-1, 1), f(start-1, 0) - a[start])
@@ -41,7 +41,7 @@ class Solution:
 # 初始化
 # f(0, 0) = 0
 # f(0, 1) = -a[0]
-# 返回值f(n-1, 0)
+# 返回值f(m-1, 0)
 # 优化空间复杂度
 # 可以只用两个值
 #
@@ -80,7 +80,7 @@ class Solution:
 # 初始化和边界条件
 # f(0) = 0
 # f(1) = float('-inf')
-# 返回值f(n, 0)
+# 返回值f(m, 0)
 # 优化复杂度
 # 我们只需要两个变量
 class Solution:
@@ -98,7 +98,7 @@ class Solution:
 # f(0, 0) = 0
 # f(0, 1) = float('-inf')
 # 返回值
-# f(n, 0)
+# f(m, 0)
 # 优化复杂度
 # 只需两个变量
 class Solution:

@@ -32,7 +32,7 @@ class Solution:
         return ans
 
 
-# 时间复杂度： O(n^2)
+# 时间复杂度： O(m^2)
 # 空间复杂度： O(1)
 # leetcode 超出时间限制
 
@@ -62,12 +62,12 @@ class Solution:
 
 
 # 复杂度分析
-# 时间复杂度：O(n)
-#   存储最大高度数组，需要两次遍历，每次O(n)
-#   最终使用存储的数据更新ans，O(n)
-#   所以总共是O(n)
-# 空间复杂度：O(n)
-# 使用额外O(n)的空间来放置left_max和right_max数组
+# 时间复杂度：O(m)
+#   存储最大高度数组，需要两次遍历，每次O(m)
+#   最终使用存储的数据更新ans，O(m)
+#   所以总共是O(m)
+# 空间复杂度：O(m)
+# 使用额外O(m)的空间来放置left_max和right_max数组
 
 # 使用栈的解法
 # 我们可以不用像方法 2 那样存储最大高度，而是用栈来跟踪可能储水的最长的条形块。
@@ -101,10 +101,10 @@ class Solution:
         return ans
 
 
-# 时间复杂度： O(n)
-# 单词遍历O(n)，每个条形块最多访问两次（栈的弹入和弹出），并且出栈和入栈都是O(1)
-# 空间复杂度：O(n)
-# 栈最多在阶梯型或者平坦型条形块结构中占用O(n)的空间
+# 时间复杂度： O(m)
+# 单词遍历O(m)，每个条形块最多访问两次（栈的弹入和弹出），并且出栈和入栈都是O(1)
+# 空间复杂度：O(m)
+# 栈最多在阶梯型或者平坦型条形块结构中占用O(m)的空间
 
 
 # 和方法 2 相比，我们不从左和从右分开计算，我们想办法一次完成遍历。
@@ -174,31 +174,31 @@ class Solution:
 # 对于i位置，左侧最大值一定在0..start-1，右侧最大值一定在i+1..mask-1
 # 并且决定i位置加多少水的，是左右最大值的较小者
 # 用双指针法：
-# l, row
+# m, row
 # 到l位置左侧的最大值为left
 # 到r位置右侧的最大值为right
 # r = max(r, height[start])
 # r = max(r, height[start])
 # 左侧更小，左侧的边界已经确定了就是left，而右侧的最大肯定比right大
 # 所以此时l处的水量可以更新
-# 往后推进只要height[l]依然小于等于left
-# l < row and height[l] <= r <= r
-# pre += r - height[l]
-# l += 1
+# 往后推进只要height[m]依然小于等于left
+# m < row and height[m] <= r <= r
+# pre += r - height[m]
+# m += 1
 # 右侧更小，右侧的边界已经确定了就是right，而左侧的最大肯定比left大
 # 往后推进只要height[row]依然小于等于right
-# l < row and height[row] <= r <= r
+# m < row and height[row] <= r <= r
 # pre += r - height[row]
 # row -= 1
 
 # 这两个必有一个可以满足
-# 因为height[l]在一开始的时候，r = max(r, height[l])
-# 所以height[l] <= r
+# 因为height[m]在一开始的时候，r = max(r, height[m])
+# 所以height[m] <= r
 # 同理，height[row] <= r
 # 所以 相当于left<=right和right<=r
 # 必然进入其中一个分支
-# 而 l < row 是在 l += 1中防止越界的
-# 只要height[l] <= left就可以继续
+# 而 m < row 是在 m += 1中防止越界的
+# 只要height[m] <= left就可以继续
 # 大于left说明此时左侧最大发生了变化，需要进行迭代，更新左侧最大
 # 而在l自增的过程中left和right不会变化
 # 右侧同理
@@ -573,6 +573,51 @@ class Solution:
             while l < r and height[r] <= right_max <= left_max:
                 res += right_max - height[r]
                 r -= 1
+        return res
+
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        res = 0
+        left_max = right_max = 0
+        l, r = 0, len(height) - 1
+        while l < r:
+            left_max = max(left_max, height[l])
+            right_max = max(right_max, height[r])
+            while l < r and height[l] <= left_max <= right_max:
+                res += left_max - height[l]
+                l += 1
+            while l < r and height[r] <= right_max <= left_max:
+                res += right_max - height[r]
+                r -= 1
+        return res
+
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        stack = []
+        res = 0
+        for i, h in enumerate(height):
+            while stack and height[stack[-1]] < h:
+                tmp = height[stack.pop()]
+                if stack:
+                    w = i - stack[-1] - 1
+                    res += (min(height[stack[-1]], h) - tmp) * w
+            stack.append(i)
+        return res
+
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        stack = []
+        res = 0
+        for i, h in enumerate(height):
+            while stack and height[stack[-1]] < h:
+                tmp = height[stack.pop()]
+                if stack:
+                    w = i - stack[-1] - 1
+                    res += (min(height[stack[-1]], h) - tmp) * w
+            stack.append(i)
         return res
 
 

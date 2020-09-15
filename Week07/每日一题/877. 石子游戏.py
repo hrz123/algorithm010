@@ -4,8 +4,8 @@ from typing import List
 
 # 数学规律
 #
-# 先拿者可以拿到序号为 1,3,5...n-1 的石子堆，
-# 也可以拿到序号为 2,4,6...n 的石子堆。
+# 先拿者可以拿到序号为 1,3,5...m-1 的石子堆，
+# 也可以拿到序号为 2,4,6...m 的石子堆。
 # 因为总石子数为奇数，所以这两种方式中，其中一种拿到的石子数大于另一种。
 # 所以不按照拿尽量多的石子数，按照这种纯奇数序号或者纯偶数序号的方式拿，先拿者总可以赢。
 
@@ -38,6 +38,11 @@ class Solution:
                     dp[i][j][0] = right
                     dp[i][j][1] = dp[i][j - 1][0]
         return bool(dp[0][n - 1][0] - dp[0][n - 1][1])
+
+
+class Solution:
+    def stoneGame(self, piles: List[int]) -> bool:
+        return True
 
 
 class Solution:

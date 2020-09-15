@@ -6,7 +6,7 @@ from typing import List
 # 1.解法1，乘方，排序，假设乘方是O(1)的，排序是O(nlogn)的
 # 2。 先找到正负分解线 logn
 #     用两个指针指向正还是负
-#     不停移动 O(n)
+#     不停移动 O(m)
 class Solution:
     def sortedSquares(self, A: List[int]) -> List[int]:
         n = len(A)
@@ -157,6 +157,26 @@ class Solution:
             r += 1
         while l >= 0:
             res[c] = A[l] * A[l]
+            c += 1
+            l -= 1
+        return res
+
+
+class Solution:
+    def sortedSquares(self, A: List[int]) -> List[int]:
+        n = len(A)
+        res = [0] * n
+        loc = bisect.bisect_left(A, 0)
+        l, c = loc - 1, 0
+        for r in range(loc, n):
+            while l >= 0 and A[l] ** 2 <= A[r] ** 2:
+                res[c] = A[l] ** 2
+                c += 1
+                l -= 1
+            res[c] = A[r] ** 2
+            c += 1
+        while l >= 0:
+            res[c] = A[l] ** 2
             c += 1
             l -= 1
         return res

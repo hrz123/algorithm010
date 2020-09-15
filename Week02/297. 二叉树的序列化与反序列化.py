@@ -478,6 +478,48 @@ class Codec:
         return helper()
 
 
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+
+        :type root: TreeNode
+        :rtype: str
+        """
+
+        def helper(root):
+            if root:
+                res.append(str(root.val))
+                helper(root.left)
+                helper(root.right)
+            else:
+                res.append('#')
+
+        res = []
+        helper(root)
+        return ' '.join(res)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        data = iter(data.split())
+
+        def helper():
+            val = next(data)
+            if val == '#':
+                return
+            val = int(val)
+            root = TreeNode(val)
+            root.left = helper()
+            root.right = helper()
+            return root
+
+        return helper()
+
+
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()
 # codec.deserialize(codec.serialize(root))

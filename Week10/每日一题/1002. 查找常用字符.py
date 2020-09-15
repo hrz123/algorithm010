@@ -71,6 +71,20 @@ class Solution:
         return res
 
 
+class Solution:
+    def commonChars(self, A: List[str]) -> List[str]:
+        counter = defaultdict(int)
+        for c in A[0]:
+            counter[c] += 1
+        for w in A[1:]:
+            for c in counter:
+                counter[c] = min(counter[c], w.count(c))
+        res = []
+        for c in counter:
+            res.extend([c] * counter[c])
+        return res
+
+
 def main():
     sol = Solution()
     A = ["bella", "label", "roller"]

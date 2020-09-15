@@ -363,6 +363,15 @@ class Solution:
         return len(stack)
 
 
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        stack = []
+        for num in nums:
+            loc = bisect.bisect_left(stack, num)
+            stack[loc:loc + 1] = [num]
+        return len(stack)
+
+
 def main():
     sol = Solution()
 

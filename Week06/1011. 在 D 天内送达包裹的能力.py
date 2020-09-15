@@ -155,6 +155,28 @@ class Solution:
         return c
 
 
+class Solution:
+    def shipWithinDays(self, weights: List[int], D: int) -> int:
+        lo, hi = max(weights), sum(weights)
+        while lo < hi:
+            mid = lo + (hi - lo >> 1)
+            if self.count(weights, mid) > D:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+
+    def count(self, weights, mid):
+        c = 1
+        p = 0
+        for w in weights:
+            p += w
+            if p > mid:
+                c += 1
+                p = w
+        return c
+
+
 def main():
     sol = Solution()
 

@@ -123,6 +123,20 @@ class Solution:
         return clone_node
 
 
+class Solution:
+    mem = {}
+
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node:
+            return node
+        if node in self.mem:
+            return self.mem[node]
+        clone_node = Node(node.val)
+        self.mem[node] = clone_node
+        clone_node.neighbors = [self.cloneGraph(e) for e in node.neighbors]
+        return clone_node
+
+
 def main():
     pass
 

@@ -38,9 +38,9 @@ class Solution:
 # 它的左右子树也为二叉搜索树。
 # 这启示我们设计一个递归函数 helper(root, lower, upper)
 # 来递归判断，函数表示考虑以 root 为根的子树，
-# 判断子树中所有节点的值是否都在 (l,row) 的范围内
+# 判断子树中所有节点的值是否都在 (m,row) 的范围内
 # （注意是开区间）。
-# 如果 root 节点的值 val 不在 (l,row) 的范围内
+# 如果 root 节点的值 val 不在 (m,row) 的范围内
 # 说明不满足条件直接返回，
 # 否则我们要继续递归调用检查它的左右子树是否满足，
 # 如果都满足才说明这是一棵二叉搜索树。
@@ -278,6 +278,51 @@ class Solution:
         while stack or root:
             while root:
                 stack.append(root)
+                root = root.left
+            root = stack.pop()
+            if root.val <= pre:
+                return False
+            pre = root.val
+            root = root.right
+        return True
+
+
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        stack = []
+        pre = float('-inf')
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            if root.val <= pre:
+                return False
+            pre = root.val
+            root = root.right
+        return True
+
+
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        def helper(root, lo, hi):
+            if not root:
+                return True
+            if root.val <= lo or root.val >= hi:
+                return False
+            return helper(root.left, lo, root.val) \
+                   and helper(root.right, root.val, hi)
+
+        return helper(root, float('-inf'), float('inf'))
+
+
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        stack = []
+        pre = float('-inf')
+        while stack or root:
+            while root:
+                stack.append(root.left)
                 root = root.left
             root = stack.pop()
             if root.val <= pre:

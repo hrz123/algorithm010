@@ -5,9 +5,9 @@ from typing import List
 
 # 思路1：
 # 一个len(words)*len(words[0])的窗口，滑动，判断里面的字符是否符合要求
-# 滑动O(n)
-# 判断：O(m),m为words个数
-# 总时间复杂度O(n*m)
+# 滑动O(m)
+# 判断：O(n),m为words个数
+# 总时间复杂度O(m*n)
 class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
         if not words:
@@ -37,9 +37,9 @@ class Solution:
 
 # 思路2：
 # 也是一个len(words)*len(words[0])的窗口，滑动
-# 复杂度O(n)
+# 复杂度O(m)
 # 这个时候从0-k-1为起点分别开始，k为len(words[0])，一个单词的长度
-# 时间复杂度为O(n*k),k为一个单词的长度
+# 时间复杂度为O(m*k),k为一个单词的长度
 # 大多数情况单词的长度比单词的个数小，所以方法二更快
 class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
@@ -389,6 +389,72 @@ class Solution:
         counter = defaultdict(int)
         while r < m:
             tmp = s[r:r + n]
+            r += n
+            if tmp in req:
+                counter[tmp] += 1
+                while counter[tmp] > req[tmp]:
+                    counter[s[l:l + n]] -= 1
+                    l += n
+                if r - l == t:
+                    res.append(l)
+            else:
+                l = r
+                counter.clear()
+
+
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words or not words[0]:
+            return []
+        n = len(words[0])
+        t = n * len(words)
+        m = len(s)
+        req = defaultdict(int)
+        for w in words:
+            req[w] += 1
+        res = []
+        for i in range(min(n, m - t + 1)):
+            self.find(i, req, s, n, t, m, res)
+        return res
+
+    def find(self, i, req, s, n, t, m, res):
+        counter = defaultdict(int)
+        l, r = i, i
+        while r < m:
+            tmp = s[r:r + n]
+            r += n
+            if tmp in req:
+                counter[tmp] += 1
+                while counter[tmp] > req[tmp]:
+                    counter[s[l:l + n]] -= 1
+                    l += n
+                if r - l == t:
+                    res.append(l)
+            else:
+                l = r
+                counter.clear()
+
+
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words or not words[0]:
+            return []
+        n = len(words[0])
+        t = len(words) * n
+        m = len(s)
+        req = defaultdict(int)
+        for w in words:
+            req[w] += 1
+        res = []
+        for i in range(min(n, m - t + 1)):
+            self.find(i, s, req, n, m, t, res)
+        return res
+
+    def find(self, i, s, req, n, m, t, res):
+        l, r = i, i
+        counter = defaultdict(int)
+        while r < m:
+            tmp = s[r: r + n]
             r += n
             if tmp in req:
                 counter[tmp] += 1

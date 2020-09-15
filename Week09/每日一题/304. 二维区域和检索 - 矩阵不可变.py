@@ -24,7 +24,7 @@ class NumMatrix:
 
 # 以下为自我练习
 class NumMatrix:
-    # dp(i, j) = dp(i-1, j) +dp(i, j-1) - dp(i-1, j-1) + m[i][j]
+    # dp(i, j) = dp(i-1, j) +dp(i, j-1) - dp(i-1, j-1) + n[i][j]
     # 增加一维哨兵
     def __init__(self, matrix: List[List[int]]):
         if not matrix or not matrix[0]:

@@ -4,8 +4,8 @@ from typing import List
 
 # 子问题
 # 定义状态数组
-# f(start, j, k)， start 0..n-1表示第i+1天，j， 0..K表示卖出几次, k 0..1表示手里有多少股票
-# max(f(n-1, 0..K, 0)
+# f(start, j, k)， start 0..m-1表示第i+1天，j， 0..K表示卖出几次, k 0..1表示手里有多少股票
+# max(f(m-1, 0..K, 0)
 # 递推方程
 # f(start, j, k) = max{
 # 不动 f(start-1, j, k)
@@ -54,8 +54,8 @@ class Solution:
 
 # 以下为自我练习
 # 子问题
-# 到第i天， 0..n-1,卖出了j 0..K次，手里还有k股 0..1 时的最大利润是多少
-# 返回f(n-1, j, 0) j 0..K的最大值
+# 到第i天， 0..m-1,卖出了j 0..K次，手里还有k股 0..1 时的最大利润是多少
+# 返回f(m-1, j, 0) j 0..K的最大值
 # 定义状态数组
 # f(start, j, k)
 # 递推方程
@@ -80,7 +80,7 @@ class Solution:
 # 优化空间
 # 需要一个(k+1)*2的矩阵
 #
-# 最后注意当k >= n//2时，相当于不限做几笔交易，防止k特别大
+# 最后注意当k >= m//2时，相当于不限做几笔交易，防止k特别大
 class Solution:
     def maxProfit(self, k: int, prices: List[int]) -> int:
         if not prices:
@@ -119,7 +119,7 @@ class Solution:
 # f(0, j, 0) = 0 手里没股票的最低利润就是0
 # f(0, j, 1) = float('-inf') 因为都不可能达到
 # 返回值
-# 可以只返回f(n, k, 0)
+# 可以只返回f(m, k, 0)
 # 优化空间复杂度
 # 只关系今天和前一天，只要这两天的数组就可以
 # 可以原地更新

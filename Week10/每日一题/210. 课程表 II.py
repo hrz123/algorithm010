@@ -169,6 +169,46 @@ class Solution:
         return res if len(res) == numCourses else []
 
 
+class Solution:
+    def findOrder(self, numCourses: int,
+                  prerequisites: List[List[int]]) -> List[int]:
+        neigh = defaultdict(list)
+        in_degree = [0] * numCourses
+        for i, j in prerequisites:
+            neigh[j].append(i)
+            in_degree[i] += 1
+        deq = deque([i for i in range(numCourses) if in_degree[i] == 0])
+        res = []
+        while deq:
+            node = deq.popleft()
+            res.append(node)
+            for j in neigh[node]:
+                in_degree[j] -= 1
+                if in_degree[j] == 0:
+                    deq.append(j)
+        return res if len(res) == numCourses else []
+
+
+class Solution:
+    def findOrder(self, n: int,
+                  prerequisites: List[List[int]]) -> List[int]:
+        neigh = defaultdict(list)
+        in_degree = [0] * n
+        for x, y in prerequisites:
+            neigh[y].append(x)
+            in_degree[x] += 1
+        stack = [i for i in range(n) if in_degree[i] == 0]
+        res = []
+        while stack:
+            node = stack.pop()
+            res.append(node)
+            for j in neigh[node]:
+                in_degree[j] -= 1
+                if in_degree[j] == 0:
+                    stack.append(j)
+        return res if len(res) == n else []
+
+
 def main():
     pass
 

@@ -124,11 +124,11 @@ class Solution:
 # 递推方程：
 # f(start, j) = first_match and f(start+1, j+1)    else
 #           (first_match and f(start+1, j)) or f(start, j+2)
-#           if j + 1 < n and p[j+1] == '*
+#           if j + 1 < m and p[j+1] == '*
 # 初始化
-# f(m, n) = True
-# f(m, j) = False  j 0..n-1
-# f(start, n) = False  start 0..m-1
+# f(n, m) = True
+# f(n, j) = False  j 0..m-1
+# f(start, m) = False  start 0..n-1
 # s到第m层是还要递推，因为p的最后字符可能是?*这种模式，导致可以匹配空
 # 而p到n层，如果s还有字符，就一定不能匹配了，这是就返回false了
 class Solution:
@@ -217,6 +217,22 @@ class Solution:
                 return helper(i, j + 2) or (first_match and helper(i + 1, j))
             return first_match and helper(i + 1, j + 1)
 
+        return helper(0, 0)
+
+
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        import functools
+        @functools.lru_cache(None)
+        def helper(i, j):
+            if j == n:
+                return i == m
+            first_match = i < m and p[j] in {'.', s[i]}
+            if j + 1 < n and p[j + 1] == '*':
+                return helper(i, j + 2) or (first_match and helper(i + 1, j))
+            return first_match and helper(i + 1, j + 1)
+
+        m, n = len(s), len(p)
         return helper(0, 0)
 
 

@@ -65,7 +65,7 @@ class Solution:
 #   2.1 当s[start-1]为(, 那么dp[start] = dp[start-2] + 2;
 #   2.2 当s[start-1]为), 并且s[start-dp[start-1]-1]为(, 那么
 #   2.3 dp[start] = dp[start-1] + 2 + dp[start-dp[start-1]-2];
-# 时间复杂度：O(n)
+# 时间复杂度：O(m)
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
         n = len(s)
@@ -88,7 +88,7 @@ class Solution:
 # 子问题 到i位置，且以i为结尾的最长有效括号子串的长度
 # 我们不停的更新这个长度，同时记录这个字符串，最终这个返回最长的字符串即可
 # 定义状态数组
-# f(start) 到第i和位置且以i为结尾的最长有效括号子串的长度，start 0..n
+# f(start) 到第i和位置且以i为结尾的最长有效括号子串的长度，start 0..m
 # 转移方程
 # if s[start-1] == '(':
 # f(start) = 0
@@ -239,8 +239,8 @@ class Solution:
         return res
 
 
-# 时间复杂度：O(n)
-# 空间复杂度：栈所使用的的空间，最坏为O(n)
+# 时间复杂度：O(m)
+# 空间复杂度：栈所使用的的空间，最坏为O(m)
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
         res = 0
@@ -271,8 +271,8 @@ class Solution:
 # 返回值，max(f(start))
 # 优化空间复杂度
 # 无法优化
-# 时间复杂度：O(n)
-# 空间复杂度: O(n)
+# 时间复杂度：O(m)
+# 空间复杂度: O(m)
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
         if not s:
@@ -313,7 +313,7 @@ class Solution:
 # 当 r 计数器与 r 计数器相等时，我们计算当前有效字符串的长度，
 # 并且记录目前为止找到的最长子字符串
 # 这样我们就能涵盖所有情况从而求解出答案。
-# 时间复杂度：遍历两遍字符串O(n)
+# 时间复杂度：遍历两遍字符串O(m)
 # 空间复杂度：O(1)
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
@@ -454,6 +454,93 @@ class Solution:
                     else:
                         dp[i] = dp[i - 2] + 2
                     res = max(res, dp[i])
+        return res
+
+
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        stack = [-1]
+        res = 0
+        for i, c in enumerate(s):
+            if c == '(':
+                stack.append(i)
+            else:
+                stack.pop()
+                if stack:
+                    res = max(res, i - stack[-1])
+                else:
+                    stack.append(i)
+        return res
+
+
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        stack = [-1]
+        res = 0
+        for i, c in enumerate(s):
+            if c == '(':
+                stack.append(i)
+            else:
+                stack.pop()
+                if stack:
+                    res = max(res, i - stack[-1])
+                else:
+                    stack.append(i)
+        return res
+
+
+# f(i) 定义为
+# if s[i] == ')'
+# if s[i-1] == '('
+# f(i) = f(i-2) + 2
+# elif s[i - f(i-1)-1] == '('
+# f(i) = f(i-1) + 2 + f(i-f(i-1)-2)
+# 初始化
+# f(0) = 0
+# 返回值，最大值
+# 优化复杂度
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        n = len(s)
+        dp = [0] * n
+        res = 0
+        for i in range(1, n):
+            if s[i] == ')':
+                if s[i - 1] == '(':
+                    dp[i] = dp[i - 2] + 2
+                else:
+                    left = i - dp[i - 1] - 1
+                    if left >= 0 and s[left] == '(':
+                        dp[i] = dp[i - 1] + 2 + (
+                            dp[left - 1] if left - 1 >= 0 else 0)
+                res = max(res, dp[i])
+        return res
+
+
+# f(i) 定义为
+# if s[i] == ')'
+# if s[i-1] == '('
+# f(i) = f(i-2) + 2
+# elif s[i - f(i-1)-1] == '('
+# f(i) = f(i-1) + 2 + f(i-f(i-1)-2)
+# 初始化
+# f(0) = 0
+# 返回值，最大值
+# 优化复杂度
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        n = len(s)
+        dp = [0] * n
+        res = 0
+        for i in range(1, n):
+            if s[i] == ')':
+                if s[i - 1] == '(':
+                    dp[i] = dp[i - 2] + 2
+                else:
+                    left = i - dp[i - 1] - 1
+                    if left >= 0 and s[left] == '(':
+                        dp[i] = dp[i - 1] + 2 + dp[left - 1]
+                res = max(res, dp[i])
         return res
 
 

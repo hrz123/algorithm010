@@ -164,6 +164,23 @@ class Solution:
         return max(l * (total - l), r * (total - r)) % (10 ** 9 + 7)
 
 
+class Solution:
+    def maxProduct(self, root: TreeNode) -> int:
+        def dfs(root):
+            if not root:
+                return 0
+            res = dfs(root.left) + dfs(root.right) + root.val
+            sums_list.append(res)
+            return res
+
+        sums_list = []
+        total = dfs(root)
+        sums_list.sort()
+        loc = bisect.bisect_left(sums_list, total >> 1)
+        l, r = sums_list[loc - 1], sums_list[loc]
+        return max(l * (total - l), r * (total - r)) % (10 ** 9 + 7)
+
+
 def main():
     ...
 

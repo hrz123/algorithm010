@@ -143,7 +143,7 @@ class Solution:
 
 
 # 递推公式dp(start, j) = dp(start + 1, j-1)+2
-# dp(start, start) = 1 start 0..n-1
+# dp(start, start) = 1 start 0..m-1
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         if not s:
@@ -350,6 +350,26 @@ class Solution:
         size = 0
         left = 0
         for i in range((n << 1) - 1):
+            idx = i >> 1
+            if i & 1:
+                l, r = idx, idx + 1
+            else:
+                l, r = idx - 1, idx + 1
+            while l >= 0 and r < n and s[l] == s[r]:
+                l -= 1
+                r += 1
+            if r - l - 1 > size:
+                size = r - l - 1
+                left = l + 1
+        return s[left:left + size]
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        size = 0
+        left = 0
+        for i in range(n * 2 - 1):
             idx = i >> 1
             if i & 1:
                 l, r = idx, idx + 1

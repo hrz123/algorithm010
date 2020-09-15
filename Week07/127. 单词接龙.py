@@ -215,8 +215,8 @@ class Solution(object):
         return
 
 
-# 时间复杂度：O(m*N)
-# 空间复杂度：O(m*N)
+# 时间复杂度：O(n*N)
+# 空间复杂度：O(n*N)
 
 
 # 单向bfs的另一种写法
@@ -549,6 +549,30 @@ class Solution:
         if endWord not in words:
             return 0
         bq, eq, nq, n, res = {beginWord}, {endWord}, set(), len(beginWord), 1
+        while bq:
+            words -= bq
+            res += 1
+            for x in bq:
+                for y in [x[:i] + c + x[i + 1:] for i in range(n) for c in
+                          string.ascii_lowercase]:
+                    if y in words:
+                        if y in eq:
+                            return res
+                        nq.add(y)
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return 0
+
+
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str,
+                     wordList: List[str]) -> int:
+        words = set(wordList)
+        if endWord not in words:
+            return 0
+        bq, eq, nq, n = {beginWord}, {endWord}, set(), len(beginWord)
+        res = 1
         while bq:
             words -= bq
             res += 1

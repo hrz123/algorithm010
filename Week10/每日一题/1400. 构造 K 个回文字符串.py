@@ -23,6 +23,20 @@ class Solution:
         return left <= k <= right
 
 
+class Solution:
+    def canConstruct(self, s: str, k: int) -> bool:
+        right = len(s)
+        counter = collections.defaultdict(int)
+        for c in s:
+            counter[c] += 1
+        left = 0
+        for c in counter:
+            left += counter[c] & 1
+        if left == 0:
+            left = 1
+        return left <= k <= right
+
+
 def main():
     pass
 

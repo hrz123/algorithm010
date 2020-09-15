@@ -68,10 +68,10 @@ class BloomFilter(object):
     @classmethod
     def get_size(cls, n, p):
         """
-        Return the mask of bit array(m) to used using
+        Return the mask of bit array(n) to used using
         following formula
-        m = -(n * lg(p)) / (lg(2)^2)
-        n : int
+        n = -(m * lg(p)) / (lg(2)^2)
+        m : int
             number of items expected to be stored in filter
         p : float
             False Positive probability in decimal
@@ -84,11 +84,11 @@ class BloomFilter(object):
         """
         Return the hash function(k) to be used using
         following formula
-        k = (m/n) * lg(2)
+        k = (n/m) * lg(2)
 
-        m : int
-            mask of bit array
         n : int
+            mask of bit array
+        m : int
             number of items expected to be stored in filter
         """
         k = (m / n) * math.log(2)

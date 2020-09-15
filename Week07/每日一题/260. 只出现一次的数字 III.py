@@ -111,6 +111,19 @@ class Solution:
         return [x1, x1 ^ xor]
 
 
+class Solution:
+    def singleNumber(self, nums: List[int]) -> List[int]:
+        xor = 0
+        for num in nums:
+            xor ^= num
+        mask = xor & -xor
+        x = 0
+        for num in nums:
+            if num & mask:
+                x ^= num
+        return [x, x ^ xor]
+
+
 def main():
     sol = Solution()
 

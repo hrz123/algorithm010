@@ -207,6 +207,23 @@ class Solution:
         return helper(root.left, root.right)
 
 
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        def helper(left, right):
+            if not left and not right:
+                return True
+            if not (left and right):
+                return False
+            if left.val != right.val:
+                return False
+            return helper(left.left, right.right) and helper(left.right,
+                                                             right.left)
+
+        if not root:
+            return True
+        return helper(root.left, root.right)
+
+
 def main():
     sol = Solution()
 

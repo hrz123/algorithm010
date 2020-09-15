@@ -35,8 +35,8 @@ class Solution:
         phone = {'2': ['a', 'b', 'c'],
                  '3': ['d', 'e', 'f'],
                  '4': ['g', 'h', 'start'],
-                 '5': ['j', 'k', 'l'],
-                 '6': ['m', 'n', 'o'],
+                 '5': ['j', 'k', 'm'],
+                 '6': ['n', 'm', 'o'],
                  '7': ['p', 'q', 'row', 's'],
                  '8': ['t', 'u', 'v'],
                  '9': ['w', 'x', 'y', 'z']}
@@ -207,6 +207,46 @@ class Solution:
         return reduce(
             lambda acc, x: [ans + c for c in m[ord(x) - ord('2')] for ans in
                             acc],
+            digits,
+            [""]
+        )
+
+
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits:
+            return []
+        hashmap = ["abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+        return reduce(
+            lambda acc, x: [ans + c
+                            for c in hashmap[ord(x) - ord('2')]
+                            for ans in acc],
+            digits,
+            [""]
+        )
+
+
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits:
+            return []
+        hashmap = ["abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+        two = ord('2')
+        return reduce(
+            lambda acc, x: [s + c for c in hashmap[ord(x) - two] for s in acc],
+            digits,
+            [""]
+        )
+
+
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits:
+            return []
+        hashmap = ["abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+        two = ord('2')
+        return reduce(
+            lambda acc, x: [s + c for c in hashmap[ord(x) - two] for s in acc],
             digits,
             [""]
         )

@@ -3,13 +3,13 @@
 
 # 思考
 # 如果没有不能同步数限制
-# f(n) = f(n-3) + f(n-2) + f(n-1)
+# f(m) = f(m-3) + f(m-2) + f(m-1)
 
 # 但是需要记录额外信息，即上一次走了几步
 
-# f(n) = f(n-3) if last_step != 3
-#      + f(n-2) if last_step != 2
-#      + f(n-1) if last_step != 1
+# f(m) = f(m-3) if last_step != 3
+#      + f(m-2) if last_step != 2
+#      + f(m-1) if last_step != 1
 
 # 所以需要记录两个状态
 # f(start, j) i表示走到第i个台阶，j表示这一步走了j个台阶

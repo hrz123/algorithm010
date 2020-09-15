@@ -38,8 +38,8 @@ class Solution:
         return helper(1, root)
 
 
-# 时间复杂度：O(n)，遍历了所有的点
-# 空间复杂度：O(log2_minus_1(n))，树的高度
+# 时间复杂度：O(m)，遍历了所有的点
+# 空间复杂度：O(log2_minus_1(m))，树的高度
 
 # dfs递归
 class Solution:
@@ -277,6 +277,42 @@ class Solution:
                 deq.append((root.left, level + 1))
             if root.right:
                 deq.append((root.right, level + 1))
+
+
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        q, nq = [root], []
+        res = 0
+        while q:
+            res += 1
+            for node in q:
+                if not node.left and not node.right:
+                    return res
+                if node.left:
+                    nq.append(node.left)
+                if node.right:
+                    nq.append(node.right)
+            q, nq = nq, []
+
+
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        q, nq = [root], []
+        res = 0
+        while q:
+            res += 1
+            for node in q:
+                if not node.left and not node.right:
+                    return res
+                if node.left:
+                    nq.append(node.left)
+                if node.right:
+                    nq.append(node.right)
+            q, nq = nq, []
 
 
 class Solution:

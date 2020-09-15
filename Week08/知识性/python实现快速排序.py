@@ -25,10 +25,10 @@ class Solution:
         nums[right], nums[pivot] = nums[pivot], nums[right]
         return right
 
-    # def partition(self, arr, l, r):
-    #     pivot = l
+    # def partition(self, arr, m, r):
+    #     pivot = m
     #     p_larger = r
-    #     start = l + 1
+    #     start = m + 1
     #     while start <= p_larger:
     #         if arr[start] >= arr[pivot]:
     #             arr[start], arr[p_larger] = arr[p_larger], arr[start]
@@ -61,10 +61,10 @@ class Solution:
         nums[right], nums[pivot] = nums[pivot], nums[right]
         return right
 
-    # def partition1(self, arr, l, r):
-    #     pivot = l
+    # def partition1(self, arr, m, r):
+    #     pivot = m
     #     r = r
-    #     start = l + 1
+    #     start = m + 1
     #     while start <= r:
     #         if arr[start] > arr[pivot]:
     #             arr[start], arr[r] = arr[r], arr[start]
@@ -372,12 +372,12 @@ class Solution:
         self.quickSortHelper(nums, l, pivot - 1)
         self.quickSortHelper(nums, pivot + 1, r)
 
-    # def partition(self, nums, l, r):
-    #     ran = random.randint(l, r)
+    # def partition(self, nums, m, r):
+    #     ran = random.randint(m, r)
     #     nums[r], nums[ran] = nums[ran], nums[r]
     #     pivot = r
-    #     right = l
-    #     for i in range(l, r):
+    #     right = m
+    #     for i in range(m, r):
     #         if nums[i] <= nums[pivot]:
     #             nums[i], nums[right] = nums[right], nums[i]
     #             right += 1
@@ -517,6 +517,117 @@ class Solution:
                 nums[i], nums[right] = nums[right], nums[i]
                 right += 1
         nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+
+class Solution:
+    def quickSort(self, nums: List[int]):
+        return self.quickSortHelper(nums, 0, len(nums) - 1)
+
+    def quickSortHelper(self, nums, l, r):
+        if l >= r:
+            return
+        pivot = self.partition(nums, l, r)
+        self.quickSortHelper(nums, l, pivot - 1)
+        self.quickSortHelper(nums, pivot + 1, r)
+
+    # def partition(self, nums, m, r):
+    #     ran = random.randint(m, r)
+    #     nums[ran], nums[r] = nums[r], nums[ran]
+    #     pivot = r
+    #     right = m
+    #     for i in range(m, r):
+    #         if nums[i] < nums[pivot]:
+    #             nums[i], nums[right] = nums[right], nums[i]
+    #             right += 1
+    #     nums[right], nums[pivot] = nums[pivot], nums[right]
+    #     return right
+
+    def partition(self, nums, l, r):
+        ran = random.randint(l, r)
+        nums[l], nums[ran] = nums[ran], nums[l]
+        pivot = l
+        left = r
+        i = l + 1
+        while i <= left:
+            if nums[i] > nums[pivot]:
+                nums[i], nums[left] = nums[left], nums[i]
+                left -= 1
+            else:
+                i += 1
+        nums[pivot], nums[left] = nums[left], nums[pivot]
+        return left
+
+
+class Solution:
+    def quickSort(self, nums: List[int]):
+        self.quickSortHelper(nums, 0, len(nums) - 1)
+
+    def quickSortHelper(self, nums: List[int], l: int, r: int):
+        if l >= r:
+            return
+        pivot = self.partition(nums, l, r)
+        self.quickSortHelper(nums, l, pivot - 1)
+        self.quickSortHelper(nums, pivot + 1, r)
+
+    def partition(self, nums, l, r):
+        ran = random.randint(l, r)
+        nums[ran], nums[r] = nums[r], nums[ran]
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] < nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+
+class Solution:
+    def quickSort(self, nums: List[int]):
+        self.quickSortHelper(nums, 0, len(nums) - 1)
+
+    def quickSortHelper(self, nums, l, r):
+        if l >= r:
+            return
+        pivot = self.partition(nums, l, r)
+        self.quickSortHelper(nums, l, pivot - 1)
+        self.quickSortHelper(nums, pivot + 1, r)
+
+    def partition(self, nums, l, r):
+        ran = random.randint(l, r)
+        nums[ran], nums[r] = nums[r], nums[ran]
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] < nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+
+class Solution:
+    def quickSort(self, nums: List[int]):
+        self.quickSortHelper(nums, 0, len(nums) - 1)
+
+    def quickSortHelper(self, nums, l, r):
+        if l >= r:
+            return
+        pivot = self.partition(nums, l, r)
+        self.quickSortHelper(nums, l, pivot - 1)
+        self.quickSortHelper(nums, pivot + 1, r)
+
+    def partition(self, nums, l, r):
+        ran = random.randint(l, r)
+        nums[ran], nums[r] = nums[r], nums[ran]
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] < nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[pivot], nums[right] = nums[right], nums[pivot]
         return right
 
 

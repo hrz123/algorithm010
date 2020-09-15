@@ -68,7 +68,7 @@ class Solution:
 #         = 0                     else
 # 递推方程
 # 初始化
-# f(m-1, n-1) = 1
+# f(n-1, m-1) = 1
 # 返回值
 # f(0, 0)
 # 优化空间，可以使用m,n中较小值为长度的数组，但是写起来不方便
@@ -192,7 +192,7 @@ class Solution:
 
 # 定义子问题
 # f(start, j)
-# f(start, j) = f(start +1, j) + f(start, j+1) if m(start, j) !+ 1
+# f(start, j) = f(start +1, j) + f(start, j+1) if n(start, j) !+ 1
 #         = 0                      else
 # 初始化
 # f(h-1, w-1) = 1
@@ -247,7 +247,7 @@ class Solution:
         return dp[0]
 
 
-# f(i, j) =f(i-1, j) + f(i, j-1) if m[i][j] == 0
+# f(i, j) =f(i-1, j) + f(i, j-1) if n[i][j] == 0
 #          0   else
 class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
@@ -275,7 +275,7 @@ class Solution:
 # 我们加一层哨兵试试
 # 加一层[1, 0...0]的哨兵可以
 # 返回值
-# f(m, n)
+# f(n, m)
 # 优化复杂度
 # 可以使用一维数组，从左到右原地更新
 class Solution:
@@ -302,6 +302,35 @@ class Solution:
         for i in range(m):
             for j in range(n):
                 dp[j] = 0 if obstacleGrid[i][j] else dp[j] + dp[j - 1]
+        return dp[n - 1]
+
+
+# 定义f(i, j)为到i， j位置的路径数
+# if mat[i, j] == 1
+# f(i, j) = 0
+# else:
+# f(i, j) = f(i-1, j) + f(i, j-1)
+# 初始化和边界条件
+# f(0, j) = 1 if mat[0][j] == 0 有障碍之后都是 0
+# 加一层哨兵
+# f(-1, j) = [1] + [0] * m
+# 返回值，f(n, m)
+# 优化复杂度
+# 一维数组从前后原地递推
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        if not obstacleGrid or not obstacleGrid[0]:
+            return 0
+        m, n = len(obstacleGrid), len(obstacleGrid[0])
+        if obstacleGrid[0][0] or obstacleGrid[m - 1][n - 1]:
+            return 0
+        dp = [1] + [0] * n
+        for i in range(m):
+            for j in range(n):
+                if obstacleGrid[i][j]:
+                    dp[j] = 0
+                else:
+                    dp[j] += dp[j - 1]
         return dp[n - 1]
 
 

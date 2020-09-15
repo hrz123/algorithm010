@@ -116,6 +116,28 @@ class Solution:
         return res
 
 
+class Solution:
+    def robotSim(self, commands: List[int], obstacles: List[List[int]]) -> int:
+        obs = set(map(tuple, obstacles))
+        res = 0
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        k = 0
+        x, y = 0, 0
+        for c in commands:
+            if c == -2:
+                k = (k - 1) & 3
+            elif c == -1:
+                k = (k + 1) & 3
+            else:
+                for _ in range(c):
+                    if (x + dirs[k][0], y + dirs[k][1]) in obs:
+                        break
+                    x += dirs[k][0]
+                    y += dirs[k][1]
+                    res = max(res, x * x + y * y)
+        return res
+
+
 def main():
     sol = Solution()
 

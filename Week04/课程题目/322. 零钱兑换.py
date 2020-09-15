@@ -5,7 +5,7 @@ from typing import List
 
 # 状态定义: 凑成总金额n最少需要多少个硬币
 # 递推方程：
-# dp(n) = min(dp(n-coins[start])) + 1
+# dp(m) = min(dp(m-coins[start])) + 1
 # 起始条件
 # dp[0] = 0
 # dp[负数] = float("inf")
@@ -64,8 +64,8 @@ class Solution:
 # f(amount)
 # 优化空间复杂度
 # 没必要，空间复杂度和coins中的最大值有关
-# 时间复杂度：O(n * m) n是amount的值，m是coins的个数
-# 空间复杂度：O(n)
+# 时间复杂度：O(m * n) n是amount的值，m是coins的个数
+# 空间复杂度：O(m)
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         _max = float('inf')
@@ -118,6 +118,26 @@ class Solution:
 
 
 # f(i) = min(f(i-c)) + 1
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [0] + [amount + 1] * amount
+        for i in range(1, amount + 1):
+            for c in coins:
+                if i >= c:
+                    dp[i] = min(dp[i], dp[i - c] + 1)
+        return -1 if dp[amount] == amount + 1 else dp[amount]
+
+
+# f(i)
+# f(i) = min(f(i-c)) + 1
+# 初始化和边界条件
+# f(0)= 0
+# f(c) = 1
+# i >= c
+# 返回值
+# f(amount)
+# 优化复杂度
+# 线性
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         dp = [0] + [amount + 1] * amount

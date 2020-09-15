@@ -2,13 +2,13 @@
 from typing import List
 
 
-# 1. brute-force, 递归，n层：r or r: 2^n
+# 1. brute-force, 递归，n层：r or r: 2^m
 
 # 2.DP
 # a.重复性（分治） problem(start, j) = min(sub(start+1, j), sub(start+1, j+1)) + a[start, j]
 # b.定义状态数组：f(start, j)
 # c.DP方程：f(start, j) = min(f(start+1, j), f(start+1, j+1)) + a[start, j]
-#   初始状态： f(n-1, j) = a[n-1, j]
+#   初始状态： f(m-1, j) = a[m-1, j]
 
 class Solution:
     def minimumTotal(self, triangle: List[List[int]]) -> int:
@@ -54,7 +54,7 @@ class Solution:
 # 递推方程
 # f(start, j) = min(f(start+1, j), f(start+1, j+1)) + a[start,j]
 # 初始状态
-# f(n-1, j) = a[n-1, j]
+# f(m-1, j) = a[m-1, j]
 class Solution:
     def minimumTotal(self, triangle: List[List[int]]) -> int:
         n = len(triangle)
@@ -139,6 +139,24 @@ class Solution:
             return 0
         n = len(triangle)
         dp = triangle[n - 1][:]
+        for i in range(n - 2, -1, -1):
+            for j in range(i + 1):
+                dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j]
+        return dp[0]
+
+
+# f(i, j)
+# f(i, j) = min(f(i + 1, j), f(i + 1, j + 1)) + a[i][j]
+# 初始化和边界条件
+# f(n-1, j) = matrix(n-1, j)
+# 返回值
+# f(0， 0)
+# 优化复杂度
+# 只需要一维数组
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        n = len(triangle)
+        dp = triangle[n - 1]
         for i in range(n - 2, -1, -1):
             for j in range(i + 1):
                 dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j]

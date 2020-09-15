@@ -145,6 +145,14 @@ class Solution:
         return -1
 
 
+class Solution:
+    def findMagicIndex(self, nums: List[int]) -> int:
+        for i, num in enumerate(nums):
+            if num == i:
+                return i
+        return -1
+
+
 def main():
     sol = Solution()
 

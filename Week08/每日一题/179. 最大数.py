@@ -81,6 +81,28 @@ class Solution:
         return "0" if largest and largest[0] == '0' else largest
 
 
+class LargerNumKey(str):
+    def __lt__(self, other):
+        return self + other > other + self
+
+
+class Solution:
+    def largestNumber(self, nums: List[int]) -> str:
+        largest = ''.join(sorted(map(str, nums), key=LargerNumKey))
+        return '0' if largest and largest[0] == '0' else largest
+
+
+class LargerNumKey(str):
+    def __lt__(self, other):
+        return self + other > other + self
+
+
+class Solution:
+    def largestNumber(self, nums: List[int]) -> str:
+        res = ''.join(sorted(map(str, nums), key=LargerNumKey))
+        return '0' if res and res[0] == '0' else res
+
+
 def main():
     sol = Solution()
 

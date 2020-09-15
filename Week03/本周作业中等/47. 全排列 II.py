@@ -245,6 +245,32 @@ class Solution:
         return q
 
 
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        q, nq = [[]], []
+        for num in nums:
+            for ans in q:
+                for i in range(len(ans) + 1):
+                    nq.append(ans[:i] + [num] + ans[i:])
+                    if i != len(ans) and num == ans[i]:
+                        break
+            q, nq = nq, []
+        return q
+
+
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        q, nq = [[]], []
+        for num in nums:
+            for ans in q:
+                for i in range(len(ans) + 1):
+                    nq.append(ans[:i] + [num] + ans[i:])
+                    if i != len(ans) and num == ans[i]:
+                        break
+            q, nq = nq, []
+        return q
+
+
 def main():
     nums = [1, 2, 1]
     sol = Solution()

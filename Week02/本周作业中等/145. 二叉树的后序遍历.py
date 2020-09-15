@@ -158,6 +158,38 @@ class Solution:
         return res[::-1]
 
 
+class Solution:
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        stack = [root]
+        res = []
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.left:
+                stack.append(root.left)
+            if root.right:
+                stack.append(root.right)
+        return res[::-1]
+
+
+class Solution:
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+        res = []
+        stack = [root]
+        while stack:
+            root = stack.pop()
+            res.append(root.val)
+            if root.left:
+                stack.append(root.left)
+            if root.right:
+                stack.append(root.right)
+        return res[::-1]
+
+
 def main():
     sol = Solution()
 

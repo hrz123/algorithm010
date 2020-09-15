@@ -31,8 +31,8 @@ class TreeNode:
 #   因此root是它们的最近公共祖先
 # 6.如果left和right都为空，则返回空（其实已经包含在前面的情况中了）
 
-# 时间复杂度：O(n)，每个节点最多遍历一次
-# 空间复杂度：O(n)，递归需要使用栈空间
+# 时间复杂度：O(m)，每个节点最多遍历一次
+# 空间复杂度：O(m)，递归需要使用栈空间
 
 
 class Solution:
@@ -176,6 +176,27 @@ class Solution:
 
 # 想法：如果p和q可以不在二叉树中呢？
 # 要写一个函数
+
+
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode',
+                             q: 'TreeNode') -> 'TreeNode':
+        if not root or root is p or root is q:
+            return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        return root if left and right else left if left else right
+
+
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode',
+                             q: 'TreeNode') -> 'TreeNode':
+        if not root or root is p or root is q:
+            return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        return root if left and right else left if left else right
+
 
 def main():
     root = [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4]

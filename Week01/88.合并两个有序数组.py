@@ -8,7 +8,7 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
-        # 用i，j计数，节省循环中使用 m-1 和 n-1 计算索引
+        # 用i，j计数，节省循环中使用 n-1 和 m-1 计算索引
         i, j = m - 1, n - 1
         while i >= 0 and j >= 0:
             if nums1[i] <= nums2[j]:
@@ -122,6 +122,32 @@ class Solution:
                 i -= 1
             nums1[i + j + 1] = nums2[j]
             j -= 1
+
+
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        i = m - 1
+        for j in range(n - 1, -1, -1):
+            while i >= 0 and nums1[i] > nums2[j]:
+                nums1[i + j + 1] = nums1[i]
+                i -= 1
+            nums1[i + j + 1] = nums2[j]
+
+
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        i = m - 1
+        for j in range(n - 1, -1, -1):
+            while i >= 0 and nums1[i] > nums2[j]:
+                nums1[i + j + 1] = nums1[i]
+                i -= 1
+            nums1[i + j + 1] = nums2[j]
 
 
 def main():

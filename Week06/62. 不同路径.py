@@ -13,13 +13,13 @@ class Solution:
 
 
 # 以下为自我练习
-# 子问题从i，j到m-1, n-1的不同路径是多少
+# 子问题从i，j到m-1, m-1的不同路径是多少
 # 定义状态数组
 # f(start, j)
 # 递推方程
 # f(start,j) = f(start+1, j) + f(start, j+1)
 # 初始化
-# f(m-1, n-1) = 1
+# f(n-1, m-1) = 1
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         if m < n:
@@ -36,9 +36,9 @@ class Solution:
 # 递推方程
 # f(start, j) = f(start+1, j) + f(start, j+1)
 # 初始化
-# f(m-1, n-1) = 1
+# f(n-1, m-1) = 1
 # 优化空间复杂度
-# 只使用一维数组即可，m,n中取最小值
+# 只使用一维数组即可，n,n中取最小值
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         if m < n:
@@ -68,7 +68,7 @@ class Solution:
 # f(i, 0) = 1
 # 使用哨兵
 # 0， 1， 000
-# 返回值 f(m, n)
+# 返回值 f(n, m)
 # 优化，使用一维数组，原地更新
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
@@ -85,7 +85,7 @@ class Solution:
 # f(i, j) = f(i-1, j) + f(i, j-1)
 # 初始化和边界条件
 # f(0, j) = 1
-# 返回值f(m, n)
+# 返回值f(n, m)
 # 优化复杂度
 # 我们可以只用一维数组，从前往后原地更新
 class Solution:
@@ -105,7 +105,7 @@ class Solution:
 # 初始化和边界条件
 # 第一行只有一种走法
 # f(0, j) = 1
-# 返回值f(m, n)
+# 返回值f(n, m)
 # 优化复杂度，我们只需要较少的那一维数组，从左到右原地更新
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
@@ -126,7 +126,7 @@ class Solution:
 # 哨兵应该是[0, 1, 0, 0, 0]
 # 也可以不加
 # 返回值
-# f(n-1)
+# f(m-1)
 # 优化复杂度
 # 我们可以维护一维数组，从左到右原地更新
 class Solution:
@@ -147,6 +147,27 @@ class Solution:
         dp = [1] + [0] * n
         for i in range(m):
             for j in range(n):
+                dp[j] += dp[j - 1]
+        return dp[n - 1]
+
+
+# 定义子问题
+# f(i,j)为到f(i, j)的路径数
+# f(i, j) = f(i-1, j) + f(i, j-1)
+# 初始化和边界条件
+# f(0, j) = 1
+# f(i, 0) = 1
+# 返回值
+# f(n, m)
+# 优化复杂度
+# 可以只使用一维数组，从前往后原地更新
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        if m < n:
+            m, n = n, m
+        dp = [1] * n
+        for i in range(1, m):
+            for j in range(1, n):
                 dp[j] += dp[j - 1]
         return dp[n - 1]
 

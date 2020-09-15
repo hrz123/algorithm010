@@ -169,6 +169,23 @@ class Solution:
         return ''.join(reversed(res))
 
 
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        res = []
+        i, j = len(a) - 1, len(b) - 1
+        carry = 0
+        while i >= 0 or j >= 0:
+            n1 = int(a[i]) if i >= 0 else 0
+            n2 = int(b[j]) if j >= 0 else 0
+            carry, mod = divmod(n1 + n2 + carry, 2)
+            res.append(str(mod))
+            i -= 1
+            j -= 1
+        if carry:
+            res.append('1')
+        return ''.join(reversed(res))
+
+
 def main():
     s = Solution()
     res = s.addBinary("1010", "1011")

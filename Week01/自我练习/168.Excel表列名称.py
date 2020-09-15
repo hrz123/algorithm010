@@ -14,17 +14,17 @@ class Solution:
 
 
 # class Solution:
-#     def convertToTitle(self, n: int) -> str:
-#         if n == 0:
+#     def convertToTitle(self, m: int) -> str:
+#         if m == 0:
 #             return ""
-#         div, mod = divmod(n - 1, 26)
+#         div, mod = divmod(m - 1, 26)
 #         return self.convertToTitle(div) + chr(mod + 65)
 
 
 # class Solution:
-#     def convertToTitle(self, n: int) -> str:
-#         return "" if n == 0 else self.convertToTitle((n - 1) // 26) + chr(
-#             (n - 1) % 26 + 65)
+#     def convertToTitle(self, m: int) -> str:
+#         return "" if m == 0 else self.convertToTitle((m - 1) // 26) + chr(
+#             (m - 1) % 26 + 65)
 
 
 # 以下为自我练习

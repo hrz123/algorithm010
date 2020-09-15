@@ -15,8 +15,8 @@ class Solution:
         return False
 
 
-# 时间复杂度：O(n^2), n为字符串长度
-# 空间复杂度：O(n)，临时字符串都等于A的大小
+# 时间复杂度：O(m^2), n为字符串长度
+# 空间复杂度：O(m)，临时字符串都等于A的大小
 
 
 # 2. 判断子串
@@ -29,8 +29,8 @@ class Solution:
 # 方法三：Rabin-Karp 字符串哈希
 # 先计算出A[0:N], A[1:N+1]等的哈希，如果哈希与B相同，再判断
 # 求哈希值时因为是连续求，所以第一步算出hash值是O(N)的，之后都是O(1)的操作
-# 时间O(n)
-# 空间O(n)
+# 时间O(m)
+# 空间O(m)
 
 # 方法四：KMP 算法
 # 判断一个串是否为另一个串的子串的最优时间复杂度的算法是 KMP 算法。
@@ -65,8 +65,8 @@ class Solution:
         return False
 
 
-# 时间O(n)
-# 空间O(n)
+# 时间O(m)
+# 空间O(m)
 
 class Solution:
     def rotateString(self, A: str, B: str) -> bool:
@@ -105,6 +105,11 @@ class Solution:
         if len(A) != len(B):
             return False
         return (A + A).find(B) != -1
+
+
+class Solution:
+    def rotateString(self, A: str, B: str) -> bool:
+        return len(A) == len(B) and (A + A).find(B) != -1
 
 
 class Solution:

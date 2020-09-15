@@ -221,6 +221,25 @@ class Solution:
         return res
 
 
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+        q, nq = [root], []
+        res = []
+        while q:
+            output = []
+            for node in q:
+                output.append(node.val)
+                if node.left:
+                    nq.append(node.left)
+                if node.right:
+                    nq.append(node.right)
+            q, nq = nq, []
+            res.append(output)
+        return res
+
+
 def main():
     root = TreeNode(3)
     root.left = TreeNode(9)

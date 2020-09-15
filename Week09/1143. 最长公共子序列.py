@@ -39,10 +39,10 @@ class Solution:
 # f(start, j) = max f(start-1, j), f(start, j-1) if stack1[start] != stack2[j]
 # f(start, j) = f(start-1, j-1) + 1          else
 # 初始化
-# f(0, j) = 0  j 0..n
-# f(start, 0) = 0  start 0..m
+# f(0, j) = 0  j 0..m
+# f(start, 0) = 0  start 0..n
 # 返回值
-# f(m, n)
+# f(n, m)
 # 优化空间复杂度
 # 需要两个数组来回交替
 # 可以使用短的那个字符串的长度作为数组的长度
@@ -74,7 +74,7 @@ class Solution:
 # 初始化
 # 可以增加一维哨兵，然后都用0初始化
 # 返回值
-# f(m, n)
+# f(n, m)
 # 优化空间复杂度
 # 只用一维数组即可，两个数组滚动
 class Solution:
@@ -103,7 +103,7 @@ class Solution:
 # f(i, j) = max(f(i-1, j) f(i, j-1))
 # 初始化和边界条件
 # f(0, j) = 0
-# 返回值返回f(m, n)
+# 返回值返回f(n, m)
 # 优化空间复杂度
 # 可以两个数组滚动，数组长度为较小的数组加1
 class Solution:
@@ -130,7 +130,7 @@ class Solution:
 # 初始化和边界条件
 # f(0, 0) = 0
 # 因为是求最大值，且最大值一定不小于0，可以用0初始化
-# 返回值f(m, n)
+# 返回值f(n, m)
 # 优化复杂度
 # 只需要两个数组来回滚动
 class Solution:
@@ -157,7 +157,7 @@ class Solution:
 # 初始化
 # f(0, j) = 0
 # f(i, 0) = 0
-# 返回值f(m,n)
+# 返回值f(n,m)
 # 优化复杂度
 # 需要两个数组来回滚动
 class Solution:
@@ -183,7 +183,7 @@ class Solution:
 # 初始化
 # f(0, j) = 0
 # f(i, 0) = 0
-# 返回值f(m, n)
+# 返回值f(n, m)
 # 优化复杂度
 # 我们需要两个数组滚动
 class Solution:
@@ -211,7 +211,7 @@ class Solution:
 # f(0, j) = 0
 # f(i, 0) = 0
 # 返回值
-# f(m,n)
+# f(n,m)
 # 优化复杂度
 # 两个数组滚动
 class Solution:

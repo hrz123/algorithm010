@@ -99,6 +99,22 @@ class TopVotedCandidate:
         return self.leads[loc - 1]
 
 
+class TopVotedCandidate:
+
+    def __init__(self, persons: List[int], times: List[int]):
+        self.leads, self.times, count = [], times, defaultdict(int)
+        lead = -1
+        for p in persons:
+            count[p] += 1
+            if count[p] >= count[lead]:
+                lead = p
+            self.leads.append(lead)
+
+    def q(self, t: int) -> int:
+        loc = bisect.bisect_right(self.times, t)
+        return self.leads[loc - 1]
+
+
 # Your TopVotedCandidate object will be instantiated and called as such:
 # obj = TopVotedCandidate(persons, times)
 # param_1 = obj.q(t)

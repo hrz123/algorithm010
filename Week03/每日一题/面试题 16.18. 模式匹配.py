@@ -397,7 +397,48 @@ class Solution:
                         else:
                             value_b = sub
                         pos += len_b
-                print(correct)
+                if correct and value_a != value_b:
+                    return True
+        return False
+
+
+class Solution:
+    def patternMatching(self, pattern: str, value: str) -> bool:
+        count_a = pattern.count('a')
+        count_b = len(pattern) - count_a
+        if count_a < count_b:
+            count_a, count_b = count_b, count_a
+            pattern = ''.join('a' if c == 'b' else 'b' for c in pattern)
+        if not value:
+            return count_b == 0
+        if not pattern:
+            return False
+        for len_a in range(len(value) // count_a + 1):
+            rest = len(value) - len_a * count_a
+            if (count_b == 0 and rest == 0) or (count_b and rest % count_b ==
+                                                0):
+                len_b = rest // count_b if count_b else 0
+                pos, correct = 0, True
+                value_a = value_b = None
+                for c in pattern:
+                    if c == 'a':
+                        sub = value[pos:pos + len_a]
+                        if value_a:
+                            if value_a != sub:
+                                correct = False
+                                break
+                        else:
+                            value_a = sub
+                        pos += len_a
+                    else:
+                        sub = value[pos:pos + len_b]
+                        if value_b:
+                            if value_b != sub:
+                                correct = False
+                                break
+                        else:
+                            value_b = sub
+                        pos += len_b
                 if correct and value_a != value_b:
                     return True
         return False

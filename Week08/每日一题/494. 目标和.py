@@ -13,7 +13,7 @@ from typing import List
 # f(0, 0) = 1
 # f(0, j) = 0 j != 0
 # 返回值
-# 返回f(n, target)
+# 返回f(m, target)
 # 优化空间复杂度
 # i只与前一天的情况有关，我们可以用两个数组来回交替
 class Solution:
@@ -38,7 +38,7 @@ class Solution:
 # j-nums[start]不能小于最小值，j+nums[start]不能大于最大值
 # 最大值为sum(nums),最小值为-sum(nums)
 # 返回值
-# f(n, target)
+# f(m, target)
 # 优化空间复杂度
 # 两个长度为(最大值-最小值+1)的数组交替
 class Solution:
@@ -68,7 +68,7 @@ class Solution:
 # f(0, 0) += 1
 # j - a[i]， j+a[i]不能越界
 # 返回值
-# f(n, S）
+# f(m, S）
 # 优化状态空间，我们只需要两个范围数组，滚动更新
 class Solution:
     def findTargetSumWays(self, nums: List[int], S: int) -> int:
@@ -97,7 +97,7 @@ class Solution:
 # 最大target为sum，最小为-sum
 # 注意递推过程不要越界
 # 返回值
-# f(n, target)
+# f(m, target)
 # 优化复杂度
 # 需要两个数组滚动
 class Solution:
@@ -123,7 +123,7 @@ class Solution:
 # 初始化
 # f(0, 0) = 1 其他都是0
 # 返回值
-# f(n, S)
+# f(m, S)
 # 优化复杂度
 class Solution:
     def findTargetSumWays(self, nums: List[int], S: int) -> int:
@@ -146,7 +146,7 @@ class Solution:
 # 初始化
 # f(0, 0) = 1
 # 返回值
-# f(n, m)
+# f(m, n)
 # 优化复杂度
 # 我们只需要i-1时候的
 # 两个数组来回滚动
@@ -174,7 +174,7 @@ class Solution:
 # 注意越界
 # 有能取到的最大值和最小值
 # 返回值
-# f(n, S)
+# f(m, S)
 # 优化复杂度
 # 两个数组来回滚动
 # 提前剪枝
@@ -195,12 +195,37 @@ class Solution:
         return dp[S + total]
 
 
+# f(i, j)
+# f(i, j) = f(i-1, j+a) + f(i-1, j-a)
+# init
+# f(0, 0) = 1
+# f(0, j) = 0
+# return
+# f(m, s)
+# optimize
+# two arrays
+class Solution:
+    def findTargetSumWays(self, nums: List[int], S: int) -> int:
+        total = sum(nums)
+        if S > total or S < -total:
+            return 0
+        cap = total * 2 + 1
+        dp = [0] * total + [1] + [0] * total
+        ndp = [0] * cap
+        for num in nums:
+            for i in range(cap):
+                l1 = dp[i + num] if i + num < cap else 0
+                l2 = dp[i - num] if i - num >= 0 else 0
+                ndp[i] = l1 + l2
+            dp, ndp = ndp, dp
+        return dp[S + total]
+
+
 def main():
     sol = Solution()
-
     nums = [1, 1, 1, 1, 1]
-    S = 3
-    res = sol.findTargetSumWays(nums, S)
+    s = 3
+    res = sol.findTargetSumWays(nums, s)
     print(res)
 
 

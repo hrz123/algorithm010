@@ -24,8 +24,8 @@ class Solution:
 # cpp一行求解
 # class Solution{
 # public:
-#     int hammingWeight(uint_32_t n) {
-#     return (n > 0) ? 1 + hammingWeight(n & (n-1)) : 0;
+#     int hammingWeight(uint_32_t m) {
+#     return (m > 0) ? 1 + hammingWeight(m & (m-1)) : 0;
 #     }
 # };
 
@@ -73,6 +73,15 @@ class Solution:
             c += 1
             n &= n - 1
         return c
+
+
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        res = 0
+        while n:
+            res += 1
+            n &= (n - 1)
+        return res
 
 
 def main():

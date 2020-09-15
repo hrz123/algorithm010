@@ -66,6 +66,40 @@ class Solution:
         return res
 
 
+# 我们用递推
+# 对于一个子树的根
+# 返回四个值
+# 第一个表示是否是二叉搜索树，第二个表示树最小值，第三个表示树的最大值，第4个表示子树和
+# [1] = left and right and root.val > left[2] and root.val < right[1]
+# [2] = left[1] if left else root.val
+# [3] = right[2] if right else root.val
+# [4] = left + right + root.val
+# 初始化
+# 空子树
+# True, float('inf'), float('-inf'), 0
+# 后序遍历
+class Solution:
+    def maxSumBST(self, root: TreeNode) -> int:
+        def dfs(root):
+            if not root:
+                return True, float('inf'), float('-inf'), 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            if not left[0] or not right[0] or root.val <= left[2] or root.val \
+                    >= right[1]:
+                return False, 0, 0, 0
+            _min = left[1] if root.left else root.val
+            _max = right[2] if root.right else root.val
+            _sum = left[3] + right[3] + root.val
+            nonlocal res
+            res = max(res, _sum)
+            return True, _min, _max, _sum
+
+        res = 0
+        dfs(root)
+        return res
+
+
 def main():
     pass
 

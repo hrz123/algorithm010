@@ -7,30 +7,30 @@ from typing import List
 # dp(start,j) = min(dp(_i, _j)) + 1 全部方向 else
 # dp(start, j) = max_value if grid[start][j] == 1
 # 不好做
-# dp(n-1, n-1) = 1
+# dp(m-1, m-1) = 1
 # class Solution:
 #     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
-#         n = len(grid)
+#         m = len(grid)
 #         if not grid or not grid[0]:
 #             return -1
 #         if grid[0][0] or grid[-1][-1]:
 #             return -1
-#         if n <= 2:
-#             return n
+#         if m <= 2:
+#             return m
 #         max_value = float('inf')
-#         dp = [[max_value] * n for _ in range(n)]
+#         dp = [[max_value] * m for _ in range(m)]
 #
-#         dp[n - 1][n - 1] = 1
+#         dp[m - 1][m - 1] = 1
 #
-#         for start in range(n - 1, -1, -1):
-#             for j in range(n - 1, -1, -1):
+#         for start in range(m - 1, -1, -1):
+#             for j in range(m - 1, -1, -1):
 #                 if grid[start][j]:
 #                     dp[start][j] = max_value
 #                 else:
 #                     for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1),
 #                                    (1, -1), (-1, -1), (-1, 1)):
 #                         _i, _j = start + dx, j + dy
-#                         if -1 < _i < n and -1 < _j < n:
+#                         if -1 < _i < m and -1 < _j < m:
 #                             dp[start][j] = min(dp[start][j])
 #         return -1 if dp[0][0] == max_value else dp[0][0]
 
@@ -395,6 +395,33 @@ class Solution:
                         if (_x, _y) in eq:
                             return res
                         nq.add((_x, _y))
+            bq, nq = nq, set()
+            if len(bq) > len(eq):
+                bq, eq = eq, bq
+        return -1
+
+
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        if grid[0][0] or grid[n - 1][n - 1]:
+            return -1
+        if n == 1:
+            return 1
+        bq, eq, nq, visited, res = {(0, 0)}, {(n - 1, n - 1)}, set(), set(), 1
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, -1),
+                (-1, 1))
+        while bq:
+            visited |= bq
+            res += 1
+            for x, y in bq:
+                for dx, dy in dirs:
+                    _x, _y = x + dx, y + dy
+                    if -1 < _x < n and -1 < _y < n and grid[_x][_y] == 0:
+                        if (_x, _y) not in visited:
+                            if (_x, _y) in eq:
+                                return res
+                            nq.add((_x, _y))
             bq, nq = nq, set()
             if len(bq) > len(eq):
                 bq, eq = eq, bq

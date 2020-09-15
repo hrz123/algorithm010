@@ -5,8 +5,8 @@ from typing import List
 
 # class Solution:
 #     def insertionSort(self, nums: List[int]):
-#         n = len(nums)
-#         for start in range(1, n):
+#         m = len(nums)
+#         for start in range(1, m):
 #             for j in range(start):
 #                 if nums[start] < nums[j]:
 #                     tmp = nums[start]
@@ -169,6 +169,32 @@ class Solution:
                 pre_index -= 1
             arr[pre_index + 1] = current
         return arr
+
+
+class Solution:
+    def insertionSort(self, arr: List[int]):
+        n = len(arr)
+        for i in range(1, n):
+            pre_index = i - 1
+            current = arr[i]
+            while pre_index >= 0 and arr[pre_index] > current:
+                arr[pre_index + 1] = arr[pre_index]
+                pre_index -= 1
+            arr[pre_index + 1] = current
+        return arr
+
+
+class Solution:
+    def insertionSort(self, nums):
+        n = len(nums)
+        for i in range(1, n):
+            pre_index = i - 1
+            current = nums[i]
+            while pre_index >= 0 and nums[pre_index] > current:
+                nums[pre_index + 1] = nums[pre_index]
+                pre_index -= 1
+            nums[pre_index + 1] = current
+        return nums
 
 
 def main():

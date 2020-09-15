@@ -34,7 +34,7 @@ class Solution:
 
 # 定义子问题
 # s[:start]到t[:j]的编辑距离
-# 最终返回s[:m]到t[:n]的编辑距离
+# 最终返回s[:n]到t[:m]的编辑距离
 # 定义状态数组
 # f(start, j)为s到i位置，t到j位置的编辑距离
 # 递推方程
@@ -162,7 +162,7 @@ class Solution:
 # 初始化
 # f(0, j) = j
 # f(i, 0) = i
-# 返回值f(m,n)
+# 返回值f(n,m)
 # 优化复杂度
 # 可以使用两个一维数组，滚动更新
 class Solution:
@@ -191,7 +191,7 @@ class Solution:
 # 初始化和边界条件
 # f(0, j) = j
 # f(i, 0) = i
-# 返回值f(m, n)
+# 返回值f(n, m)
 # 优化复杂度
 # 我们只需要i-1的j-1和j索引，还需要i的j-1索引
 # 我们可以使用两个数组滚动，数组的大小可以是两个字符串长度的较小值
@@ -210,6 +210,37 @@ class Solution:
                     ndp[j + 1] = dp[j]
                 else:
                     ndp[j + 1] = min(dp[j + 1], dp[j], ndp[j]) + 1
+            dp, ndp = ndp, dp
+        return dp[n]
+
+
+# 定义子问题
+# f(i, j)为s[:i]到t[:j]的最小操作数
+# if s[i] == t[j]
+# f(i, j) = f(i-1, j-1)
+# else:
+# f(i, j) = min(f(i-1, j), f(i, j-1), f(i-1, j-1)) + 1
+# 初始化
+# f(0, j) = j
+# f(i, 0) = i
+# 返回值
+# f(n, m)
+# 优化复杂度，需要两个数组滚动，可以选用长度较短的
+class Solution:
+    def minDistance(self, s: str, t: str) -> int:
+        m, n = len(s), len(t)
+        if m < n:
+            m, n = n, m
+            s, t = t, s
+        dp = [*range(n + 1)]
+        ndp = [0] * (n + 1)
+        for i in range(m):
+            ndp[0] = i + 1
+            for j in range(n):
+                if s[i] == t[j]:
+                    ndp[j + 1] = dp[j]
+                else:
+                    ndp[j + 1] = min(ndp[j], dp[j + 1], dp[j]) + 1
             dp, ndp = ndp, dp
         return dp[n]
 

@@ -1,4 +1,4 @@
-# 剑指 Offer 64. 求1+2+…+n.py
+# 剑指 Offer 64. 求1+2+…+m.py
 from functools import reduce
 
 

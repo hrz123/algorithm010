@@ -5,7 +5,7 @@ from functools import lru_cache
 # 定义子问题
 # s[:start]位置解码方法有多少种
 # 定义状态数组
-## dp(start) 0..n
+## dp(start) 0..m
 # 递推方程
 # f(start) = f(start-1) + f(start-2) if 0 < s[start-2:start] <= 26 and s[start-1] !=0
 # f(start) = f(start-1)          if s[start-1] !=0
@@ -35,7 +35,7 @@ class Solution:
 # 以下为自我练习
 
 # 子问题
-# 子问题为s[:start]的解码方法，start 0..n n = len(s)
+# 子问题为s[:start]的解码方法，start 0..m m = len(s)
 # 定义状态数组
 # f(start)
 # 递推方程
@@ -120,7 +120,7 @@ class Solution:
 # 初始化和边界条件
 # 空字符串的解码方式有一种
 # dp[0] = 1， dp[1] = 1如果s[0]！='0'
-# 返回值 dp[n]
+# 返回值 dp[m]
 # 优化空间复杂度
 class Solution:
     def numDecodings(self, s: str) -> int:
@@ -146,7 +146,7 @@ class Solution:
 # f(1) = 0 if s[0] == '0' else 1
 # f(0) = 1
 # 返回值
-# f(n)
+# f(m)
 # 优化复杂度
 # 我们只需要两个值代表i-1和i-2即可
 class Solution:
@@ -169,7 +169,7 @@ class Solution:
 # 初始化
 # f(0) = 1
 # f(1) = 1 or 0
-# 返回值f(n)
+# 返回值f(m)
 # 优化复杂地，只需要两个值
 class Solution:
     def numDecodings(self, s: str) -> int:
@@ -191,7 +191,7 @@ class Solution:
 # 初始化
 # f(0) = 1
 # f(1) = 1 or 0
-# 返回值f(n)
+# 返回值f(m)
 # 优化复杂度
 # 只需要两个值
 class Solution:
@@ -219,6 +219,30 @@ class Solution:
                 (0 if s[i] == '0' else f1) +
                 (f0 if 10 <= int(s[i - 1:i + 1]) <= 26 else 0)
             )
+        return f1
+
+
+# f(i)
+# f(i-1) + f(i-2)
+# f(i-1) if a == '0'
+# f(i-2) if 10 <= int(a[:]( <= 26
+# init
+# f(1) = f(0) +f(-1) = 1 if s[0] != '0'
+# f(0) = 1
+# f(-1) = 0
+# return f(n)
+#
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        f0, f1 = 0, 1
+        for i in range(len(s)):
+            f0, f1 = (
+                f1,
+                (0 if s[i] == '0' else f1) +
+                (f0 if i != 0 and 10 <= int(s[i - 1:i + 1]) <= 26 else 0)
+            )
+            if f1 == 0:
+                return 0
         return f1
 
 

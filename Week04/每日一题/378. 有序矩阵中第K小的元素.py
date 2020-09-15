@@ -127,8 +127,8 @@ class Solution:
 
 
 # 第一种方法，变成一维数组，对所有的数做直接排序，这个一维数组的第k个数就是答案
-# 时间复杂度 O(n^2logn)
-# 空间复杂度：一维数组存这个矩阵O(n^2)
+# 时间复杂度 O(m^2logn)
+# 空间复杂度：一维数组存这个矩阵O(m^2)
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
         # sum(iterable[, start])语法，
@@ -144,7 +144,7 @@ class Solution:
 # 而从左侧的一列遍历，左下的元素已经被考虑过了，唯一可能比当前堆顶元素小的，就是pop元素的右边
 # 所以每次pop之后 ，push这个已经pop出去的元素右方元素
 # 时间复杂度：O(klogn)
-# 空间：堆占用了一列的元素O(n)
+# 空间：堆占用了一列的元素O(m)
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
         n = len(matrix)
@@ -158,7 +158,7 @@ class Solution:
 
 
 # 第三种方法，利用这个矩阵的性质，只有斜着方向（左下、右上方向的元素无法确定相对大小）
-# 我们可以在O(n)时间复杂度内找到任何一个元素在矩阵的元素中有多少不大于它，或者小于它
+# 我们可以在O(m)时间复杂度内找到任何一个元素在矩阵的元素中有多少不大于它，或者小于它
 # 我们首先初始化计数器为0，用指针i, j（行列）指向左下角，
 # 如果比该元素大，count += start + 1， j += 1 (跳到下一列）
 # 因为测试元素比这个元素大，比这个元素的下方元素小，它一定比这个元素的右下方的元素小，
@@ -167,7 +167,7 @@ class Solution:
 # 循环条件是 while start >= 0 and j < w
 # 这就启示我们可以用二分法
 # 最小值为左上角，最大值为右下角
-# 每次O(n)时间找到不大于中点元素的个数，比如说是i
+# 每次O(m)时间找到不大于中点元素的个数，比如说是i
 # 如果小于k，那么中点元素（如果在矩阵中）是第i小元素，比k小，目标元素一定比mid大
 # 如果大于等于k，那么可能从第k到最后第i个都相等，且都等于mid，这时mid就是目标元素，
 # 当然也有可能mid比第k和元素大，所以两边收敛的时候要将右侧收敛到mid
@@ -191,7 +191,7 @@ class Solution:
 # 什么时候会走到right = mid呢
 # 当小于右侧元素的矩阵元素一直大于等于k的时候
 # 所以我们在写二分的时候注意，r = mid + 1, r = mid是可以收敛的
-# 时间复杂度：二分法是O(r-l)的，二分法内部查找是O(n)，总共是O(nlog(r-l))
+# 时间复杂度：二分法是O(r-m)的，二分法内部查找是O(m)，总共是O(nlog(r-m))
 # 空间复杂度：O(1)，没用到额外空间
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
@@ -283,6 +283,30 @@ class Solution:
         c = 0
         while i >= 0 and j < n:
             if t >= matrix[i][j]:
+                c += i + 1
+                j += 1
+            else:
+                i -= 1
+        return c
+
+
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        n = len(matrix)
+        lo, hi = matrix[0][0], matrix[n - 1][n - 1]
+        while lo < hi:
+            mid = lo + (hi - lo >> 1)
+            if self.count(matrix, n, mid) >= k:
+                hi = mid
+            else:
+                lo = mid + 1
+        return lo
+
+    def count(self, matrix, n, mid):
+        i, j = n - 1, 0
+        c = 0
+        while i >= 0 and j < n:
+            if matrix[i][j] <= mid:
                 c += i + 1
                 j += 1
             else:

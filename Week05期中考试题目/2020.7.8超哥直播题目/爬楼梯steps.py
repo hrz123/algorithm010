@@ -5,7 +5,7 @@ from typing import List
 
 
 # dp
-# dp(n) = sum{dp(n - step)}
+# dp(m) = sum{dp(m - step)}
 # 起始条件
 # dp(0) = 1
 # dp(负数) = 0

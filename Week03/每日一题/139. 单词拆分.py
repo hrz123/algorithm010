@@ -16,8 +16,8 @@ class Solution:
         return dp[-1]
 
 
-# 时间复杂度：O(n^2)
-# 空间复杂度：O(n)
+# 时间复杂度：O(m^2)
+# 空间复杂度：O(m)
 
 
 class Solution:
@@ -166,6 +166,44 @@ class Solution:
                         return True
             return False
 
+        return dfs(0)
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        import functools
+        @functools.lru_cache(None)
+        def dfs(i):
+            if i == n:
+                return True
+            for l in lens:
+                if i + l <= n and s[i:i + l] in words:
+                    if dfs(i + l):
+                        return True
+            return False
+
+        words = {w for w in wordDict if s.find(w) != -1}
+        lens = {len(w) for w in words}
+        n = len(s)
+        return dfs(0)
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        import functools
+        @functools.lru_cache(None)
+        def dfs(i):
+            if i == n:
+                return True
+            for l in lens:
+                if i + l <= n and s[i:i + l] in words:
+                    if dfs(i + l):
+                        return True
+            return False
+
+        n = len(s)
+        words = {w for w in wordDict if s.find(w) != -1}
+        lens = {len(w) for w in words}
         return dfs(0)
 
 

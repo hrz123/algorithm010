@@ -77,11 +77,11 @@ class Solution:
 # 定义状态数组
 # f(start)
 # 递推方程
-# f(start) = min(f(start+l))   if s[start:start+l] in dict start+l < N  and l in lens
+# f(start) = min(f(start+m))   if s[start:start+m] in dict start+m < N  and m in lens
 #      = f(start+1) + 1  else
 # 两者取最小值
 # 初始化
-# f(n) = 0
+# f(m) = 0
 # 返回值
 # f(0)
 # 优化空间复杂度
@@ -138,11 +138,11 @@ class Solution:
 # 定义状态数组
 # f(start)
 # 递推方程
-# f(start) = min(f(start+l))   if s[start:start+l] in dict start+l < N  and l in lens
+# f(start) = min(f(start+m))   if s[start:start+m] in dict start+m < N  and m in lens
 #      = f(start+1) + 1  else
 # 两者取最小值
 # 初始化
-# f(n) = 0
+# f(m) = 0
 # 返回值
 # f(0)
 # 优化空间复杂度
@@ -344,11 +344,34 @@ class Solution:
         return dp[n]
 
 
+# 定义子问题
+# f(i)为s[:i]的未识别字符数
+# f(i) = f(i-1) + 1
+# f(i) = f(i-m)
+# 初始化
+# f(0)= 0
+# 返回值f(m)
+# 优化复杂度
+# 线性
+class Solution:
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        words = {w for w in dictionary if sentence.find(w) != -1}
+        lens = {len(w) for w in words}
+        n = len(sentence)
+        dp = [0] * (n + 1)
+        for i in range(1, n + 1):
+            dp[i] = dp[i - 1] + 1
+            for l in lens:
+                if i - l >= 0 and sentence[i - l:i] in words:
+                    dp[i] = min(dp[i], dp[i - l])
+        return dp[n]
+
+
 def main():
+    sol = Solution()
+
     dictionary = ["looked", "just", "like", "her", "brother"]
     sentence = "jesslookedjustliketimherbrother"
-
-    sol = Solution()
     res = sol.respace(dictionary, sentence)
     print(res)
 

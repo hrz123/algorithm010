@@ -259,6 +259,30 @@ class Solution:
         return ans
 
 
+class Solution:
+    def countSubTrees(self, n: int, edges: List[List[int]],
+                      labels: str) -> List[int]:
+        def dfs(i, pre):
+            data = {labels[i]: 1}
+            for nxt in neigh[i]:
+                if nxt != pre:
+                    for k, v in dfs(nxt, i).items():
+                        if k in data:
+                            data[k] += v
+                        else:
+                            data[k] = v
+            ans[i] = data[labels[i]]
+            return data
+
+        ans = [1] * n
+        neigh = defaultdict(list)
+        for x, y in edges:
+            neigh[x].append(y)
+            neigh[y].append(x)
+        dfs(0, None)
+        return ans
+
+
 def main():
     sol = Solution()
 

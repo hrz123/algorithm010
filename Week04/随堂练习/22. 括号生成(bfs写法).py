@@ -28,10 +28,10 @@ class Solution:
         return res
 
 
-# vector<string> generateParenthesis2(int n) {
+# vector<string> generateParenthesis2(int m) {
 #         vector<string> rs;
 #         queue<pair<string, pair<int, int>>>q; // pair<当前的括号, pair<左括号剩余, 右括号剩余>>
-#         q.push({"",{n,n}});
+#         q.push({"",{m,m}});
 #         while (!q.empty()) {
 #             auto top = q.front();
 #             q.pop();
@@ -125,6 +125,21 @@ class Solution:
                     nq.append((l, r + 1, s + ')'))
             q, nq = nq, []
         return [e[2] for e in q]
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        deq = deque([(0, 0, '')])
+        res = []
+        while deq:
+            l, r, s = deq.popleft()
+            if r == n:
+                res.append(s)
+            if l < n:
+                deq.append((l + 1, r, s + '('))
+            if r < l:
+                deq.append((l, r + 1, s + ')'))
+        return res
 
 
 def main():

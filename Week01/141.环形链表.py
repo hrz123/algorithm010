@@ -157,6 +157,69 @@ class Solution:
             return False
 
 
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        try:
+            slow, fast = head.next, head.next.next
+            while slow != fast:
+                slow = slow.next
+                fast = fast.next.next
+            return True
+        except:
+            return False
+
+
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        try:
+            slow, fast = head.next, head.next.next
+            while slow != fast:
+                slow = slow.next
+                fast = fast.next.next
+            return True
+        except:
+            return False
+
+
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        if not head or not head.next:
+            return False
+        slow = head.next
+        fast = head.next.next
+        while fast and fast.next:
+            if slow == fast:
+                return True
+            slow = slow.next
+            fast = fast.next.next
+        return False
+
+
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        try:
+            slow, fast = head.next, head.next.next
+            while slow != fast:
+                slow = slow.next
+                fast = fast.next.next
+            return True
+        except:
+            return False
+
+
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        if not head or not head.next:
+            return False
+        slow, fast = head.next, head.next.next
+        while fast and fast.next:
+            if slow == fast:
+                return True
+            slow = slow.next
+            fast = fast.next.next
+        return False
+
+
 def main():
     pass
 

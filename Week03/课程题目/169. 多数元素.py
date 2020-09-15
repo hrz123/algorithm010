@@ -7,8 +7,8 @@ from typing import List
 # 使用哈希表存储每个元素以及出现的次数，然后遍历哈希表，返回值最大的键。
 # 我们同样也可以在遍历数组 arr 时候使用打擂台的方法，
 # 维护最大的值，这样省去了最后对哈希映射的遍历。
-# 时间复杂度：O(n)
-# 空间复杂度：O(n)
+# 时间复杂度：O(m)
+# 空间复杂度：O(m)
 
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
@@ -66,7 +66,7 @@ class Solution:
 
 
 # 方法三：随机法
-# 因为超过 n//2 的数组下标被众数占据了，
+# 因为超过 m//2 的数组下标被众数占据了，
 # 这样我们随机挑选一个下标对应的元素并验证，有很大的概率能找到众数。
 # 算法
 # 由于一个给定的下标对应的数字很有可能是众数，我们随机挑选一个下标，
@@ -124,7 +124,7 @@ class Solution:
         return majority_element_rec(0, len(nums) - 1)
 
 
-# 时间复杂度：O(nlogn)。T(n) = 2T(n/2) + 2n
+# 时间复杂度：O(nlogn)。T(m) = 2T(m/2) + 2n
 # 空间复杂度：O(logn)，使用了递归栈，要进行O(logn)次递归，所以空间复杂度为O(logn)
 
 
@@ -154,7 +154,7 @@ class Solution:
         return candidate
 
 
-# 时间复杂度：O(n)
+# 时间复杂度：O(m)
 # 空闲复杂度：O(1)
 
 # 以下为自我练习
@@ -222,6 +222,17 @@ class Solution:
                 t = n
             count += 1 if n == t else -1
         return t
+
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        res = 0
+        count = 0
+        for num in nums:
+            if count == 0:
+                res = num
+            count += 1 if num == res else -1
+        return res
 
 
 def main():

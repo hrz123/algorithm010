@@ -49,7 +49,7 @@ class Solution:
 # 时间复杂度：
 # 建立哈希表要遍历整个数组，O(N)。之后遍历哈希表建立计数排序所需数组，
 # 时间复杂度与数组中不同的元素数目相关，不同元素个数小于数组大小。
-# 遍历计数排序数组，O(N)。综合起来，时间复杂度是O(n)
+# 遍历计数排序数组，O(N)。综合起来，时间复杂度是O(m)
 
 # 空间复杂度：哈希表和计数排序数组占额外空间。O(N)
 
@@ -195,6 +195,24 @@ class Solution:
             res.extend(c2[i])
             if len(res) == k:
                 return res
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = collections.defaultdict(int)
+        for num in nums:
+            counter[num] += 1
+        c2 = [[] for _ in range(len(nums) + 1)]
+        for num, v in counter.items():
+            c2[v].append(num)
+        res = []
+        for i in range(len(nums), -1, -1):
+            res.extend(c2[i])
+            if len(res) == k:
+                return res
+
+
+
 
 
 def main():

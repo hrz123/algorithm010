@@ -1,14 +1,19 @@
 # 459. 重复的子字符串.py
 
 
-# 时间复杂度：O(n)
-# 空间复杂度：O(n)
+# 时间复杂度：O(m)
+# 空间复杂度：O(m)
 class Solution:
     def repeatedSubstringPattern(self, s: str) -> bool:
         return (s + s).find(s, 1) != len(s)
 
 
 # 以下为自我练习
+class Solution:
+    def repeatedSubstringPattern(self, s: str) -> bool:
+        return (s + s).find(s, 1) != len(s)
+
+
 class Solution:
     def repeatedSubstringPattern(self, s: str) -> bool:
         return (s + s).find(s, 1) != len(s)

@@ -82,7 +82,7 @@ class Solution:
         m = len(matrix)
         n = len(matrix[0])
 
-        left = [0] * n  # initialize l as the leftmost boundary possible
+        left = [0] * n  # initialize m as the leftmost boundary possible
         right = [n] * n  # initialize r as the rightmost boundary possible
         height = [0] * n
 
@@ -96,7 +96,7 @@ class Solution:
                     height[j] += 1
                 else:
                     height[j] = 0
-            # update l
+            # update m
             for j in range(n):
                 if matrix[i][j] == '1':
                     left[j] = max(left[j], cur_left)
@@ -157,9 +157,9 @@ class Solution:
         return res
 
 
-# 方法四里的 l[j] = 0 和 r[j] = n 我觉得有点难懂。
+# 方法四里的 m[j] = 0 和 r[j] = m 我觉得有点难懂。
 # 写一点我自己的理解：当matrix[start][j]是0的时候，height[j]是0，所以面积肯定是0了，
-# l[j]和right[j]并不影响这个位置的面积的计算。
+# m[j]和right[j]并不影响这个位置的面积的计算。
 # 但是如果我们不更新left[j]和right[j]，
 # 到下一行时，代码还以为上一行这个位置的矩形最多只能在left[j]和right[j]之间，
 # 但实际上上一行这个位置并没有构成矩形。

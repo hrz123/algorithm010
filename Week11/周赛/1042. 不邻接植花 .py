@@ -58,6 +58,24 @@ class Solution:
         return color
 
 
+class Solution:
+    def gardenNoAdj(self, N: int, paths: List[List[int]]) -> List[int]:
+        ans = [1] * N
+        neigh = [[] for _ in range(N)]
+        for i, j in paths:
+            if i > j:
+                neigh[i - 1].append(j - 1)
+            else:
+                neigh[j - 1].append(i - 1)
+        for i in range(N):
+            flowers = [1, 2, 3, 4]
+            for j in neigh[i]:
+                if ans[j] in flowers:
+                    flowers.remove(ans[j])
+            ans[i] = flowers[0]
+        return ans
+
+
 def main():
     sol = Solution()
     n = 3

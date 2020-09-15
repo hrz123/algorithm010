@@ -94,6 +94,23 @@ class Solution:
         return res
 
 
+class Solution:
+    def combinationSum(self, candidates: List[int],
+                       target: int) -> List[List[int]]:
+        def dfs(i, val, pre):
+            if val == target:
+                res.append(pre)
+                return
+            for j in range(i, n):
+                if val + candidates[j] <= target:
+                    dfs(j, val + candidates[j], pre + [candidates[j]])
+
+        res = []
+        n = len(candidates)
+        dfs(0, 0, [])
+        return res
+
+
 def main():
     sol = Solution()
 

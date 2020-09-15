@@ -5,18 +5,18 @@ from typing import List
 # 定义子问题
 # 到第i个元素，最后还剩下m个0，n个1没用的状态，最多能拼出几个字符串
 # 定义状态数组
-# f(start, m, n)
+# f(start, n, m)
 # 递推方程
-# f(start, m, n) = max(f(start-1, m, n), f(start-1, m+0s, n+1s) + 1)
+# f(start, n, m) = max(f(start-1, n, m), f(start-1, n+0s, m+1s) + 1)
 # 初始化
-# f(0, m, n) = 0
-# f(0, m-0s, n-1s) = 1 如果不越界
+# f(0, n, m) = 0
+# f(0, n-0s, m-1s) = 1 如果不越界
 # 加入哨兵
 # f(-1, start, j) = float('-inf')
-# f(-1, m, n) = 0
+# f(-1, n, m) = 0
 # 其余都可以初始化为0
 # 返回值
-# max(f(n-1))
+# max(f(m-1))
 # 优化空间复杂度
 # 只需记录i,start-1两个
 class Solution:
@@ -70,7 +70,7 @@ class Solution:
 # j -0s >=0, k - 1s >=0
 # f(0, j, k) = 0
 # f(1, j, k)
-# 返回值f(len, m, n)
+# 返回值f(len, n, m)
 # 优化恐慌间复杂度
 # 只需要m,n的矩阵，原地更新从右下到左上
 class Solution:
@@ -124,7 +124,7 @@ class Solution:
 # f(0, j, k) = 0
 # j - 0s, k-1s >=0
 # 返回值
-# f(n, j, k)
+# f(m, j, k)
 # 优化状态空间
 # 我们只需要维持j, k维的数组
 # 从右下往左上更新的时候可以原地更新
@@ -148,7 +148,7 @@ class Solution:
 # f(0, j, k) = 0
 # f(1, j, k)
 # 返回值
-# f(len, m, n)
+# f(len, n, m)
 # 优化复杂度
 # 不需要第一维，二维矩阵，增加0这个索引
 # 因为c0,c1都是非负数，我们从右下角往左上角可以原地更新
@@ -164,13 +164,13 @@ class Solution:
         return dp[m][n]
 
 
-# f(i, m, n) s[:i]可以用m个0n个1最多凑出几个
-# f(i, m, n) = max(f(i-1, m, n), f(i-1, m-0s, n-1s) + 1)
+# f(i, n, m) s[:i]可以用m个0n个1最多凑出几个
+# f(i, n, m) = max(f(i-1, n, m), f(i-1, n-0s, m-1s) + 1)
 # 初始化和边界条件
 # f(0, 0, 0) = 0
-# f(1, m, n)
+# f(1, n, m)
 # 注意m, n不能越界
-# 返回值f(len, m, n)
+# 返回值f(len, n, m)
 # 注意给0这个边界条件
 # 优化复杂度，我们只需要两维
 # 从右下到左上原地更新
@@ -193,11 +193,32 @@ class Solution:
 # f(0, j, k) = 0
 # 注意不要越界
 # 返回值
-# f(len, m, n)
+# f(len, n, m)
 # 优化复杂度
 # 我们只需要i-1时候的，我们从右下往左上可以原地递推
 class Solution:
     def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+        for s in strs:
+            c0 = s.count('0')
+            c1 = len(s) - c0
+            for i in range(m, c0 - 1, -1):
+                for j in range(n, c1 - 1, -1):
+                    dp[i][j] = max(dp[i][j], dp[i - c0][j - c1] + 1)
+        return dp[m][n]
+
+
+# f(i, j, k) s[:i] j 0 k 1 max
+# f(i, j, k) = max(f(i-1, j, k) f(i-1, j-0s, k-1s) + 1)
+# init
+# f(0, j, k) = 0
+# j - 0s >= 0 k - 1s >= 0
+# return
+# f(n, j, k)
+# optimize
+# from back to start
+class Solution:
+    def findMaxForm(self, strs: [List[str]], m: int, n: int) -> int:
         dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
         for s in strs:
             c0 = s.count('0')

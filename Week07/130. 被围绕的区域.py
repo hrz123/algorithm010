@@ -380,6 +380,39 @@ class Solution:
                     board[i][j] = 'O'
 
 
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        if not board or not board[0]:
+            return
+
+        def dfs(i, j):
+            board[i][j] = '#'
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and board[_i][_j] == 'O':
+                    dfs(_i, _j)
+
+        m, n = len(board), len(board[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        for i in range(m):
+            for j in (0, n - 1):
+                if board[i][j] == 'O':
+                    dfs(i, j)
+        for j in range(n):
+            for i in (0, m - 1):
+                if board[i][j] == 'O':
+                    dfs(i, j)
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == '#':
+                    board[i][j] = 'O'
+                elif board[i][j] == 'O':
+                    board[i][j] = 'X'
+
+
 def main():
     sol = Solution()
 

@@ -3,14 +3,14 @@ from typing import List
 
 
 # 暴力
-# O(n^2)的解决办法
+# O(m^2)的解决办法
 
 # 左右指针
-# l, row = 0, len(height) - 1
-# s = min(height[l], height[row]) * (row - l)
+# m, row = 0, len(height) - 1
+# s = min(height[m], height[row]) * (row - m)
 # res = max(res, s)
-# if l <= row:
-# l += 1
+# if m <= row:
+# m += 1
 # else:
 # row -= 1
 class Solution:
@@ -104,6 +104,24 @@ class Solution:
                 l += 1
             else:
                 res = max(res, height[r] * (r - l))
+                r -= 1
+        return res
+
+
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        if not height:
+            return 0
+        l, r = 0, len(height) - 1
+        res = 0
+        while l < r:
+            left = height[l]
+            right = height[r]
+            if left < right:
+                res = max(res, left * (r - l))
+                l += 1
+            else:
+                res = max(res, right * (r - l))
                 r -= 1
         return res
 

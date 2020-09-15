@@ -3,9 +3,9 @@ from typing import List
 
 
 # 定义子问题
-# 到i, j位置的最大正方形面积的边长，返回m-1, n-1,必须包含i，j
+# 到i, j位置的最大正方形面积的边长，返回m-1, m-1,必须包含i，j
 # 定义状态数组
-# dp[start][j] start 0..m-1 j 0..n-1
+# dp[start][j] start 0..n-1 j 0..m-1
 # 递推方程
 # f(start, j) = min{f(start-1, j), f(start, j-1)} if f(start-1, j) != f(start, j-1)
 # f(start, j) = f(start, j-1) + 1 if a[start-f(start, j-1)][j-f(start, j-1)] else 0
@@ -126,7 +126,7 @@ class Solution:
 
 
 # f(i, j)定义为matrix[i][j]的最大正方形边长，且以i，j为右下角
-# f(i,j) = min(f(i-1, j), f(i, j-1), f(i-1, j-1)) + 1 if m[i][j] == '1'
+# f(i,j) = min(f(i-1, j), f(i, j-1), f(i-1, j-1)) + 1 if n[i][j] == '1'
 # f(i,j) = 0 else
 # 初始化f(0, 0)
 # 加入哨兵初始化

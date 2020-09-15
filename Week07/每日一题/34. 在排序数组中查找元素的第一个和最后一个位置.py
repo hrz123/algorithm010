@@ -179,6 +179,41 @@ class Solution:
         return [left, binary_search(0, n, False) - 1]
 
 
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        def binary_search(nums, l, r, left=True):
+            while l < r:
+                mid = l + (r - l >> 1)
+                if nums[mid] > target or (left and nums[mid] == target):
+                    r = mid
+                else:
+                    l = mid + 1
+            return l
+
+        left = binary_search(nums, 0, len(nums))
+        if left == len(nums) or nums[left] != target:
+            return [-1, -1]
+        return [left, binary_search(nums, 0, len(nums), False) - 1]
+
+
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        def binary_search(nums, l, r, left=True):
+            while l < r:
+                mid = l + (r - l >> 1)
+                if nums[mid] > target or (left and nums[mid] == target):
+                    r = mid
+                else:
+                    l = mid + 1
+            return l
+
+        n = len(nums)
+        left = binary_search(nums, 0, n)
+        if left == n or nums[left] != target:
+            return [-1, -1]
+        return [left, binary_search(nums, 0, n, False) - 1]
+
+
 def main():
     sol = Solution()
 

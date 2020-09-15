@@ -31,7 +31,7 @@ class Solution:
 #             # 多加 len(stack) - 1 个 "/"
 #             return ans + len(stack) - 1
 #
-#         s = input.split("\n")
+#         s = input.split("\m")
 #         # 记录缩进个数和字符串
 #         t = []
 #         for a in s:

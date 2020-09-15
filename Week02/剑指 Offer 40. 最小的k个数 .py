@@ -1,4 +1,4 @@
-# 面试题40. 最小的k个数.py
+# 剑指 Offer 40. 最小的k个数 .py
 
 import heapq
 import random
@@ -7,7 +7,7 @@ from typing import List
 
 # 1.sort: O(NlogN)
 # 2.heap：O(NlogK)
-# 3.quick-sort: O(n)
+# 3.quick-sort: O(m)
 
 # sort排序的方法
 class Solution:
@@ -34,7 +34,7 @@ class Solution:
 
 
 # 使用快排partition方法
-# 时间复杂度：期望为 O(n) ，由于证明过程很繁琐，所以不再这里展开讲。
+# 时间复杂度：期望为 O(m) ，由于证明过程很繁琐，所以不再这里展开讲。
 # 具体证明可以参考《算法导论》第 9 章第 2 小节。
 class Solution:
     def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
@@ -207,6 +207,53 @@ class Solution:
         return right
 
 
+class Solution:
+    def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
+        if k == 0:
+            return []
+        l, r = 0, len(arr) - 1
+        while l <= r:
+            pivot = self.partition(arr, l, r)
+            if pivot == k - 1:
+                return arr[:k]
+            if pivot < k - 1:
+                l = pivot + 1
+            else:
+                r = pivot - 1
+
+    def partition(self, nums, l, r):
+        ran = random.randint(l, r)
+        nums[r], nums[ran] = nums[ran], nums[r]
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] < nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+
+class Solution:
+    def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
+        heap = []
+        for num in arr:
+            heapq.heappush(heap, -num)
+            if len(heap) > k:
+                heapq.heappop(heap)
+        return [-num for num in heap]
+
+
+class Solution:
+    def getLeastNumbers(self, arr: List[int], k: int) -> List[int]:
+        heap = []
+        for num in arr:
+            heapq.heappush(heap, -num)
+            if len(heap) > k:
+                heapq.heappop(heap)
+        return [-num for num in heap]
+
+
 def main():
     s = Solution()
     arr = [3, 2, 1]
@@ -215,6 +262,16 @@ def main():
 
     arr = [0, 1, 2, 1]
     res = s.getLeastNumbers(arr, 2)
+    print(res)
+
+    arr = [0, 0, 0, 2, 0, 5]
+    k = 0
+    res = s.getLeastNumbers(arr, k)
+    print(res)
+
+    arr = [0]
+    k = 1
+    res = s.getLeastNumbers(arr, k)
     print(res)
 
 

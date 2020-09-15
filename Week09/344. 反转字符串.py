@@ -66,7 +66,7 @@ class Solution:
 def main():
     sol = Solution()
 
-    s = ['h', 'e', 'l', 'l', 'o']
+    s = ['h', 'e', 'm', 'm', 'o']
     sol.reverseString(s)
     print(s)
 

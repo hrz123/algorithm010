@@ -51,6 +51,22 @@ class Solution:
         return c
 
 
+class Solution:
+    def countNegatives(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        i, j = m - 1, 0
+        c = 0
+        while i >= 0 and j < n:
+            if grid[i][j] < 0:
+                i -= 1
+            else:
+                c += m - i - 1
+                j += 1
+        if j < n:
+            c += (n - j) * m
+        return c
+
+
 def main():
     sol = Solution()
     grid = [[4, 3, 2, -1],

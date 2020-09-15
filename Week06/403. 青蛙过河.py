@@ -72,7 +72,7 @@ class Solution:
         return dfs(0, 0)
 
 
-# 时间复杂度： n^2的递归，每次递归需要O(n)的时间找到下次递归的位置
+# 时间复杂度： m^2的递归，每次递归需要O(m)的时间找到下次递归的位置
 # 空间复杂度：O(N^2)，递归
 
 
@@ -102,7 +102,7 @@ class Solution:
 
 
 # 时间复杂度：
-# 空间复杂度：O(n^2)
+# 空间复杂度：O(m^2)
 
 
 # 更快了一些 超过了80%多
@@ -212,7 +212,7 @@ class Solution:
         return any(dp[n - 1])
 
 
-# 时间复杂度：O(n^2)，但是反而变慢了，leetcode 上只超过了30%
+# 时间复杂度：O(m^2)，但是反而变慢了，leetcode 上只超过了30%
 
 
 # dfs, using memo
@@ -354,7 +354,7 @@ class Solution:
 # f(start, j) 取决于 f(k, start-k) 是否为True 是的话 f(start, start-k\start-k-1\start-k+1) 对于所有的k 0..start-1
 # 初始化
 # f(0, 1) = True 在0这个石子只有1的速度可行
-# 返回值 f(n, k)有没有一个为True
+# 返回值 f(m, k)有没有一个为True
 # 优化空间复杂度
 # 无法优化
 class Solution:

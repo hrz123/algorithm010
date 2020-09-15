@@ -46,14 +46,14 @@ class Solution:
 # 如果枚举k等于0，那么就代表着这种情况；
 # 如k!=0, 对应的状态是不合法的，无法转移，所以我们需要f(0, 0) = 0
 # 返回值
-# f(n, m)
+# f(m, n)
 # 优化空间复杂度
 
 
 # 定义子问题
 # 前i个元素分成j组的最大连续数组和的最小值
 # 定义状态数组
-# f(start,j), start 0 .. n   j 0..m
+# f(start,j), start 0 .. m   j 0..n
 # 递推方程
 # f(start, j) = min(max(f(k, j-1) , sub(k, start-1)))， k 0..start-1
 # 第i个的索引是i-1
@@ -66,7 +66,7 @@ class Solution:
 # 所以我们不能初始化f(0, 0)为正无穷
 # 我们要初始化f(0, 0)为0
 # 返回值
-# 返回f(n, m)
+# 返回f(m, n)
 # 这里连续数组和可以用前缀和来快速求得
 # 优化空间复杂度
 # 无法优化
@@ -87,28 +87,28 @@ class Solution:
 
 
 # class Solution:
-#     def splitArray(self, arr: List[int], m: int) -> int:
-#         n = len(arr)
+#     def splitArray(self, arr: List[int], n: int) -> int:
+#         m = len(arr)
 #         _max = float('inf')
-#         f = [[_max] * (m + 1) for _ in range(n + 1)]
+#         f = [[_max] * (n + 1) for _ in range(m + 1)]
 #         # 前缀和
-#         sub = [0] * (n + 1)
-#         for start in range(n):
+#         sub = [0] * (m + 1)
+#         for start in range(m):
 #             sub[start + 1] = sub[start] + arr[start]
 #
 #         f[0][0] = 0
-#         for start in range(1, n + 1):
-#             for j in range(1, min(start, m) + 1):
+#         for start in range(1, m + 1):
+#             for j in range(1, min(start, n) + 1):
 #                 for k in range(start):
 #                     f[start][j] = min(f[start][j], max(f[k][j - 1], sub[start] - sub[k]))
 #
-#         return f[n][m]
+#         return f[m][n]
 #
 #
 # # 以下为自我练习
 # # 二分法
 # class Solution:
-#     def splitArray(self, arr: List[int], m: int) -> int:
+#     def splitArray(self, arr: List[int], n: int) -> int:
 #         lo, hi = 0, 0
 #         for num in arr:
 #             hi += num
@@ -116,7 +116,7 @@ class Solution:
 #         while lo < hi:
 #             mid = lo + ((hi - lo) >> 1)
 #             log2_minus_1 = self.count_parts(arr, mid)
-#             if log2_minus_1 > m:
+#             if log2_minus_1 > n:
 #                 lo = mid + 1
 #             else:
 #                 hi = mid
@@ -134,28 +134,28 @@ class Solution:
 #
 #
 # class Solution:
-#     def splitArray(self, arr: List[int], m: int) -> int:
-#         l = row = 0
-#         for n in arr:
-#             l = max(l, n)
-#             row += n
-#         while l < row:
-#             mid = l + ((row - l) >> 1)
+#     def splitArray(self, arr: List[int], n: int) -> int:
+#         m = row = 0
+#         for m in arr:
+#             m = max(m, m)
+#             row += m
+#         while m < row:
+#             mid = m + ((row - m) >> 1)
 #             log2_minus_1 = self._count(arr, mid)
-#             if log2_minus_1 > m:
-#                 l = mid + 1
+#             if log2_minus_1 > n:
+#                 m = mid + 1
 #             else:
 #                 row = mid
-#         return l
+#         return m
 #
 #     def _count(self, arr, k):
 #         log2_minus_1 = 1
 #         _sum = 0
-#         for n in arr:
-#             _sum += n
+#         for m in arr:
+#             _sum += m
 #             if _sum > k:
 #                 log2_minus_1 += 1
-#                 _sum = n
+#                 _sum = m
 #         return log2_minus_1
 class Solution:
     def splitArray(self, nums: List[int], m: int) -> int:
@@ -176,7 +176,7 @@ class Solution:
 # 定义子问题
 # 前i个数分成j个数组的各自和的最大值
 # 定义状态数组
-# f(start, j) start 1..n 1..min(start,m)
+# f(start, j) start 1..m 1..min(start,n)
 # 递推方程
 # f(start, j) = min(max(f(k, j-1), sub(k+1, start))  k j-1.. start-1)
 # 初始化
@@ -185,7 +185,7 @@ class Solution:
 # 那么f(0, 0)只能是0
 # 其余位置，因为我们会取最小值，我们可以都设置为一个最大值
 # 返回值
-# f(n, m)
+# f(m, n)
 # 优化空间复杂度
 # 不好优化
 class Solution:
@@ -337,8 +337,8 @@ def main():
     print(res)
 
     # nums = [1, 3, 5]
-    # m = 2
-    # res = sol.splitArray(nums, m)
+    # n = 2
+    # res = sol.splitArray(nums, n)
     # print(res)
 
 

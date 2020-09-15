@@ -538,6 +538,82 @@ class Solution:
                      pre + [p], res)
 
 
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        mask = (1 << n) - 1
+        self.dfs(0, n, 0, 0, 0, mask, [], res)
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in res]
+
+    def dfs(self, row, n, col, pie, na, mask, pre, res):
+        if row == n:
+            res.append([p.bit_length() - 1 for p in pre])
+            return
+        bits = ~(col | pie | na) & mask
+        while bits:
+            p = bits & -bits
+            bits -= p
+            self.dfs(row + 1, n, col | p, (pie | p) << 1, (na | p) >> 1,
+                     mask, pre + [p], res)
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        mask = (1 << n) - 1
+        self.dfs(0, n, 0, 0, 0, mask, [], res)
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in res]
+
+    def dfs(self, row, n, col, pie, na, mask, pre, res):
+        if row == n:
+            res.append([p.bit_length() - 1 for p in pre])
+            return
+        bits = ~(col | pie | na) & mask
+        while bits:
+            p = bits & -bits
+            bits -= p
+            self.dfs(row + 1, n, col | p, (pie | p) << 1, (na | p) >> 1,
+                     mask, pre + [p], res)
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[int]]:
+        res = []
+        mask = (1 << n) - 1
+        self.dfs(0, n, 0, 0, 0, mask, [], res)
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in res]
+
+    def dfs(self, row, n, col, pie, na, mask, pre, res):
+        if row == n:
+            res.append([p.bit_length() - 1 for p in pre])
+            return
+        bits = ~(col | pie | na) & mask
+        while bits:
+            p = bits & -bits
+            bits -= p
+            self.dfs(row + 1, n, col | p, (pie | p) << 1, (na | p) >> 1,
+                     mask, pre + [p], res)
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        mask = (1 << n) - 1
+        self.dfs(0, n, 0, 0, 0, mask, [], res)
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in res]
+
+    def dfs(self, row, n, col, pie, na, mask, pre, res):
+        if row == n:
+            res.append([p.bit_length() - 1 for p in pre])
+            return
+        bits = ~(col | pie | na) & mask
+        while bits:
+            p = bits & -bits
+            bits -= p
+            self.dfs(row + 1, n, col | p, (pie | p) << 1, (na | p) >> 1,
+                     mask, pre + [p], res)
+
+
 def main():
     n = 4
     sol = Solution()

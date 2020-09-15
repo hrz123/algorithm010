@@ -242,6 +242,64 @@ class Solution:
         return False
 
 
+class Solution:
+    def exist(self, board: [List[List[int]]], word: str) -> bool:
+        def dfs(level, i, j):
+            if level == wl:
+                return True
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and board[_i][_j] == word[
+                    level] and (_i, _j) not in visited:
+                    visited.add((_i, _j))
+                    if dfs(level + 1, _i, _j):
+                        return True
+                    visited.remove((_i, _j))
+            return False
+
+        m, n = len(board), len(board[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        wl = len(word)
+        visited = set()
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == word[0]:
+                    visited.add((i, j))
+                    if dfs(1, i, j):
+                        return True
+                    visited.remove((i, j))
+        return False
+
+
+class Solution:
+    def exist(self, board: [List[List[int]]], word: str) -> bool:
+        def dfs(level, i, j):
+            if level == wl:
+                return True
+            for di, dj in dirs:
+                _i, _j = i + di, j + dj
+                if -1 < _i < m and -1 < _j < n and board[_i][_j] == word[
+                    level] and (_i, _j) not in visited:
+                    visited.add((_i, _j))
+                    if dfs(level + 1, _i, _j):
+                        return True
+                    visited.remove((_i, _j))
+            return False
+
+        m, n = len(board), len(board[0])
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        wl = len(word)
+        visited = set()
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == word[0]:
+                    visited.add((i, j))
+                    if dfs(1, i, j):
+                        return True
+                    visited.remove((i, j))
+        return False
+
+
 def main():
     sol = Solution()
 

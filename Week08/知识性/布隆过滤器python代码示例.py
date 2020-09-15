@@ -146,6 +146,26 @@ class BloomFilter:
         return True
 
 
+class BloomFilter:
+    def __init__(self, size, hash_num):
+        self.size = size
+        self.hash_num = hash_num
+        self.bit_array = bitarray(size)
+        self.bit_array.set_all(0)
+
+    def add(self, s):
+        for seed in range(self.hash_num):
+            res = mmh3.hash(s, seed) % self.size
+            self.bit_array[res] = 1
+
+    def search(self, s):
+        for seed in range(self.hash_num):
+            res = mmh3.hash(s, seed) % self.size
+            if self.bit_array[res] == 0:
+                return False
+        return True
+
+
 def main():
     bf = BloomFilter(500000, 7)
     bf.add("dantezhao")

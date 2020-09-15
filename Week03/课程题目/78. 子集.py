@@ -142,6 +142,24 @@ class Solution:
         )
 
 
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        return reduce(
+            lambda acc, x: acc + [ans + [x] for ans in acc],
+            nums,
+            [[]]
+        )
+
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        return reduce(
+            lambda acc, x: acc + [ans + [x] for ans in acc],
+            nums,
+            [[]]
+        )
+
+
 def main():
     sol = Solution()
     res = sol.subsets([1, 2, 3])

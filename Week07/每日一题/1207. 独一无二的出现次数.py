@@ -1,5 +1,5 @@
 # 1207. 独一无二的出现次数.py
-from collections import Counter
+from collections import Counter, defaultdict
 from typing import List
 
 
@@ -73,6 +73,19 @@ class Solution:
         for k in c2:
             if c2[k] > 1:
                 return False
+        return True
+
+
+class Solution:
+    def uniqueOccurrences(self, arr: List[int]) -> bool:
+        c1 = defaultdict(int)
+        for num in arr:
+            c1[num] += 1
+        mem = set()
+        for v in c1.values():
+            if v in mem:
+                return False
+            mem.add(v)
         return True
 
 

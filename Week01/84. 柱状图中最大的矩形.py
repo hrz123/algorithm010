@@ -29,7 +29,7 @@ class Solution:
 
 
 # python代码不能得到通过
-# 时间复杂度：O(n^2)
+# 时间复杂度：O(m^2)
 # 空间复杂度：O(1)
 
 
@@ -316,6 +316,20 @@ class Solution:
                 t = heights[stack.pop()]
                 w = i - stack[-1] - 1
                 res = max(res, t * w)
+            stack.append(i)
+        return res
+
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        stack = [-1]
+        res = 0
+        heights.append(0)
+        for i, h in enumerate(heights):
+            while stack and heights[stack[-1]] > h:
+                tmp = heights[stack.pop()]
+                w = i - stack[-1] - 1
+                res = max(res, tmp * w)
             stack.append(i)
         return res
 

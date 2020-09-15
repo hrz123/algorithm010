@@ -114,6 +114,22 @@ class Solution:
         return res
 
 
+class Solution:
+    def distributeCoins(self, root: TreeNode) -> int:
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            nonlocal res
+            res += abs(left) + abs(right)
+            return left + right + root.val - 1
+
+        res = 0
+        dfs(root)
+        return res
+
+
 def main():
     pass
 

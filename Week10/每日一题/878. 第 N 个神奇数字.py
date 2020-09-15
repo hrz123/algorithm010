@@ -45,7 +45,7 @@ class Solution(object):
         l = A // gcd(A, B) * B
 
         def magic_below_x(x):
-            # How many magical numbers are <= x?
+            # How many magical nums are <= x?
             return x // A + x // B - x // l
 
         lo = 0
@@ -58,6 +58,23 @@ class Solution(object):
                 hi = mi
 
         return lo % mod
+
+
+class Solution(object):
+    def nthMagicalNumber(self, N, A, B):
+        from math import gcd
+        l = A * B // gcd(A, B)
+        lo, hi = 1, 10 ** 15
+        while lo < hi:
+            mid = lo + (hi - lo >> 1)
+            if self.count(mid, A, B, l) < N:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo % (10 ** 9 + 7)
+
+    def count(self, mid, A, B, l):
+        return mid // A + mid // B - mid // l
 
 
 def main():

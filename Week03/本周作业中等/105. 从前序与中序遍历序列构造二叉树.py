@@ -128,10 +128,10 @@ class Solution:
 # 6.使用preorder=[3,6] inorder=[6,3]添加为右子树
 
 # 但是考虑到最坏的情况，一个不平衡的树，并且是向左的一条线。
-# 那么inorder是preorder的反序，那么在inorder中查找，就是O(n^2)的总共的时间复杂度
-# 另外，取决于你怎么分隔数组，有可能你的空间复杂度也是O(n^2)
-# 可以使用一个hashmap使查询的总时间将为O(n)。
-# 但是这样使用了O(n)的额外空间。
+# 那么inorder是preorder的反序，那么在inorder中查找，就是O(m^2)的总共的时间复杂度
+# 另外，取决于你怎么分隔数组，有可能你的空间复杂度也是O(m^2)
+# 可以使用一个hashmap使查询的总时间将为O(m)。
+# 但是这样使用了O(m)的额外空间。
 # 并且同样也有分隔时的空间问题。
 # 为了解决这个，你可以在preorder和inorder中使用指针。
 # 并且使用指针，你同样也可以不使用value_to_index的map。
@@ -377,6 +377,38 @@ class Solution:
         root.left = self.buildTree(preorder[1:ind + 1], inorder[:ind])
         root.right = self.buildTree(preorder[ind + 1:], inorder[ind + 1:])
         return root
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def build(stop):
+            if inorder[-1] != stop:
+                root = TreeNode(preorder.pop())
+                root.left = build(root.val)
+                inorder.pop()
+                root.right = build(stop)
+                return root
+
+        preorder.reverse()
+        inorder.append(None)
+        inorder.reverse()
+        return build(None)
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        def build(stop):
+            if inorder[-1] != stop:
+                root = TreeNode(preorder.pop())
+                root.left = build(root.val)
+                inorder.pop()
+                root.right = build(stop)
+                return root
+
+        preorder.reverse()
+        inorder.append(None)
+        inorder.reverse()
+        return build(None)
 
 
 class Solution:

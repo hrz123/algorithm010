@@ -34,7 +34,7 @@ from typing import List
 # 如果|x|∈[1,N]，那么我们给数组中的第|x|-1个位置添加一个负号。
 # 注意如果它已经有负号，不需要重复添加；
 # 在遍历完成之后，如果数组中的每一个数都是负数，那么答案是N+1，否则答案是第一个正数的位置加1.
-# 时间复杂度：O(n)，遍历3次数组
+# 时间复杂度：O(m)，遍历3次数组
 # 空间复杂度：O(1)
 class Solution:
     def firstMissingPositive(self, nums: List[int]) -> int:
@@ -242,6 +242,46 @@ class Solution:
         for i in range(n):
             while 0 < nums[i] <= n and nums[i] != nums[nums[i] - 1]:
                 nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i - 1]]
+        for i in range(n):
+            if nums[i] != i + 1:
+                return i + 1
+        return n + 1
+
+
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        n = len(nums)
+        for i in range(n):
+            while 0 < nums[i] <= n and nums[i] != nums[nums[i] - 1]:
+                nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
+        for i in range(n):
+            if nums[i] != i + 1:
+                return i + 1
+        return n + 1
+
+
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        n = len(nums)
+        for i in range(n):
+            if nums[i] <= 0:
+                nums[i] = n + 1
+        for i in range(n):
+            x = abs(nums[i])
+            if 0 < x <= n:
+                nums[x - 1] = nums[x - 1] if nums[x - 1] < 0 else -nums[x - 1]
+        for i in range(n):
+            if nums[i] > 0:
+                return i + 1
+        return n + 1
+
+
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        n = len(nums)
+        for i in range(n):
+            while 0 < nums[i] <= n and nums[i] != nums[nums[i] - 1]:
+                nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
         for i in range(n):
             if nums[i] != i + 1:
                 return i + 1

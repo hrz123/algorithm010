@@ -49,9 +49,9 @@ class Solution:
 
 
 # 每个节点返回两个值，List，0表示不偷这个节点时的最大收益，1表示投这个节点的最大收益
-# root[0] = Math.max(rob(root.l)[0], rob(root.l)[1]) +
+# root[0] = Math.max(rob(root.m)[0], rob(root.m)[1]) +
 # Math.max(rob(root.r)[0], rob(root.r)[1])
-# root[1] = rob(root.l)[0] + rob(root.r)[0] + root.val;
+# root[1] = rob(root.m)[0] + rob(root.r)[0] + root.val;
 class Solution:
 
     def rob(self, root: TreeNode) -> int:

@@ -115,6 +115,24 @@ class Solution:
         return timer
 
 
+# bfs
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        fresh = {(i, j) for i in range(m) for j in range(n) if grid[i][j] == 1}
+        rotten = {(i, j) for i in range(m) for j in range(n) if grid[i][j] == 2}
+        dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        timer = 0
+        while fresh:
+            rotten = {(i, j) for i, j in fresh for di, dj in dirs
+                      if (i + di, j + dj) in rotten}
+            if not rotten:
+                return -1
+            fresh -= rotten
+            timer += 1
+        return timer
+
+
 def main():
     sol = Solution()
 

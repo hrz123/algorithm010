@@ -129,10 +129,10 @@ class Solution:
 # 以下为自我练习
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        # def partition(nums, l, r):
+        # def partition(nums, m, r):
         #     pivot = r
-        #     r = l
-        #     for i in range(l, r):
+        #     r = m
+        #     for i in range(m, r):
         #         if nums[i] <= nums[pivot]:
         #             nums[i], nums[r] = nums[r], nums[i]
         #             r += 1
@@ -418,6 +418,32 @@ class Solution:
         right = l
         for i in range(l, r):
             if nums[i] <= nums[pivot]:
+                nums[i], nums[right] = nums[right], nums[i]
+                right += 1
+        nums[right], nums[pivot] = nums[pivot], nums[right]
+        return right
+
+
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        l, r = 0, n - 1
+        while l <= r:
+            pivot = self.partition(nums, l, r)
+            if pivot == n - k:
+                return nums[pivot]
+            if pivot < n - k:
+                l = pivot + 1
+            else:
+                r = pivot - 1
+
+    def partition(self, nums, l, r):
+        ran = random.randint(l, r)
+        nums[r], nums[ran] = nums[ran], nums[r]
+        pivot = r
+        right = l
+        for i in range(l, r):
+            if nums[i] < nums[pivot]:
                 nums[i], nums[right] = nums[right], nums[i]
                 right += 1
         nums[right], nums[pivot] = nums[pivot], nums[right]

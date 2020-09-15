@@ -6,7 +6,7 @@ from typing import List
 # 暴力搜索，穷举
 
 
-# 贪心:O(n)
+# 贪心:O(m)
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
         if not nums:
@@ -134,6 +134,16 @@ class Solution:
             if i > start:
                 return False
             start = max(start, i + n)
+        return True
+
+
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        start = 0
+        for i, num in enumerate(nums):
+            if i > start:
+                return False
+            start = max(start, i + num)
         return True
 
 

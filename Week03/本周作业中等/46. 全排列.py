@@ -1,9 +1,10 @@
 # 46. 全排列.py
+from functools import reduce
 from typing import List
 
 
 # 使用 数组 来判断某个位置的元素是否已经使用过
-# 使用O(n)的空间
+# 使用O(m)的空间
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         def dfs(depth, nums, size, path, used, res):
@@ -36,7 +37,7 @@ class Solution:
 
 
 # 使用 hashset 来判断某个位置的元素是否已经使用过
-# 使用O(n)的空间
+# 使用O(m)的空间
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         def dfs(nums, size, depth, hash_set, path, res):
@@ -99,7 +100,7 @@ class Solution:
             new_perms = []
             for perm in perms:
                 for i in range(len(perm) + 1):
-                    new_perms.append(perm[:i] + [n] + perm[i:])  # insert n
+                    new_perms.append(perm[:i] + [n] + perm[i:])  # insert m
             perms = new_perms
         return perms
 
@@ -250,6 +251,25 @@ class Solution:
             res = [ans[:i] + [n] + ans[i:] for
                    ans in res for i in range(len(ans) + 1)]
         return res
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for num in nums:
+            res = [ans[:i] + [num] + ans[i:]
+                   for ans in res for i in range(len(ans) + 1)]
+        return res
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        return reduce(
+            lambda acc, x: [ans[:i] + [x] + ans[i:]
+                            for ans in acc for i in range(len(ans) + 1)],
+            nums,
+            [[]]
+        )
 
 
 def main():

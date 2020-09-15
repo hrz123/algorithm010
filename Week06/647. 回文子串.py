@@ -134,9 +134,9 @@ class Solution:
 
 
 # 第一个想法，从中间向两边扩散
-# O(n^2) 但是可以提前停止
+# O(m^2) 但是可以提前停止
 # 第二个想法，动态规划
-# O(n^2)
+# O(m^2)
 class Solution:
     def countSubstrings(self, s: str) -> int:
         n = len(s)

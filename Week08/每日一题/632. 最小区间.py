@@ -241,14 +241,63 @@ class Solution:
             heapq.heappush(heap, (nums[row][idx], row, idx))
 
 
+class Solution:
+    def smallestRange(self, nums: List[List[int]]) -> List[int]:
+        range_left, range_right = float('-inf'), float('inf')
+        heap = [(num[0], i, 0) for i, num in enumerate(nums)]
+        heapq.heapify(heap)
+        _max_value = max(num[0] for num in nums)
+        while True:
+            _min_value, row, ind = heapq.heappop(heap)
+            if _max_value - _min_value < range_right - range_left:
+                range_left = _min_value
+                range_right = _max_value
+            ind += 1
+            if ind == len(nums[row]):
+                return [range_left, range_right]
+            _max_value = max(_max_value, nums[row][ind])
+            heapq.heappush(heap, (nums[row][ind], row, ind))
+
+
+class Solution:
+    def smallestRange(self, nums: List[List[int]]) -> List[int]:
+        range_left, range_right = float('-inf'), float('inf')
+        heap = [(num[0], i, 0) for i, num in enumerate(nums)]
+        heapq.heapify(heap)
+        _max_value = max(num[0] for num in nums)
+        while True:
+            _min_value, row, idx = heapq.heappop(heap)
+            if _max_value - _min_value < range_right - range_left:
+                range_left = _min_value
+                range_right = _max_value
+            idx += 1
+            if idx == len(nums[row]):
+                return [range_left, range_right]
+            _max_value = max(_max_value, nums[row][idx])
+            heapq.heappush(heap, (nums[row][idx], row, idx))
+
+
+class Solution:
+    def smallestRange(self, nums: List[List[int]]) -> List[int]:
+        range_left, range_right = float('-inf'), float('inf')
+        heap = [(num[0], i, 0) for i, num in enumerate(nums)]
+        heapq.heapify(heap)
+        _max_value = max(num[0] for num in nums)
+        while True:
+            _min_value, row, idx = heapq.heappop(heap)
+            if _max_value - _min_value < range_right - range_left:
+                range_left = _min_value
+                range_right = _max_value
+            idx += 1
+            if idx == len(nums[row]):
+                return [range_left, range_right]
+            _max_value = max(_max_value, nums[row][idx])
+            heapq.heappush(heap, (nums[row][idx], row, idx))
+
+
 def main():
     sol = Solution()
-
     nums = [[4, 10, 15, 24, 26], [0, 9, 12, 20], [5, 18, 22, 30]]
-    res = sol.smallestRange(nums)
-    print(res)
-
-    nums = [[-5, -4, -3, -2, -1], [1, 2, 3, 4, 5]]
     res = sol.smallestRange(nums)
     print(res)
 

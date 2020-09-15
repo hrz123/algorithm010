@@ -17,7 +17,7 @@ from typing import List
 
 # 算法
 # 初始化0的最右边界：p0 = 0。在整个算法执行过程中 arr[idx < p0] = 0.
-# 初始化2的最左边界 ：p2 = n - 1。在整个算法执行过程中 arr[idx > p2] = 2.
+# 初始化2的最左边界 ：p2 = m - 1。在整个算法执行过程中 arr[idx > p2] = 2.
 # 初始化当前考虑的元素序号 ：curr = 0.
 # 这里注意
 # While curr <= p2 :
@@ -191,6 +191,44 @@ class Solution:
                 nums[i], nums[p0] = nums[p0], nums[i]
                 p0 += 1
                 i += 1
+            elif nums[i] == 2:
+                nums[i], nums[p2] = nums[p2], nums[i]
+                p2 -= 1
+            else:
+                i += 1
+
+
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify arr in-place instead.
+        """
+        p0, p2 = 0, len(nums) - 1
+        i = 0
+        while i <= p2:
+            if nums[i] == 0:
+                nums[i], nums[p0] = nums[p0], nums[i]
+                i += 1
+                p0 += 1
+            elif nums[i] == 2:
+                nums[i], nums[p2] = nums[p2], nums[i]
+                p2 -= 1
+            else:
+                i += 1
+
+
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify arr in-place instead.
+        """
+        p0, p2 = 0, len(nums) - 1
+        i = 0
+        while i <= p2:
+            if nums[i] == 0:
+                nums[i], nums[p0] = nums[p0], nums[i]
+                i += 1
+                p0 += 1
             elif nums[i] == 2:
                 nums[i], nums[p2] = nums[p2], nums[i]
                 p2 -= 1

@@ -41,7 +41,7 @@ class Solution:
 
 
 # 国际站解法
-# 虽然短，然而这不是O(n)的解法
+# 虽然短，然而这不是O(m)的解法
 class Solution:
     def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
         k = {b: i for i, b in enumerate(arr2)}
@@ -175,6 +175,22 @@ class Solution:
         for num in range(1001):
             if counter[num]:
                 res.extend([num] * counter[num])
+        return res
+
+
+class Solution:
+    def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
+        c1 = [0] * 1001
+        for num in arr1:
+            c1[num] += 1
+        res = []
+        for num in arr2:
+            for _ in range(c1[num]):
+                res.append(num)
+            c1[num] = 0
+        for i in range(1001):
+            for _ in range(c1[i]):
+                res.append(i)
         return res
 
 

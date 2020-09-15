@@ -186,7 +186,7 @@ class Solution:
 
 
 # 库函数
-# 递归，相当于从t-1个数里选k-1个数再加上这个数，t k..n
+# 递归，相当于从t-1个数里选k-1个数再加上这个数，t k..m
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
         if n <= 0 or k <= 0 or k > n:
@@ -308,23 +308,119 @@ class Solution:
 
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        res = []
-
         def dfs(i, pre):
             if len(pre) == k:
                 res.append(pre)
                 return
-            for j in range(i + 1, n + 1):
+            for j in range(i + 1, n - k + len(pre) + 2):
                 dfs(j, pre + [j])
 
+        res = []
+        dfs(0, [])
+        return res
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def dfs(i, pre):
+            if len(pre) == k:
+                res.append(pre)
+                return
+            for j in range(i + 1, n - k + len(pre) + 2):
+                dfs(j, pre + [j])
+
+        res = []
+        dfs(0, [])
+        return res
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def dfs(i, pre):
+            if len(pre) == k:
+                res.append(pre[:])
+                return
+            for j in range(i + 1, n - k + len(pre) + 2):
+                pre.append(j)
+                dfs(j, pre)
+                pre.pop()
+
+        res = []
+        dfs(0, [])
+        return res
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        if k < 1 or n < 1 or k > n:
+            return [[]]
+        return [ans + [i] for i in range(k, n + 1) for ans in
+                self.combine(i - 1, k - 1)]
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        if n < 1 or k < 1 or k > n:
+            return [[]]
+        return [ans + [i] for i in range(k, n + 1) for ans in self.combine(
+            i - 1, k - 1)]
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        if n < 1 or k < 1 or k > n:
+            return [[]]
+        return [ans + [i] for i in range(k, n + 1) for ans in self.combine(
+            i - 1, k - 1)]
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def dfs(i, pre):
+            if len(pre) == k:
+                res.append(pre[:])
+                return
+            for j in range(i + 1, n - k + len(pre) + 2):
+                pre.append(j)
+                dfs(j, pre)
+                pre.pop()
+
+        res = []
+        dfs(0, [])
+        return res
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def dfs(i, pre):
+            if len(pre) == k:
+                res.append(pre[:])
+                return
+            for j in range(i + 1, n - k + len(pre) + 2):
+                pre.append(j)
+                dfs(j, pre)
+                pre.pop()
+
+        res = []
         dfs(0, [])
         return res
 
 
 def main():
+    sol = Solution()
+
     n = 4
     k = 2
-    sol = Solution()
+    res = sol.combine(n, k)
+    print(res)
+
+    n = 1
+    k = 1
+    res = sol.combine(n, k)
+    print(res)
+
+    n = 2
+    k = 1
     res = sol.combine(n, k)
     print(res)
 

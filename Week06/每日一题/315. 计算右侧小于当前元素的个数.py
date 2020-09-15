@@ -3,7 +3,7 @@ from typing import List
 
 
 # 暴力解法
-# O(n^2)
+# O(m^2)
 class Solution:
     def countSmaller(self, nums: List[int]) -> List[int]:
         n = len(nums)
@@ -83,7 +83,7 @@ class Solution:
                 # 注意
                 res[indexes[i]] += (r - mid - 1)
             else:
-                # assert arr[tmp[l]] > arr[tmp[row]]
+                # assert arr[tmp[m]] > arr[tmp[row]]
                 # 上面两种情况只在其中一种统计就可以了
                 # [3,5,7,9],[4,6,8,10]
                 indexes[i] = tmp[r]
@@ -91,7 +91,7 @@ class Solution:
 
 
 # 时间复杂度：O(nlogn)
-# 空间复杂度：O(n)
+# 空间复杂度：O(m)
 
 
 # 树状数组解法
@@ -383,10 +383,89 @@ class Solution:
         return res[::-1]
 
 
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        rank = {val: i + 1 for i, val in enumerate(sorted(nums))}
+        n = len(nums)
+        BITree = [0] * (n + 1)
+
+        def update(i, k=1):
+            while i <= n:
+                BITree[i] += k
+                i += i & -i
+
+        def getSum(i):
+            s = 0
+            while i:
+                s += BITree[i]
+                i -= i & -i
+            return s
+
+        res = []
+        for num in reversed(nums):
+            res.append(getSum(rank[num] - 1))
+            update(rank[num])
+        return res[::-1]
+
+
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        rank = {val: i + 1 for i, val in enumerate(sorted(nums))}
+        n = len(nums)
+        BITree = [0] * (n + 1)
+
+        def update(i, k=1):
+            while i <= n:
+                BITree[i] += k
+                i += i & -i
+
+        def getSum(i):
+            s = 0
+            while i:
+                s += BITree[i]
+                i -= i & -i
+            return s
+
+        res = []
+        for num in reversed(nums):
+            res.append(getSum(rank[num] - 1))
+            update(rank[num])
+        return res[::-1]
+
+
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        rank = {val: i + 1 for i, val in enumerate(sorted(nums))}
+        n = len(nums)
+        BITree = [0] * (n + 1)
+
+        def update(i, k=1):
+            while i <= n:
+                BITree[i] += k
+                i += i & -i
+
+        def getSum(i):
+            s = 0
+            while i:
+                s += BITree[i]
+                i -= i & -i
+            return s
+
+        res = []
+        for num in reversed(nums):
+            res.append(getSum(rank[num] - 1))
+            update(rank[num])
+        return res[::-1]
+
+
 def main():
     solution = Solution()
 
     nums = [5, 2, 6, 1]
+    result = solution.countSmaller(nums)
+    print(result)
+
+    nums = [5, 5, 4, 4]
     result = solution.countSmaller(nums)
     print(result)
 

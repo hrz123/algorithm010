@@ -140,7 +140,7 @@ class Solution:
 # 我们可以记住k的值，在这一鸡蛋个数中重用
 # 这样K最多从0到j，我们整体的时间复杂度下降到了
 # O(K*N)
-# 开始的时候f(i-1,k-1)都是小于f(i, n-k)的
+# 开始的时候f(i-1,k-1)都是小于f(i, m-k)的
 # 到它们开始相等的时候，两者之间求max是最小的
 class Solution:
     def superEggDrop(self, K: int, N: int) -> int:
@@ -276,7 +276,7 @@ class Solution:
 # f(1, j) = j
 # f(i, 1) = 1
 # 返回值
-# f(k, n)
+# f(k, m)
 # 优化复杂度
 # 只与i-1有关，我们用两个数组滚动
 # 最合适的k层随着j的增加而增加，我们可以对每一个鸡蛋数量，一直维护一个k值
@@ -293,6 +293,54 @@ class Solution:
                 ndp[j] = dp[k - 1] + 1
             dp, ndp = ndp, dp
         return dp[N]
+
+
+# f(i, j) egg levels
+# 100 25
+# f(i, j) = min(max(f(i - 1, k - 1), f(i, j - k)) + 1) for k in (1, j)
+# init
+# f(1, j) = j
+# return
+# f(k, n)
+# optimize
+# k grows as j grows
+class Solution:
+    def superEggDrop(self, K: int, N: int) -> int:
+        dp = [*range(N + 1)]
+        ndp = [0] * (N + 1)
+        for i in range(2, K + 1):
+            k = 1
+            for j in range(1, N + 1):
+                while k <= j and dp[k - 1] < ndp[j - k]:
+                    k += 1
+                ndp[j] = dp[k - 1] + 1
+            dp, ndp = ndp, dp
+        return dp[N]
+
+
+# f(i, j) egg level
+# 100 25
+# f(i, j) = min(max(f(i - 1, k - 1), f(i, j - k)) + 1) for k in (1, j)
+# init
+# f(1, j) = j
+# return f(K, N)
+# optimize
+# f(i-1, k-1) up as k up
+# f(i, j-k) down as k up
+# keep k for every i
+class Solution:
+    def superEggDrop(self, K, N):
+        dp = [*range(N + 1)]
+        ndp = [0] * (N + 1)
+        for i in range(2, K + 1):
+            k = 1
+            for j in range(1, N + 1):
+                while k <= j and dp[k-1] < ndp[j-k]:
+                    k += 1
+                ndp[j] = dp[k-1] + 1
+            dp, ndp = ndp, dp
+        return dp[N]
+
 
 
 def main():

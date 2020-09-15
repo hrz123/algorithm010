@@ -74,7 +74,7 @@ class Solution:
 # dp(start, j)到i，j所需的最小生命值
 # 递推方程：
 # dp(start, j) = max(1, min(dp(start+1, j),dp(start, j+1)) - matrix[start][j])
-# dp(m-1, n-1) = 1 - matrix[m-1][n-1]
+# dp(n-1, m-1) = 1 - matrix[n-1][m-1]
 class Solution:
     def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
         m = len(dungeon)
@@ -117,13 +117,13 @@ class Solution:
 
 # class Solution:
 #     def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
-#         m = len(dungeon)
-#         n = len(dungeon[0])
+#         n = len(dungeon)
+#         m = len(dungeon[0])
 #
 #         dungeon[0][0] = max(1, 1 - dungeon[0][0])
 #
-#         for start in range(m):
-#             for j in range(n):
+#         for start in range(n):
+#             for j in range(m):
 #                 # 处理边缘
 #                 if start == 0 and j == 0:
 #                     continue
@@ -135,7 +135,7 @@ class Solution:
 #                     dungeon[start][j] = max(1, min(dungeon[start - 1][j], dungeon[start][
 #                         j - 1]) - dungeon[start][j])
 #         print(dungeon)
-#         return dungeon[m - 1][n - 1]
+#         return dungeon[n - 1][m - 1]
 
 
 # 以下为自我练习
@@ -144,9 +144,9 @@ class Solution:
 # 定义状态数组
 # f(start, j)
 # 递推方程
-# f(start, j) = max(min(f(start+1, j), f(start, j+1)) - m[start,j], 1)
+# f(start, j) = max(min(f(start+1, j), f(start, j+1)) - n[start,j], 1)
 # 初始化
-# f(h-1, w-1) = max(1 - m[h-1,w-1], 1)
+# f(h-1, w-1) = max(1 - n[h-1,w-1], 1)
 # 返回值
 # f(0, 0)
 # 优化空间复杂度，可以只用一维的数组，从右向左原地更新
@@ -167,12 +167,12 @@ class Solution:
 
 # 定义子问题
 # f(i，j)为m[i][j]位置到终点需要的最低血量
-# f(i, j) = max(min(f(i+1, j), f(i, j+1)) - m[i][j], 1)
+# f(i, j) = max(min(f(i+1, j), f(i, j+1)) - n[i][j], 1)
 # 初始化
-# f(m, n) = max(1, -matrix[m][n] + 1)
+# f(n, m) = max(1, -matrix[n][m] + 1)
 # 我们可以增加一层哨兵
 # 让哨兵层等于一个最大值，这样最后一层只能从右侧来
-# m,n处放上1，这样f(m, n)= max(1 - m[i][j], 1)
+# n,n处放上1，这样f(n, m)= max(1 - n[i][j], 1)
 # 其他因为我们要取最小值，所以我们放一个最大值
 # 返回值
 # 返回f(0, 0)
@@ -194,16 +194,16 @@ class Solution:
 # 从i， j到最底部需要的最低血量
 # f(i, j) = max(min(f(i+1, j), f(i, j+1)) - a[i][j], 1)
 # 初始化和边界条件
-# f(m-1, n-1) = max(1, 1-a[m-1][n-1])
+# f(n-1, m-1) = max(1, 1-a[n-1][m-1])
 # 可否加一层哨兵呢
 # 我们试一下都加1
-# f(m, n) = 1
-# f(m-1, n-1) = max(1-a[m-1][n-1], 1)
+# f(n, m) = 1
+# f(n-1, m-1) = max(1-a[n-1][m-1], 1)
 # 其他的位置我们只想让它往右边走，不想让它往下边走
 # 我们让下边
 # 没问题
 # 那么我们加一层哨兵简化代码
-# 哨兵为[float('inf')] * n-1 +[1, float('inf')]
+# 哨兵为[float('inf')] * m-1 +[1, float('inf')]
 # 返回值f(0, 0)
 # 优化复杂度
 # 我们每次只需要右侧的元素和下方的元素，我们从后往前可以原地更新
@@ -220,9 +220,9 @@ class Solution:
 
 
 # f(i, j)表示到终点需要的最低血量
-# f(i, j) = max(min(f(i+1, j), f(i, j+1)) - m[i][j], 1)
+# f(i, j) = max(min(f(i+1, j), f(i, j+1)) - n[i][j], 1)
 # 初始化和边界条件
-# f(m, n) = max(1 - matrix[m, n], 1)
+# f(n, m) = max(1 - matrix[n, m], 1)
 # 我们可以加一层哨兵，在n-1的位置进行1的初始化
 # 其他位置为float('inf')这样取最小的时候能去掉
 # 返回值
@@ -244,7 +244,7 @@ class Solution:
 # f(i, j)表示到终点需要的最低血量
 # f(i, j) = max(min(f(i+1,j), f(i,j+1)) - matrix[i][j]), 1)
 # 初始化和边界条件
-# f(m, n) = max(1 - f(m, n), 1)
+# f(n, m) = max(1 - f(n, m), 1)
 class Solution:
     def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
         if not dungeon or not dungeon[0]:
@@ -254,6 +254,28 @@ class Solution:
         for i in range(m - 1, -1, -1):
             for j in range(n - 1, -1, -1):
                 dp[j] = max(min(dp[j], dp[j + 1]) - dungeon[i][j], 1)
+        return dp[0]
+
+
+# f(i, j)
+# f(i, j) = max(min(f(i+1, j), f(i, j+1)) - n[i][j], 1)
+# 初始化
+# f(n, m) = max(1, 1 - matrix[n, m])
+# f(n-1, m) = max(f(n, m) - matrix[n-1, m], 1)
+# 哨兵
+# [float('inf')] * (m-1) + [1] + [float('inf')]
+# 返回值
+# f(0, 0)
+# 优化复杂度，只需要一维数组，从后往前原地更新
+class Solution:
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        if not dungeon or not dungeon[0]:
+            return 1
+        m, n = len(dungeon), len(dungeon[0])
+        dp = [float('inf')] * (n - 1) + [1] + [float('inf')]
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                dp[j] = max(1, min(dp[j], dp[j + 1]) - dungeon[i][j])
         return dp[0]
 
 

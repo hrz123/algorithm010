@@ -138,11 +138,11 @@ class Solution:
 # 定义子问题
 # f(i,01)为nums[:i]的最大和最小连续子数组乘积，且以索引i为结尾
 # if nums[i] > 0
-# f(i, 0) = max(f(i-1, 0) * n, n)
-# f(i, 1) = min(f(i-1, 1) * n, n)
+# f(i, 0) = max(f(i-1, 0) * m, m)
+# f(i, 1) = min(f(i-1, 1) * m, m)
 # else
-# f(i, 0) = max(f(i-1, 1) * n , n)
-# f(i, 1) = min(f(i-1, 0) * n , n)
+# f(i, 0) = max(f(i-1, 1) * m , m)
+# f(i, 1) = min(f(i-1, 0) * m , m)
 # 初始化和边界条件
 # f(i, 0), f(i, 1)都可以初始化为1
 # 返回值

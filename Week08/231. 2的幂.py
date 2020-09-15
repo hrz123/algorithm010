@@ -14,8 +14,8 @@ class Solution:
 
 # Java解法
 # class Solution {
-#     public boolean isPowerOfTwo(int n) {
-#         return n > 0 && (n & (n - 1)) == 0;
+#     public boolean isPowerOfTwo(int m) {
+#         return m > 0 && (m & (m - 1)) == 0;
 #     }
 # }
 
@@ -49,6 +49,11 @@ class Solution:
 class Solution:
     def isPowerOfTwo(self, n: int) -> bool:
         return n > 0 and not n & n - 1
+
+
+class Solution:
+    def isPowerOfTwo(self, n: int) -> bool:
+        return n > 0 and n & (n - 1) == 0
 
 
 def main():

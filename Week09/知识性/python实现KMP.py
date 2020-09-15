@@ -154,7 +154,7 @@ class Solution:
             if s[i] == p[j]:
                 j += 1
             if j == m:
-                # return start - m + 1
+                # return start - n + 1
                 print("find at {}".format(i - m + 1))
                 j = lps[j - 1] + 1
         # return -1
@@ -183,7 +183,7 @@ class Solution:
             if s[i] == p[j]:
                 j += 1
             if j == m:
-                # return start - m + 1
+                # return start - n + 1
                 print("find at " + str(i - m + 1))
                 j = lps[j - 1] + 1
         return -1
@@ -301,7 +301,7 @@ class Solution:
             if s[i] == p[j]:
                 j += 1
             if j == m:
-                # return i - m + 1
+                # return i - n + 1
                 print("find at {}".format(i - m + 1))
                 j = lps[j - 1] + 1
         return -1
@@ -329,7 +329,7 @@ class Solution:
             if s[i] == p[j]:
                 j += 1
             if j == m:
-                # return i - m + 1
+                # return i - n + 1
                 print("find at {}".format(i - m + 1))
                 j = lps[j - 1] + 1
         return -1
@@ -357,7 +357,7 @@ class Solution:
             if s[i] == p[j]:
                 j += 1
             if j == m:
-                # return i - m + 1
+                # return i - n + 1
                 print("find at {}".format(i - m + 1))
                 j = lps[j - 1] + 1
         return -1
@@ -387,7 +387,7 @@ class Solution:
             if j == m:
                 print("find at {}".format(i - m + 1))
                 j = lps[j - 1] + 1
-                # return i - m + 1
+                # return i - n + 1
         return -1
 
     def get_lps(self, p, m):
@@ -415,7 +415,7 @@ class Solution:
             if j == m:
                 print("find at {}".format(i - m + 1))
                 j = lps[j - 1] + 1
-                # return i - m + 1
+                # return i - n + 1
         return -1
 
     def get_lps(self, p, m):
@@ -472,7 +472,7 @@ class Solution:
             if s[i] == p[j]:
                 j += 1
             if j == m:
-                # return i - m + 1
+                # return i - n + 1
                 print("find at {}".format(i - m + 1))
                 j = lps[j - 1] + 1
         return -1
@@ -489,12 +489,99 @@ class Solution:
         print(lps)
         return lps
 
+        if not p:
+            return 0
+        m, n = len(p), len(s)
+        lps = self.get_lps(p, m)
+        j = -1
+        for i in range(n):
+            while j != 0 and s[i] != p[j]:
+                j = lps[j - 1] + 1
+            if s[i] == p[j]:
+                j += 1
+            if j == m:
+                # return i - n + 1
+                print("find at {}".format(i - m + 1))
+                j = lps[j - 1] + 1
+        return -1
+
+    def get_lps(self, p, m):
+        lps = [-1] * m
+        k = -1
+        for i in range(1, m):
+            while k != -1 and p[i] != p[k + 1]:
+                k = lps[k]
+            if p[i] == p[k + 1]:
+                k += 1
+            lps[i] = k
+        return lps
+
+
+class Solution:
+    def KMPSearch(self, p, s):
+        if not p:
+            return 0
+        m, n = len(p), len(s)
+        lps = self.get_lps(p, m)
+        j = 0
+        for i in range(n):
+            while j != 0 and s[i] != p[j]:
+                j = lps[j - 1] + 1
+            if s[i] == p[j]:
+                j += 1
+            if j == m:
+                # return i - n + 1
+                print("find at {}".format(i - m + 1))
+                j = lps[j - 1] + 1
+        return -1
+
+    def get_lps(self, p, m):
+        lps = [-1] * m
+        k = -1
+        for i in range(1, m):
+            while k != -1 and p[i] != p[k + 1]:
+                k = lps[k]
+            if p[i] == p[k + 1]:
+                k += 1
+            lps[i] = k
+        return lps
+
+
+class Solution:
+    def KMPSearch(self, p, s):
+        if not p:
+            return True
+        m, n = len(p), len(s)
+        lps = self.get_lps(p, m)
+        j = 0
+        for i in range(n):
+            while j != 0 and s[i] != p[j]:
+                j = lps[j - 1] + 1
+            if s[i] == p[j]:
+                j += 1
+            if j == m:
+                # return i - m + 1
+                print("find at {}".format(i - m + 1))
+                j = lps[j - 1] + 1
+        return -1
+
+    def get_lps(self, p, m):
+        lps = [-1] * m
+        k = -1
+        for i in range(1, m):
+            while k != -1 and p[i] != p[k + 1]:
+                k = lps[k]
+            if p[i] == p[k + 1]:
+                k += 1
+            lps[i] = k
+        return lps
+
 
 def main():
     sol = Solution()
 
     s = "abcruizheuhuruizheaasdasd"
-    p = "banana"
+    p = "ruizhe"
     res = sol.KMPSearch(p, s)
     print(res)
 

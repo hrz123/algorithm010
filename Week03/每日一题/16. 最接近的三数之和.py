@@ -108,6 +108,50 @@ class Solution:
         return res
 
 
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        res = float('inf')
+        n = len(nums)
+        nums.sort()
+        for i in range(n - 2):
+            if i == 0 or nums[i] != nums[i - 1]:
+                tmp = target - nums[i]
+                l, r = i + 1, n - 1
+                while l < r:
+                    total = nums[l] + nums[r]
+                    if total == tmp:
+                        return target
+                    if abs(total - tmp) < abs(res - target):
+                        res = total + nums[i]
+                    if total < tmp:
+                        l += 1
+                    else:
+                        r -= 1
+        return res
+
+
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        n = len(nums)
+        nums.sort()
+        res = float('inf')
+        for i in range(n - 2):
+            if i == 0 or nums[i] != nums[i - 1]:
+                l, r = i + 1, n - 1
+                tmp = target - nums[i]
+                while l < r:
+                    total = nums[l] + nums[r]
+                    if total == tmp:
+                        return target
+                    if abs(total - tmp) < abs(res - target):
+                        res = total + nums[i]
+                    if total < tmp:
+                        l += 1
+                    else:
+                        r -= 1
+        return res
+
+
 def main():
     s = Solution()
     res = s.threeSumClosest([-1, 2, 1, -4], 1)

@@ -137,7 +137,7 @@ class Solution:
 # 初始化和边界条件
 # f(0, 0) = 1
 # f(0, j) = 0  其他为0种方法
-# 返回值f(n, amount)
+# 返回值f(m, amount)
 # 优化复杂度
 # 我们只需要j-1种和j种硬币的时候，可以使用一维数组从前往后原地更新
 class Solution:

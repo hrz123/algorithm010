@@ -4,7 +4,7 @@ from typing import List
 
 # 1.暴力
 # 超出时间限制
-# 时间复杂度:O(n^2m)其中n是words数组长度，m是元素平均长度
+# 时间复杂度:O(m^2m)其中n是words数组长度，m是元素平均长度
 class Solution:
     def palindromePairs(self, words: List[str]) -> List[List[int]]:
         n = len(words)

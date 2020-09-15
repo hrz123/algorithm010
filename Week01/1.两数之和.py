@@ -22,19 +22,19 @@ class Solution:
 # 错误的解法
 # class Solution:
 #     def twoSum(self, arr: List[int], target: int) -> List[int]:
-#         l, row = 0, len(arr) - 1
+#         m, row = 0, len(arr) - 1
 #         nums_copy = arr[:]
 #         arr.sort()
 #         res = []
-#         while l < row:
-#             s = arr[l] + arr[row]
+#         while m < row:
+#             s = arr[m] + arr[row]
 #             if s == target:
-#                 res.append([arr[l], arr[row]])
-#                 l += 1
-#                 while l < row and arr[l] == arr[l - 1]:
-#                     l += 1
+#                 res.append([arr[m], arr[row]])
+#                 m += 1
+#                 while m < row and arr[m] == arr[m - 1]:
+#                     m += 1
 #             elif s < target:
-#                 l += 1
+#                 m += 1
 #             else:
 #                 row -= 1
 #         return [nums_copy.index(start) for start in res[0]] if res else res
@@ -94,6 +94,26 @@ class Solution:
             if n in mem:
                 return [mem[n], i]
             mem[target - n] = i
+        return []
+
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        mem = {}
+        for i, num in enumerate(nums):
+            if num in mem:
+                return [mem[num], i]
+            mem[target - num] = i
+        return []
+
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        mem = {}
+        for i, num in enumerate(nums):
+            if num in mem:
+                return [mem[num], i]
+            mem[target - num] = i
         return []
 
 

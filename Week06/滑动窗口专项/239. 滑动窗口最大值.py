@@ -5,7 +5,7 @@ from typing import List
 
 # 方法一
 # 暴力解法
-# 时间复杂度：O(n*k)
+# 时间复杂度：O(m*k)
 
 # 方法二
 # 维护一个缓存
@@ -188,6 +188,54 @@ class Solution:
         res = [0] * (len(nums) - k + 1)
         for i, n in enumerate(nums):
             while deq and nums[deq[-1]] <= n:
+                deq.pop()
+            deq.append(i)
+            idx = i - k + 1
+            if idx >= 0:
+                res[idx] = nums[deq[0]]
+                if deq[0] == idx:
+                    deq.popleft()
+        return res
+
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        deq = deque()
+        res = [0] * (len(nums) - k + 1)
+        for i, num in enumerate(nums):
+            while deq and nums[deq[-1]] <= num:
+                deq.pop()
+            deq.append(i)
+            idx = i - k + 1
+            if idx >= 0:
+                res[idx] = nums[deq[0]]
+                if deq[0] == idx:
+                    deq.popleft()
+        return res
+
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        deq = deque()
+        res = [0] * (len(nums) - k + 1)
+        for i, num in enumerate(nums):
+            while deq and nums[deq[-1]] < num:
+                deq.pop()
+            deq.append(i)
+            idx = i - k + 1
+            if idx >= 0:
+                res[idx] = nums[deq[0]]
+                if deq[0] == idx:
+                    deq.popleft()
+        return res
+
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        deq = deque()
+        res = [0] * (len(nums) - k + 1)
+        for i, num in enumerate(nums):
+            while deq and nums[deq[-1]] < num:
                 deq.pop()
             deq.append(i)
             idx = i - k + 1

@@ -104,21 +104,21 @@ class Solution:
 #         req = defaultdict(int)
 #         for c in stack1:
 #             req[c] += 1
-#         l = row = 0
-#         m, n = len(stack1), len(stack2)
+#         m = row = 0
+#         n, m = len(stack1), len(stack2)
 #
-#         while row < n:
+#         while row < m:
 #             char = stack2[row]
 #             row += 1
 #             if char not in req:
-#                 l = row
+#                 m = row
 #                 # 这个地方没有clear
 #             else:
 #                 req[char] -= 1
 #                 while req[char] < 0:
-#                     req[stack2[l]] += 1
-#                     l += 1
-#                 if row - l == m:
+#                     req[stack2[m]] += 1
+#                     m += 1
+#                 if row - m == n:
 #                     return True
 #         return False
 
@@ -173,6 +173,30 @@ class Solution:
         req = Counter(s1)
         l, r = 0, 0
         m, n = len(s1), len(s2)
+        counter = defaultdict(int)
+        while r < n:
+            tmp = s2[r]
+            r += 1
+            if tmp in req:
+                counter[tmp] += 1
+                while counter[tmp] > req[tmp]:
+                    counter[s2[l]] -= 1
+                    l += 1
+                if r - l == m:
+                    return True
+            else:
+                l = r
+                counter.clear()
+        return False
+
+
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        req = defaultdict(int)
+        for c in s1:
+            req[c] += 1
+        m, n = len(s1), len(s2)
+        l, r = 0, 0
         counter = defaultdict(int)
         while r < n:
             tmp = s2[r]

@@ -10,7 +10,7 @@ from typing import List
 # f(start, j) = f(start-1, j) or f(start - 1, j - a[start])
 # 初始化
 # 初始化全部为False，将f(0, a[0]) 和 f(0, 0)初始化为True，注意要判断越界
-# start 0 .. n-1 j 0 .. target
+# start 0 .. m-1 j 0 .. target
 # 返回值，一旦f(k, target)为True，返回True，否则返回False
 # 优化空间复杂度
 # 我们只需要两个数组来回表示i-1和i的情况即可
@@ -76,7 +76,7 @@ class Solution:
 # f(0, 0) = True f(0, k) = False
 # j >= nums[start]
 # 返回值
-# f(n, target)
+# f(m, target)
 # 优化空间复杂度
 # 只需要target+1那么长的数组，从target往前递推的时候可以原地
 class Solution:
@@ -97,7 +97,7 @@ class Solution:
 # 初始化和边界条件
 # f(0, 0) = True
 # j >= nums[i]
-# 返回值f(n, target)
+# 返回值f(m, target)
 # 优化空间复杂度
 # 只需要一维数组
 # j从后往前递推可以原地更新
@@ -122,7 +122,7 @@ class Solution:
 # f(1, )是满足的
 # j要大于等于p
 # 只包含正整数，所以所有的负数都拿不到
-# 返回值f(n, target)
+# 返回值f(m, target)
 # 优化复杂度，空间上只需要i-1和i天，其中只依赖j和j-p，都小于等于j，可以从后往前原地递推
 # 我们只看target能不能拿到，所以大于target的值我们都可以忽略
 class Solution:
@@ -174,9 +174,55 @@ class Solution:
 # f(0, j) = False j != 0
 # 注意j>=p
 # 返回值
-# f(n , j)
+# f(m , j)
 # 优化复杂度
 # 只与f(i-1)有关，我们从大到小可以原地更新
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if total & 1:
+            return False
+        target = total >> 1
+        dp = [True] + [False] * target
+        for num in nums:
+            for j in range(target, num - 1, -1):
+                dp[j] = dp[j] or dp[j - num]
+            if dp[target]:
+                return True
+        return False
+
+
+# f(i, j) s[:i] can get j
+# f(i, j) = f(i-1, j) or f(i-1, j-a)
+# init
+# f(0, 0) = True
+# f(0, j) = False
+# return f(n, target)
+# optimize from start to end
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if total & 1:
+            return False
+        target = total >> 1
+        dp = [True] + [False] * target
+        for num in nums:
+            for j in range(target, num - 1, -1):
+                dp[j] = dp[j] or dp[j - num]
+            if dp[target]:
+                return True
+        return False
+
+
+# f(i, j)
+# f(i, j) = f(i-1, j) or f(i-1, j - a)
+# 初始化
+# f(0, 0) = True
+# f(0, j) = False
+# 返回值
+# f(n, target)
+# 优化复杂度
+# 我们可以只用一维数组，从后往前原地更新
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         total = sum(nums)
