@@ -88,11 +88,13 @@ class Solution:
 #
 #         return helper(y_left, y_right, y_count)
 
+
 class Solution:
     def minimumOperations(self, leaves: str) -> int:
-        a, b, c = int(leaves[0] == 'y'), float('inf'), float('inf')
-        for i in range(1, len(leaves)):
-            x = int(leaves[i] == 'y')
+        a = 0
+        b = c = float('inf')
+        for leave in leaves:
+            x = int(leave == 'y')
             a, b, c = a + x, min(a, b) + (1 - x), min(b, c) + x
         return c
 
