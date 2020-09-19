@@ -1,5 +1,6 @@
 # 808.分汤.py
 
+
 class Solution(object):
     def soupServings(self, N):
         Q, R = divmod(N, 25)
