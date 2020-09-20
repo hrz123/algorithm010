@@ -1,38 +1,24 @@
-from collections import defaultdict
+import math
 
 
 class Solution:
-    def isTransformable(self, s: str, t: str) -> bool:
-        if s == t:
-            return True
-        c1 = defaultdict(int)
-        for c in s:
-            c1[c] += 1
-        for c in t:
-            if c1[c] == 0:
-                return False
-            c1[c] -= 1
-        pre = defaultdict(int)
-        c1 = defaultdict(int)
-        for c in s:
-            c = int(c)
-            for i in range(c + 1, 10):
-                if pre[i]:
-                    c1[i, c] += pre[i]
-            pre[c] += 1
-        pre = defaultdict(int)
-        for c in t:
-            c = int(c)
-            for i in range(c + 1, 10):
-                if pre[i]:
-                    c1[i, c] -= pre[i]
-                if c1[i, c] < 0:
-                    return False
-            pre[c] += 1
-        return True
-
-
-# 5503. 所有奇数长度子数组的和.py
+    def paintingPlan(self, n: int, k: int) -> int:
+        if k == 0:
+            return 1
+        if k == n * n:
+            return 1
+        rest = n * n - k
+        res = 0
+        for i in range(1, n + 1):
+            if rest % i == 0:
+                col = rest // i
+                if col <= n:
+                    tmp1 = math.factorial(n) // (
+                            math.factorial(i) * math.factorial(n - i))
+                    tmp2 = math.factorial(n) // (
+                            math.factorial(col) * math.factorial(n - col))
+                    res += tmp1 * tmp2
+        return res
 
 
 def main():
