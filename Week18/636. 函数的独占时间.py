@@ -10,7 +10,7 @@ class Solution:
         for log in logs:
             fid, s, t = log.split(':')
             # print(stack)
-            # print(res )
+            # print(res)
             if s == "start":
                 if stack:
                     res[stack[-1]] += int(t) - prev
