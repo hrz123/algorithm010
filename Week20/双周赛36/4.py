@@ -1,135 +1,35 @@
 # 4.py
-import bisect
-import heapq
+from heapq import heappush, heappop
 from typing import List
 
 
-class TreeSet(object):
-    """
-    Binary-tree set like java Treeset.
-    Duplicate elements will not be added.
-    When added new element, TreeSet will be sorted automatically.
-    """
-
-    def __init__(self, elements):
-        self._treeset = []
-        self.addAll(elements)
-
-    def addAll(self, elements):
-        for element in elements:
-            if element in self: continue
-            self.add(element)
-
-    def add(self, element):
-        if element not in self:
-            bisect.insort(self._treeset, element)
-
-    def ceiling_index(self, e, exclusive=False):
-        index = bisect.bisect_right(self._treeset, e)
-        if exclusive:
-            return index
-        if index > 0 and self[index - 1] == e:
-            return index - 1
-        return index
-
-    def floor_index(self, e, exclusive=False):
-        index = bisect.bisect_left(self._treeset, e)
-        if exclusive:
-            return index - 1
-        if index < len(self) and self[index] == e:
-            return index
-        return index - 1
-
-    def ceiling(self, e, exclusive=False):
-        index = self.ceiling_index(e, exclusive)
-        if 0 <= index < len(self):
-            return self[index]
-        return None
-
-    def floor(self, e, exclusive=False):
-        index = self.floor_index(e, exclusive)
-        if 0 <= index < len(self):
-            return self[index]
-        return None
-
-    def __getitem__(self, num):
-        return self._treeset[num]
-
-    def __len__(self):
-        return len(self._treeset)
-
-    def clear(self):
-        """
-        Delete all elements in TreeSet.
-        """
-        self._treeset = []
-
-    def clone(self):
-        """
-        Return shallow copy of self.
-        """
-        return TreeSet(self._treeset)
-
-    def remove(self, element):
-        """
-        Remove element if element in TreeSet.
-        """
-        try:
-            self._treeset.remove(element)
-        except ValueError:
-            return False
-        return True
-
-    def __iter__(self):
-        """
-        Do ascending iteration for TreeSet
-        """
-        for element in self._treeset:
-            yield element
-
-    def pop(self, index):
-        return self._treeset.pop(index)
-
-    def __str__(self):
-        return str(self._treeset)
-
-    def __eq__(self, target):
-        if isinstance(target, TreeSet):
-            return self._treeset == target.treeset
-        elif isinstance(target, list):
-            return self._treeset == target
-
-    def __contains__(self, e):
-        """
-        Fast attribution judgment by bisect
-        """
-        try:
-            return e == self._treeset[bisect.bisect_left(self._treeset, e)]
-        except:
-            return False
-
-
 class Solution:
-    def busiestServers(self, k: int, arrival: List[int],
-                       load: List[int]) -> List[int]:
-        count = [0 for _ in range(k)]
-        ts = TreeSet(list(range(k)))
-        h = []
-        for i, a in enumerate(arrival):
-            l = load[i]
-            while h and h[0][0] <= a:
-                ts.add(h[0][1])
-                heapq.heappop(h)
-            idx = i % k
-            t = ts.ceiling(idx)
-            if t is None:
-                t = ts.ceiling(-1)
-            if t is not None:
-                ts.remove(t)
-                heapq.heappush(h, (a + l, t))
-                count[t] += 1
-        m = max(count)
-        return [i for i, c in enumerate(count) if c == m]
+    def busiestServers(self, ks: int, a: List[int], d: List[int]) -> List[int]:
+        from sortedcontainers import SortedList
+        ans = [0] * ks
+        pq = []
+        fu = SortedList(range(ks))
+        v = 0
+        for i, j in zip(a, d):
+            heappush(pq, [i, 1, i + j, v])
+            v += 1
+        # print(pq,fu)
+        while pq:
+            i, k, j, num = heappop(pq)
+            if k == 1 and fu:
+                v = fu.bisect_left(num % ks)
+                if v == len(fu):
+                    v = 0
+                v = fu[v]
+                fu.remove(v)
+                ans[v] += 1
+                heappush(pq, [j, 0, v, num])
+            elif k == 0:
+                fu.add(j)
+            # print(pq,fu)
+        # print(ans)
+        t = max(ans)
+        return [i for i in range(ks) if ans[i] == t]
 
 
 def main():
